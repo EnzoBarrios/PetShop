@@ -191,14 +191,14 @@ namespace PetShop.Presentacion
             // 
             this.recaudaciónToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("recaudaciónToolStripMenuItem.Image")));
             this.recaudaciónToolStripMenuItem.Name = "recaudaciónToolStripMenuItem";
-            this.recaudaciónToolStripMenuItem.Size = new System.Drawing.Size(203, 38);
+            this.recaudaciónToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
             this.recaudaciónToolStripMenuItem.Text = "Recaudación";
             // 
             // stockToolStripMenuItem
             // 
             this.stockToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("stockToolStripMenuItem.Image")));
             this.stockToolStripMenuItem.Name = "stockToolStripMenuItem";
-            this.stockToolStripMenuItem.Size = new System.Drawing.Size(203, 38);
+            this.stockToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
             this.stockToolStripMenuItem.Text = "Stock";
             // 
             // sistemaToolStripMenuItem
