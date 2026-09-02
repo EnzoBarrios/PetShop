@@ -66,16 +66,6 @@ namespace PetShop.Presentacion
         {
         }
 
-        private void ToolBarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            toolStrip.Visible = toolBarToolStripMenuItem.Checked;
-        }
-
-        private void StatusBarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            statusStrip.Visible = statusBarToolStripMenuItem.Checked;
-        }
-
         private void CascadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LayoutMdi(MdiLayout.Cascade);
@@ -102,6 +92,25 @@ namespace PetShop.Presentacion
             {
                 childForm.Close();
             }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            // Muestra la hora en formato 24hs (HH:mm:ss)
+            lblHora.Text = DateTime.Now.ToString("HH:mm:ss");
+
+            // Muestra la fecha completa: día de la semana, día de mes de año
+            DateTime ahora = DateTime.Now;
+
+            // Obtiene y capitaliza el día de la semana 
+            string diaSemana = ahora.ToString("dddd");
+            diaSemana = char.ToUpper(diaSemana[0]) + diaSemana.Substring(1);
+
+            // Obtiene y capitaliza el mes 
+            string mes = ahora.ToString("MMMM");
+            mes = char.ToUpper(mes[0]) + mes.Substring(1);
+
+            lblFecha.Text = $"{diaSemana}, {ahora.Day} de {mes} de {ahora.Year}";
         }
     }
 }
