@@ -28,39 +28,51 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormVentas));
             this.lblTituloVenta = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblMetodoPago = new System.Windows.Forms.Label();
+            this.gbInformacionPago = new System.Windows.Forms.GroupBox();
+            this.txtCambio = new System.Windows.Forms.TextBox();
+            this.lblCambio = new System.Windows.Forms.Label();
+            this.chkQR = new System.Windows.Forms.CheckBox();
+            this.chkEfectivo = new System.Windows.Forms.CheckBox();
+            this.chkTransferencia = new System.Windows.Forms.CheckBox();
+            this.txtTotalPago = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label7 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.lblTotalPagar = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.gbInformacionProducto = new System.Windows.Forms.GroupBox();
+            this.btnBuscarProducto = new System.Windows.Forms.Button();
+            this.txtStock = new System.Windows.Forms.TextBox();
+            this.txtPrecio = new System.Windows.Forms.TextBox();
+            this.txtProducto = new System.Windows.Forms.TextBox();
+            this.txtCantidad = new System.Windows.Forms.ListBox();
+            this.lblCantidad = new System.Windows.Forms.Label();
+            this.lblStock = new System.Windows.Forms.Label();
+            this.lblPrecio = new System.Windows.Forms.Label();
+            this.lblProducto = new System.Windows.Forms.Label();
+            this.txtCodProducto = new System.Windows.Forms.TextBox();
+            this.lblCodProducto = new System.Windows.Forms.Label();
+            this.dgvVenta = new System.Windows.Forms.DataGridView();
+            this.btnBuscarVenta = new System.Windows.Forms.Button();
+            this.btnConfirmarVenta = new System.Windows.Forms.Button();
+            this.btnCancelarVenta = new System.Windows.Forms.Button();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.imageList2 = new System.Windows.Forms.ImageList(this.components);
+            this.txtPagaCon = new System.Windows.Forms.TextBox();
+            this.lblPagaCon = new System.Windows.Forms.Label();
+            this.IdProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SubTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnQuitarProducto = new System.Windows.Forms.DataGridViewImageColumn();
+            this.gbInformacionPago.SuspendLayout();
+            this.gbInformacionProducto.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVenta)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTituloVenta
@@ -73,298 +85,435 @@
             this.lblTituloVenta.TabIndex = 0;
             this.lblTituloVenta.Text = "Registrar Venta";
             // 
-            // label2
+            // lblMetodoPago
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 63);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(108, 16);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Método de Pago";
+            this.lblMetodoPago.AutoSize = true;
+            this.lblMetodoPago.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetodoPago.Location = new System.Drawing.Point(5, 60);
+            this.lblMetodoPago.Name = "lblMetodoPago";
+            this.lblMetodoPago.Size = new System.Drawing.Size(110, 17);
+            this.lblMetodoPago.TabIndex = 1;
+            this.lblMetodoPago.Text = "Método de Pago";
             // 
-            // groupBox1
+            // gbInformacionPago
             // 
-            this.groupBox1.Controls.Add(this.textBox9);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.checkBox3);
-            this.groupBox1.Controls.Add(this.checkBox2);
-            this.groupBox1.Controls.Add(this.checkBox1);
-            this.groupBox1.Controls.Add(this.textBox4);
-            this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.textBox3);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(671, 213);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(277, 253);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Información del Pago";
+            this.gbInformacionPago.Controls.Add(this.txtPagaCon);
+            this.gbInformacionPago.Controls.Add(this.lblPagaCon);
+            this.gbInformacionPago.Controls.Add(this.txtCambio);
+            this.gbInformacionPago.Controls.Add(this.lblCambio);
+            this.gbInformacionPago.Controls.Add(this.chkQR);
+            this.gbInformacionPago.Controls.Add(this.chkEfectivo);
+            this.gbInformacionPago.Controls.Add(this.chkTransferencia);
+            this.gbInformacionPago.Controls.Add(this.txtTotalPago);
+            this.gbInformacionPago.Controls.Add(this.textBox1);
+            this.gbInformacionPago.Controls.Add(this.textBox2);
+            this.gbInformacionPago.Controls.Add(this.textBox3);
+            this.gbInformacionPago.Controls.Add(this.lblTotalPagar);
+            this.gbInformacionPago.Controls.Add(this.label1);
+            this.gbInformacionPago.Controls.Add(this.lblMetodoPago);
+            this.gbInformacionPago.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbInformacionPago.Location = new System.Drawing.Point(680, 190);
+            this.gbInformacionPago.Name = "gbInformacionPago";
+            this.gbInformacionPago.Size = new System.Drawing.Size(260, 280);
+            this.gbInformacionPago.TabIndex = 2;
+            this.gbInformacionPago.TabStop = false;
+            this.gbInformacionPago.Text = "Información del Pago";
             // 
-            // groupBox2
+            // txtCambio
             // 
-            this.groupBox2.Controls.Add(this.button1);
-            this.groupBox2.Controls.Add(this.textBox8);
-            this.groupBox2.Controls.Add(this.textBox7);
-            this.groupBox2.Controls.Add(this.textBox6);
-            this.groupBox2.Controls.Add(this.listBox1);
-            this.groupBox2.Controls.Add(this.label11);
-            this.groupBox2.Controls.Add(this.label10);
-            this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.textBox5);
-            this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Location = new System.Drawing.Point(29, 82);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(761, 100);
-            this.groupBox2.TabIndex = 3;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Información Producto";
+            this.txtCambio.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCambio.Location = new System.Drawing.Point(150, 245);
+            this.txtCambio.Name = "txtCambio";
+            this.txtCambio.Size = new System.Drawing.Size(100, 22);
+            this.txtCambio.TabIndex = 14;
+            // 
+            // lblCambio
+            // 
+            this.lblCambio.AutoSize = true;
+            this.lblCambio.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.lblCambio.Location = new System.Drawing.Point(5, 250);
+            this.lblCambio.Name = "lblCambio";
+            this.lblCambio.Size = new System.Drawing.Size(56, 19);
+            this.lblCambio.TabIndex = 13;
+            this.lblCambio.Text = "Cambio";
+            // 
+            // chkQR
+            // 
+            this.chkQR.AutoSize = true;
+            this.chkQR.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.chkQR.Location = new System.Drawing.Point(10, 165);
+            this.chkQR.Name = "chkQR";
+            this.chkQR.Size = new System.Drawing.Size(50, 23);
+            this.chkQR.TabIndex = 12;
+            this.chkQR.Text = "QR";
+            this.chkQR.UseVisualStyleBackColor = true;
+            // 
+            // chkEfectivo
+            // 
+            this.chkEfectivo.AutoSize = true;
+            this.chkEfectivo.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkEfectivo.Location = new System.Drawing.Point(10, 85);
+            this.chkEfectivo.Name = "chkEfectivo";
+            this.chkEfectivo.Size = new System.Drawing.Size(75, 21);
+            this.chkEfectivo.TabIndex = 11;
+            this.chkEfectivo.Text = "Efectivo";
+            this.chkEfectivo.UseVisualStyleBackColor = true;
+            // 
+            // chkTransferencia
+            // 
+            this.chkTransferencia.AutoSize = true;
+            this.chkTransferencia.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkTransferencia.Location = new System.Drawing.Point(10, 125);
+            this.chkTransferencia.Name = "chkTransferencia";
+            this.chkTransferencia.Size = new System.Drawing.Size(107, 21);
+            this.chkTransferencia.TabIndex = 10;
+            this.chkTransferencia.Text = "Transferencia";
+            this.chkTransferencia.UseVisualStyleBackColor = true;
+            // 
+            // txtTotalPago
+            // 
+            this.txtTotalPago.Location = new System.Drawing.Point(150, 25);
+            this.txtTotalPago.Name = "txtTotalPago";
+            this.txtTotalPago.Size = new System.Drawing.Size(100, 27);
+            this.txtTotalPago.TabIndex = 9;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(150, 80);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 27);
+            this.textBox1.TabIndex = 4;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(150, 120);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 27);
+            this.textBox2.TabIndex = 5;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(150, 160);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(100, 27);
+            this.textBox3.TabIndex = 6;
+            // 
+            // lblTotalPagar
+            // 
+            this.lblTotalPagar.AutoSize = true;
+            this.lblTotalPagar.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalPagar.Location = new System.Drawing.Point(5, 30);
+            this.lblTotalPagar.Name = "lblTotalPagar";
+            this.lblTotalPagar.Size = new System.Drawing.Size(86, 17);
+            this.lblTotalPagar.TabIndex = 6;
+            this.lblTotalPagar.Text = "Total a pagar";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(6, 27);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 16);
+            this.label1.Size = new System.Drawing.Size(0, 20);
             this.label1.TabIndex = 4;
             // 
-            // label3
+            // gbInformacionProducto
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 30);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(88, 16);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Total a pagar";
+            this.gbInformacionProducto.Controls.Add(this.btnBuscarProducto);
+            this.gbInformacionProducto.Controls.Add(this.txtStock);
+            this.gbInformacionProducto.Controls.Add(this.txtPrecio);
+            this.gbInformacionProducto.Controls.Add(this.txtProducto);
+            this.gbInformacionProducto.Controls.Add(this.txtCantidad);
+            this.gbInformacionProducto.Controls.Add(this.lblCantidad);
+            this.gbInformacionProducto.Controls.Add(this.lblStock);
+            this.gbInformacionProducto.Controls.Add(this.lblPrecio);
+            this.gbInformacionProducto.Controls.Add(this.lblProducto);
+            this.gbInformacionProducto.Controls.Add(this.txtCodProducto);
+            this.gbInformacionProducto.Controls.Add(this.lblCodProducto);
+            this.gbInformacionProducto.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbInformacionProducto.Location = new System.Drawing.Point(20, 70);
+            this.gbInformacionProducto.Name = "gbInformacionProducto";
+            this.gbInformacionProducto.Size = new System.Drawing.Size(760, 100);
+            this.gbInformacionProducto.TabIndex = 3;
+            this.gbInformacionProducto.TabStop = false;
+            this.gbInformacionProducto.Text = "Información Producto";
             // 
-            // textBox1
+            // btnBuscarProducto
             // 
-            this.textBox1.Location = new System.Drawing.Point(152, 91);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 22);
-            this.textBox1.TabIndex = 4;
+            this.btnBuscarProducto.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnBuscarProducto.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBuscarProducto.ImageIndex = 0;
+            this.btnBuscarProducto.ImageList = this.imageList1;
+            this.btnBuscarProducto.Location = new System.Drawing.Point(158, 45);
+            this.btnBuscarProducto.Name = "btnBuscarProducto";
+            this.btnBuscarProducto.Size = new System.Drawing.Size(32, 32);
+            this.btnBuscarProducto.TabIndex = 5;
+            this.btnBuscarProducto.UseVisualStyleBackColor = false;
+            this.btnBuscarProducto.Click += new System.EventHandler(this.btnBuscarProducto_Click);
             // 
-            // textBox2
+            // txtStock
             // 
-            this.textBox2.Location = new System.Drawing.Point(152, 119);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 22);
-            this.textBox2.TabIndex = 5;
+            this.txtStock.Location = new System.Drawing.Point(530, 50);
+            this.txtStock.Name = "txtStock";
+            this.txtStock.Size = new System.Drawing.Size(100, 27);
+            this.txtStock.TabIndex = 14;
             // 
-            // textBox3
+            // txtPrecio
             // 
-            this.textBox3.Location = new System.Drawing.Point(152, 147);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 22);
-            this.textBox3.TabIndex = 6;
+            this.txtPrecio.Location = new System.Drawing.Point(410, 50);
+            this.txtPrecio.Name = "txtPrecio";
+            this.txtPrecio.Size = new System.Drawing.Size(100, 27);
+            this.txtPrecio.TabIndex = 13;
             // 
-            // textBox4
+            // txtProducto
             // 
-            this.textBox4.Location = new System.Drawing.Point(97, 27);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 22);
-            this.textBox4.TabIndex = 9;
+            this.txtProducto.Location = new System.Drawing.Point(210, 50);
+            this.txtProducto.Name = "txtProducto";
+            this.txtProducto.Size = new System.Drawing.Size(180, 27);
+            this.txtProducto.TabIndex = 12;
             // 
-            // dataGridView1
+            // txtCantidad
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(20, 213);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(645, 363);
-            this.dataGridView1.TabIndex = 4;
+            this.txtCantidad.DisplayMember = "1";
+            this.txtCantidad.FormattingEnabled = true;
+            this.txtCantidad.ItemHeight = 20;
+            this.txtCantidad.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "10"});
+            this.txtCantidad.Location = new System.Drawing.Point(650, 50);
+            this.txtCantidad.Name = "txtCantidad";
+            this.txtCantidad.Size = new System.Drawing.Size(86, 24);
+            this.txtCantidad.TabIndex = 11;
+            this.txtCantidad.ValueMember = "1";
             // 
-            // label7
+            // lblCantidad
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(24, 32);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(92, 16);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "Cod. Producto";
+            this.lblCantidad.AutoSize = true;
+            this.lblCantidad.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCantidad.Location = new System.Drawing.Point(650, 30);
+            this.lblCantidad.Name = "lblCantidad";
+            this.lblCantidad.Size = new System.Drawing.Size(60, 17);
+            this.lblCantidad.TabIndex = 10;
+            this.lblCantidad.Text = "Cantidad";
             // 
-            // textBox5
+            // lblStock
             // 
-            this.textBox5.Location = new System.Drawing.Point(122, 29);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 22);
-            this.textBox5.TabIndex = 6;
+            this.lblStock.AutoSize = true;
+            this.lblStock.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStock.Location = new System.Drawing.Point(530, 30);
+            this.lblStock.Name = "lblStock";
+            this.lblStock.Size = new System.Drawing.Size(39, 17);
+            this.lblStock.TabIndex = 9;
+            this.lblStock.Text = "Stock";
             // 
-            // label8
+            // lblPrecio
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(263, 32);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(61, 16);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "Producto";
+            this.lblPrecio.AutoSize = true;
+            this.lblPrecio.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPrecio.Location = new System.Drawing.Point(410, 30);
+            this.lblPrecio.Name = "lblPrecio";
+            this.lblPrecio.Size = new System.Drawing.Size(44, 17);
+            this.lblPrecio.TabIndex = 8;
+            this.lblPrecio.Text = "Precio";
             // 
-            // label9
+            // lblProducto
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(392, 35);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(46, 16);
-            this.label9.TabIndex = 8;
-            this.label9.Text = "Precio";
+            this.lblProducto.AutoSize = true;
+            this.lblProducto.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProducto.Location = new System.Drawing.Point(210, 30);
+            this.lblProducto.Name = "lblProducto";
+            this.lblProducto.Size = new System.Drawing.Size(61, 17);
+            this.lblProducto.TabIndex = 7;
+            this.lblProducto.Text = "Producto";
             // 
-            // label10
+            // txtCodProducto
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(476, 29);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(41, 16);
-            this.label10.TabIndex = 9;
-            this.label10.Text = "Stock";
+            this.txtCodProducto.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCodProducto.Location = new System.Drawing.Point(30, 50);
+            this.txtCodProducto.Name = "txtCodProducto";
+            this.txtCodProducto.Size = new System.Drawing.Size(120, 22);
+            this.txtCodProducto.TabIndex = 6;
             // 
-            // label11
+            // lblCodProducto
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(601, 29);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(61, 16);
-            this.label11.TabIndex = 10;
-            this.label11.Text = "Cantidad";
+            this.lblCodProducto.AutoSize = true;
+            this.lblCodProducto.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCodProducto.Location = new System.Drawing.Point(30, 30);
+            this.lblCodProducto.Name = "lblCodProducto";
+            this.lblCodProducto.Size = new System.Drawing.Size(92, 17);
+            this.lblCodProducto.TabIndex = 5;
+            this.lblCodProducto.Text = "Cod. Producto";
             // 
-            // listBox1
+            // dgvVenta
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(604, 56);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(86, 20);
-            this.listBox1.TabIndex = 11;
+            this.dgvVenta.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvVenta.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.IdProducto,
+            this.Producto,
+            this.Precio,
+            this.Cantidad,
+            this.SubTotal,
+            this.btnQuitarProducto});
+            this.dgvVenta.Location = new System.Drawing.Point(20, 190);
+            this.dgvVenta.Name = "dgvVenta";
+            this.dgvVenta.RowHeadersWidth = 51;
+            this.dgvVenta.RowTemplate.Height = 24;
+            this.dgvVenta.Size = new System.Drawing.Size(640, 390);
+            this.dgvVenta.TabIndex = 4;
             // 
-            // textBox6
+            // btnBuscarVenta
             // 
-            this.textBox6.Location = new System.Drawing.Point(249, 56);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(100, 22);
-            this.textBox6.TabIndex = 12;
+            this.btnBuscarVenta.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnBuscarVenta.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBuscarVenta.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnBuscarVenta.ImageIndex = 0;
+            this.btnBuscarVenta.ImageList = this.imageList2;
+            this.btnBuscarVenta.Location = new System.Drawing.Point(825, 80);
+            this.btnBuscarVenta.Name = "btnBuscarVenta";
+            this.btnBuscarVenta.Size = new System.Drawing.Size(90, 90);
+            this.btnBuscarVenta.TabIndex = 5;
+            this.btnBuscarVenta.Text = "Agregar Producto";
+            this.btnBuscarVenta.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnBuscarVenta.UseVisualStyleBackColor = false;
             // 
-            // textBox7
+            // btnConfirmarVenta
             // 
-            this.textBox7.Location = new System.Drawing.Point(353, 56);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(100, 22);
-            this.textBox7.TabIndex = 13;
+            this.btnConfirmarVenta.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnConfirmarVenta.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConfirmarVenta.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnConfirmarVenta.ImageIndex = 2;
+            this.btnConfirmarVenta.ImageList = this.imageList2;
+            this.btnConfirmarVenta.Location = new System.Drawing.Point(825, 490);
+            this.btnConfirmarVenta.Name = "btnConfirmarVenta";
+            this.btnConfirmarVenta.Size = new System.Drawing.Size(90, 90);
+            this.btnConfirmarVenta.TabIndex = 6;
+            this.btnConfirmarVenta.Text = "Confirmar Venta";
+            this.btnConfirmarVenta.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnConfirmarVenta.UseVisualStyleBackColor = false;
             // 
-            // textBox8
+            // btnCancelarVenta
             // 
-            this.textBox8.Location = new System.Drawing.Point(468, 56);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(100, 22);
-            this.textBox8.TabIndex = 14;
+            this.btnCancelarVenta.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnCancelarVenta.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelarVenta.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnCancelarVenta.ImageIndex = 1;
+            this.btnCancelarVenta.ImageList = this.imageList2;
+            this.btnCancelarVenta.Location = new System.Drawing.Point(705, 490);
+            this.btnCancelarVenta.Name = "btnCancelarVenta";
+            this.btnCancelarVenta.Size = new System.Drawing.Size(90, 90);
+            this.btnCancelarVenta.TabIndex = 7;
+            this.btnCancelarVenta.Text = "Cancelar Venta";
+            this.btnCancelarVenta.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnCancelarVenta.UseVisualStyleBackColor = false;
+            this.btnCancelarVenta.Click += new System.EventHandler(this.btnCancelarVenta_Click);
             // 
-            // button1
+            // imageList1
             // 
-            this.button1.Location = new System.Drawing.Point(218, 27);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(39, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "Buscar.png");
             // 
-            // button2
+            // imageList2
             // 
-            this.button2.Location = new System.Drawing.Point(814, 98);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(106, 84);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
+            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList2.Images.SetKeyName(0, "Agregar_Venta.png");
+            this.imageList2.Images.SetKeyName(1, "Cancelar_Venta.png");
+            this.imageList2.Images.SetKeyName(2, "Crear_Venta.png");
             // 
-            // button3
+            // txtPagaCon
             // 
-            this.button3.Location = new System.Drawing.Point(814, 492);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(106, 84);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "Confirmar Venta";
-            this.button3.UseVisualStyleBackColor = true;
+            this.txtPagaCon.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPagaCon.Location = new System.Drawing.Point(150, 205);
+            this.txtPagaCon.Name = "txtPagaCon";
+            this.txtPagaCon.Size = new System.Drawing.Size(100, 22);
+            this.txtPagaCon.TabIndex = 16;
             // 
-            // button4
+            // lblPagaCon
             // 
-            this.button4.Location = new System.Drawing.Point(696, 492);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(106, 84);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "Cancelar Venta";
-            this.button4.UseVisualStyleBackColor = true;
+            this.lblPagaCon.AutoSize = true;
+            this.lblPagaCon.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.lblPagaCon.Location = new System.Drawing.Point(5, 210);
+            this.lblPagaCon.Name = "lblPagaCon";
+            this.lblPagaCon.Size = new System.Drawing.Size(65, 19);
+            this.lblPagaCon.TabIndex = 15;
+            this.lblPagaCon.Text = "Paga con";
             // 
-            // checkBox1
+            // IdProducto
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(9, 123);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(95, 20);
-            this.checkBox1.TabIndex = 10;
-            this.checkBox1.Text = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.IdProducto.HeaderText = "";
+            this.IdProducto.MinimumWidth = 6;
+            this.IdProducto.Name = "IdProducto";
+            this.IdProducto.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.IdProducto.Visible = false;
+            this.IdProducto.Width = 50;
             // 
-            // checkBox2
+            // Producto
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(9, 93);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(95, 20);
-            this.checkBox2.TabIndex = 11;
-            this.checkBox2.Text = "checkBox2";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.Producto.HeaderText = "Producto";
+            this.Producto.MinimumWidth = 6;
+            this.Producto.Name = "Producto";
+            this.Producto.Width = 150;
             // 
-            // checkBox3
+            // Precio
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(9, 149);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(95, 20);
-            this.checkBox3.TabIndex = 12;
-            this.checkBox3.Text = "checkBox3";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.Precio.HeaderText = "Precio";
+            this.Precio.MinimumWidth = 6;
+            this.Precio.Name = "Precio";
             // 
-            // textBox9
+            // Cantidad
             // 
-            this.textBox9.Location = new System.Drawing.Point(110, 199);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(100, 22);
-            this.textBox9.TabIndex = 14;
+            this.Cantidad.HeaderText = "Cantidad";
+            this.Cantidad.MinimumWidth = 6;
+            this.Cantidad.Name = "Cantidad";
             // 
-            // label4
+            // SubTotal
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 202);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(54, 16);
-            this.label4.TabIndex = 13;
-            this.label4.Text = "Cambio";
+            this.SubTotal.HeaderText = "Sub Total";
+            this.SubTotal.MinimumWidth = 6;
+            this.SubTotal.Name = "SubTotal";
+            // 
+            // btnQuitarProducto
+            // 
+            this.btnQuitarProducto.HeaderText = "";
+            this.btnQuitarProducto.Image = ((System.Drawing.Image)(resources.GetObject("btnQuitarProducto.Image")));
+            this.btnQuitarProducto.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.btnQuitarProducto.MinimumWidth = 6;
+            this.btnQuitarProducto.Name = "btnQuitarProducto";
+            this.btnQuitarProducto.ReadOnly = true;
+            this.btnQuitarProducto.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.btnQuitarProducto.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.btnQuitarProducto.Width = 40;
             // 
             // FormVentas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(965, 600);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(960, 600);
+            this.Controls.Add(this.btnCancelarVenta);
+            this.Controls.Add(this.btnConfirmarVenta);
+            this.Controls.Add(this.btnBuscarVenta);
+            this.Controls.Add(this.dgvVenta);
+            this.Controls.Add(this.gbInformacionProducto);
+            this.Controls.Add(this.gbInformacionPago);
             this.Controls.Add(this.lblTituloVenta);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FormVentas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Registrar Ventas";
             this.Load += new System.EventHandler(this.FormVentas_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.gbInformacionPago.ResumeLayout(false);
+            this.gbInformacionPago.PerformLayout();
+            this.gbInformacionProducto.ResumeLayout(false);
+            this.gbInformacionProducto.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVenta)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -373,34 +522,44 @@
         #endregion
 
         private System.Windows.Forms.Label lblTituloVenta;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label lblMetodoPago;
+        private System.Windows.Forms.GroupBox gbInformacionPago;
+        private System.Windows.Forms.GroupBox gbInformacionProducto;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label lblTotalPagar;
+        private System.Windows.Forms.TextBox txtTotalPago;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.DataGridView dgvVenta;
+        private System.Windows.Forms.Button btnBuscarProducto;
+        private System.Windows.Forms.TextBox txtStock;
+        private System.Windows.Forms.TextBox txtPrecio;
+        private System.Windows.Forms.TextBox txtProducto;
+        private System.Windows.Forms.ListBox txtCantidad;
+        private System.Windows.Forms.Label lblCantidad;
+        private System.Windows.Forms.Label lblStock;
+        private System.Windows.Forms.Label lblPrecio;
+        private System.Windows.Forms.Label lblProducto;
+        private System.Windows.Forms.TextBox txtCodProducto;
+        private System.Windows.Forms.Label lblCodProducto;
+        private System.Windows.Forms.Button btnBuscarVenta;
+        private System.Windows.Forms.Button btnConfirmarVenta;
+        private System.Windows.Forms.Button btnCancelarVenta;
+        private System.Windows.Forms.TextBox txtCambio;
+        private System.Windows.Forms.Label lblCambio;
+        private System.Windows.Forms.CheckBox chkQR;
+        private System.Windows.Forms.CheckBox chkEfectivo;
+        private System.Windows.Forms.CheckBox chkTransferencia;
+        private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.ImageList imageList2;
+        private System.Windows.Forms.TextBox txtPagaCon;
+        private System.Windows.Forms.Label lblPagaCon;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IdProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Producto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Precio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Cantidad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SubTotal;
+        private System.Windows.Forms.DataGridViewImageColumn btnQuitarProducto;
     }
 }
