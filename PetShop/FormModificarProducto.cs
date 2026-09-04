@@ -8,18 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PetShop.Presentacion
+namespace PetShop
 {
-    public partial class FormCargaProducto : Form
+    public partial class FormModificarProducto : Form
     {
-        public FormCargaProducto()
+        public FormModificarProducto()
         {
             InitializeComponent();
-        }
-
-        private void FormCargaProducto_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

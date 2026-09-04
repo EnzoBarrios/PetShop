@@ -56,6 +56,7 @@
             this.TBuscar.Name = "TBuscar";
             this.TBuscar.Size = new System.Drawing.Size(217, 26);
             this.TBuscar.TabIndex = 12;
+            this.TBuscar.TextChanged += new System.EventHandler(this.TBuscar_TextChanged);
             // 
             // LBuscar
             // 
@@ -89,6 +90,7 @@
             this.BNuevoProducto.TabIndex = 21;
             this.BNuevoProducto.Text = "Nuevo Producto";
             this.BNuevoProducto.UseVisualStyleBackColor = true;
+            this.BNuevoProducto.Click += new System.EventHandler(this.BNuevoProducto_Click);
             // 
             // BModificarProducto
             // 
@@ -98,6 +100,7 @@
             this.BModificarProducto.TabIndex = 22;
             this.BModificarProducto.Text = "Modificar";
             this.BModificarProducto.UseVisualStyleBackColor = true;
+            this.BModificarProducto.Click += new System.EventHandler(this.BModificarProducto_Click);
             // 
             // BEliminarProducto
             // 
@@ -107,15 +110,17 @@
             this.BEliminarProducto.TabIndex = 23;
             this.BEliminarProducto.Text = "Eliminar";
             this.BEliminarProducto.UseVisualStyleBackColor = true;
+            this.BEliminarProducto.Click += new System.EventHandler(this.BEliminarProducto_Click);
             // 
             // BVolver
             // 
-            this.BVolver.Location = new System.Drawing.Point(12, 12);
+            this.BVolver.Location = new System.Drawing.Point(9, 12);
             this.BVolver.Name = "BVolver";
-            this.BVolver.Size = new System.Drawing.Size(101, 46);
-            this.BVolver.TabIndex = 24;
+            this.BVolver.Size = new System.Drawing.Size(96, 39);
+            this.BVolver.TabIndex = 25;
             this.BVolver.Text = "Volver";
             this.BVolver.UseVisualStyleBackColor = true;
+            this.BVolver.Click += new System.EventHandler(this.BVolver_Click);
             // 
             // FormProductos
             // 
