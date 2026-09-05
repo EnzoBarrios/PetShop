@@ -33,6 +33,8 @@
             this.lblTituloVenta = new System.Windows.Forms.Label();
             this.lblMetodoPago = new System.Windows.Forms.Label();
             this.gbInformacionPago = new System.Windows.Forms.GroupBox();
+            this.txtPagaCon = new System.Windows.Forms.TextBox();
+            this.lblPagaCon = new System.Windows.Forms.Label();
             this.txtCambio = new System.Windows.Forms.TextBox();
             this.lblCambio = new System.Windows.Forms.Label();
             this.chkQR = new System.Windows.Forms.CheckBox();
@@ -46,6 +48,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.gbInformacionProducto = new System.Windows.Forms.GroupBox();
             this.btnBuscarProducto = new System.Windows.Forms.Button();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.txtStock = new System.Windows.Forms.TextBox();
             this.txtPrecio = new System.Windows.Forms.TextBox();
             this.txtProducto = new System.Windows.Forms.TextBox();
@@ -58,18 +61,15 @@
             this.lblCodProducto = new System.Windows.Forms.Label();
             this.dgvVenta = new System.Windows.Forms.DataGridView();
             this.btnBuscarVenta = new System.Windows.Forms.Button();
+            this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.btnConfirmarVenta = new System.Windows.Forms.Button();
             this.btnCancelarVenta = new System.Windows.Forms.Button();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.imageList2 = new System.Windows.Forms.ImageList(this.components);
-            this.txtPagaCon = new System.Windows.Forms.TextBox();
-            this.lblPagaCon = new System.Windows.Forms.Label();
             this.IdProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SubTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnQuitarProducto = new System.Windows.Forms.DataGridViewImageColumn();
+            this.btnQuitarProducto = new System.Windows.Forms.DataGridViewButtonColumn();
             this.gbInformacionPago.SuspendLayout();
             this.gbInformacionProducto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVenta)).BeginInit();
@@ -118,6 +118,24 @@
             this.gbInformacionPago.TabIndex = 2;
             this.gbInformacionPago.TabStop = false;
             this.gbInformacionPago.Text = "Información del Pago";
+            // 
+            // txtPagaCon
+            // 
+            this.txtPagaCon.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPagaCon.Location = new System.Drawing.Point(150, 205);
+            this.txtPagaCon.Name = "txtPagaCon";
+            this.txtPagaCon.Size = new System.Drawing.Size(100, 22);
+            this.txtPagaCon.TabIndex = 16;
+            // 
+            // lblPagaCon
+            // 
+            this.lblPagaCon.AutoSize = true;
+            this.lblPagaCon.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.lblPagaCon.Location = new System.Drawing.Point(5, 210);
+            this.lblPagaCon.Name = "lblPagaCon";
+            this.lblPagaCon.Size = new System.Drawing.Size(65, 19);
+            this.lblPagaCon.TabIndex = 15;
+            this.lblPagaCon.Text = "Paga con";
             // 
             // txtCambio
             // 
@@ -249,6 +267,12 @@
             this.btnBuscarProducto.TabIndex = 5;
             this.btnBuscarProducto.UseVisualStyleBackColor = false;
             this.btnBuscarProducto.Click += new System.EventHandler(this.btnBuscarProducto_Click);
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "Buscar.png");
             // 
             // txtStock
             // 
@@ -382,6 +406,14 @@
             this.btnBuscarVenta.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnBuscarVenta.UseVisualStyleBackColor = false;
             // 
+            // imageList2
+            // 
+            this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
+            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList2.Images.SetKeyName(0, "Agregar_Venta.png");
+            this.imageList2.Images.SetKeyName(1, "Cancelar_Venta.png");
+            this.imageList2.Images.SetKeyName(2, "Crear_Venta.png");
+            // 
             // btnConfirmarVenta
             // 
             this.btnConfirmarVenta.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -413,38 +445,6 @@
             this.btnCancelarVenta.UseVisualStyleBackColor = false;
             this.btnCancelarVenta.Click += new System.EventHandler(this.btnCancelarVenta_Click);
             // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "Buscar.png");
-            // 
-            // imageList2
-            // 
-            this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
-            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList2.Images.SetKeyName(0, "Agregar_Venta.png");
-            this.imageList2.Images.SetKeyName(1, "Cancelar_Venta.png");
-            this.imageList2.Images.SetKeyName(2, "Crear_Venta.png");
-            // 
-            // txtPagaCon
-            // 
-            this.txtPagaCon.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPagaCon.Location = new System.Drawing.Point(150, 205);
-            this.txtPagaCon.Name = "txtPagaCon";
-            this.txtPagaCon.Size = new System.Drawing.Size(100, 22);
-            this.txtPagaCon.TabIndex = 16;
-            // 
-            // lblPagaCon
-            // 
-            this.lblPagaCon.AutoSize = true;
-            this.lblPagaCon.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            this.lblPagaCon.Location = new System.Drawing.Point(5, 210);
-            this.lblPagaCon.Name = "lblPagaCon";
-            this.lblPagaCon.Size = new System.Drawing.Size(65, 19);
-            this.lblPagaCon.TabIndex = 15;
-            this.lblPagaCon.Text = "Paga con";
-            // 
             // IdProducto
             // 
             this.IdProducto.HeaderText = "";
@@ -466,24 +466,25 @@
             this.Precio.HeaderText = "Precio";
             this.Precio.MinimumWidth = 6;
             this.Precio.Name = "Precio";
+            this.Precio.Width = 125;
             // 
             // Cantidad
             // 
             this.Cantidad.HeaderText = "Cantidad";
             this.Cantidad.MinimumWidth = 6;
             this.Cantidad.Name = "Cantidad";
+            this.Cantidad.Width = 125;
             // 
             // SubTotal
             // 
             this.SubTotal.HeaderText = "Sub Total";
             this.SubTotal.MinimumWidth = 6;
             this.SubTotal.Name = "SubTotal";
+            this.SubTotal.Width = 125;
             // 
             // btnQuitarProducto
             // 
             this.btnQuitarProducto.HeaderText = "";
-            this.btnQuitarProducto.Image = ((System.Drawing.Image)(resources.GetObject("btnQuitarProducto.Image")));
-            this.btnQuitarProducto.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
             this.btnQuitarProducto.MinimumWidth = 6;
             this.btnQuitarProducto.Name = "btnQuitarProducto";
             this.btnQuitarProducto.ReadOnly = true;
@@ -560,6 +561,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Precio;
         private System.Windows.Forms.DataGridViewTextBoxColumn Cantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn SubTotal;
-        private System.Windows.Forms.DataGridViewImageColumn btnQuitarProducto;
+        private System.Windows.Forms.DataGridViewButtonColumn btnQuitarProducto;
     }
 }
