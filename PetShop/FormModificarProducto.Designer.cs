@@ -50,11 +50,13 @@
             this.BVolver = new System.Windows.Forms.Button();
             this.BEliminar = new System.Windows.Forms.Button();
             this.BGuardar = new System.Windows.Forms.Button();
+            this.LEstado = new System.Windows.Forms.Label();
+            this.CBEstado = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // TBCantidad
             // 
-            this.TBCantidad.Location = new System.Drawing.Point(136, 426);
+            this.TBCantidad.Location = new System.Drawing.Point(473, 297);
             this.TBCantidad.Name = "TBCantidad";
             this.TBCantidad.Size = new System.Drawing.Size(78, 26);
             this.TBCantidad.TabIndex = 36;
@@ -134,7 +136,7 @@
             // 
             this.LCantidad.AutoSize = true;
             this.LCantidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LCantidad.Location = new System.Drawing.Point(49, 429);
+            this.LCantidad.Location = new System.Drawing.Point(364, 303);
             this.LCantidad.Name = "LCantidad";
             this.LCantidad.Size = new System.Drawing.Size(81, 20);
             this.LCantidad.TabIndex = 27;
@@ -259,11 +261,34 @@
             this.BGuardar.Text = "Guardar";
             this.BGuardar.UseVisualStyleBackColor = true;
             // 
+            // LEstado
+            // 
+            this.LEstado.AutoSize = true;
+            this.LEstado.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LEstado.Location = new System.Drawing.Point(49, 435);
+            this.LEstado.Name = "LEstado";
+            this.LEstado.Size = new System.Drawing.Size(66, 20);
+            this.LEstado.TabIndex = 41;
+            this.LEstado.Text = "Estado";
+            // 
+            // CBEstado
+            // 
+            this.CBEstado.FormattingEnabled = true;
+            this.CBEstado.Items.AddRange(new object[] {
+            "Activo",
+            "Inactivo"});
+            this.CBEstado.Location = new System.Drawing.Point(128, 427);
+            this.CBEstado.Name = "CBEstado";
+            this.CBEstado.Size = new System.Drawing.Size(121, 28);
+            this.CBEstado.TabIndex = 42;
+            // 
             // FormModificarProducto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 537);
+            this.Controls.Add(this.CBEstado);
+            this.Controls.Add(this.LEstado);
             this.Controls.Add(this.BEliminar);
             this.Controls.Add(this.BGuardar);
             this.Controls.Add(this.BVolver);
@@ -316,5 +341,7 @@
         private System.Windows.Forms.Button BVolver;
         private System.Windows.Forms.Button BEliminar;
         private System.Windows.Forms.Button BGuardar;
+        private System.Windows.Forms.Label LEstado;
+        private System.Windows.Forms.ComboBox CBEstado;
     }
 }
