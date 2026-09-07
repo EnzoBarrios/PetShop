@@ -12,86 +12,12 @@ namespace PetShop.Presentacion
 {
     public partial class FormMenuPrincipal : Form
     {
-        private int childFormNumber = 0;
+        // Variable para rastrear el formulario secundario actualmente visible
+        private Form formularioActivo = null;
 
         public FormMenuPrincipal()
         {
             InitializeComponent();
-        }
-
-        private void ShowNewForm(object sender, EventArgs e)
-        {
-            Form childForm = new Form();
-            childForm.MdiParent = this;
-            childForm.Text = "Ventana " + childFormNumber++;
-            childForm.Show();
-        }
-
-        private void OpenFile(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            openFileDialog.Filter = "Archivos de texto (*.txt)|*.txt|Todos los archivos (*.*)|*.*";
-            if (openFileDialog.ShowDialog(this) == DialogResult.OK)
-            {
-                string FileName = openFileDialog.FileName;
-            }
-        }
-
-        private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            saveFileDialog.Filter = "Archivos de texto (*.txt)|*.txt|Todos los archivos (*.*)|*.*";
-            if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
-            {
-                string FileName = saveFileDialog.FileName;
-            }
-        }
-
-        private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void CutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void CascadeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LayoutMdi(MdiLayout.Cascade);
-        }
-
-        private void TileVerticalToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LayoutMdi(MdiLayout.TileVertical);
-        }
-
-        private void TileHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LayoutMdi(MdiLayout.TileHorizontal);
-        }
-
-        private void ArrangeIconsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LayoutMdi(MdiLayout.ArrangeIcons);
-        }
-
-        private void CloseAllToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            foreach (Form childForm in MdiChildren)
-            {
-                childForm.Close();
-            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -111,6 +37,110 @@ namespace PetShop.Presentacion
             mes = char.ToUpper(mes[0]) + mes.Substring(1);
 
             lblFecha.Text = $"{diaSemana}, {ahora.Day} de {mes} de {ahora.Year}";
+        }
+
+        private void AbrirFormularioEnMdi<T>() where T : Form, new()
+        {
+            // Si ya está abierto el mismo formulario, no recarga
+            if (formularioActivo != null && formularioActivo is T)
+            {
+                formularioActivo.BringToFront();
+                return;
+            }
+
+            // Cierra y libera el formulario anterior si existe
+            if (formularioActivo != null)
+            {
+                formularioActivo.Close();
+                formularioActivo.Dispose();
+            }
+
+            formularioActivo = new T
+            {
+                TopLevel= false,
+                FormBorderStyle = FormBorderStyle.None, 
+                StartPosition = FormStartPosition.CenterScreen 
+            };
+
+            contenedor.Controls.Clear();
+            contenedor.Controls.Add(formularioActivo);
+            contenedor.Tag = formularioActivo;
+            formularioActivo.Show();
+            formularioActivo.BringToFront();
+        }
+        private void catalogoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnMdi<FormUsuarios>();
+        }
+
+        private void productosToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            AbrirFormularioEnMdi<FormProductos>();
+        }
+
+       /* 
+        * private void categoriasToolStripMenuItem_Click(object sender, EventArgs e)
+        * {
+        * AbrirFormularioEnMdi<FormCategorias>();
+        * } 
+        */
+
+        /*
+        private void especiesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnMdi<FormEspecies>();
+        }
+        */
+
+        private void nuevaVentaToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            AbrirFormularioEnMdi<FormVentas>();
+        }
+
+        /*
+        private void historialDeVentasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnMdi<FormHistorialVentas>();
+        }
+        */
+
+        private void gestionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnMdi<FormProovedores>();
+        }
+
+        private void reportesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnMdi<FormLogin>();
+        }
+
+        private void cerrarSesiónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult respuesta = MessageBox.Show(
+                "¿Está seguro de que desea cerrar la sesión actual?",
+                "Cerrar Sesión",
+                MessageBoxButtons.YesNo,
+                icon: MessageBoxIcon.Question);
+
+            if (respuesta == DialogResult.Yes)
+            {
+                Application.Restart();
+            }
+        }
+
+        private void salirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult respuesta = MessageBox.Show(
+            "¿Está seguro de que desea salir del sistema?",
+            "Confirmar Salida",
+            MessageBoxButtons.YesNo,
+            icon: MessageBoxIcon.Warning
+        );
+
+            if (respuesta == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
         }
     }
 }
