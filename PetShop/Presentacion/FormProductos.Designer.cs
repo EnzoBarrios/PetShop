@@ -1,4 +1,4 @@
-﻿namespace proyecto2
+﻿namespace PetShop.Presentacion
 {
     partial class FormProductos
     {
@@ -34,7 +34,7 @@
             this.DGVProductos = new System.Windows.Forms.DataGridView();
             this.BNuevoProducto = new System.Windows.Forms.Button();
             this.BModificarProducto = new System.Windows.Forms.Button();
-            this.BEliminarProducto = new System.Windows.Forms.Button();
+            this.BCambiarEstado = new System.Windows.Forms.Button();
             this.BVolver = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DGVProductos)).BeginInit();
             this.SuspendLayout();
@@ -52,7 +52,7 @@
             // 
             // TBuscar
             // 
-            this.TBuscar.Location = new System.Drawing.Point(111, 118);
+            this.TBuscar.Location = new System.Drawing.Point(111, 92);
             this.TBuscar.Name = "TBuscar";
             this.TBuscar.Size = new System.Drawing.Size(217, 26);
             this.TBuscar.TabIndex = 12;
@@ -62,7 +62,7 @@
             // 
             this.LBuscar.AutoSize = true;
             this.LBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LBuscar.Location = new System.Drawing.Point(40, 124);
+            this.LBuscar.Location = new System.Drawing.Point(40, 98);
             this.LBuscar.Name = "LBuscar";
             this.LBuscar.Size = new System.Drawing.Size(65, 20);
             this.LBuscar.TabIndex = 11;
@@ -72,19 +72,19 @@
             // 
             this.DGVProductos.AllowUserToAddRows = false;
             this.DGVProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGVProductos.Location = new System.Drawing.Point(32, 158);
+            this.DGVProductos.Location = new System.Drawing.Point(32, 124);
             this.DGVProductos.MultiSelect = false;
             this.DGVProductos.Name = "DGVProductos";
             this.DGVProductos.ReadOnly = true;
             this.DGVProductos.RowHeadersWidth = 62;
             this.DGVProductos.RowTemplate.Height = 28;
             this.DGVProductos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGVProductos.Size = new System.Drawing.Size(734, 210);
+            this.DGVProductos.Size = new System.Drawing.Size(734, 274);
             this.DGVProductos.TabIndex = 20;
             // 
             // BNuevoProducto
             // 
-            this.BNuevoProducto.Location = new System.Drawing.Point(32, 374);
+            this.BNuevoProducto.Location = new System.Drawing.Point(32, 404);
             this.BNuevoProducto.Name = "BNuevoProducto";
             this.BNuevoProducto.Size = new System.Drawing.Size(132, 56);
             this.BNuevoProducto.TabIndex = 21;
@@ -94,7 +94,7 @@
             // 
             // BModificarProducto
             // 
-            this.BModificarProducto.Location = new System.Drawing.Point(318, 374);
+            this.BModificarProducto.Location = new System.Drawing.Point(309, 404);
             this.BModificarProducto.Name = "BModificarProducto";
             this.BModificarProducto.Size = new System.Drawing.Size(153, 56);
             this.BModificarProducto.TabIndex = 22;
@@ -102,15 +102,15 @@
             this.BModificarProducto.UseVisualStyleBackColor = true;
             this.BModificarProducto.Click += new System.EventHandler(this.BModificarProducto_Click);
             // 
-            // BEliminarProducto
+            // BCambiarEstado
             // 
-            this.BEliminarProducto.Location = new System.Drawing.Point(613, 374);
-            this.BEliminarProducto.Name = "BEliminarProducto";
-            this.BEliminarProducto.Size = new System.Drawing.Size(153, 56);
-            this.BEliminarProducto.TabIndex = 23;
-            this.BEliminarProducto.Text = "Eliminar";
-            this.BEliminarProducto.UseVisualStyleBackColor = true;
-            this.BEliminarProducto.Click += new System.EventHandler(this.BEliminarProducto_Click);
+            this.BCambiarEstado.Location = new System.Drawing.Point(613, 404);
+            this.BCambiarEstado.Name = "BCambiarEstado";
+            this.BCambiarEstado.Size = new System.Drawing.Size(153, 56);
+            this.BCambiarEstado.TabIndex = 23;
+            this.BCambiarEstado.Text = "Desactivar";
+            this.BCambiarEstado.UseVisualStyleBackColor = true;
+            this.BCambiarEstado.Click += new System.EventHandler(this.BEliminarProducto_Click);
             // 
             // BVolver
             // 
@@ -128,7 +128,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 502);
             this.Controls.Add(this.BVolver);
-            this.Controls.Add(this.BEliminarProducto);
+            this.Controls.Add(this.BCambiarEstado);
             this.Controls.Add(this.BModificarProducto);
             this.Controls.Add(this.BNuevoProducto);
             this.Controls.Add(this.DGVProductos);
@@ -152,7 +152,7 @@
         private System.Windows.Forms.DataGridView DGVProductos;
         private System.Windows.Forms.Button BNuevoProducto;
         private System.Windows.Forms.Button BModificarProducto;
-        private System.Windows.Forms.Button BEliminarProducto;
+        private System.Windows.Forms.Button BCambiarEstado;
         private System.Windows.Forms.Button BVolver;
     }
 }

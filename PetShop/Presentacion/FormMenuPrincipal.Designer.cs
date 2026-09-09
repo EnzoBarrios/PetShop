@@ -121,21 +121,21 @@ namespace PetShop.Presentacion
             // 
             this.productosToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("productosToolStripMenuItem.Image")));
             this.productosToolStripMenuItem.Name = "productosToolStripMenuItem";
-            this.productosToolStripMenuItem.Size = new System.Drawing.Size(278, 42);
+            this.productosToolStripMenuItem.Size = new System.Drawing.Size(222, 42);
             this.productosToolStripMenuItem.Text = "Productos";
             // 
             // categoriasToolStripMenuItem
             // 
             this.categoriasToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("categoriasToolStripMenuItem.Image")));
             this.categoriasToolStripMenuItem.Name = "categoriasToolStripMenuItem";
-            this.categoriasToolStripMenuItem.Size = new System.Drawing.Size(278, 42);
+            this.categoriasToolStripMenuItem.Size = new System.Drawing.Size(222, 42);
             this.categoriasToolStripMenuItem.Text = "Categorias";
             // 
             // especiesToolStripMenuItem
             // 
             this.especiesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("especiesToolStripMenuItem.Image")));
             this.especiesToolStripMenuItem.Name = "especiesToolStripMenuItem";
-            this.especiesToolStripMenuItem.Size = new System.Drawing.Size(278, 42);
+            this.especiesToolStripMenuItem.Size = new System.Drawing.Size(222, 42);
             this.especiesToolStripMenuItem.Text = "Especies";
             // 
             // ventaToolStripMenuItem

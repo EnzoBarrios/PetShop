@@ -27,6 +27,9 @@ namespace PetShop
             this.idProducto = idProducto;
         }
 
+        private void FormModificarProducto_Load(object sender, EventArgs e)
+        {
 
+        }
     }
 }

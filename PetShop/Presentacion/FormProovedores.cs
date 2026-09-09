@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace PetShop.Presentacion
 {
-    public partial class FormProovedores : Form
+    public partial class FormCompras : Form
     {
-        public FormProovedores()
+        public FormCompras()
         {
             InitializeComponent();
+        }
+
+        private void FormCompras_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

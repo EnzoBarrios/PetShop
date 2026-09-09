@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.LFecha = new System.Windows.Forms.Label();
             this.TClave = new System.Windows.Forms.TextBox();
             this.LClave = new System.Windows.Forms.Label();
             this.BEliminar = new System.Windows.Forms.Button();
@@ -41,22 +40,15 @@
             this.LNombre = new System.Windows.Forms.Label();
             this.TConfirmar = new System.Windows.Forms.TextBox();
             this.LConfirmar = new System.Windows.Forms.Label();
-            this.DTFecha = new System.Windows.Forms.DateTimePicker();
+            this.LApellido = new System.Windows.Forms.Label();
+            this.TApellido = new System.Windows.Forms.TextBox();
+            this.LNombreUsuario = new System.Windows.Forms.Label();
+            this.TNombreUsuario = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
-            // LFecha
-            // 
-            this.LFecha.AutoSize = true;
-            this.LFecha.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LFecha.Location = new System.Drawing.Point(58, 334);
-            this.LFecha.Name = "LFecha";
-            this.LFecha.Size = new System.Drawing.Size(157, 20);
-            this.LFecha.TabIndex = 79;
-            this.LFecha.Text = "Fecha de creación";
             // 
             // TClave
             // 
-            this.TClave.Location = new System.Drawing.Point(166, 190);
+            this.TClave.Location = new System.Drawing.Point(154, 263);
             this.TClave.Name = "TClave";
             this.TClave.Size = new System.Drawing.Size(202, 26);
             this.TClave.TabIndex = 78;
@@ -65,7 +57,7 @@
             // 
             this.LClave.AutoSize = true;
             this.LClave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LClave.Location = new System.Drawing.Point(58, 196);
+            this.LClave.Location = new System.Drawing.Point(46, 269);
             this.LClave.Name = "LClave";
             this.LClave.Size = new System.Drawing.Size(102, 20);
             this.LClave.TabIndex = 77;
@@ -73,7 +65,7 @@
             // 
             // BEliminar
             // 
-            this.BEliminar.Location = new System.Drawing.Point(622, 394);
+            this.BEliminar.Location = new System.Drawing.Point(610, 392);
             this.BEliminar.Name = "BEliminar";
             this.BEliminar.Size = new System.Drawing.Size(150, 65);
             this.BEliminar.TabIndex = 76;
@@ -82,7 +74,7 @@
             // 
             // BGuardar
             // 
-            this.BGuardar.Location = new System.Drawing.Point(452, 394);
+            this.BGuardar.Location = new System.Drawing.Point(440, 392);
             this.BGuardar.Name = "BGuardar";
             this.BGuardar.Size = new System.Drawing.Size(150, 65);
             this.BGuardar.TabIndex = 75;
@@ -116,14 +108,14 @@
             this.CBRol.Items.AddRange(new object[] {
             "Administrador",
             "Empleado"});
-            this.CBRol.Location = new System.Drawing.Point(137, 259);
+            this.CBRol.Location = new System.Drawing.Point(88, 333);
             this.CBRol.Name = "CBRol";
             this.CBRol.Size = new System.Drawing.Size(231, 28);
             this.CBRol.TabIndex = 72;
             // 
             // TBNombre
             // 
-            this.TBNombre.Location = new System.Drawing.Point(135, 119);
+            this.TBNombre.Location = new System.Drawing.Point(123, 107);
             this.TBNombre.Name = "TBNombre";
             this.TBNombre.Size = new System.Drawing.Size(233, 26);
             this.TBNombre.TabIndex = 71;
@@ -132,7 +124,7 @@
             // 
             this.LRol.AutoSize = true;
             this.LRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LRol.Location = new System.Drawing.Point(58, 267);
+            this.LRol.Location = new System.Drawing.Point(46, 341);
             this.LRol.Name = "LRol";
             this.LRol.Size = new System.Drawing.Size(36, 20);
             this.LRol.TabIndex = 70;
@@ -142,7 +134,7 @@
             // 
             this.LNombre.AutoSize = true;
             this.LNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LNombre.Location = new System.Drawing.Point(58, 125);
+            this.LNombre.Location = new System.Drawing.Point(46, 113);
             this.LNombre.Name = "LNombre";
             this.LNombre.Size = new System.Drawing.Size(71, 20);
             this.LNombre.TabIndex = 69;
@@ -150,7 +142,7 @@
             // 
             // TConfirmar
             // 
-            this.TConfirmar.Location = new System.Drawing.Point(575, 190);
+            this.TConfirmar.Location = new System.Drawing.Point(558, 263);
             this.TConfirmar.Name = "TConfirmar";
             this.TConfirmar.Size = new System.Drawing.Size(202, 26);
             this.TConfirmar.TabIndex = 82;
@@ -159,28 +151,57 @@
             // 
             this.LConfirmar.AutoSize = true;
             this.LConfirmar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LConfirmar.Location = new System.Drawing.Point(387, 196);
+            this.LConfirmar.Location = new System.Drawing.Point(370, 269);
             this.LConfirmar.Name = "LConfirmar";
             this.LConfirmar.Size = new System.Drawing.Size(182, 20);
             this.LConfirmar.TabIndex = 81;
             this.LConfirmar.Text = "Confirmar contraseña";
             // 
-            // DTFecha
+            // LApellido
             // 
-            this.DTFecha.Location = new System.Drawing.Point(221, 328);
-            this.DTFecha.Name = "DTFecha";
-            this.DTFecha.Size = new System.Drawing.Size(147, 26);
-            this.DTFecha.TabIndex = 83;
+            this.LApellido.AutoSize = true;
+            this.LApellido.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LApellido.Location = new System.Drawing.Point(375, 110);
+            this.LApellido.Name = "LApellido";
+            this.LApellido.Size = new System.Drawing.Size(73, 20);
+            this.LApellido.TabIndex = 84;
+            this.LApellido.Text = "Apellido";
+            // 
+            // TApellido
+            // 
+            this.TApellido.Location = new System.Drawing.Point(454, 104);
+            this.TApellido.Name = "TApellido";
+            this.TApellido.Size = new System.Drawing.Size(233, 26);
+            this.TApellido.TabIndex = 85;
+            // 
+            // LNombreUsuario
+            // 
+            this.LNombreUsuario.AutoSize = true;
+            this.LNombreUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LNombreUsuario.Location = new System.Drawing.Point(46, 190);
+            this.LNombreUsuario.Name = "LNombreUsuario";
+            this.LNombreUsuario.Size = new System.Drawing.Size(160, 20);
+            this.LNombreUsuario.TabIndex = 86;
+            this.LNombreUsuario.Text = "Nombre de usuario";
+            // 
+            // TNombreUsuario
+            // 
+            this.TNombreUsuario.Location = new System.Drawing.Point(218, 184);
+            this.TNombreUsuario.Name = "TNombreUsuario";
+            this.TNombreUsuario.Size = new System.Drawing.Size(203, 26);
+            this.TNombreUsuario.TabIndex = 87;
             // 
             // FormCargaUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 469);
-            this.Controls.Add(this.DTFecha);
+            this.ClientSize = new System.Drawing.Size(800, 523);
+            this.Controls.Add(this.TNombreUsuario);
+            this.Controls.Add(this.LNombreUsuario);
+            this.Controls.Add(this.TApellido);
+            this.Controls.Add(this.LApellido);
             this.Controls.Add(this.TConfirmar);
             this.Controls.Add(this.LConfirmar);
-            this.Controls.Add(this.LFecha);
             this.Controls.Add(this.TClave);
             this.Controls.Add(this.LClave);
             this.Controls.Add(this.BEliminar);
@@ -199,7 +220,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label LFecha;
         private System.Windows.Forms.TextBox TClave;
         private System.Windows.Forms.Label LClave;
         private System.Windows.Forms.Button BEliminar;
@@ -212,6 +232,9 @@
         private System.Windows.Forms.Label LNombre;
         private System.Windows.Forms.TextBox TConfirmar;
         private System.Windows.Forms.Label LConfirmar;
-        private System.Windows.Forms.DateTimePicker DTFecha;
+        private System.Windows.Forms.Label LApellido;
+        private System.Windows.Forms.TextBox TApellido;
+        private System.Windows.Forms.Label LNombreUsuario;
+        private System.Windows.Forms.TextBox TNombreUsuario;
     }
 }

@@ -245,7 +245,7 @@
             // 
             // BGuardar
             // 
-            this.BGuardar.Location = new System.Drawing.Point(455, 455);
+            this.BGuardar.Location = new System.Drawing.Point(452, 438);
             this.BGuardar.Name = "BGuardar";
             this.BGuardar.Size = new System.Drawing.Size(150, 65);
             this.BGuardar.TabIndex = 20;
@@ -254,7 +254,7 @@
             // 
             // BEliminar
             // 
-            this.BEliminar.Location = new System.Drawing.Point(627, 455);
+            this.BEliminar.Location = new System.Drawing.Point(624, 438);
             this.BEliminar.Name = "BEliminar";
             this.BEliminar.Size = new System.Drawing.Size(150, 65);
             this.BEliminar.TabIndex = 21;

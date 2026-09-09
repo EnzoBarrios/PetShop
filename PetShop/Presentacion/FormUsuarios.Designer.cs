@@ -50,7 +50,7 @@
             // 
             // BCambiarEstado
             // 
-            this.BCambiarEstado.Location = new System.Drawing.Point(614, 375);
+            this.BCambiarEstado.Location = new System.Drawing.Point(613, 382);
             this.BCambiarEstado.Name = "BCambiarEstado";
             this.BCambiarEstado.Size = new System.Drawing.Size(153, 56);
             this.BCambiarEstado.TabIndex = 32;
@@ -59,7 +59,7 @@
             // 
             // BModificarUsuario
             // 
-            this.BModificarUsuario.Location = new System.Drawing.Point(319, 375);
+            this.BModificarUsuario.Location = new System.Drawing.Point(318, 382);
             this.BModificarUsuario.Name = "BModificarUsuario";
             this.BModificarUsuario.Size = new System.Drawing.Size(153, 56);
             this.BModificarUsuario.TabIndex = 31;
@@ -68,7 +68,7 @@
             // 
             // BNuevoUsuario
             // 
-            this.BNuevoUsuario.Location = new System.Drawing.Point(33, 375);
+            this.BNuevoUsuario.Location = new System.Drawing.Point(32, 382);
             this.BNuevoUsuario.Name = "BNuevoUsuario";
             this.BNuevoUsuario.Size = new System.Drawing.Size(132, 56);
             this.BNuevoUsuario.TabIndex = 30;
@@ -79,19 +79,19 @@
             // 
             this.DGVUsuarios.AllowUserToAddRows = false;
             this.DGVUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGVUsuarios.Location = new System.Drawing.Point(33, 159);
+            this.DGVUsuarios.Location = new System.Drawing.Point(32, 123);
             this.DGVUsuarios.MultiSelect = false;
             this.DGVUsuarios.Name = "DGVUsuarios";
             this.DGVUsuarios.ReadOnly = true;
             this.DGVUsuarios.RowHeadersWidth = 62;
             this.DGVUsuarios.RowTemplate.Height = 28;
             this.DGVUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGVUsuarios.Size = new System.Drawing.Size(734, 210);
+            this.DGVUsuarios.Size = new System.Drawing.Size(734, 253);
             this.DGVUsuarios.TabIndex = 29;
             // 
             // TBuscar
             // 
-            this.TBuscar.Location = new System.Drawing.Point(112, 119);
+            this.TBuscar.Location = new System.Drawing.Point(111, 91);
             this.TBuscar.Name = "TBuscar";
             this.TBuscar.Size = new System.Drawing.Size(217, 26);
             this.TBuscar.TabIndex = 28;
@@ -100,7 +100,7 @@
             // 
             this.LBuscar.AutoSize = true;
             this.LBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LBuscar.Location = new System.Drawing.Point(41, 125);
+            this.LBuscar.Location = new System.Drawing.Point(40, 97);
             this.LBuscar.Name = "LBuscar";
             this.LBuscar.Size = new System.Drawing.Size(65, 20);
             this.LBuscar.TabIndex = 27;

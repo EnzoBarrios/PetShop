@@ -1,6 +1,6 @@
 ﻿namespace PetShop.Presentacion
 {
-    partial class FormProovedores
+    partial class FormCompras
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // FormCompras
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "FormProovedores";
+            this.Name = "FormCompras";
+            this.Text = "FormCompras";
+            this.Load += new System.EventHandler(this.FormCompras_Load);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
