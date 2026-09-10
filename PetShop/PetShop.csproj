@@ -154,6 +154,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\FormVentas.resx">
       <DependentUpon>FormVentas.cs</DependentUpon>
+    </EmbeddedResource>	
     <EmbeddedResource Include="Presentacion\FormUsuarios.resx">
       <DependentUpon>FormUsuarios.cs</DependentUpon>
     </EmbeddedResource>
