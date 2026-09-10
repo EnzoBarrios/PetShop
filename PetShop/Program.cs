@@ -19,7 +19,7 @@ namespace PetShop
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new FormLogin());
             //Application.Run(new FormMenuPrincipal());
-            Application.Run(new FormVentas());
+            Application.Run(new FormMenuPrincipal());
         }
     }
 }

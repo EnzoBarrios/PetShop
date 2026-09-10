@@ -73,10 +73,12 @@ namespace PetShop.Presentacion
             AbrirFormularioEnMdi<FormUsuarios>();
         }
 
-        private void productosToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-            AbrirFormularioEnMdi<FormProductos>();
-        }
+        /*
+         * private void productosToolStripMenuItem_Click_1(object sender, EventArgs e)
+         * {
+         * AbrirFormularioEnMdi<FormProductos>();
+         * }
+        */
 
        /* 
         * private void categoriasToolStripMenuItem_Click(object sender, EventArgs e)
@@ -97,12 +99,10 @@ namespace PetShop.Presentacion
             AbrirFormularioEnMdi<FormVentas>();
         }
 
-        /*
         private void historialDeVentasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbrirFormularioEnMdi<FormHistorialVentas>();
         }
-        */
 
         private void gestionToolStripMenuItem_Click(object sender, EventArgs e)
         {

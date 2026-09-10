@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormHistorialVentas));
             this.gbInformacionVenta = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.txtStock = new System.Windows.Forms.TextBox();
             this.txtProducto = new System.Windows.Forms.TextBox();
             this.lblBuscador = new System.Windows.Forms.Label();
@@ -39,8 +41,6 @@
             this.lblFechaDesde = new System.Windows.Forms.Label();
             this.lblTituloHistorialVentas = new System.Windows.Forms.Label();
             this.dgvVenta = new System.Windows.Forms.DataGridView();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.button1 = new System.Windows.Forms.Button();
             this.IdDetalleVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Ticket = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,6 +70,26 @@
             this.gbInformacionVenta.TabIndex = 5;
             this.gbInformacionVenta.TabStop = false;
             this.gbInformacionVenta.Text = "Filtros de Busqueda";
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.ImageIndex = 0;
+            this.button1.ImageList = this.imageList1;
+            this.button1.Location = new System.Drawing.Point(695, 50);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 25);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "Buscar";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "Buscar.png");
             // 
             // txtStock
             // 
@@ -155,26 +175,6 @@
             this.dgvVenta.Size = new System.Drawing.Size(780, 400);
             this.dgvVenta.TabIndex = 6;
             // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "Buscar.png");
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.ImageIndex = 0;
-            this.button1.ImageList = this.imageList1;
-            this.button1.Location = new System.Drawing.Point(695, 50);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 25);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "Buscar";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // IdDetalleVenta
             // 
             this.IdDetalleVenta.HeaderText = "";
@@ -189,12 +189,14 @@
             this.Ticket.HeaderText = "Ticket";
             this.Ticket.MinimumWidth = 6;
             this.Ticket.Name = "Ticket";
+            this.Ticket.Width = 125;
             // 
             // Precio
             // 
             this.Precio.HeaderText = "Fecha";
             this.Precio.MinimumWidth = 6;
             this.Precio.Name = "Precio";
+            this.Precio.Width = 125;
             // 
             // Cantidad
             // 
@@ -208,24 +210,28 @@
             this.SubTotal.HeaderText = "Monto Total";
             this.SubTotal.MinimumWidth = 6;
             this.SubTotal.Name = "SubTotal";
+            this.SubTotal.Width = 125;
             // 
             // AbonadoEfectivo
             // 
             this.AbonadoEfectivo.HeaderText = "Abonado en Efectivo";
             this.AbonadoEfectivo.MinimumWidth = 6;
             this.AbonadoEfectivo.Name = "AbonadoEfectivo";
+            this.AbonadoEfectivo.Width = 125;
             // 
             // AbonadoTransferencia
             // 
             this.AbonadoTransferencia.HeaderText = "Abonado en Transferencia";
             this.AbonadoTransferencia.MinimumWidth = 6;
             this.AbonadoTransferencia.Name = "AbonadoTransferencia";
+            this.AbonadoTransferencia.Width = 125;
             // 
             // AbonadoQR
             // 
             this.AbonadoQR.HeaderText = "Abonado en QR";
             this.AbonadoQR.MinimumWidth = 6;
             this.AbonadoQR.Name = "AbonadoQR";
+            this.AbonadoQR.Width = 125;
             // 
             // btnQuitarProducto
             // 

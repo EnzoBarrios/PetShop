@@ -105,11 +105,13 @@ namespace proyecto2
             int IDProductoSeleccionado = Convert.ToInt32(DGVProductos.SelectedRows[0].Cells["ID"].Value);
 
             // Abrir formulario de modificación de producto a traves del ID 
+            /*
             FormModificarProducto formModificar = new FormModificarProducto(IDProductoSeleccionado);
             if (formModificar.ShowDialog() == DialogResult.OK)
             {
                 CargarGrillaProductos(); //Actualiza la grilla de productos después de cerrar el formulario de modificación
             }
+            */
         }
 
         //Filtro en la caja de texto de Buscar
