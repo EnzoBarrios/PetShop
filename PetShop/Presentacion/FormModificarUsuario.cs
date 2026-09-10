@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace PetShop
 {
-    public partial class FormModificarProducto : Form
+    public partial class FormModificarUsuario : Form
     {
-        public FormModificarProducto()
+        public FormModificarUsuario()
         {
             InitializeComponent();
+        }
+
+        private void LTitulo_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

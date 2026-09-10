@@ -21,5 +21,15 @@ namespace PetShop.Presentacion
         {
 
         }
+
+        private void TBCodigo_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CBEspecie_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

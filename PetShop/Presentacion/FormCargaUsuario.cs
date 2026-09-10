@@ -8,16 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PetShop.Presentacion
+namespace PetShop
 {
-    public partial class FormCompras : Form
+    public partial class FormCargaUsuario : Form
     {
-        public FormCompras()
+        public FormCargaUsuario()
         {
             InitializeComponent();
         }
 
-        private void FormCompras_Load(object sender, EventArgs e)
+        private void LTitulo_Click(object sender, EventArgs e)
         {
 
         }

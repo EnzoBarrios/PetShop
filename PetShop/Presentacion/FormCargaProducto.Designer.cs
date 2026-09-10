@@ -148,7 +148,7 @@
             // 
             this.LCantidad.AutoSize = true;
             this.LCantidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LCantidad.Location = new System.Drawing.Point(49, 432);
+            this.LCantidad.Location = new System.Drawing.Point(364, 303);
             this.LCantidad.Name = "LCantidad";
             this.LCantidad.Size = new System.Drawing.Size(81, 20);
             this.LCantidad.TabIndex = 9;
@@ -160,6 +160,7 @@
             this.TBCodigo.Name = "TBCodigo";
             this.TBCodigo.Size = new System.Drawing.Size(161, 26);
             this.TBCodigo.TabIndex = 10;
+            this.TBCodigo.TextChanged += new System.EventHandler(this.TBCodigo_TextChanged);
             // 
             // TBNombre
             // 
@@ -189,6 +190,7 @@
             this.CBEspecie.Name = "CBEspecie";
             this.CBEspecie.Size = new System.Drawing.Size(202, 28);
             this.CBEspecie.TabIndex = 13;
+            this.CBEspecie.SelectedIndexChanged += new System.EventHandler(this.CBEspecie_SelectedIndexChanged);
             // 
             // CBCategoria
             // 
@@ -227,7 +229,7 @@
             // 
             // TBCantidad
             // 
-            this.TBCantidad.Location = new System.Drawing.Point(136, 426);
+            this.TBCantidad.Location = new System.Drawing.Point(473, 297);
             this.TBCantidad.Name = "TBCantidad";
             this.TBCantidad.Size = new System.Drawing.Size(78, 26);
             this.TBCantidad.TabIndex = 18;
@@ -243,7 +245,7 @@
             // 
             // BGuardar
             // 
-            this.BGuardar.Location = new System.Drawing.Point(455, 455);
+            this.BGuardar.Location = new System.Drawing.Point(452, 438);
             this.BGuardar.Name = "BGuardar";
             this.BGuardar.Size = new System.Drawing.Size(150, 65);
             this.BGuardar.TabIndex = 20;
@@ -252,7 +254,7 @@
             // 
             // BEliminar
             // 
-            this.BEliminar.Location = new System.Drawing.Point(627, 455);
+            this.BEliminar.Location = new System.Drawing.Point(624, 438);
             this.BEliminar.Name = "BEliminar";
             this.BEliminar.Size = new System.Drawing.Size(150, 65);
             this.BEliminar.TabIndex = 21;
