@@ -72,20 +72,17 @@ namespace PetShop.Presentacion
         {
             AbrirFormularioEnMdi<FormUsuarios>();
         }
+        private void productosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnMdi<FormProductos>();
+        }
 
-        /*
-         * private void productosToolStripMenuItem_Click_1(object sender, EventArgs e)
+        /* 
+         * private void categoriasToolStripMenuItem_Click(object sender, EventArgs e)
          * {
-         * AbrirFormularioEnMdi<FormProductos>();
-         * }
-        */
-
-       /* 
-        * private void categoriasToolStripMenuItem_Click(object sender, EventArgs e)
-        * {
-        * AbrirFormularioEnMdi<FormCategorias>();
-        * } 
-        */
+         * AbrirFormularioEnMdi<FormCategorias>();
+         * } 
+         */
 
         /*
         private void especiesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -106,7 +103,7 @@ namespace PetShop.Presentacion
 
         private void gestionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirFormularioEnMdi<FormProovedores>();
+            AbrirFormularioEnMdi<FormCompras>();
         }
 
         private void reportesToolStripMenuItem_Click(object sender, EventArgs e)

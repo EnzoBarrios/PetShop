@@ -123,21 +123,22 @@ namespace PetShop.Presentacion
             // 
             this.productosToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("productosToolStripMenuItem.Image")));
             this.productosToolStripMenuItem.Name = "productosToolStripMenuItem";
-            this.productosToolStripMenuItem.Size = new System.Drawing.Size(187, 38);
+            this.productosToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
             this.productosToolStripMenuItem.Text = "Productos";
+            this.productosToolStripMenuItem.Click += new System.EventHandler(this.productosToolStripMenuItem_Click);
             // 
             // categoriasToolStripMenuItem
             // 
             this.categoriasToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("categoriasToolStripMenuItem.Image")));
             this.categoriasToolStripMenuItem.Name = "categoriasToolStripMenuItem";
-            this.categoriasToolStripMenuItem.Size = new System.Drawing.Size(187, 38);
+            this.categoriasToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
             this.categoriasToolStripMenuItem.Text = "Categorias";
             // 
             // especiesToolStripMenuItem
             // 
             this.especiesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("especiesToolStripMenuItem.Image")));
             this.especiesToolStripMenuItem.Name = "especiesToolStripMenuItem";
-            this.especiesToolStripMenuItem.Size = new System.Drawing.Size(187, 38);
+            this.especiesToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
             this.especiesToolStripMenuItem.Text = "Especies";
             // 
             // ventaToolStripMenuItem
