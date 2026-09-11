@@ -34,55 +34,64 @@
             this.LNombreUsuario = new System.Windows.Forms.Label();
             this.TApellido = new System.Windows.Forms.TextBox();
             this.LApellido = new System.Windows.Forms.Label();
-            this.DTFecha = new System.Windows.Forms.DateTimePicker();
             this.TConfirmar = new System.Windows.Forms.TextBox();
             this.LConfirmar = new System.Windows.Forms.Label();
             this.LFecha = new System.Windows.Forms.Label();
             this.TClave = new System.Windows.Forms.TextBox();
             this.LClave = new System.Windows.Forms.Label();
-            this.BEliminar = new System.Windows.Forms.Button();
+            this.BEliminarTodo = new System.Windows.Forms.Button();
             this.BGuardar = new System.Windows.Forms.Button();
             this.CBRol = new System.Windows.Forms.ComboBox();
-            this.TBNombre = new System.Windows.Forms.TextBox();
+            this.TNombre = new System.Windows.Forms.TextBox();
             this.LRol = new System.Windows.Forms.Label();
             this.LNombre = new System.Windows.Forms.Label();
             this.CBEstado = new System.Windows.Forms.ComboBox();
             this.LEstado = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.PanelContenedor = new System.Windows.Forms.Panel();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.PanelContenedor.SuspendLayout();
             this.SuspendLayout();
             // 
             // BVolver
             // 
-            this.BVolver.Location = new System.Drawing.Point(12, 12);
+            this.BVolver.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BVolver.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BVolver.Location = new System.Drawing.Point(24, 453);
             this.BVolver.Name = "BVolver";
-            this.BVolver.Size = new System.Drawing.Size(96, 39);
+            this.BVolver.Size = new System.Drawing.Size(107, 43);
             this.BVolver.TabIndex = 62;
             this.BVolver.Text = "Volver";
             this.BVolver.UseVisualStyleBackColor = true;
             // 
             // LTitulo
             // 
-            this.LTitulo.AutoSize = true;
-            this.LTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LTitulo.ForeColor = System.Drawing.Color.SteelBlue;
-            this.LTitulo.Location = new System.Drawing.Point(269, 35);
+            this.LTitulo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.LTitulo.Font = new System.Drawing.Font("Segoe UI Historic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LTitulo.ForeColor = System.Drawing.Color.Transparent;
+            this.LTitulo.Location = new System.Drawing.Point(0, 0);
+            this.LTitulo.Margin = new System.Windows.Forms.Padding(11, 0, 7, 0);
             this.LTitulo.Name = "LTitulo";
-            this.LTitulo.Size = new System.Drawing.Size(279, 37);
+            this.LTitulo.Padding = new System.Windows.Forms.Padding(15, 20, 0, 0);
+            this.LTitulo.Size = new System.Drawing.Size(889, 48);
             this.LTitulo.TabIndex = 61;
-            this.LTitulo.Text = "Modificar usuario";
-            this.LTitulo.Click += new System.EventHandler(this.LTitulo_Click);
+            this.LTitulo.Text = "- MODIFICAR USUARIO -";
+            this.LTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // TNombreUsuario
             // 
-            this.TNombreUsuario.Location = new System.Drawing.Point(214, 189);
+            this.TNombreUsuario.Location = new System.Drawing.Point(20, 131);
             this.TNombreUsuario.Name = "TNombreUsuario";
-            this.TNombreUsuario.Size = new System.Drawing.Size(203, 26);
+            this.TNombreUsuario.Size = new System.Drawing.Size(375, 26);
             this.TNombreUsuario.TabIndex = 103;
             // 
             // LNombreUsuario
             // 
             this.LNombreUsuario.AutoSize = true;
             this.LNombreUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LNombreUsuario.Location = new System.Drawing.Point(42, 195);
+            this.LNombreUsuario.Location = new System.Drawing.Point(16, 107);
             this.LNombreUsuario.Name = "LNombreUsuario";
             this.LNombreUsuario.Size = new System.Drawing.Size(160, 20);
             this.LNombreUsuario.TabIndex = 102;
@@ -90,40 +99,33 @@
             // 
             // TApellido
             // 
-            this.TApellido.Location = new System.Drawing.Point(450, 109);
+            this.TApellido.Location = new System.Drawing.Point(432, 56);
             this.TApellido.Name = "TApellido";
-            this.TApellido.Size = new System.Drawing.Size(233, 26);
+            this.TApellido.Size = new System.Drawing.Size(366, 26);
             this.TApellido.TabIndex = 101;
             // 
             // LApellido
             // 
             this.LApellido.AutoSize = true;
             this.LApellido.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LApellido.Location = new System.Drawing.Point(371, 115);
+            this.LApellido.Location = new System.Drawing.Point(428, 31);
             this.LApellido.Name = "LApellido";
             this.LApellido.Size = new System.Drawing.Size(73, 20);
             this.LApellido.TabIndex = 100;
             this.LApellido.Text = "Apellido";
             // 
-            // DTFecha
-            // 
-            this.DTFecha.Location = new System.Drawing.Point(205, 424);
-            this.DTFecha.Name = "DTFecha";
-            this.DTFecha.Size = new System.Drawing.Size(147, 26);
-            this.DTFecha.TabIndex = 99;
-            // 
             // TConfirmar
             // 
-            this.TConfirmar.Location = new System.Drawing.Point(554, 268);
+            this.TConfirmar.Location = new System.Drawing.Point(20, 61);
             this.TConfirmar.Name = "TConfirmar";
-            this.TConfirmar.Size = new System.Drawing.Size(202, 26);
+            this.TConfirmar.Size = new System.Drawing.Size(375, 26);
             this.TConfirmar.TabIndex = 98;
             // 
             // LConfirmar
             // 
             this.LConfirmar.AutoSize = true;
             this.LConfirmar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LConfirmar.Location = new System.Drawing.Point(366, 274);
+            this.LConfirmar.Location = new System.Drawing.Point(428, 37);
             this.LConfirmar.Name = "LConfirmar";
             this.LConfirmar.Size = new System.Drawing.Size(182, 20);
             this.LConfirmar.TabIndex = 97;
@@ -133,70 +135,83 @@
             // 
             this.LFecha.AutoSize = true;
             this.LFecha.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LFecha.Location = new System.Drawing.Point(42, 430);
+            this.LFecha.Location = new System.Drawing.Point(428, 137);
             this.LFecha.Name = "LFecha";
-            this.LFecha.Size = new System.Drawing.Size(157, 20);
+            this.LFecha.Size = new System.Drawing.Size(162, 20);
             this.LFecha.TabIndex = 96;
-            this.LFecha.Text = "Fecha de creación";
+            this.LFecha.Text = "Fecha de creación:";
+            this.LFecha.Click += new System.EventHandler(this.LFecha_Click);
             // 
             // TClave
             // 
-            this.TClave.Location = new System.Drawing.Point(150, 268);
+            this.TClave.Location = new System.Drawing.Point(432, 61);
             this.TClave.Name = "TClave";
-            this.TClave.Size = new System.Drawing.Size(202, 26);
+            this.TClave.Size = new System.Drawing.Size(366, 26);
             this.TClave.TabIndex = 95;
             // 
             // LClave
             // 
             this.LClave.AutoSize = true;
             this.LClave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LClave.Location = new System.Drawing.Point(42, 274);
+            this.LClave.Location = new System.Drawing.Point(16, 37);
             this.LClave.Name = "LClave";
             this.LClave.Size = new System.Drawing.Size(102, 20);
             this.LClave.TabIndex = 94;
             this.LClave.Text = "Contraseña";
             // 
-            // BEliminar
+            // BEliminarTodo
             // 
-            this.BEliminar.Location = new System.Drawing.Point(606, 397);
-            this.BEliminar.Name = "BEliminar";
-            this.BEliminar.Size = new System.Drawing.Size(150, 65);
-            this.BEliminar.TabIndex = 93;
-            this.BEliminar.Text = "Eliminar todo";
-            this.BEliminar.UseVisualStyleBackColor = true;
+            this.BEliminarTodo.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.BEliminarTodo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BEliminarTodo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BEliminarTodo.Location = new System.Drawing.Point(675, 453);
+            this.BEliminarTodo.Name = "BEliminarTodo";
+            this.BEliminarTodo.Size = new System.Drawing.Size(167, 43);
+            this.BEliminarTodo.TabIndex = 93;
+            this.BEliminarTodo.Text = "Eliminar todo";
+            this.BEliminarTodo.UseVisualStyleBackColor = true;
             // 
             // BGuardar
             // 
-            this.BGuardar.Location = new System.Drawing.Point(436, 397);
+            this.BGuardar.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.BGuardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.BGuardar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BGuardar.FlatAppearance.BorderSize = 0;
+            this.BGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BGuardar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.BGuardar.Location = new System.Drawing.Point(495, 453);
             this.BGuardar.Name = "BGuardar";
-            this.BGuardar.Size = new System.Drawing.Size(150, 65);
+            this.BGuardar.Size = new System.Drawing.Size(167, 43);
             this.BGuardar.TabIndex = 92;
             this.BGuardar.Text = "Guardar";
-            this.BGuardar.UseVisualStyleBackColor = true;
+            this.BGuardar.UseVisualStyleBackColor = false;
             // 
             // CBRol
             // 
+            this.CBRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBRol.FormattingEnabled = true;
             this.CBRol.Items.AddRange(new object[] {
             "Administrador",
             "Empleado"});
-            this.CBRol.Location = new System.Drawing.Point(84, 338);
+            this.CBRol.Location = new System.Drawing.Point(20, 122);
             this.CBRol.Name = "CBRol";
-            this.CBRol.Size = new System.Drawing.Size(231, 28);
+            this.CBRol.Size = new System.Drawing.Size(375, 28);
             this.CBRol.TabIndex = 91;
             // 
-            // TBNombre
+            // TNombre
             // 
-            this.TBNombre.Location = new System.Drawing.Point(119, 112);
-            this.TBNombre.Name = "TBNombre";
-            this.TBNombre.Size = new System.Drawing.Size(233, 26);
-            this.TBNombre.TabIndex = 90;
+            this.TNombre.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.TNombre.Location = new System.Drawing.Point(20, 59);
+            this.TNombre.Name = "TNombre";
+            this.TNombre.Size = new System.Drawing.Size(375, 26);
+            this.TNombre.TabIndex = 90;
             // 
             // LRol
             // 
             this.LRol.AutoSize = true;
             this.LRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LRol.Location = new System.Drawing.Point(42, 346);
+            this.LRol.Location = new System.Drawing.Point(16, 102);
             this.LRol.Name = "LRol";
             this.LRol.Size = new System.Drawing.Size(36, 20);
             this.LRol.TabIndex = 89;
@@ -206,7 +221,7 @@
             // 
             this.LNombre.AutoSize = true;
             this.LNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LNombre.Location = new System.Drawing.Point(42, 118);
+            this.LNombre.Location = new System.Drawing.Point(16, 35);
             this.LNombre.Name = "LNombre";
             this.LNombre.Size = new System.Drawing.Size(71, 20);
             this.LNombre.TabIndex = 88;
@@ -214,54 +229,100 @@
             // 
             // CBEstado
             // 
+            this.CBEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBEstado.FormattingEnabled = true;
             this.CBEstado.Items.AddRange(new object[] {
             "Activo",
             "Inactivo"});
-            this.CBEstado.Location = new System.Drawing.Point(445, 338);
+            this.CBEstado.Location = new System.Drawing.Point(432, 122);
             this.CBEstado.Name = "CBEstado";
-            this.CBEstado.Size = new System.Drawing.Size(121, 28);
+            this.CBEstado.Size = new System.Drawing.Size(366, 28);
             this.CBEstado.TabIndex = 105;
             // 
             // LEstado
             // 
             this.LEstado.AutoSize = true;
             this.LEstado.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LEstado.Location = new System.Drawing.Point(366, 346);
+            this.LEstado.Location = new System.Drawing.Point(428, 102);
             this.LEstado.Name = "LEstado";
             this.LEstado.Size = new System.Drawing.Size(66, 20);
             this.LEstado.TabIndex = 104;
             this.LEstado.Text = "Estado";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.TNombre);
+            this.groupBox1.Controls.Add(this.LNombre);
+            this.groupBox1.Controls.Add(this.LApellido);
+            this.groupBox1.Controls.Add(this.TNombreUsuario);
+            this.groupBox1.Controls.Add(this.TApellido);
+            this.groupBox1.Controls.Add(this.LNombreUsuario);
+            this.groupBox1.Controls.Add(this.LFecha);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.ForeColor = System.Drawing.Color.AliceBlue;
+            this.groupBox1.Location = new System.Drawing.Point(24, 16);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(818, 176);
+            this.groupBox1.TabIndex = 106;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "DATOS PERSONALES";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.TClave);
+            this.groupBox2.Controls.Add(this.LRol);
+            this.groupBox2.Controls.Add(this.CBEstado);
+            this.groupBox2.Controls.Add(this.CBRol);
+            this.groupBox2.Controls.Add(this.LEstado);
+            this.groupBox2.Controls.Add(this.LClave);
+            this.groupBox2.Controls.Add(this.TConfirmar);
+            this.groupBox2.Controls.Add(this.LConfirmar);
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.ForeColor = System.Drawing.Color.AliceBlue;
+            this.groupBox2.Location = new System.Drawing.Point(24, 239);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(818, 173);
+            this.groupBox2.TabIndex = 107;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "SEGURIDAD Y ROLES";
+            // 
+            // PanelContenedor
+            // 
+            this.PanelContenedor.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.PanelContenedor.Controls.Add(this.groupBox1);
+            this.PanelContenedor.Controls.Add(this.BVolver);
+            this.PanelContenedor.Controls.Add(this.BEliminarTodo);
+            this.PanelContenedor.Controls.Add(this.groupBox2);
+            this.PanelContenedor.Controls.Add(this.BGuardar);
+            this.PanelContenedor.Location = new System.Drawing.Point(12, 68);
+            this.PanelContenedor.Name = "PanelContenedor";
+            this.PanelContenedor.Size = new System.Drawing.Size(863, 512);
+            this.PanelContenedor.TabIndex = 108;
+            // 
             // FormModificarUsuario
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 534);
-            this.Controls.Add(this.CBEstado);
-            this.Controls.Add(this.LEstado);
-            this.Controls.Add(this.TNombreUsuario);
-            this.Controls.Add(this.LNombreUsuario);
-            this.Controls.Add(this.TApellido);
-            this.Controls.Add(this.LApellido);
-            this.Controls.Add(this.DTFecha);
-            this.Controls.Add(this.TConfirmar);
-            this.Controls.Add(this.LConfirmar);
-            this.Controls.Add(this.LFecha);
-            this.Controls.Add(this.TClave);
-            this.Controls.Add(this.LClave);
-            this.Controls.Add(this.BEliminar);
-            this.Controls.Add(this.BGuardar);
-            this.Controls.Add(this.CBRol);
-            this.Controls.Add(this.TBNombre);
-            this.Controls.Add(this.LRol);
-            this.Controls.Add(this.LNombre);
-            this.Controls.Add(this.BVolver);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(44)))), ((int)(((byte)(40)))));
+            this.ClientSize = new System.Drawing.Size(889, 627);
+            this.Controls.Add(this.PanelContenedor);
             this.Controls.Add(this.LTitulo);
+            this.Font = new System.Drawing.Font("Symbol", 8.25F);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormModificarUsuario";
-            this.Text = " FormModificarUsuario";
+            this.Text = "Modificar Usuario ";
+            this.Load += new System.EventHandler(this.FormModificarUsuario_Load);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.PanelContenedor.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -272,19 +333,21 @@
         private System.Windows.Forms.Label LNombreUsuario;
         private System.Windows.Forms.TextBox TApellido;
         private System.Windows.Forms.Label LApellido;
-        private System.Windows.Forms.DateTimePicker DTFecha;
         private System.Windows.Forms.TextBox TConfirmar;
         private System.Windows.Forms.Label LConfirmar;
         private System.Windows.Forms.Label LFecha;
         private System.Windows.Forms.TextBox TClave;
         private System.Windows.Forms.Label LClave;
-        private System.Windows.Forms.Button BEliminar;
+        private System.Windows.Forms.Button BEliminarTodo;
         private System.Windows.Forms.Button BGuardar;
         private System.Windows.Forms.ComboBox CBRol;
-        private System.Windows.Forms.TextBox TBNombre;
+        private System.Windows.Forms.TextBox TNombre;
         private System.Windows.Forms.Label LRol;
         private System.Windows.Forms.Label LNombre;
         private System.Windows.Forms.ComboBox CBEstado;
         private System.Windows.Forms.Label LEstado;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Panel PanelContenedor;
     }
 }
