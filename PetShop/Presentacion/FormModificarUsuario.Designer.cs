@@ -47,11 +47,11 @@
             this.LNombre = new System.Windows.Forms.Label();
             this.CBEstado = new System.Windows.Forms.ComboBox();
             this.LEstado = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.GBDatos = new System.Windows.Forms.GroupBox();
+            this.GBSeguridad = new System.Windows.Forms.GroupBox();
             this.PanelContenedor = new System.Windows.Forms.Panel();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.GBDatos.SuspendLayout();
+            this.GBSeguridad.SuspendLayout();
             this.PanelContenedor.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,6 +79,7 @@
             this.LTitulo.TabIndex = 61;
             this.LTitulo.Text = "- MODIFICAR USUARIO -";
             this.LTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.LTitulo.Click += new System.EventHandler(this.LTitulo_Click);
             // 
             // TNombreUsuario
             // 
@@ -249,55 +250,55 @@
             this.LEstado.TabIndex = 104;
             this.LEstado.Text = "Estado";
             // 
-            // groupBox1
+            // GBDatos
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GBDatos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox1.Controls.Add(this.TNombre);
-            this.groupBox1.Controls.Add(this.LNombre);
-            this.groupBox1.Controls.Add(this.LApellido);
-            this.groupBox1.Controls.Add(this.TNombreUsuario);
-            this.groupBox1.Controls.Add(this.TApellido);
-            this.groupBox1.Controls.Add(this.LNombreUsuario);
-            this.groupBox1.Controls.Add(this.LFecha);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.ForeColor = System.Drawing.Color.AliceBlue;
-            this.groupBox1.Location = new System.Drawing.Point(24, 16);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(818, 176);
-            this.groupBox1.TabIndex = 106;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "DATOS PERSONALES";
+            this.GBDatos.BackColor = System.Drawing.Color.Transparent;
+            this.GBDatos.Controls.Add(this.TNombre);
+            this.GBDatos.Controls.Add(this.LNombre);
+            this.GBDatos.Controls.Add(this.LApellido);
+            this.GBDatos.Controls.Add(this.TNombreUsuario);
+            this.GBDatos.Controls.Add(this.TApellido);
+            this.GBDatos.Controls.Add(this.LNombreUsuario);
+            this.GBDatos.Controls.Add(this.LFecha);
+            this.GBDatos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.GBDatos.ForeColor = System.Drawing.Color.AliceBlue;
+            this.GBDatos.Location = new System.Drawing.Point(24, 16);
+            this.GBDatos.Name = "GBDatos";
+            this.GBDatos.Size = new System.Drawing.Size(818, 176);
+            this.GBDatos.TabIndex = 106;
+            this.GBDatos.TabStop = false;
+            this.GBDatos.Text = "DATOS PERSONALES";
             // 
-            // groupBox2
+            // GBSeguridad
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GBSeguridad.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.TClave);
-            this.groupBox2.Controls.Add(this.LRol);
-            this.groupBox2.Controls.Add(this.CBEstado);
-            this.groupBox2.Controls.Add(this.CBRol);
-            this.groupBox2.Controls.Add(this.LEstado);
-            this.groupBox2.Controls.Add(this.LClave);
-            this.groupBox2.Controls.Add(this.TConfirmar);
-            this.groupBox2.Controls.Add(this.LConfirmar);
-            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.ForeColor = System.Drawing.Color.AliceBlue;
-            this.groupBox2.Location = new System.Drawing.Point(24, 239);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(818, 173);
-            this.groupBox2.TabIndex = 107;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "SEGURIDAD Y ROLES";
+            this.GBSeguridad.Controls.Add(this.TClave);
+            this.GBSeguridad.Controls.Add(this.LRol);
+            this.GBSeguridad.Controls.Add(this.CBEstado);
+            this.GBSeguridad.Controls.Add(this.CBRol);
+            this.GBSeguridad.Controls.Add(this.LEstado);
+            this.GBSeguridad.Controls.Add(this.LClave);
+            this.GBSeguridad.Controls.Add(this.TConfirmar);
+            this.GBSeguridad.Controls.Add(this.LConfirmar);
+            this.GBSeguridad.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.GBSeguridad.ForeColor = System.Drawing.Color.AliceBlue;
+            this.GBSeguridad.Location = new System.Drawing.Point(24, 239);
+            this.GBSeguridad.Name = "GBSeguridad";
+            this.GBSeguridad.Size = new System.Drawing.Size(818, 173);
+            this.GBSeguridad.TabIndex = 107;
+            this.GBSeguridad.TabStop = false;
+            this.GBSeguridad.Text = "SEGURIDAD Y ROLES";
             // 
             // PanelContenedor
             // 
             this.PanelContenedor.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.PanelContenedor.Controls.Add(this.groupBox1);
+            this.PanelContenedor.Controls.Add(this.GBDatos);
             this.PanelContenedor.Controls.Add(this.BVolver);
             this.PanelContenedor.Controls.Add(this.BEliminarTodo);
-            this.PanelContenedor.Controls.Add(this.groupBox2);
+            this.PanelContenedor.Controls.Add(this.GBSeguridad);
             this.PanelContenedor.Controls.Add(this.BGuardar);
             this.PanelContenedor.Location = new System.Drawing.Point(12, 68);
             this.PanelContenedor.Name = "PanelContenedor";
@@ -317,10 +318,10 @@
             this.Name = "FormModificarUsuario";
             this.Text = "Modificar Usuario ";
             this.Load += new System.EventHandler(this.FormModificarUsuario_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.GBDatos.ResumeLayout(false);
+            this.GBDatos.PerformLayout();
+            this.GBSeguridad.ResumeLayout(false);
+            this.GBSeguridad.PerformLayout();
             this.PanelContenedor.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -346,8 +347,8 @@
         private System.Windows.Forms.Label LNombre;
         private System.Windows.Forms.ComboBox CBEstado;
         private System.Windows.Forms.Label LEstado;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox GBDatos;
+        private System.Windows.Forms.GroupBox GBSeguridad;
         private System.Windows.Forms.Panel PanelContenedor;
     }
 }

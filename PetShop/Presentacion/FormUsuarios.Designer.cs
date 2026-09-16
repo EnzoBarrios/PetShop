@@ -78,6 +78,9 @@
             // DGVUsuarios
             // 
             this.DGVUsuarios.AllowUserToAddRows = false;
+            this.DGVUsuarios.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DGVUsuarios.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DGVUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVUsuarios.Location = new System.Drawing.Point(32, 123);
             this.DGVUsuarios.MultiSelect = false;
@@ -100,6 +103,7 @@
             // 
             this.LBuscar.AutoSize = true;
             this.LBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LBuscar.ForeColor = System.Drawing.Color.Transparent;
             this.LBuscar.Location = new System.Drawing.Point(40, 97);
             this.LBuscar.Name = "LBuscar";
             this.LBuscar.Size = new System.Drawing.Size(65, 20);
@@ -109,29 +113,31 @@
             // LTitulo
             // 
             this.LTitulo.AutoSize = true;
-            this.LTitulo.Font = new System.Drawing.Font("MS Reference Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LTitulo.ForeColor = System.Drawing.Color.SteelBlue;
-            this.LTitulo.Location = new System.Drawing.Point(232, 34);
+            this.LTitulo.Font = new System.Drawing.Font("Segoe UI Historic", 18F, System.Drawing.FontStyle.Bold);
+            this.LTitulo.ForeColor = System.Drawing.Color.Transparent;
+            this.LTitulo.Location = new System.Drawing.Point(204, 7);
             this.LTitulo.Name = "LTitulo";
-            this.LTitulo.Size = new System.Drawing.Size(318, 35);
+            this.LTitulo.Size = new System.Drawing.Size(417, 48);
             this.LTitulo.TabIndex = 26;
-            this.LTitulo.Text = "Gestión de usuarios";
+            this.LTitulo.Text = "GESTIÓN DE USUARIOS";
             // 
             // FormUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(44)))), ((int)(((byte)(40)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.BVolver);
             this.Controls.Add(this.BCambiarEstado);
             this.Controls.Add(this.BModificarUsuario);
             this.Controls.Add(this.BNuevoUsuario);
-            this.Controls.Add(this.DGVUsuarios);
+            this.Controls.Add(this.BVolver);
             this.Controls.Add(this.TBuscar);
             this.Controls.Add(this.LBuscar);
             this.Controls.Add(this.LTitulo);
+            this.Controls.Add(this.DGVUsuarios);
             this.Name = "FormUsuarios";
             this.Text = "FormUsuarios";
+            this.Load += new System.EventHandler(this.FormUsuarios_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGVUsuarios)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

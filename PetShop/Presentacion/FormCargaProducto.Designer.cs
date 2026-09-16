@@ -34,7 +34,7 @@
             this.LDescripcion = new System.Windows.Forms.Label();
             this.LEspecie = new System.Windows.Forms.Label();
             this.LCategoria = new System.Windows.Forms.Label();
-            this.LProveedor = new System.Windows.Forms.Label();
+            this.lblTamano = new System.Windows.Forms.Label();
             this.LPrecioCompra = new System.Windows.Forms.Label();
             this.LPrecioVenta = new System.Windows.Forms.Label();
             this.LCantidad = new System.Windows.Forms.Label();
@@ -43,7 +43,7 @@
             this.TBDescripcion = new System.Windows.Forms.TextBox();
             this.CBEspecie = new System.Windows.Forms.ComboBox();
             this.CBCategoria = new System.Windows.Forms.ComboBox();
-            this.TBProveedor = new System.Windows.Forms.TextBox();
+            this.tbxTamano = new System.Windows.Forms.TextBox();
             this.TBPrecioCompra = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.TBCantidad = new System.Windows.Forms.TextBox();
@@ -113,15 +113,15 @@
             this.LCategoria.TabIndex = 5;
             this.LCategoria.Text = "Categoría";
             // 
-            // LProveedor
+            // lblTamano
             // 
-            this.LProveedor.AutoSize = true;
-            this.LProveedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LProveedor.Location = new System.Drawing.Point(49, 303);
-            this.LProveedor.Name = "LProveedor";
-            this.LProveedor.Size = new System.Drawing.Size(90, 20);
-            this.LProveedor.TabIndex = 6;
-            this.LProveedor.Text = "Proveedor";
+            this.lblTamano.AutoSize = true;
+            this.lblTamano.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTamano.Location = new System.Drawing.Point(49, 303);
+            this.lblTamano.Name = "lblTamano";
+            this.lblTamano.Size = new System.Drawing.Size(73, 20);
+            this.lblTamano.TabIndex = 6;
+            this.lblTamano.Text = "Tamaño";
             // 
             // LPrecioCompra
             // 
@@ -206,12 +206,12 @@
             this.CBCategoria.Size = new System.Drawing.Size(202, 28);
             this.CBCategoria.TabIndex = 14;
             // 
-            // TBProveedor
+            // tbxTamano
             // 
-            this.TBProveedor.Location = new System.Drawing.Point(145, 297);
-            this.TBProveedor.Name = "TBProveedor";
-            this.TBProveedor.Size = new System.Drawing.Size(185, 26);
-            this.TBProveedor.TabIndex = 15;
+            this.tbxTamano.Location = new System.Drawing.Point(145, 297);
+            this.tbxTamano.Name = "tbxTamano";
+            this.tbxTamano.Size = new System.Drawing.Size(185, 26);
+            this.tbxTamano.TabIndex = 15;
             // 
             // TBPrecioCompra
             // 
@@ -272,7 +272,7 @@
             this.Controls.Add(this.TBCantidad);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.TBPrecioCompra);
-            this.Controls.Add(this.TBProveedor);
+            this.Controls.Add(this.tbxTamano);
             this.Controls.Add(this.CBCategoria);
             this.Controls.Add(this.CBEspecie);
             this.Controls.Add(this.TBDescripcion);
@@ -281,7 +281,7 @@
             this.Controls.Add(this.LCantidad);
             this.Controls.Add(this.LPrecioVenta);
             this.Controls.Add(this.LPrecioCompra);
-            this.Controls.Add(this.LProveedor);
+            this.Controls.Add(this.lblTamano);
             this.Controls.Add(this.LCategoria);
             this.Controls.Add(this.LEspecie);
             this.Controls.Add(this.LDescripcion);
@@ -304,7 +304,7 @@
         private System.Windows.Forms.Label LDescripcion;
         private System.Windows.Forms.Label LEspecie;
         private System.Windows.Forms.Label LCategoria;
-        private System.Windows.Forms.Label LProveedor;
+        private System.Windows.Forms.Label lblTamano;
         private System.Windows.Forms.Label LPrecioCompra;
         private System.Windows.Forms.Label LPrecioVenta;
         private System.Windows.Forms.Label LCantidad;
@@ -313,7 +313,7 @@
         private System.Windows.Forms.TextBox TBDescripcion;
         private System.Windows.Forms.ComboBox CBEspecie;
         private System.Windows.Forms.ComboBox CBCategoria;
-        private System.Windows.Forms.TextBox TBProveedor;
+        private System.Windows.Forms.TextBox tbxTamano;
         private System.Windows.Forms.TextBox TBPrecioCompra;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox TBCantidad;
