@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.BVolver = new System.Windows.Forms.Button();
-            this.BCambiarEstado = new System.Windows.Forms.Button();
+            this.BEstado = new System.Windows.Forms.Button();
             this.BModificarUsuario = new System.Windows.Forms.Button();
             this.BNuevoUsuario = new System.Windows.Forms.Button();
             this.DGVUsuarios = new System.Windows.Forms.DataGridView();
@@ -47,15 +47,17 @@
             this.BVolver.TabIndex = 33;
             this.BVolver.Text = "Volver";
             this.BVolver.UseVisualStyleBackColor = true;
+            this.BVolver.Click += new System.EventHandler(this.BVolver_Click);
             // 
-            // BCambiarEstado
+            // BEstado
             // 
-            this.BCambiarEstado.Location = new System.Drawing.Point(613, 382);
-            this.BCambiarEstado.Name = "BCambiarEstado";
-            this.BCambiarEstado.Size = new System.Drawing.Size(153, 56);
-            this.BCambiarEstado.TabIndex = 32;
-            this.BCambiarEstado.Text = "Desactivar";
-            this.BCambiarEstado.UseVisualStyleBackColor = true;
+            this.BEstado.Location = new System.Drawing.Point(613, 382);
+            this.BEstado.Name = "BEstado";
+            this.BEstado.Size = new System.Drawing.Size(153, 56);
+            this.BEstado.TabIndex = 32;
+            this.BEstado.Text = "Desactivar";
+            this.BEstado.UseVisualStyleBackColor = true;
+            this.BEstado.Click += new System.EventHandler(this.BEstado_Click);
             // 
             // BModificarUsuario
             // 
@@ -65,6 +67,7 @@
             this.BModificarUsuario.TabIndex = 31;
             this.BModificarUsuario.Text = "Modificar";
             this.BModificarUsuario.UseVisualStyleBackColor = true;
+            this.BModificarUsuario.Click += new System.EventHandler(this.BModificar_Click);
             // 
             // BNuevoUsuario
             // 
@@ -74,6 +77,7 @@
             this.BNuevoUsuario.TabIndex = 30;
             this.BNuevoUsuario.Text = "Nuevo Usuario";
             this.BNuevoUsuario.UseVisualStyleBackColor = true;
+            this.BNuevoUsuario.Click += new System.EventHandler(this.BNuevoUsuario_Click);
             // 
             // DGVUsuarios
             // 
@@ -91,6 +95,7 @@
             this.DGVUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGVUsuarios.Size = new System.Drawing.Size(734, 253);
             this.DGVUsuarios.TabIndex = 29;
+            this.DGVUsuarios.SelectionChanged += new System.EventHandler(this.DGVUsuarios_SelectionChanged);
             // 
             // TBuscar
             // 
@@ -98,6 +103,7 @@
             this.TBuscar.Name = "TBuscar";
             this.TBuscar.Size = new System.Drawing.Size(217, 26);
             this.TBuscar.TabIndex = 28;
+            this.TBuscar.TextChanged += new System.EventHandler(this.TBuscar_TextChanged);
             // 
             // LBuscar
             // 
@@ -127,7 +133,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(44)))), ((int)(((byte)(40)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.BCambiarEstado);
+            this.Controls.Add(this.BEstado);
             this.Controls.Add(this.BModificarUsuario);
             this.Controls.Add(this.BNuevoUsuario);
             this.Controls.Add(this.BVolver);
@@ -147,7 +153,7 @@
         #endregion
 
         private System.Windows.Forms.Button BVolver;
-        private System.Windows.Forms.Button BCambiarEstado;
+        private System.Windows.Forms.Button BEstado;
         private System.Windows.Forms.Button BModificarUsuario;
         private System.Windows.Forms.Button BNuevoUsuario;
         private System.Windows.Forms.DataGridView DGVUsuarios;

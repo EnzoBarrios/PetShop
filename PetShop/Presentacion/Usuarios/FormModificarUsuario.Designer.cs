@@ -36,7 +36,7 @@
             this.LApellido = new System.Windows.Forms.Label();
             this.TConfirmar = new System.Windows.Forms.TextBox();
             this.LConfirmar = new System.Windows.Forms.Label();
-            this.LFecha = new System.Windows.Forms.Label();
+            this.LFechaCreacion = new System.Windows.Forms.Label();
             this.TClave = new System.Windows.Forms.TextBox();
             this.LClave = new System.Windows.Forms.Label();
             this.BEliminarTodo = new System.Windows.Forms.Button();
@@ -79,7 +79,6 @@
             this.LTitulo.TabIndex = 61;
             this.LTitulo.Text = "- MODIFICAR USUARIO -";
             this.LTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.LTitulo.Click += new System.EventHandler(this.LTitulo_Click);
             // 
             // TNombreUsuario
             // 
@@ -132,16 +131,15 @@
             this.LConfirmar.TabIndex = 97;
             this.LConfirmar.Text = "Confirmar contraseña";
             // 
-            // LFecha
+            // LFechaCreacion
             // 
-            this.LFecha.AutoSize = true;
-            this.LFecha.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LFecha.Location = new System.Drawing.Point(428, 137);
-            this.LFecha.Name = "LFecha";
-            this.LFecha.Size = new System.Drawing.Size(162, 20);
-            this.LFecha.TabIndex = 96;
-            this.LFecha.Text = "Fecha de creación:";
-            this.LFecha.Click += new System.EventHandler(this.LFecha_Click);
+            this.LFechaCreacion.AutoSize = true;
+            this.LFechaCreacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LFechaCreacion.Location = new System.Drawing.Point(428, 137);
+            this.LFechaCreacion.Name = "LFechaCreacion";
+            this.LFechaCreacion.Size = new System.Drawing.Size(162, 20);
+            this.LFechaCreacion.TabIndex = 96;
+            this.LFechaCreacion.Text = "Fecha de creación:";
             // 
             // TClave
             // 
@@ -261,7 +259,7 @@
             this.GBDatos.Controls.Add(this.TNombreUsuario);
             this.GBDatos.Controls.Add(this.TApellido);
             this.GBDatos.Controls.Add(this.LNombreUsuario);
-            this.GBDatos.Controls.Add(this.LFecha);
+            this.GBDatos.Controls.Add(this.LFechaCreacion);
             this.GBDatos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GBDatos.ForeColor = System.Drawing.Color.AliceBlue;
             this.GBDatos.Location = new System.Drawing.Point(24, 16);
@@ -336,7 +334,7 @@
         private System.Windows.Forms.Label LApellido;
         private System.Windows.Forms.TextBox TConfirmar;
         private System.Windows.Forms.Label LConfirmar;
-        private System.Windows.Forms.Label LFecha;
+        private System.Windows.Forms.Label LFechaCreacion;
         private System.Windows.Forms.TextBox TClave;
         private System.Windows.Forms.Label LClave;
         private System.Windows.Forms.Button BEliminarTodo;
