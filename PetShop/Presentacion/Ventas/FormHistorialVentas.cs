@@ -8,13 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PetShop
+namespace PetShop.Presentacion
 {
-    public partial class Form1 : Form
+    public partial class FormHistorialVentas : Form
     {
-        public Form1()
+        public FormHistorialVentas()
         {
             InitializeComponent();
+        }
+
+        private void FormHistorialVentas_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

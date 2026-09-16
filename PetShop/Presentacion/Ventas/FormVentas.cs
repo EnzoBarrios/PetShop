@@ -16,5 +16,25 @@ namespace PetShop.Presentacion
         {
             InitializeComponent();
         }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FormVentas_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCancelarVenta_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnBuscarProducto_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
