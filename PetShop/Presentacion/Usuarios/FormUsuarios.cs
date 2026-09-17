@@ -17,12 +17,8 @@ namespace PetShop.Presentacion
             CargarUsuarios();
         }
 
-        /// <summary>
-        /// Trae la lista de usuarios desde SQL Server y la asigna al DataGridView.
-        /// </summary>
         private void CargarUsuarios(string filtro = "")
         {
-            // Consulta con INNER JOIN para mostrar el nombre del rol en lugar del ID
             string query = @"SELECT 
                                 u.id_usuario AS [ID],
                                 u.nombre AS [Nombre],
@@ -45,13 +41,9 @@ namespace PetShop.Presentacion
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
                         cmd.Parameters.AddWithValue("@Filtro", "%" + filtro + "%");
-
                         SqlDataAdapter da = new SqlDataAdapter(cmd);
                         DataTable dt = new DataTable();
                         da.Fill(dt);
-
-                        // Asignamos la tabla de resultados al DataGridView
-                        // (Verificá si el name de tu grilla en el Diseñador es dgvUsuarios)
                         DGVUsuarios.DataSource = dt;
                     }
                 }
@@ -62,17 +54,122 @@ namespace PetShop.Presentacion
             }
         }
 
-        // Evento TextChanged del campo de texto de búsqueda
-        // (Asegurate de asociar este evento a tu TextBox desde la ventana de propiedades)
+        // 1. BOTÓN NUEVO USUARIO
+        private void BNuevoUsuario_Click(object sender, EventArgs e)
+        {
+            FormCargaUsuario formAlta = new FormCargaUsuario();
+            formAlta.ShowDialog();
+
+            CargarUsuarios();
+        }
+
+        // 2. BOTÓN MODIFICAR
+        private void BModificar_Click(object sender, EventArgs e)
+        {
+            if (DGVUsuarios.SelectedRows.Count > 0)
+            {
+                int idUsuario = Convert.ToInt32(DGVUsuarios.CurrentRow.Cells["ID"].Value);
+
+                FormModificarUsuario formModif = new FormModificarUsuario(idUsuario);
+                formModif.ShowDialog();
+
+                CargarUsuarios();
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione un usuario de la lista para modificar.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        // 3. BOTÓN ACTIVAR / DESACTIVAR (Alternar Estado)
+        private void BEstado_Click(object sender, EventArgs e)
+        {
+            if (DGVUsuarios.SelectedRows.Count > 0)
+            {
+                int idUsuario = Convert.ToInt32(DGVUsuarios.CurrentRow.Cells["ID"].Value);
+                string usuarioNombre = DGVUsuarios.CurrentRow.Cells["Usuario"].Value.ToString();
+                string estadoActual = DGVUsuarios.CurrentRow.Cells["Estado"].Value.ToString();
+
+                // Definir el nuevo estado y las etiquetas dinamicas
+                string nuevoEstadoBD = (estadoActual == "Inactivo") ? "Activo" : "Inactivo";
+                string accionTexto = (estadoActual == "Inactivo") ? "activar" : "desactivar";
+                string tituloConfirmacion = (estadoActual == "Inactivo") ? "Confirmar Activación" : "Confirmar Desactivación";
+
+                // Pedir confirmación
+                DialogResult respuesta = MessageBox.Show(
+                    $"¿Está seguro de que desea {accionTexto} al usuario '{usuarioNombre}'?",
+                    tituloConfirmacion,
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (respuesta == DialogResult.Yes)
+                {
+                    CambiarEstadoUsuario(idUsuario, nuevoEstadoBD);
+                    CargarUsuarios(); // Refresca la grilla y dispara automáticamente SelectionChanged
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione un usuario de la lista.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        // Método auxiliar para actualizar el estado en la base de datos
+        private void CambiarEstadoUsuario(int idUsuario, string nuevoEstado)
+        {
+            string query = "UPDATE Usuario SET estado = @Estado WHERE id_usuario = @IdUsuario";
+
+            using (SqlConnection con = Conexion.ObtenerConexion())
+            {
+                try
+                {
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Estado", nuevoEstado);
+                        cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+
+                        int filasAfectadas = cmd.ExecuteNonQuery();
+
+                        if (filasAfectadas > 0)
+                        {
+                            string mensaje = (nuevoEstado == "Activo") ? "activado" : "desactivado";
+                            MessageBox.Show($"El usuario ha sido {mensaje} con éxito.", "Operación Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al actualizar el estado: " + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        // 4. BOTÓN VOLVER
+        private void BVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void TBuscar_TextChanged(object sender, EventArgs e)
         {
             CargarUsuarios(TBuscar.Text.Trim());
         }
 
-        // Evento del botón Volver
-        private void btnVolver_Click(object sender, EventArgs e)
+        // Evento que actualiza el texto del botón BEstado al cambiar la selección en el DataGridView
+        private void DGVUsuarios_SelectionChanged(object sender, EventArgs e)
         {
-            this.Close();
+            if (DGVUsuarios.SelectedRows.Count > 0 && DGVUsuarios.CurrentRow != null)
+            {
+                object valorEstado = DGVUsuarios.CurrentRow.Cells["Estado"].Value;
+
+                if (valorEstado != null && valorEstado != DBNull.Value)
+                {
+                    string estadoActual = valorEstado.ToString();
+                    BEstado.Text = (estadoActual == "Inactivo") ? "Activar" : "Desactivar";
+                }
+            }
         }
     }
 }

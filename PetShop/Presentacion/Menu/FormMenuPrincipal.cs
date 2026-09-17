@@ -68,7 +68,7 @@ namespace PetShop.Presentacion
             formularioActivo.Show();
             formularioActivo.BringToFront();
         }
-        private void catalogoToolStripMenuItem_Click(object sender, EventArgs e)
+        private void usuarioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbrirFormularioEnMdi<FormUsuarios>();
         }
