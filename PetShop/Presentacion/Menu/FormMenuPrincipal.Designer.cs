@@ -104,6 +104,7 @@ namespace PetShop.Presentacion
             this.catalogoToolStripMenuItem.Text = "Usuarios";
             this.catalogoToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.catalogoToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
+            this.catalogoToolStripMenuItem.Click += new System.EventHandler(this.usuarioToolStripMenuItem_Click);
             // 
             // catalogoToolStripMenuItem1
             // 
