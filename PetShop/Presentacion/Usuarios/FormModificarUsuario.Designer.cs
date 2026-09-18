@@ -116,10 +116,11 @@
             // 
             // TConfirmar
             // 
-            this.TConfirmar.Location = new System.Drawing.Point(20, 61);
+            this.TConfirmar.Location = new System.Drawing.Point(432, 60);
             this.TConfirmar.Name = "TConfirmar";
-            this.TConfirmar.Size = new System.Drawing.Size(375, 26);
+            this.TConfirmar.Size = new System.Drawing.Size(366, 26);
             this.TConfirmar.TabIndex = 98;
+            this.TConfirmar.UseSystemPasswordChar = true;
             // 
             // LConfirmar
             // 
@@ -143,10 +144,11 @@
             // 
             // TClave
             // 
-            this.TClave.Location = new System.Drawing.Point(432, 61);
+            this.TClave.Location = new System.Drawing.Point(20, 60);
             this.TClave.Name = "TClave";
-            this.TClave.Size = new System.Drawing.Size(366, 26);
+            this.TClave.Size = new System.Drawing.Size(375, 26);
             this.TClave.TabIndex = 95;
+            this.TClave.UseSystemPasswordChar = true;
             // 
             // LClave
             // 
@@ -190,9 +192,6 @@
             // 
             this.CBRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBRol.FormattingEnabled = true;
-            this.CBRol.Items.AddRange(new object[] {
-            "Administrador",
-            "Empleado"});
             this.CBRol.Location = new System.Drawing.Point(20, 122);
             this.CBRol.Name = "CBRol";
             this.CBRol.Size = new System.Drawing.Size(375, 28);
@@ -230,9 +229,6 @@
             // 
             this.CBEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBEstado.FormattingEnabled = true;
-            this.CBEstado.Items.AddRange(new object[] {
-            "Activo",
-            "Inactivo"});
             this.CBEstado.Location = new System.Drawing.Point(432, 122);
             this.CBEstado.Name = "CBEstado";
             this.CBEstado.Size = new System.Drawing.Size(366, 28);
