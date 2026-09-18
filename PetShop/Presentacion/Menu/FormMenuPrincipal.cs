@@ -68,10 +68,12 @@ namespace PetShop.Presentacion
             formularioActivo.Show();
             formularioActivo.BringToFront();
         }
-        private void usuarioToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbrirFormularioEnMdi<FormUsuarios>();
         }
+
         private void productosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbrirFormularioEnMdi<FormProductos>();
@@ -121,7 +123,7 @@ namespace PetShop.Presentacion
 
             if (respuesta == DialogResult.Yes)
             {
-                Application.Restart();
+                this.Close();
             }
         }
 

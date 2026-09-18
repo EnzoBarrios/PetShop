@@ -47,7 +47,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Conexion.cs" />
+    <Compile Include="Datos\CD_Usuario.cs" />
+    <Compile Include="Datos\Conexion.cs" />
+    <Compile Include="Entidades\Categoria.cs" />
+    <Compile Include="Entidades\DetalleVenta.cs" />
+    <Compile Include="Entidades\Especie.cs" />
+    <Compile Include="Entidades\EspecieTamano.cs" />
+    <Compile Include="Entidades\MetodoPago.cs" />
+    <Compile Include="Entidades\Pago.cs" />
+    <Compile Include="Entidades\Producto.cs" />
+    <Compile Include="Entidades\Rol.cs" />
+    <Compile Include="Entidades\Tamano.cs" />
+    <Compile Include="Entidades\TipoVenta.cs" />
+    <Compile Include="Entidades\Usuario.cs" />
+    <Compile Include="Entidades\Venta.cs" />
+    <Compile Include="Negocio\CN_Usuario.cs" />
     <Compile Include="Presentacion\Autenticacion\FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,7 +134,7 @@
     <Compile Include="Presentacion\Ventas\FormVentas.Designer.cs">
       <DependentUpon>FormVentas.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Presentacion\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -181,13 +195,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="Presentacion\App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BaseDatos\" />
-    <Folder Include="Entidades\" />
-    <Folder Include="Negocio\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Presentacion\Imagenes\Tienda.png" />
   </ItemGroup>
