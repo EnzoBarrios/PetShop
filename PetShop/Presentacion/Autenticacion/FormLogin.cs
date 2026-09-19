@@ -40,15 +40,15 @@ namespace PetShop.Presentacion
                 return;
             }
 
-            Usuario obj_usuario = new CN_Usuario().Listar()
+            Usuario usuarioLogeado = new CN_Usuario().Listar()
                 .FirstOrDefault(u => u.NombreUsuario.Trim().Equals(usuarioIngresado, StringComparison.OrdinalIgnoreCase)
-                && u.Clave.Trim() == claveIngresada
-                && u.Estado == true);
+                                  && u.Clave.Trim() == claveIngresada
+                                  && u.Estado == true);
 
-            if (obj_usuario != null)
+            if (usuarioLogeado != null)
             {
                 MessageBox.Show("Bienvenido al sistema", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                FormMenuPrincipal form = new FormMenuPrincipal();
+                FormMenuPrincipal form = new FormMenuPrincipal(usuarioLogeado);
                 form.FormClosed += cerrar_sesion;
 
                 this.Hide();

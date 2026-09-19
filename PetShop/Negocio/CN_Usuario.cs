@@ -10,11 +10,11 @@ namespace PetShop.Negocio
 {
     public class CN_Usuario
     {
-        private CD_Usuario objcd_usuario = new CD_Usuario();
+        private CD_Usuario _cdusuario = new CD_Usuario();
 
         public List<Usuario> Listar()
         {
-            return objcd_usuario.Listar();
+            return _cdusuario.Listar();
         }
     }
 }

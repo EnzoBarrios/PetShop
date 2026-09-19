@@ -97,6 +97,7 @@
             // 
             this.txtClave.Location = new System.Drawing.Point(250, 178);
             this.txtClave.Name = "txtClave";
+            this.txtClave.PasswordChar = '•';
             this.txtClave.Size = new System.Drawing.Size(200, 22);
             this.txtClave.TabIndex = 6;
             // 
@@ -146,6 +147,7 @@
             // 
             // FormLogin
             // 
+            this.AcceptButton = this.btnIngresar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;

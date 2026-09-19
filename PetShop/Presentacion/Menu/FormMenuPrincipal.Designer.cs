@@ -35,14 +35,13 @@ namespace PetShop.Presentacion
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.msPrincipal = new System.Windows.Forms.MenuStrip();
             this.usuariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.catalogoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.catalogoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.productosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.categoriasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.especiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ventaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nuevaVentaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.historialDeVentasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gestionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sistemaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cerrarSesiónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,14 +50,14 @@ namespace PetShop.Presentacion
             this.object_e3c5580b_6d24_4dcc_8c22_cda8350d0a46 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer = new System.Windows.Forms.Timer(this.components);
             this.gbSesionIniciada = new System.Windows.Forms.GroupBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblRolLogeado = new System.Windows.Forms.Label();
             this.lblUsuarioLogueado = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbFechaHora = new System.Windows.Forms.GroupBox();
             this.lblHora = new System.Windows.Forms.Label();
             this.lblFecha = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -70,7 +69,7 @@ namespace PetShop.Presentacion
             this.gbSesionIniciada.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.gbFechaHora.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,9 +81,8 @@ namespace PetShop.Presentacion
             this.msPrincipal.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.msPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.usuariosToolStripMenuItem,
-            this.catalogoToolStripMenuItem1,
+            this.catalogoToolStripMenuItem,
             this.ventaToolStripMenuItem,
-            this.gestionToolStripMenuItem,
             this.reportesToolStripMenuItem,
             this.sistemaToolStripMenuItem});
             this.msPrincipal.Location = new System.Drawing.Point(0, 60);
@@ -95,35 +93,35 @@ namespace PetShop.Presentacion
             // 
             // usuariosToolStripMenuItem
             // 
+            this.usuariosToolStripMenuItem.AutoSize = false;
             this.usuariosToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.usuariosToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("usuariosToolStripMenuItem.Image")));
-            this.usuariosToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
-            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(89, 76);
+            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(95, 76);
             this.usuariosToolStripMenuItem.Text = "Usuarios";
             this.usuariosToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.usuariosToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
+            this.usuariosToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.usuariosToolStripMenuItem.Click += new System.EventHandler(this.usuariosToolStripMenuItem_Click);
             // 
-            // catalogoToolStripMenuItem1
+            // catalogoToolStripMenuItem
             // 
-            this.catalogoToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.catalogoToolStripMenuItem.AutoSize = false;
+            this.catalogoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.productosToolStripMenuItem,
             this.categoriasToolStripMenuItem,
             this.especiesToolStripMenuItem});
-            this.catalogoToolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("catalogoToolStripMenuItem1.Image")));
-            this.catalogoToolStripMenuItem1.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.catalogoToolStripMenuItem1.Name = "catalogoToolStripMenuItem1";
-            this.catalogoToolStripMenuItem1.Size = new System.Drawing.Size(93, 76);
-            this.catalogoToolStripMenuItem1.Text = "Catálogo";
-            this.catalogoToolStripMenuItem1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.catalogoToolStripMenuItem1.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
+            this.catalogoToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("catalogoToolStripMenuItem.Image")));
+            this.catalogoToolStripMenuItem.Name = "catalogoToolStripMenuItem";
+            this.catalogoToolStripMenuItem.Size = new System.Drawing.Size(95, 76);
+            this.catalogoToolStripMenuItem.Text = "Catálogo";
+            this.catalogoToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.catalogoToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // productosToolStripMenuItem
             // 
             this.productosToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("productosToolStripMenuItem.Image")));
             this.productosToolStripMenuItem.Name = "productosToolStripMenuItem";
-            this.productosToolStripMenuItem.Size = new System.Drawing.Size(187, 38);
+            this.productosToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
             this.productosToolStripMenuItem.Text = "Productos";
             this.productosToolStripMenuItem.Click += new System.EventHandler(this.productosToolStripMenuItem_Click);
             // 
@@ -131,28 +129,28 @@ namespace PetShop.Presentacion
             // 
             this.categoriasToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("categoriasToolStripMenuItem.Image")));
             this.categoriasToolStripMenuItem.Name = "categoriasToolStripMenuItem";
-            this.categoriasToolStripMenuItem.Size = new System.Drawing.Size(187, 38);
+            this.categoriasToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
             this.categoriasToolStripMenuItem.Text = "Categorias";
             // 
             // especiesToolStripMenuItem
             // 
             this.especiesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("especiesToolStripMenuItem.Image")));
             this.especiesToolStripMenuItem.Name = "especiesToolStripMenuItem";
-            this.especiesToolStripMenuItem.Size = new System.Drawing.Size(187, 38);
+            this.especiesToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
             this.especiesToolStripMenuItem.Text = "Especies";
             // 
             // ventaToolStripMenuItem
             // 
+            this.ventaToolStripMenuItem.AutoSize = false;
             this.ventaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.nuevaVentaToolStripMenuItem,
             this.historialDeVentasToolStripMenuItem});
             this.ventaToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ventaToolStripMenuItem.Image")));
-            this.ventaToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.ventaToolStripMenuItem.Name = "ventaToolStripMenuItem";
-            this.ventaToolStripMenuItem.Size = new System.Drawing.Size(75, 76);
+            this.ventaToolStripMenuItem.Size = new System.Drawing.Size(95, 76);
             this.ventaToolStripMenuItem.Text = "Ventas";
             this.ventaToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.ventaToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
+            this.ventaToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // nuevaVentaToolStripMenuItem
             // 
@@ -170,41 +168,29 @@ namespace PetShop.Presentacion
             this.historialDeVentasToolStripMenuItem.Text = "Historial de Ventas";
             this.historialDeVentasToolStripMenuItem.Click += new System.EventHandler(this.historialDeVentasToolStripMenuItem_Click);
             // 
-            // gestionToolStripMenuItem
-            // 
-            this.gestionToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
-            this.gestionToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("gestionToolStripMenuItem.Image")));
-            this.gestionToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.gestionToolStripMenuItem.Name = "gestionToolStripMenuItem";
-            this.gestionToolStripMenuItem.Size = new System.Drawing.Size(118, 76);
-            this.gestionToolStripMenuItem.Text = "Proveedores";
-            this.gestionToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.gestionToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
-            this.gestionToolStripMenuItem.Click += new System.EventHandler(this.gestionToolStripMenuItem_Click);
-            // 
             // reportesToolStripMenuItem
             // 
+            this.reportesToolStripMenuItem.AutoSize = false;
             this.reportesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("reportesToolStripMenuItem.Image")));
-            this.reportesToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.reportesToolStripMenuItem.Name = "reportesToolStripMenuItem";
-            this.reportesToolStripMenuItem.Size = new System.Drawing.Size(91, 76);
+            this.reportesToolStripMenuItem.Size = new System.Drawing.Size(95, 76);
             this.reportesToolStripMenuItem.Text = "Reportes";
             this.reportesToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.reportesToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
+            this.reportesToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.reportesToolStripMenuItem.Click += new System.EventHandler(this.reportesToolStripMenuItem_Click);
             // 
             // sistemaToolStripMenuItem
             // 
+            this.sistemaToolStripMenuItem.AutoSize = false;
             this.sistemaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cerrarSesiónToolStripMenuItem,
             this.salirToolStripMenuItem});
             this.sistemaToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("sistemaToolStripMenuItem.Image")));
-            this.sistemaToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.sistemaToolStripMenuItem.Name = "sistemaToolStripMenuItem";
-            this.sistemaToolStripMenuItem.Size = new System.Drawing.Size(83, 76);
+            this.sistemaToolStripMenuItem.Size = new System.Drawing.Size(95, 76);
             this.sistemaToolStripMenuItem.Text = "Sistema";
             this.sistemaToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.sistemaToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
+            this.sistemaToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // cerrarSesiónToolStripMenuItem
             // 
@@ -250,17 +236,17 @@ namespace PetShop.Presentacion
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // timer1
+            // timer
             // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timer.Enabled = true;
+            this.timer.Interval = 1000;
+            this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // gbSesionIniciada
             // 
             this.gbSesionIniciada.Controls.Add(this.pictureBox2);
             this.gbSesionIniciada.Controls.Add(this.pictureBox1);
-            this.gbSesionIniciada.Controls.Add(this.label5);
+            this.gbSesionIniciada.Controls.Add(this.lblRolLogeado);
             this.gbSesionIniciada.Controls.Add(this.lblUsuarioLogueado);
             this.gbSesionIniciada.Controls.Add(this.label1);
             this.gbSesionIniciada.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -291,15 +277,15 @@ namespace PetShop.Presentacion
             this.pictureBox1.TabIndex = 11;
             this.pictureBox1.TabStop = false;
             // 
-            // label5
+            // lblRolLogeado
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(35, 55);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(118, 23);
-            this.label5.TabIndex = 13;
-            this.label5.Text = "Administrador";
+            this.lblRolLogeado.AutoSize = true;
+            this.lblRolLogeado.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRolLogeado.Location = new System.Drawing.Point(35, 55);
+            this.lblRolLogeado.Name = "lblRolLogeado";
+            this.lblRolLogeado.Size = new System.Drawing.Size(118, 23);
+            this.lblRolLogeado.TabIndex = 13;
+            this.lblRolLogeado.Text = "Administrador";
             // 
             // lblUsuarioLogueado
             // 
@@ -322,18 +308,18 @@ namespace PetShop.Presentacion
             this.label1.Size = new System.Drawing.Size(0, 23);
             this.label1.TabIndex = 11;
             // 
-            // groupBox1
+            // gbFechaHora
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.lblHora);
-            this.groupBox1.Controls.Add(this.lblFecha);
-            this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(848, 5);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(400, 90);
-            this.groupBox1.TabIndex = 12;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Fecha y Hora";
+            this.gbFechaHora.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbFechaHora.Controls.Add(this.lblHora);
+            this.gbFechaHora.Controls.Add(this.lblFecha);
+            this.gbFechaHora.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbFechaHora.Location = new System.Drawing.Point(848, 5);
+            this.gbFechaHora.Name = "gbFechaHora";
+            this.gbFechaHora.Size = new System.Drawing.Size(400, 90);
+            this.gbFechaHora.TabIndex = 12;
+            this.gbFechaHora.TabStop = false;
+            this.gbFechaHora.Text = "Fecha y Hora";
             // 
             // lblHora
             // 
@@ -356,7 +342,7 @@ namespace PetShop.Presentacion
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Controls.Add(this.gbFechaHora);
             this.panel1.Controls.Add(this.gbSesionIniciada);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 760);
@@ -420,14 +406,15 @@ namespace PetShop.Presentacion
             this.Name = "FormMenuPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PetShop - Sistema de Gestión Veterinaria";
+            this.Load += new System.EventHandler(this.FormMenuPrincipal_Load);
             this.msPrincipal.ResumeLayout(false);
             this.msPrincipal.PerformLayout();
             this.gbSesionIniciada.ResumeLayout(false);
             this.gbSesionIniciada.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.gbFechaHora.ResumeLayout(false);
+            this.gbFechaHora.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -436,9 +423,8 @@ namespace PetShop.Presentacion
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.MenuStrip msPrincipal;
         private System.Windows.Forms.ToolStripMenuItem usuariosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem catalogoToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem catalogoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ventaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem gestionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sistemaToolStripMenuItem;
         private System.Windows.Forms.ImageList imageList1;
@@ -452,14 +438,14 @@ namespace PetShop.Presentacion
         private System.Windows.Forms.ToolStripStatusLabel object_e3c5580b_6d24_4dcc_8c22_cda8350d0a46;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private Timer timer1;
+        private Timer timer;
         private GroupBox gbSesionIniciada;
         private PictureBox pictureBox2;
         private PictureBox pictureBox1;
-        private Label label5;
+        private Label lblRolLogeado;
         private Label lblUsuarioLogueado;
         private Label label1;
-        private GroupBox groupBox1;
+        private GroupBox gbFechaHora;
         private Label lblHora;
         private Label lblFecha;
         private Panel panel1;
