@@ -1,4 +1,4 @@
-﻿namespace PetShop
+﻿namespace PetShop.Presentacion.Usuarios
 {
     partial class FormModificarUsuario
     {
@@ -65,6 +65,7 @@
             this.BVolver.TabIndex = 62;
             this.BVolver.Text = "Volver";
             this.BVolver.UseVisualStyleBackColor = true;
+            this.BVolver.Click += new System.EventHandler(this.BVolver_Click);
             // 
             // LTitulo
             // 
@@ -169,8 +170,9 @@
             this.BEliminarTodo.Name = "BEliminarTodo";
             this.BEliminarTodo.Size = new System.Drawing.Size(167, 43);
             this.BEliminarTodo.TabIndex = 93;
-            this.BEliminarTodo.Text = "Eliminar todo";
+            this.BEliminarTodo.Text = "Restablecer";
             this.BEliminarTodo.UseVisualStyleBackColor = true;
+            this.BEliminarTodo.Click += new System.EventHandler(this.BEliminarTodo_Click);
             // 
             // BGuardar
             // 
@@ -187,6 +189,7 @@
             this.BGuardar.TabIndex = 92;
             this.BGuardar.Text = "Guardar";
             this.BGuardar.UseVisualStyleBackColor = false;
+            this.BGuardar.Click += new System.EventHandler(this.BGuardar_Click);
             // 
             // CBRol
             // 

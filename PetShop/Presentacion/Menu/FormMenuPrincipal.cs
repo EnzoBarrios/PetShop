@@ -8,8 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PetShop.Entidades;
+using PetShop.Presentacion.Usuarios;
 
-namespace PetShop.Presentacion
+namespace PetShop.Presentacion.Menu
 {
     public partial class FormMenuPrincipal : Form
     {

@@ -78,6 +78,7 @@
             this.BEliminarTodo.TabIndex = 76;
             this.BEliminarTodo.Text = "Eliminar todo";
             this.BEliminarTodo.UseVisualStyleBackColor = true;
+            this.BEliminarTodo.Click += new System.EventHandler(this.BEliminarTodo_Click);
             // 
             // BGuardar
             // 
@@ -97,6 +98,7 @@
             this.BVolver.TabIndex = 74;
             this.BVolver.Text = "Volver";
             this.BVolver.UseVisualStyleBackColor = true;
+            this.BVolver.Click += new System.EventHandler(this.BVolver_Click);
             // 
             // LTitulo
             // 
@@ -111,6 +113,7 @@
             // 
             // CBRol
             // 
+            this.CBRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBRol.FormattingEnabled = true;
             this.CBRol.Location = new System.Drawing.Point(88, 333);
             this.CBRol.Name = "CBRol";
@@ -276,6 +279,7 @@
             this.Controls.Add(this.LNombre);
             this.Name = "FormCargaUsuario";
             this.Text = "FormCargaUsuario";
+            this.Load += new System.EventHandler(this.FormCargaUsuario_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

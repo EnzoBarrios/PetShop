@@ -14,6 +14,8 @@ namespace PetShop.Presentacion.Usuarios
 
         private void FormCargaUsuario_Load(object sender, EventArgs e)
         {
+            // Bloquea la edición manual para que solo se pueda seleccionar de la lista
+            CBRol.DropDownStyle = ComboBoxStyle.DropDownList;
             CargarRoles();
         }
 
@@ -25,17 +27,22 @@ namespace PetShop.Presentacion.Usuarios
             {
                 try
                 {
-                    con.Open();
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
                         SqlDataAdapter da = new SqlDataAdapter(cmd);
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
-                        CBRol.DataSource = dt;
-                        CBRol.ValueMember = "id_rol";
+                        // 1. Desvincular binding previo
+                        CBRol.DataSource = null;
+
+                        // 2. Definir qué mostrar y qué usar como ID PRIMERO
                         CBRol.DisplayMember = "nombre_rol";
-                        CBRol.SelectedIndex = -1;
+                        CBRol.ValueMember = "id_rol";
+
+                        // 3. Asignar el DataTable RECIÉN AL FINAL
+                        CBRol.DataSource = dt;
+
                     }
                 }
                 catch (Exception ex)

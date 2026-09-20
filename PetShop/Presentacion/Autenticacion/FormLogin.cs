@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PetShop.Negocio;
 using PetShop.Entidades;
+using PetShop.Presentacion.Menu;
 
-namespace PetShop.Presentacion
+namespace PetShop.Presentacion.Autenticacion
 {
     public partial class FormLogin : Form
     {

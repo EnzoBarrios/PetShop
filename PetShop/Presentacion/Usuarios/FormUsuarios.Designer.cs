@@ -1,4 +1,4 @@
-﻿namespace PetShop.Presentacion
+﻿namespace PetShop.Presentacion.Usuarios
 {
     partial class FormUsuarios
     {
