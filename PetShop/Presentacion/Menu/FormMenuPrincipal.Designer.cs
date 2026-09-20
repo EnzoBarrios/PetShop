@@ -79,7 +79,6 @@ namespace PetShop.Presentacion
             this.msPrincipal.AutoSize = false;
             this.msPrincipal.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.msPrincipal.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.msPrincipal.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.msPrincipal.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.msPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.catalogoToolStripMenuItem,
@@ -385,7 +384,6 @@ namespace PetShop.Presentacion
             // 
             this.menuStrip1.AutoSize = false;
             this.menuStrip1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
