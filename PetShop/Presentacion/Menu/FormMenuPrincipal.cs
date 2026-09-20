@@ -7,20 +7,84 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PetShop.Entidades;
 
 namespace PetShop.Presentacion
 {
     public partial class FormMenuPrincipal : Form
     {
-        // Variable para rastrear el formulario secundario actualmente visible
-        private Form formularioActivo = null;
+        // Variable para almacenar el usuario actual
+        private Usuario _usuarioActual;
 
-        public FormMenuPrincipal()
+        // Variable para rastrear el formulario secundario actualmente visible
+        private Form _formularioActivo = null;
+
+        public FormMenuPrincipal(Usuario usuario)
         {
             InitializeComponent();
+
+            _usuarioActual = usuario;
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void FormMenuPrincipal_Load(object sender, EventArgs e)
+        {
+            CargarDatosUsuario();
+            ConfigurarPermisosPorRol();
+        }
+
+        private void CargarDatosUsuario()
+        {
+            if (_usuarioActual != null)
+            {
+                lblUsuarioLogueado.Text = _usuarioActual.NombreUsuario;
+
+                if (_usuarioActual.Rol != null)
+                {
+                    lblRolLogeado.Text = _usuarioActual.Rol.NombreRol;
+                }
+            }
+        }
+
+        private void ConfigurarPermisosPorRol()
+        {
+            if (_usuarioActual?.Rol == null) return;
+
+            string rol = _usuarioActual.Rol.NombreRol.Trim();
+
+            usuariosToolStripMenuItem.Enabled = false;
+            catalogoToolStripMenuItem.Enabled = false;
+            ventaToolStripMenuItem.Enabled = false;
+            reportesToolStripMenuItem.Enabled = false;
+
+            switch (rol)
+            {
+                case "Administrador":
+                    usuariosToolStripMenuItem.Enabled = true;
+                    catalogoToolStripMenuItem.Enabled = true;
+                    ventaToolStripMenuItem.Enabled = true;
+                    reportesToolStripMenuItem.Enabled = true;
+                    break;
+
+                case "Gerente":
+                    // El gerente no administra usuarios del sistema
+                    catalogoToolStripMenuItem.Enabled = true;
+                    ventaToolStripMenuItem.Enabled = true;
+                    reportesToolStripMenuItem.Enabled = true;
+                    break;
+
+                case "Vendedor":
+                    // El vendedor solo opera ventas y consulta productos
+                    catalogoToolStripMenuItem.Enabled = true;
+                    ventaToolStripMenuItem.Enabled = true;
+                    break;
+
+                default:
+                    // Por seguridad, si el rol no coincide se oculta todo lo crítico
+                    break;
+            }
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
         {
             // Muestra la hora en formato 24hs (HH:mm:ss)
             lblHora.Text = DateTime.Now.ToString("HH:mm:ss");
@@ -42,20 +106,20 @@ namespace PetShop.Presentacion
         private void AbrirFormularioEnMdi<T>() where T : Form, new()
         {
             // Si ya está abierto el mismo formulario, no recarga
-            if (formularioActivo != null && formularioActivo is T)
+            if (_formularioActivo != null && _formularioActivo is T)
             {
-                formularioActivo.BringToFront();
+                _formularioActivo.BringToFront();
                 return;
             }
 
             // Cierra y libera el formulario anterior si existe
-            if (formularioActivo != null)
+            if (_formularioActivo != null)
             {
-                formularioActivo.Close();
-                formularioActivo.Dispose();
+                _formularioActivo.Close();
+                _formularioActivo.Dispose();
             }
 
-            formularioActivo = new T
+            _formularioActivo = new T
             {
                 TopLevel= false,
                 FormBorderStyle = FormBorderStyle.None, 
@@ -63,15 +127,17 @@ namespace PetShop.Presentacion
             };
 
             contenedor.Controls.Clear();
-            contenedor.Controls.Add(formularioActivo);
-            contenedor.Tag = formularioActivo;
-            formularioActivo.Show();
-            formularioActivo.BringToFront();
+            contenedor.Controls.Add(_formularioActivo);
+            contenedor.Tag = _formularioActivo;
+            _formularioActivo.Show();
+            _formularioActivo.BringToFront();
         }
-        private void usuarioToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbrirFormularioEnMdi<FormUsuarios>();
-        }
+        } 
+
         private void productosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbrirFormularioEnMdi<FormProductos>();
@@ -101,14 +167,9 @@ namespace PetShop.Presentacion
             AbrirFormularioEnMdi<FormHistorialVentas>();
         }
 
-        private void gestionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AbrirFormularioEnMdi<FormCompras>();
-        }
-
         private void reportesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirFormularioEnMdi<FormLogin>();
+            AbrirFormularioEnMdi<FormReportes>();
         }
 
         private void cerrarSesiónToolStripMenuItem_Click(object sender, EventArgs e)
@@ -121,7 +182,7 @@ namespace PetShop.Presentacion
 
             if (respuesta == DialogResult.Yes)
             {
-                Application.Restart();
+                this.Close();
             }
         }
 

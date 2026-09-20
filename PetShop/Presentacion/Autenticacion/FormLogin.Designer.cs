@@ -35,8 +35,8 @@
             this.lblInisiarSesion = new System.Windows.Forms.Label();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.lblClave = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtClave = new System.Windows.Forms.TextBox();
+            this.txtUsuario = new System.Windows.Forms.TextBox();
             this.btnIngresar = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.btnCancelar = new System.Windows.Forms.Button();
@@ -93,22 +93,24 @@
             this.lblClave.TabIndex = 4;
             this.lblClave.Text = "Clave";
             // 
-            // textBox1
+            // txtClave
             // 
-            this.textBox1.Location = new System.Drawing.Point(250, 178);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(200, 22);
-            this.textBox1.TabIndex = 5;
+            this.txtClave.Location = new System.Drawing.Point(250, 178);
+            this.txtClave.Name = "txtClave";
+            this.txtClave.PasswordChar = '•';
+            this.txtClave.Size = new System.Drawing.Size(200, 22);
+            this.txtClave.TabIndex = 6;
             // 
-            // textBox2
+            // txtUsuario
             // 
-            this.textBox2.Location = new System.Drawing.Point(250, 121);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(200, 22);
-            this.textBox2.TabIndex = 6;
+            this.txtUsuario.Location = new System.Drawing.Point(250, 121);
+            this.txtUsuario.Name = "txtUsuario";
+            this.txtUsuario.Size = new System.Drawing.Size(200, 22);
+            this.txtUsuario.TabIndex = 5;
             // 
             // btnIngresar
             // 
+            this.btnIngresar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnIngresar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnIngresar.ImageIndex = 0;
             this.btnIngresar.ImageList = this.imageList1;
@@ -119,6 +121,7 @@
             this.btnIngresar.Text = "Ingresar";
             this.btnIngresar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnIngresar.UseVisualStyleBackColor = true;
+            this.btnIngresar.Click += new System.EventHandler(this.btnIngresar_Click);
             // 
             // imageList1
             // 
@@ -129,6 +132,7 @@
             // 
             // btnCancelar
             // 
+            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCancelar.ImageIndex = 1;
             this.btnCancelar.ImageList = this.imageList1;
@@ -139,17 +143,19 @@
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // FormLogin
             // 
+            this.AcceptButton = this.btnIngresar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.ClientSize = new System.Drawing.Size(500, 300);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnIngresar);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtUsuario);
+            this.Controls.Add(this.txtClave);
             this.Controls.Add(this.lblClave);
             this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.lblInisiarSesion);
@@ -174,8 +180,8 @@
         private System.Windows.Forms.Label lblInisiarSesion;
         private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.Label lblClave;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtClave;
+        private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.Button btnIngresar;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.ImageList imageList1;
