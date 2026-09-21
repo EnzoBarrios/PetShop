@@ -97,7 +97,7 @@ namespace PetShop.Presentacion
             this.usuariosToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.usuariosToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("usuariosToolStripMenuItem.Image")));
             this.usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
-            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(95, 76);
+            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(89, 76);
             this.usuariosToolStripMenuItem.Text = "Usuarios";
             this.usuariosToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.usuariosToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -121,7 +121,7 @@ namespace PetShop.Presentacion
             // 
             this.productosToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("productosToolStripMenuItem.Image")));
             this.productosToolStripMenuItem.Name = "productosToolStripMenuItem";
-            this.productosToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
+            this.productosToolStripMenuItem.Size = new System.Drawing.Size(187, 38);
             this.productosToolStripMenuItem.Text = "Productos";
             this.productosToolStripMenuItem.Click += new System.EventHandler(this.productosToolStripMenuItem_Click);
             // 
@@ -129,14 +129,14 @@ namespace PetShop.Presentacion
             // 
             this.categoriasToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("categoriasToolStripMenuItem.Image")));
             this.categoriasToolStripMenuItem.Name = "categoriasToolStripMenuItem";
-            this.categoriasToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
+            this.categoriasToolStripMenuItem.Size = new System.Drawing.Size(187, 38);
             this.categoriasToolStripMenuItem.Text = "Categorias";
             // 
             // especiesToolStripMenuItem
             // 
             this.especiesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("especiesToolStripMenuItem.Image")));
             this.especiesToolStripMenuItem.Name = "especiesToolStripMenuItem";
-            this.especiesToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
+            this.especiesToolStripMenuItem.Size = new System.Drawing.Size(187, 38);
             this.especiesToolStripMenuItem.Text = "Especies";
             // 
             // ventaToolStripMenuItem
@@ -252,7 +252,7 @@ namespace PetShop.Presentacion
             this.gbSesionIniciada.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbSesionIniciada.Location = new System.Drawing.Point(15, 5);
             this.gbSesionIniciada.Name = "gbSesionIniciada";
-            this.gbSesionIniciada.Size = new System.Drawing.Size(200, 90);
+            this.gbSesionIniciada.Size = new System.Drawing.Size(400, 90);
             this.gbSesionIniciada.TabIndex = 11;
             this.gbSesionIniciada.TabStop = false;
             this.gbSesionIniciada.Text = "Sesión Iniciada";
@@ -352,7 +352,6 @@ namespace PetShop.Presentacion
             // 
             // contenedor
             // 
-            this.contenedor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contenedor.Location = new System.Drawing.Point(0, 140);
             this.contenedor.Name = "contenedor";
             this.contenedor.Size = new System.Drawing.Size(1280, 620);
@@ -399,7 +398,7 @@ namespace PetShop.Presentacion
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.msPrincipal);
             this.Controls.Add(this.menuStrip1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);

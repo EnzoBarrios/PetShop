@@ -123,8 +123,14 @@ namespace PetShop.Presentacion
             {
                 TopLevel= false,
                 FormBorderStyle = FormBorderStyle.None, 
-                StartPosition = FormStartPosition.CenterScreen 
+                Dock = DockStyle.None
             };
+
+            // Calcula el centrado respecto al tamaño interno del contenedor
+            int posicionX = Math.Max(0, (contenedor.ClientSize.Width - _formularioActivo.Width) / 2);
+            int posicionY = Math.Max(0, (contenedor.ClientSize.Height - _formularioActivo.Height) / 2);
+
+            _formularioActivo.Location = new Point(posicionX, posicionY);
 
             contenedor.Controls.Clear();
             contenedor.Controls.Add(_formularioActivo);

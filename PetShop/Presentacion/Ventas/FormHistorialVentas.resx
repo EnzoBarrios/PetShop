@@ -124,9 +124,9 @@
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
-        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAe
-        CAAAAk1TRnQBSQFMAwEBAAEQAQABEAEAAQ4BAAEOAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMA
-        ATgDAAEOAwABAQEAAQgFAAEQAQMYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAM
+        CAAAAk1TRnQBSQFMAwEBAAEgAQABIAEAAQwBAAEMAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMA
+        ATADAAEMAwABAQEAAQgFAAFAAQIYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
         AWYDAAGZAwABzAIAATMDAAIzAgABMwFmAgABMwGZAgABMwHMAgABMwH/AgABZgMAAWYBMwIAAmYCAAFm
@@ -153,25 +153,25 @@
         AcwBAAH/AZkB/wEAAf8BzAIAAf8BzAEzAQAB/wHMAWYBAAH/AcwBmQEAAf8CzAEAAf8BzAH/AQAC/wEz
         AQABzAH/AWYBAAL/AZkBAAL/AcwBAAJmAf8BAAFmAf8BZgEAAWYC/wEAAf8CZgEAAf8BZgH/AQAC/wFm
         AQABIQEAAaUBAANfAQADdwEAA4YBAAOWAQADywEAA7IBAAPXAQAD3QEAA+MBAAPqAQAD8QEAA/gBAAHw
-        AfsB/wEAAaQCoAEAA4ADAAH/AgAB/wMAAv8BAAH/AwAB/wEAAf8BAAL/AgAD/wwAAfQBFQHrNAAB9AFD
-        AQABFSwAAf8B8QHsARMBEgHtAfIB9AFDAQABQwH0KwAB/wHrBgABDgEAAUMB9CsAAf8B6gEAAQ4BkgLw
-        AewCAAEOAfQsAAG8AQABDgHzBAAB8AIAAfIsAAHqAQAB7wYAAewBAAHtLAABDgEAAfMGAAHwAQABEiwA
-        AQ4BAAHzBgAB8AEAARMsAAETAQABBwYAAZIBAAHsLAABBwEAARAB9AQAAfMBDgEAAfEsAAH/ARUBAAEQ
-        AQcC8wHvAQ4BAAHrAf8tAAH0ARUGAAHqAf8vAAH/AQcBEwIOAeoBvAH/LgABQgFNAT4HAAE+AwABKAMA
-        ATgDAAEOAwABAQEAAQEFAAFwFwAD/wEAAf8B4AYAAf8BwAYAAcAHAAGAAQQHAAEMBgABDwEMBgABHwGM
-        BgABHwGMBgABHwGMBgABHwGMBgABDwEMBwABDAYAAYABHAYAAcABPAYACw==
+        AfsB/wEAAaQCoAEAA4ADAAH/AgAB/wMAAv8BAAH/AwAB/wEAAf8BAAL/AgAD/wkAAf8B8gJtJQAB/wH0
+        AfMC8gHzAfQB8gHrAQ4BbSUAAfMB9wHqAUMBEQETAesBbQEPAesB8iQAAfQB7AEPARUB7AHtAeoBAAEO
+        AW0B8gH/JAAB8AEOARMB8QH0Af8B9AHtAQAB6wH0JQAB6gEPAfAEAAH0AeoBEwHzJQABDgEQAfMEAAH/
+        Ae0BEQHyJQABEQEQAfIEAAH0AewBQwHyJQAB7AEOAe8B9AMAAfEBFQHqAfMlAAHzARABEQHvAfIB8wHw
+        ARMBDwH3AfQlAAH/Ae8BEAEOAhABDwEOAewB8wH/JgAB/wHzAewBEQEOAeoB8AH0JwABQgFNAT4HAAE+
+        AwABKAMAATADAAEMAwABAQEAAQEFAAFgFwAD/wEAAf8HAAGABwABgBAAARAGAAEeARAGAAEeARAGAAEe
+        ARAGAAEOARAHAAEQBwABEAYAAYABcAYACw==
 </value>
   </data>
-  <metadata name="IdDetalleVenta.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="colIdDetalleVenta.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="Ticket.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="colNroTicket.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="Precio.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="colFecha.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="Cantidad.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="colHora.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="SubTotal.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -184,9 +184,6 @@
     <value>True</value>
   </metadata>
   <metadata name="AbonadoQR.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="btnQuitarProducto.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
 </root>
