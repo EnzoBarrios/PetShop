@@ -17,7 +17,21 @@ namespace PetShop.Presentacion
             InitializeComponent();
         }
 
-        private void dgvVenta_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        private void DgvVenta_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+            // Verifica que se haya presionado la columna del botón eliminar
+            if (dgvVenta.Columns[e.ColumnIndex].Name == "btnEliminar")
+            {
+                dgvVenta.Rows.RemoveAt(e.RowIndex);
+
+                // Opcional: Llamar a tu método de recalcular total
+                // CalcularTotal();
+            }
+        }
+
+        private void DgvVenta_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             // 1. Evitar pintar en la fila de encabezados
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
@@ -44,20 +58,6 @@ namespace PetShop.Presentacion
 
                 // Marcamos el evento como manejado para evitar que el DataGridView dibuje encima
                 e.Handled = true;
-            }
-        }
-
-        private void dgvVenta_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
-
-            // Verifica que se haya presionado la columna del botón eliminar
-            if (dgvVenta.Columns[e.ColumnIndex].Name == "btnEliminar")
-            {
-                dgvVenta.Rows.RemoveAt(e.RowIndex);
-
-                // Opcional: Llamar a tu método de recalcular total
-                // CalcularTotal();
             }
         }
     }

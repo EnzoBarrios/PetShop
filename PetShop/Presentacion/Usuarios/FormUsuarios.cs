@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
-namespace PetShop.Presentacion
+namespace PetShop.Presentacion.Usuarios
 {
     public partial class FormUsuarios : Form
     {
