@@ -30,60 +30,78 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormHistorialVentas));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gbInformacionVenta = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.dtpHasta = new System.Windows.Forms.DateTimePicker();
+            this.dtpDesde = new System.Windows.Forms.DateTimePicker();
+            this.btnBuscar = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.txtStock = new System.Windows.Forms.TextBox();
-            this.txtProducto = new System.Windows.Forms.TextBox();
             this.lblBuscador = new System.Windows.Forms.Label();
             this.lblFechaHasta = new System.Windows.Forms.Label();
-            this.txtCodProducto = new System.Windows.Forms.TextBox();
             this.lblFechaDesde = new System.Windows.Forms.Label();
             this.lblTituloHistorialVentas = new System.Windows.Forms.Label();
             this.dgvVenta = new System.Windows.Forms.DataGridView();
-            this.IdDetalleVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Ticket = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colIdDetalleVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNroTicket = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHora = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SubTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AbonadoEfectivo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AbonadoTransferencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AbonadoQR = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnQuitarProducto = new System.Windows.Forms.DataGridViewButtonColumn();
             this.gbInformacionVenta.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVenta)).BeginInit();
             this.SuspendLayout();
             // 
             // gbInformacionVenta
             // 
-            this.gbInformacionVenta.Controls.Add(this.button1);
+            this.gbInformacionVenta.Controls.Add(this.dtpHasta);
+            this.gbInformacionVenta.Controls.Add(this.dtpDesde);
+            this.gbInformacionVenta.Controls.Add(this.btnBuscar);
             this.gbInformacionVenta.Controls.Add(this.txtStock);
-            this.gbInformacionVenta.Controls.Add(this.txtProducto);
             this.gbInformacionVenta.Controls.Add(this.lblBuscador);
             this.gbInformacionVenta.Controls.Add(this.lblFechaHasta);
-            this.gbInformacionVenta.Controls.Add(this.txtCodProducto);
             this.gbInformacionVenta.Controls.Add(this.lblFechaDesde);
             this.gbInformacionVenta.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbInformacionVenta.Location = new System.Drawing.Point(20, 60);
+            this.gbInformacionVenta.Location = new System.Drawing.Point(240, 60);
             this.gbInformacionVenta.Name = "gbInformacionVenta";
-            this.gbInformacionVenta.Size = new System.Drawing.Size(780, 100);
+            this.gbInformacionVenta.Size = new System.Drawing.Size(800, 100);
             this.gbInformacionVenta.TabIndex = 5;
             this.gbInformacionVenta.TabStop = false;
             this.gbInformacionVenta.Text = "Filtros de Busqueda";
             // 
-            // button1
+            // dtpHasta
             // 
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.ImageIndex = 0;
-            this.button1.ImageList = this.imageList1;
-            this.button1.Location = new System.Drawing.Point(695, 50);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 25);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "Buscar";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button1.UseVisualStyleBackColor = true;
+            this.dtpHasta.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpHasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpHasta.Location = new System.Drawing.Point(297, 48);
+            this.dtpHasta.Name = "dtpHasta";
+            this.dtpHasta.Size = new System.Drawing.Size(120, 25);
+            this.dtpHasta.TabIndex = 16;
+            // 
+            // dtpDesde
+            // 
+            this.dtpDesde.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpDesde.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpDesde.Location = new System.Drawing.Point(95, 48);
+            this.dtpDesde.Name = "dtpDesde";
+            this.dtpDesde.Size = new System.Drawing.Size(120, 25);
+            this.dtpDesde.TabIndex = 7;
+            // 
+            // btnBuscar
+            // 
+            this.btnBuscar.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBuscar.ImageIndex = 0;
+            this.btnBuscar.ImageList = this.imageList1;
+            this.btnBuscar.Location = new System.Drawing.Point(680, 46);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(80, 30);
+            this.btnBuscar.TabIndex = 15;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnBuscar.UseVisualStyleBackColor = true;
             // 
             // imageList1
             // 
@@ -94,54 +112,38 @@
             // txtStock
             // 
             this.txtStock.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtStock.Location = new System.Drawing.Point(525, 50);
+            this.txtStock.Location = new System.Drawing.Point(525, 48);
             this.txtStock.Name = "txtStock";
             this.txtStock.Size = new System.Drawing.Size(120, 25);
             this.txtStock.TabIndex = 14;
             // 
-            // txtProducto
-            // 
-            this.txtProducto.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProducto.Location = new System.Drawing.Point(295, 50);
-            this.txtProducto.Name = "txtProducto";
-            this.txtProducto.Size = new System.Drawing.Size(120, 25);
-            this.txtProducto.TabIndex = 12;
-            // 
             // lblBuscador
             // 
             this.lblBuscador.AutoSize = true;
-            this.lblBuscador.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBuscador.Location = new System.Drawing.Point(455, 53);
+            this.lblBuscador.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBuscador.Location = new System.Drawing.Point(450, 50);
             this.lblBuscador.Name = "lblBuscador";
-            this.lblBuscador.Size = new System.Drawing.Size(65, 17);
+            this.lblBuscador.Size = new System.Drawing.Size(68, 19);
             this.lblBuscador.TabIndex = 9;
             this.lblBuscador.Text = "Buscador:";
             // 
             // lblFechaHasta
             // 
             this.lblFechaHasta.AutoSize = true;
-            this.lblFechaHasta.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFechaHasta.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFechaHasta.Location = new System.Drawing.Point(245, 50);
             this.lblFechaHasta.Name = "lblFechaHasta";
-            this.lblFechaHasta.Size = new System.Drawing.Size(44, 17);
+            this.lblFechaHasta.Size = new System.Drawing.Size(47, 19);
             this.lblFechaHasta.TabIndex = 7;
             this.lblFechaHasta.Text = "Hasta:";
-            // 
-            // txtCodProducto
-            // 
-            this.txtCodProducto.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCodProducto.Location = new System.Drawing.Point(85, 50);
-            this.txtCodProducto.Name = "txtCodProducto";
-            this.txtCodProducto.Size = new System.Drawing.Size(120, 25);
-            this.txtCodProducto.TabIndex = 6;
             // 
             // lblFechaDesde
             // 
             this.lblFechaDesde.AutoSize = true;
-            this.lblFechaDesde.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFechaDesde.Location = new System.Drawing.Point(30, 50);
+            this.lblFechaDesde.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFechaDesde.Location = new System.Drawing.Point(40, 50);
             this.lblFechaDesde.Name = "lblFechaDesde";
-            this.lblFechaDesde.Size = new System.Drawing.Size(48, 17);
+            this.lblFechaDesde.Size = new System.Drawing.Size(50, 19);
             this.lblFechaDesde.TabIndex = 5;
             this.lblFechaDesde.Text = "Desde:";
             // 
@@ -149,7 +151,7 @@
             // 
             this.lblTituloHistorialVentas.AutoSize = true;
             this.lblTituloHistorialVentas.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTituloHistorialVentas.Location = new System.Drawing.Point(12, 9);
+            this.lblTituloHistorialVentas.Location = new System.Drawing.Point(20, 10);
             this.lblTituloHistorialVentas.Name = "lblTituloHistorialVentas";
             this.lblTituloHistorialVentas.Size = new System.Drawing.Size(191, 28);
             this.lblTituloHistorialVentas.TabIndex = 4;
@@ -157,60 +159,67 @@
             // 
             // dgvVenta
             // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvVenta.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvVenta.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvVenta.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.IdDetalleVenta,
-            this.Ticket,
-            this.Precio,
-            this.Cantidad,
+            this.colIdDetalleVenta,
+            this.colNroTicket,
+            this.colFecha,
+            this.colHora,
             this.SubTotal,
             this.AbonadoEfectivo,
             this.AbonadoTransferencia,
-            this.AbonadoQR,
-            this.btnQuitarProducto});
-            this.dgvVenta.Location = new System.Drawing.Point(20, 180);
+            this.AbonadoQR});
+            this.dgvVenta.Location = new System.Drawing.Point(40, 190);
             this.dgvVenta.Name = "dgvVenta";
             this.dgvVenta.RowHeadersWidth = 51;
             this.dgvVenta.RowTemplate.Height = 24;
-            this.dgvVenta.Size = new System.Drawing.Size(780, 400);
+            this.dgvVenta.Size = new System.Drawing.Size(1200, 400);
             this.dgvVenta.TabIndex = 6;
             // 
-            // IdDetalleVenta
+            // colIdDetalleVenta
             // 
-            this.IdDetalleVenta.HeaderText = "";
-            this.IdDetalleVenta.MinimumWidth = 6;
-            this.IdDetalleVenta.Name = "IdDetalleVenta";
-            this.IdDetalleVenta.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.IdDetalleVenta.Visible = false;
-            this.IdDetalleVenta.Width = 50;
+            this.colIdDetalleVenta.HeaderText = "";
+            this.colIdDetalleVenta.MinimumWidth = 6;
+            this.colIdDetalleVenta.Name = "colIdDetalleVenta";
+            this.colIdDetalleVenta.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colIdDetalleVenta.Visible = false;
+            this.colIdDetalleVenta.Width = 50;
             // 
-            // Ticket
+            // colNroTicket
             // 
-            this.Ticket.HeaderText = "Ticket";
-            this.Ticket.MinimumWidth = 6;
-            this.Ticket.Name = "Ticket";
-            this.Ticket.Width = 125;
+            this.colNroTicket.HeaderText = "N° Ticket";
+            this.colNroTicket.MinimumWidth = 6;
+            this.colNroTicket.Name = "colNroTicket";
+            this.colNroTicket.Width = 125;
             // 
-            // Precio
+            // colFecha
             // 
-            this.Precio.HeaderText = "Fecha";
-            this.Precio.MinimumWidth = 6;
-            this.Precio.Name = "Precio";
-            this.Precio.Width = 125;
+            this.colFecha.HeaderText = "Fecha";
+            this.colFecha.MinimumWidth = 6;
+            this.colFecha.Name = "colFecha";
+            this.colFecha.Width = 120;
             // 
-            // Cantidad
+            // colHora
             // 
-            this.Cantidad.HeaderText = "Hora";
-            this.Cantidad.MinimumWidth = 6;
-            this.Cantidad.Name = "Cantidad";
-            this.Cantidad.Width = 80;
+            this.colHora.HeaderText = "Hora";
+            this.colHora.MinimumWidth = 6;
+            this.colHora.Name = "colHora";
+            this.colHora.Width = 80;
             // 
             // SubTotal
             // 
             this.SubTotal.HeaderText = "Monto Total";
             this.SubTotal.MinimumWidth = 6;
             this.SubTotal.Name = "SubTotal";
-            this.SubTotal.Width = 125;
+            this.SubTotal.Width = 120;
             // 
             // AbonadoEfectivo
             // 
@@ -233,21 +242,12 @@
             this.AbonadoQR.Name = "AbonadoQR";
             this.AbonadoQR.Width = 125;
             // 
-            // btnQuitarProducto
-            // 
-            this.btnQuitarProducto.HeaderText = "";
-            this.btnQuitarProducto.MinimumWidth = 6;
-            this.btnQuitarProducto.Name = "btnQuitarProducto";
-            this.btnQuitarProducto.ReadOnly = true;
-            this.btnQuitarProducto.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.btnQuitarProducto.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.btnQuitarProducto.Width = 40;
-            // 
             // FormHistorialVentas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(820, 600);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(1280, 620);
             this.Controls.Add(this.dgvVenta);
             this.Controls.Add(this.gbInformacionVenta);
             this.Controls.Add(this.lblTituloHistorialVentas);
@@ -267,23 +267,22 @@
 
         private System.Windows.Forms.GroupBox gbInformacionVenta;
         private System.Windows.Forms.TextBox txtStock;
-        private System.Windows.Forms.TextBox txtProducto;
         private System.Windows.Forms.Label lblBuscador;
         private System.Windows.Forms.Label lblFechaHasta;
-        private System.Windows.Forms.TextBox txtCodProducto;
         private System.Windows.Forms.Label lblFechaDesde;
         private System.Windows.Forms.Label lblTituloHistorialVentas;
         private System.Windows.Forms.DataGridView dgvVenta;
         private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IdDetalleVenta;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Ticket;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Precio;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Cantidad;
+        private System.Windows.Forms.Button btnBuscar;
+        private System.Windows.Forms.DateTimePicker dtpDesde;
+        private System.Windows.Forms.DateTimePicker dtpHasta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colIdDetalleVenta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNroTicket;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFecha;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colHora;
         private System.Windows.Forms.DataGridViewTextBoxColumn SubTotal;
         private System.Windows.Forms.DataGridViewTextBoxColumn AbonadoEfectivo;
         private System.Windows.Forms.DataGridViewTextBoxColumn AbonadoTransferencia;
         private System.Windows.Forms.DataGridViewTextBoxColumn AbonadoQR;
-        private System.Windows.Forms.DataGridViewButtonColumn btnQuitarProducto;
     }
 }
