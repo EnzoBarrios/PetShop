@@ -45,6 +45,8 @@ GO
 CREATE TABLE Categoria (
 	id_categoria INT IDENTITY(1,1),
 	nombre_categoria VARCHAR(50) NOT NULL,
+	descripcion VARCHAR(255) NULL,
+	estado BIT NOT NULL DEFAULT 1, -- 1: Activo, 0: Inactivo
 	CONSTRAINT PK_Categoria PRIMARY KEY (id_categoria)
 );
 GO
