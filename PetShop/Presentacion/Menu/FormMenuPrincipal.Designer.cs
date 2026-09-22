@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace PetShop.Presentacion
+namespace PetShop.Presentacion.Menu
 {
     partial class FormMenuPrincipal : Form
     {
