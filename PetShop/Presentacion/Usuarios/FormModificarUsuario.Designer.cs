@@ -78,7 +78,7 @@
             // 
             this.TNombreUsuario.Location = new System.Drawing.Point(20, 131);
             this.TNombreUsuario.Name = "TNombreUsuario";
-            this.TNombreUsuario.Size = new System.Drawing.Size(375, 23);
+            this.TNombreUsuario.Size = new System.Drawing.Size(375, 26);
             this.TNombreUsuario.TabIndex = 103;
             // 
             // LNombreUsuario
@@ -87,16 +87,16 @@
             this.LNombreUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LNombreUsuario.Location = new System.Drawing.Point(16, 107);
             this.LNombreUsuario.Name = "LNombreUsuario";
-            this.LNombreUsuario.Size = new System.Drawing.Size(146, 17);
+            this.LNombreUsuario.Size = new System.Drawing.Size(160, 20);
             this.LNombreUsuario.TabIndex = 102;
             this.LNombreUsuario.Text = "Nombre de usuario";
             // 
             // TApellido
             // 
             this.TApellido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TApellido.Location = new System.Drawing.Point(424, 59);
+            this.TApellido.Location = new System.Drawing.Point(404, 59);
             this.TApellido.Name = "TApellido";
-            this.TApellido.Size = new System.Drawing.Size(375, 23);
+            this.TApellido.Size = new System.Drawing.Size(375, 26);
             this.TApellido.TabIndex = 101;
             // 
             // LApellido
@@ -104,18 +104,18 @@
             this.LApellido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LApellido.AutoSize = true;
             this.LApellido.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LApellido.Location = new System.Drawing.Point(420, 31);
+            this.LApellido.Location = new System.Drawing.Point(400, 31);
             this.LApellido.Name = "LApellido";
-            this.LApellido.Size = new System.Drawing.Size(66, 17);
+            this.LApellido.Size = new System.Drawing.Size(73, 20);
             this.LApellido.TabIndex = 100;
             this.LApellido.Text = "Apellido";
             // 
             // TConfirmar
             // 
             this.TConfirmar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TConfirmar.Location = new System.Drawing.Point(424, 60);
+            this.TConfirmar.Location = new System.Drawing.Point(404, 60);
             this.TConfirmar.Name = "TConfirmar";
-            this.TConfirmar.Size = new System.Drawing.Size(375, 23);
+            this.TConfirmar.Size = new System.Drawing.Size(375, 26);
             this.TConfirmar.TabIndex = 98;
             this.TConfirmar.UseSystemPasswordChar = true;
             // 
@@ -124,9 +124,9 @@
             this.LConfirmar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LConfirmar.AutoSize = true;
             this.LConfirmar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LConfirmar.Location = new System.Drawing.Point(420, 37);
+            this.LConfirmar.Location = new System.Drawing.Point(400, 37);
             this.LConfirmar.Name = "LConfirmar";
-            this.LConfirmar.Size = new System.Drawing.Size(164, 17);
+            this.LConfirmar.Size = new System.Drawing.Size(182, 20);
             this.LConfirmar.TabIndex = 97;
             this.LConfirmar.Text = "Confirmar contraseña";
             // 
@@ -136,7 +136,7 @@
             this.LFechaCreacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LFechaCreacion.Location = new System.Drawing.Point(442, 29);
             this.LFechaCreacion.Name = "LFechaCreacion";
-            this.LFechaCreacion.Size = new System.Drawing.Size(172, 17);
+            this.LFechaCreacion.Size = new System.Drawing.Size(201, 20);
             this.LFechaCreacion.TabIndex = 96;
             this.LFechaCreacion.Text = "FECHA DE CREACIÓN:";
             // 
@@ -144,7 +144,7 @@
             // 
             this.TClave.Location = new System.Drawing.Point(20, 60);
             this.TClave.Name = "TClave";
-            this.TClave.Size = new System.Drawing.Size(375, 23);
+            this.TClave.Size = new System.Drawing.Size(375, 26);
             this.TClave.TabIndex = 95;
             this.TClave.UseSystemPasswordChar = true;
             // 
@@ -154,7 +154,7 @@
             this.LClave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LClave.Location = new System.Drawing.Point(16, 37);
             this.LClave.Name = "LClave";
-            this.LClave.Size = new System.Drawing.Size(91, 17);
+            this.LClave.Size = new System.Drawing.Size(102, 20);
             this.LClave.TabIndex = 94;
             this.LClave.Text = "Contraseña";
             // 
@@ -168,7 +168,7 @@
             this.BEliminarTodo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.BEliminarTodo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BEliminarTodo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BEliminarTodo.Location = new System.Drawing.Point(669, 526);
+            this.BEliminarTodo.Location = new System.Drawing.Point(649, 526);
             this.BEliminarTodo.Name = "BEliminarTodo";
             this.BEliminarTodo.Size = new System.Drawing.Size(167, 43);
             this.BEliminarTodo.TabIndex = 93;
@@ -187,7 +187,7 @@
             this.BGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BGuardar.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.BGuardar.Location = new System.Drawing.Point(476, 526);
+            this.BGuardar.Location = new System.Drawing.Point(456, 526);
             this.BGuardar.Name = "BGuardar";
             this.BGuardar.Size = new System.Drawing.Size(167, 43);
             this.BGuardar.TabIndex = 92;
@@ -201,7 +201,7 @@
             this.CBRol.FormattingEnabled = true;
             this.CBRol.Location = new System.Drawing.Point(20, 122);
             this.CBRol.Name = "CBRol";
-            this.CBRol.Size = new System.Drawing.Size(375, 24);
+            this.CBRol.Size = new System.Drawing.Size(375, 28);
             this.CBRol.TabIndex = 91;
             // 
             // TNombre
@@ -209,7 +209,7 @@
             this.TNombre.BackColor = System.Drawing.SystemColors.HighlightText;
             this.TNombre.Location = new System.Drawing.Point(20, 59);
             this.TNombre.Name = "TNombre";
-            this.TNombre.Size = new System.Drawing.Size(375, 23);
+            this.TNombre.Size = new System.Drawing.Size(375, 26);
             this.TNombre.TabIndex = 90;
             // 
             // LRol
@@ -218,7 +218,7 @@
             this.LRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LRol.Location = new System.Drawing.Point(16, 102);
             this.LRol.Name = "LRol";
-            this.LRol.Size = new System.Drawing.Size(32, 17);
+            this.LRol.Size = new System.Drawing.Size(36, 20);
             this.LRol.TabIndex = 89;
             this.LRol.Text = "Rol";
             // 
@@ -228,7 +228,7 @@
             this.LNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LNombre.Location = new System.Drawing.Point(16, 35);
             this.LNombre.Name = "LNombre";
-            this.LNombre.Size = new System.Drawing.Size(64, 17);
+            this.LNombre.Size = new System.Drawing.Size(71, 20);
             this.LNombre.TabIndex = 88;
             this.LNombre.Text = "Nombre";
             // 
@@ -237,9 +237,9 @@
             this.CBEstado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CBEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBEstado.FormattingEnabled = true;
-            this.CBEstado.Location = new System.Drawing.Point(424, 125);
+            this.CBEstado.Location = new System.Drawing.Point(404, 125);
             this.CBEstado.Name = "CBEstado";
-            this.CBEstado.Size = new System.Drawing.Size(375, 24);
+            this.CBEstado.Size = new System.Drawing.Size(375, 28);
             this.CBEstado.TabIndex = 105;
             // 
             // LEstado
@@ -247,9 +247,9 @@
             this.LEstado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LEstado.AutoSize = true;
             this.LEstado.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LEstado.Location = new System.Drawing.Point(420, 102);
+            this.LEstado.Location = new System.Drawing.Point(400, 102);
             this.LEstado.Name = "LEstado";
-            this.LEstado.Size = new System.Drawing.Size(58, 17);
+            this.LEstado.Size = new System.Drawing.Size(66, 20);
             this.LEstado.TabIndex = 104;
             this.LEstado.Text = "Estado";
             // 
@@ -274,7 +274,7 @@
             this.GBDatos.ForeColor = System.Drawing.Color.Black;
             this.GBDatos.Location = new System.Drawing.Point(15, 52);
             this.GBDatos.Name = "GBDatos";
-            this.GBDatos.Size = new System.Drawing.Size(821, 247);
+            this.GBDatos.Size = new System.Drawing.Size(801, 247);
             this.GBDatos.TabIndex = 106;
             this.GBDatos.TabStop = false;
             this.GBDatos.Text = "DATOS PERSONALES";
@@ -283,7 +283,7 @@
             // 
             this.TTelefono.Location = new System.Drawing.Point(20, 201);
             this.TTelefono.Name = "TTelefono";
-            this.TTelefono.Size = new System.Drawing.Size(375, 23);
+            this.TTelefono.Size = new System.Drawing.Size(375, 26);
             this.TTelefono.TabIndex = 109;
             // 
             // LTelefono
@@ -292,24 +292,24 @@
             this.LTelefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LTelefono.Location = new System.Drawing.Point(16, 178);
             this.LTelefono.Name = "LTelefono";
-            this.LTelefono.Size = new System.Drawing.Size(72, 17);
+            this.LTelefono.Size = new System.Drawing.Size(79, 20);
             this.LTelefono.TabIndex = 108;
             this.LTelefono.Text = "Teléfono";
             // 
             // TDni
             // 
             this.TDni.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TDni.Location = new System.Drawing.Point(424, 131);
+            this.TDni.Location = new System.Drawing.Point(404, 131);
             this.TDni.Name = "TDni";
-            this.TDni.Size = new System.Drawing.Size(375, 23);
+            this.TDni.Size = new System.Drawing.Size(375, 26);
             this.TDni.TabIndex = 105;
             // 
             // TCorreo
             // 
             this.TCorreo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TCorreo.Location = new System.Drawing.Point(424, 201);
+            this.TCorreo.Location = new System.Drawing.Point(404, 201);
             this.TCorreo.Name = "TCorreo";
-            this.TCorreo.Size = new System.Drawing.Size(375, 23);
+            this.TCorreo.Size = new System.Drawing.Size(375, 26);
             this.TCorreo.TabIndex = 107;
             // 
             // LCorreo
@@ -317,9 +317,9 @@
             this.LCorreo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LCorreo.AutoSize = true;
             this.LCorreo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LCorreo.Location = new System.Drawing.Point(420, 178);
+            this.LCorreo.Location = new System.Drawing.Point(400, 178);
             this.LCorreo.Name = "LCorreo";
-            this.LCorreo.Size = new System.Drawing.Size(57, 17);
+            this.LCorreo.Size = new System.Drawing.Size(63, 20);
             this.LCorreo.TabIndex = 106;
             this.LCorreo.Text = "Correo";
             // 
@@ -328,9 +328,9 @@
             this.LDni.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LDni.AutoSize = true;
             this.LDni.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LDni.Location = new System.Drawing.Point(420, 107);
+            this.LDni.Location = new System.Drawing.Point(400, 107);
             this.LDni.Name = "LDni";
-            this.LDni.Size = new System.Drawing.Size(34, 17);
+            this.LDni.Size = new System.Drawing.Size(40, 20);
             this.LDni.TabIndex = 104;
             this.LDni.Text = "DNI";
             // 
@@ -350,7 +350,7 @@
             this.GBSeguridad.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.GBSeguridad.Location = new System.Drawing.Point(15, 327);
             this.GBSeguridad.Name = "GBSeguridad";
-            this.GBSeguridad.Size = new System.Drawing.Size(821, 173);
+            this.GBSeguridad.Size = new System.Drawing.Size(801, 173);
             this.GBSeguridad.TabIndex = 107;
             this.GBSeguridad.TabStop = false;
             this.GBSeguridad.Text = "SEGURIDAD Y ROLES";
@@ -391,7 +391,7 @@
             this.LTitulo.ForeColor = System.Drawing.Color.SteelBlue;
             this.LTitulo.Location = new System.Drawing.Point(252, 24);
             this.LTitulo.Name = "LTitulo";
-            this.LTitulo.Size = new System.Drawing.Size(423, 40);
+            this.LTitulo.Size = new System.Drawing.Size(418, 40);
             this.LTitulo.TabIndex = 108;
             this.LTitulo.Text = "- MODIFICAR USUARIO -";
             this.LTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -399,7 +399,7 @@
             // 
             // FormModificarUsuario
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoScrollMinSize = new System.Drawing.Size(850, 900);
