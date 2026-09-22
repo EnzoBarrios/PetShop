@@ -361,10 +361,12 @@ namespace PetShop.Presentacion.Menu
             // 
             // contenedor
             // 
+            this.contenedor.AutoScroll = true;
             this.contenedor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contenedor.Location = new System.Drawing.Point(0, 175);
             this.contenedor.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.contenedor.Name = "contenedor";
+            this.contenedor.Padding = new System.Windows.Forms.Padding(15);
             this.contenedor.Size = new System.Drawing.Size(1440, 746);
             this.contenedor.TabIndex = 13;
             // 
