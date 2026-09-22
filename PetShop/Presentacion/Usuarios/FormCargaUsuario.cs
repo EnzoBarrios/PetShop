@@ -54,26 +54,34 @@ namespace PetShop.Presentacion.Usuarios
 
         private void BGuardar_Click(object sender, EventArgs e)
         {
-            // Validar campos obligatorios básicos
+            // 1. Validar campos obligatorios básicos
             if (string.IsNullOrWhiteSpace(TNombre.Text) ||
                 string.IsNullOrWhiteSpace(TApellido.Text) ||
                 string.IsNullOrWhiteSpace(TNombreUsuario.Text) ||
                 string.IsNullOrWhiteSpace(TClave.Text) ||
-                CBRol.SelectedIndex == -1)
+                CBRol.SelectedIndex == -1 ||
+                CBRol.SelectedValue == null)
             {
                 MessageBox.Show("Por favor, complete los campos obligatorios (Nombre, Apellido, Usuario, Contraseña y Rol).", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Validar coincidencia de contraseñas
+            // 2. Validar coincidencia de contraseñas
             if (TClave.Text != TConfirmar.Text)
             {
                 MessageBox.Show("Las contraseñas ingresadas no coinciden.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            string query = @"INSERT INTO Usuario (nombre, apellido, nombre_usuario, clave, dni, correo, telefono, estado, fecha_creacion, id_rol)
-                            VALUES (@Nombre, @Apellido, @Usuario, @Clave, @Dni, @Correo, @Telefono, 'Activo', GETDATE(), @IdRol)";
+            // 3. Validar obtención correcta del IdRol
+            if (!int.TryParse(CBRol.SelectedValue.ToString(), out int idRol))
+            {
+                MessageBox.Show("Seleccione un rol válido.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string query = @"INSERT INTO Usuario (nombre, apellido, nombre_usuario, clave, dni, correo, telefono, estado, fecha_creacion, id_rol) 
+                    VALUES (@Nombre, @Apellido, @Usuario, @Clave, @Dni, @Correo, @Telefono, 1, GETDATE(), @IdRol)";
 
             using (SqlConnection con = Conexion.ObtenerConexion())
             {
@@ -87,18 +95,19 @@ namespace PetShop.Presentacion.Usuarios
                         cmd.Parameters.AddWithValue("@Usuario", TNombreUsuario.Text.Trim());
                         cmd.Parameters.AddWithValue("@Clave", TClave.Text.Trim());
 
-                        // Si los campos opcionales tienen texto se mandan, si no, se inserta DBNull
+                        // Mapeo seguro de campos opcionales
                         cmd.Parameters.AddWithValue("@Dni", string.IsNullOrWhiteSpace(TDni.Text) ? (object)DBNull.Value : TDni.Text.Trim());
                         cmd.Parameters.AddWithValue("@Correo", string.IsNullOrWhiteSpace(TCorreo.Text) ? (object)DBNull.Value : TCorreo.Text.Trim());
                         cmd.Parameters.AddWithValue("@Telefono", string.IsNullOrWhiteSpace(TTelefono.Text) ? (object)DBNull.Value : TTelefono.Text.Trim());
 
-                        cmd.Parameters.AddWithValue("@IdRol", Convert.ToInt32(CBRol.SelectedValue));
+                        cmd.Parameters.AddWithValue("@IdRol", idRol);
 
                         int filasAfectadas = cmd.ExecuteNonQuery();
 
                         if (filasAfectadas > 0)
                         {
                             MessageBox.Show("Usuario registrado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.DialogResult = DialogResult.OK; // Opcional: permite notificar al FormUsuarios que debe refrescar la grilla
                             this.Close();
                         }
                     }

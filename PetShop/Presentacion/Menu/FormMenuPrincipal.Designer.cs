@@ -78,6 +78,7 @@ namespace PetShop.Presentacion.Menu
             this.msPrincipal.AutoSize = false;
             this.msPrincipal.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.msPrincipal.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.msPrincipal.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.msPrincipal.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.msPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.usuariosToolStripMenuItem,
@@ -85,9 +86,10 @@ namespace PetShop.Presentacion.Menu
             this.ventaToolStripMenuItem,
             this.reportesToolStripMenuItem,
             this.sistemaToolStripMenuItem});
-            this.msPrincipal.Location = new System.Drawing.Point(0, 60);
+            this.msPrincipal.Location = new System.Drawing.Point(0, 75);
             this.msPrincipal.Name = "msPrincipal";
-            this.msPrincipal.Size = new System.Drawing.Size(1280, 80);
+            this.msPrincipal.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+            this.msPrincipal.Size = new System.Drawing.Size(1440, 100);
             this.msPrincipal.TabIndex = 4;
             this.msPrincipal.Text = "PetShop";
             // 
@@ -121,7 +123,7 @@ namespace PetShop.Presentacion.Menu
             // 
             this.productosToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("productosToolStripMenuItem.Image")));
             this.productosToolStripMenuItem.Name = "productosToolStripMenuItem";
-            this.productosToolStripMenuItem.Size = new System.Drawing.Size(187, 38);
+            this.productosToolStripMenuItem.Size = new System.Drawing.Size(222, 42);
             this.productosToolStripMenuItem.Text = "Productos";
             this.productosToolStripMenuItem.Click += new System.EventHandler(this.productosToolStripMenuItem_Click);
             // 
@@ -129,14 +131,14 @@ namespace PetShop.Presentacion.Menu
             // 
             this.categoriasToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("categoriasToolStripMenuItem.Image")));
             this.categoriasToolStripMenuItem.Name = "categoriasToolStripMenuItem";
-            this.categoriasToolStripMenuItem.Size = new System.Drawing.Size(187, 38);
+            this.categoriasToolStripMenuItem.Size = new System.Drawing.Size(222, 42);
             this.categoriasToolStripMenuItem.Text = "Categorias";
             // 
             // especiesToolStripMenuItem
             // 
             this.especiesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("especiesToolStripMenuItem.Image")));
             this.especiesToolStripMenuItem.Name = "especiesToolStripMenuItem";
-            this.especiesToolStripMenuItem.Size = new System.Drawing.Size(187, 38);
+            this.especiesToolStripMenuItem.Size = new System.Drawing.Size(222, 42);
             this.especiesToolStripMenuItem.Text = "Especies";
             // 
             // ventaToolStripMenuItem
@@ -156,7 +158,7 @@ namespace PetShop.Presentacion.Menu
             // 
             this.nuevaVentaToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("nuevaVentaToolStripMenuItem.Image")));
             this.nuevaVentaToolStripMenuItem.Name = "nuevaVentaToolStripMenuItem";
-            this.nuevaVentaToolStripMenuItem.Size = new System.Drawing.Size(248, 38);
+            this.nuevaVentaToolStripMenuItem.Size = new System.Drawing.Size(297, 42);
             this.nuevaVentaToolStripMenuItem.Text = "Nueva Venta";
             this.nuevaVentaToolStripMenuItem.Click += new System.EventHandler(this.nuevaVentaToolStripMenuItem_Click_1);
             // 
@@ -164,7 +166,7 @@ namespace PetShop.Presentacion.Menu
             // 
             this.historialDeVentasToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("historialDeVentasToolStripMenuItem.Image")));
             this.historialDeVentasToolStripMenuItem.Name = "historialDeVentasToolStripMenuItem";
-            this.historialDeVentasToolStripMenuItem.Size = new System.Drawing.Size(248, 38);
+            this.historialDeVentasToolStripMenuItem.Size = new System.Drawing.Size(297, 42);
             this.historialDeVentasToolStripMenuItem.Text = "Historial de Ventas";
             this.historialDeVentasToolStripMenuItem.Click += new System.EventHandler(this.historialDeVentasToolStripMenuItem_Click);
             // 
@@ -196,7 +198,7 @@ namespace PetShop.Presentacion.Menu
             // 
             this.cerrarSesiónToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("cerrarSesiónToolStripMenuItem.Image")));
             this.cerrarSesiónToolStripMenuItem.Name = "cerrarSesiónToolStripMenuItem";
-            this.cerrarSesiónToolStripMenuItem.Size = new System.Drawing.Size(207, 38);
+            this.cerrarSesiónToolStripMenuItem.Size = new System.Drawing.Size(246, 42);
             this.cerrarSesiónToolStripMenuItem.Text = "Cerrar Sesión";
             this.cerrarSesiónToolStripMenuItem.Click += new System.EventHandler(this.cerrarSesiónToolStripMenuItem_Click);
             // 
@@ -204,7 +206,7 @@ namespace PetShop.Presentacion.Menu
             // 
             this.salirToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("salirToolStripMenuItem.Image")));
             this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-            this.salirToolStripMenuItem.Size = new System.Drawing.Size(207, 38);
+            this.salirToolStripMenuItem.Size = new System.Drawing.Size(246, 42);
             this.salirToolStripMenuItem.Text = "Salir";
             this.salirToolStripMenuItem.Click += new System.EventHandler(this.salirToolStripMenuItem_Click);
             // 
@@ -250,9 +252,11 @@ namespace PetShop.Presentacion.Menu
             this.gbSesionIniciada.Controls.Add(this.lblUsuarioLogueado);
             this.gbSesionIniciada.Controls.Add(this.label1);
             this.gbSesionIniciada.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbSesionIniciada.Location = new System.Drawing.Point(15, 5);
+            this.gbSesionIniciada.Location = new System.Drawing.Point(17, 6);
+            this.gbSesionIniciada.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.gbSesionIniciada.Name = "gbSesionIniciada";
-            this.gbSesionIniciada.Size = new System.Drawing.Size(400, 90);
+            this.gbSesionIniciada.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.gbSesionIniciada.Size = new System.Drawing.Size(450, 112);
             this.gbSesionIniciada.TabIndex = 11;
             this.gbSesionIniciada.TabStop = false;
             this.gbSesionIniciada.Text = "Sesión Iniciada";
@@ -260,9 +264,10 @@ namespace PetShop.Presentacion.Menu
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(10, 55);
+            this.pictureBox2.Location = new System.Drawing.Point(11, 69);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox2.Size = new System.Drawing.Size(27, 30);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 14;
             this.pictureBox2.TabStop = false;
@@ -270,9 +275,10 @@ namespace PetShop.Presentacion.Menu
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(10, 25);
+            this.pictureBox1.Location = new System.Drawing.Point(11, 31);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox1.Size = new System.Drawing.Size(27, 30);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 11;
             this.pictureBox1.TabStop = false;
@@ -281,9 +287,9 @@ namespace PetShop.Presentacion.Menu
             // 
             this.lblRolLogeado.AutoSize = true;
             this.lblRolLogeado.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRolLogeado.Location = new System.Drawing.Point(35, 55);
+            this.lblRolLogeado.Location = new System.Drawing.Point(39, 69);
             this.lblRolLogeado.Name = "lblRolLogeado";
-            this.lblRolLogeado.Size = new System.Drawing.Size(118, 23);
+            this.lblRolLogeado.Size = new System.Drawing.Size(144, 30);
             this.lblRolLogeado.TabIndex = 13;
             this.lblRolLogeado.Text = "Administrador";
             // 
@@ -293,9 +299,9 @@ namespace PetShop.Presentacion.Menu
             this.lblUsuarioLogueado.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUsuarioLogueado.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblUsuarioLogueado.ImageIndex = 0;
-            this.lblUsuarioLogueado.Location = new System.Drawing.Point(35, 25);
+            this.lblUsuarioLogueado.Location = new System.Drawing.Point(39, 31);
             this.lblUsuarioLogueado.Name = "lblUsuarioLogueado";
-            this.lblUsuarioLogueado.Size = new System.Drawing.Size(60, 23);
+            this.lblUsuarioLogueado.Size = new System.Drawing.Size(74, 30);
             this.lblUsuarioLogueado.TabIndex = 12;
             this.lblUsuarioLogueado.Text = "Admin";
             this.lblUsuarioLogueado.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -303,9 +309,9 @@ namespace PetShop.Presentacion.Menu
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 43);
+            this.label1.Location = new System.Drawing.Point(15, 54);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 23);
+            this.label1.Size = new System.Drawing.Size(0, 30);
             this.label1.TabIndex = 11;
             // 
             // gbFechaHora
@@ -314,9 +320,11 @@ namespace PetShop.Presentacion.Menu
             this.gbFechaHora.Controls.Add(this.lblHora);
             this.gbFechaHora.Controls.Add(this.lblFecha);
             this.gbFechaHora.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbFechaHora.Location = new System.Drawing.Point(848, 5);
+            this.gbFechaHora.Location = new System.Drawing.Point(954, 6);
+            this.gbFechaHora.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.gbFechaHora.Name = "gbFechaHora";
-            this.gbFechaHora.Size = new System.Drawing.Size(400, 90);
+            this.gbFechaHora.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.gbFechaHora.Size = new System.Drawing.Size(450, 112);
             this.gbFechaHora.TabIndex = 12;
             this.gbFechaHora.TabStop = false;
             this.gbFechaHora.Text = "Fecha y Hora";
@@ -325,18 +333,18 @@ namespace PetShop.Presentacion.Menu
             // 
             this.lblHora.AutoSize = true;
             this.lblHora.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHora.Location = new System.Drawing.Point(15, 25);
+            this.lblHora.Location = new System.Drawing.Point(17, 31);
             this.lblHora.Name = "lblHora";
-            this.lblHora.Size = new System.Drawing.Size(0, 20);
+            this.lblHora.Size = new System.Drawing.Size(0, 24);
             this.lblHora.TabIndex = 14;
             // 
             // lblFecha
             // 
             this.lblFecha.AutoSize = true;
             this.lblFecha.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFecha.Location = new System.Drawing.Point(15, 55);
+            this.lblFecha.Location = new System.Drawing.Point(17, 69);
             this.lblFecha.Name = "lblFecha";
-            this.lblFecha.Size = new System.Drawing.Size(0, 20);
+            this.lblFecha.Size = new System.Drawing.Size(0, 24);
             this.lblFecha.TabIndex = 13;
             // 
             // panel1
@@ -345,9 +353,10 @@ namespace PetShop.Presentacion.Menu
             this.panel1.Controls.Add(this.gbFechaHora);
             this.panel1.Controls.Add(this.gbSesionIniciada);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 760);
+            this.panel1.Location = new System.Drawing.Point(0, 950);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1280, 100);
+            this.panel1.Size = new System.Drawing.Size(1440, 125);
             this.panel1.TabIndex = 10;
             // 
             // contenedor
@@ -355,20 +364,22 @@ namespace PetShop.Presentacion.Menu
             this.contenedor.AutoScroll = true;
             this.contenedor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contenedor.Location = new System.Drawing.Point(0, 175);
-            this.contenedor.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.contenedor.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.contenedor.Name = "contenedor";
-            this.contenedor.Padding = new System.Windows.Forms.Padding(15);
-            this.contenedor.Size = new System.Drawing.Size(1440, 746);
+            this.contenedor.Padding = new System.Windows.Forms.Padding(17, 19, 17, 19);
+            this.contenedor.Size = new System.Drawing.Size(1440, 775);
             this.contenedor.TabIndex = 13;
             // 
             // menuStrip1
             // 
             this.menuStrip1.AutoSize = false;
             this.menuStrip1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1280, 60);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1440, 75);
             this.menuStrip1.TabIndex = 16;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -379,9 +390,9 @@ namespace PetShop.Presentacion.Menu
             this.lblPetShop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblPetShop.ImageIndex = 0;
             this.lblPetShop.ImageList = this.imageList2;
-            this.lblPetShop.Location = new System.Drawing.Point(10, 10);
+            this.lblPetShop.Location = new System.Drawing.Point(11, 12);
             this.lblPetShop.Name = "lblPetShop";
-            this.lblPetShop.Size = new System.Drawing.Size(200, 40);
+            this.lblPetShop.Size = new System.Drawing.Size(225, 50);
             this.lblPetShop.TabIndex = 17;
             this.lblPetShop.Text = "PetShop";
             this.lblPetShop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -394,9 +405,9 @@ namespace PetShop.Presentacion.Menu
             // 
             // FormMenuPrincipal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1280, 860);
+            this.ClientSize = new System.Drawing.Size(1440, 1075);
             this.Controls.Add(this.lblPetShop);
             this.Controls.Add(this.contenedor);
             this.Controls.Add(this.panel1);
@@ -405,7 +416,7 @@ namespace PetShop.Presentacion.Menu
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FormMenuPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PetShop - Sistema de Gestión Veterinaria";

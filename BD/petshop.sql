@@ -192,3 +192,4 @@ GO
 INSERT INTO Metodo_pago (nombre_metodo)
 VALUES ('Efectivo'), ('Transferencia'), ('Qr');
 GO
+

@@ -122,7 +122,7 @@ namespace PetShop.Presentacion.Menu
             {
                 TopLevel = false,
                 FormBorderStyle = FormBorderStyle.None,
-                Dock = DockStyle.Fill // <--- Esto hace que el formulario tome todo el tamaño del contenedor
+                Dock = DockStyle.None // <--- Esto hace que el formulario tome todo el tamaño del contenedor
             };
 
             // Calcula el centrado respecto al tamaño interno del contenedor

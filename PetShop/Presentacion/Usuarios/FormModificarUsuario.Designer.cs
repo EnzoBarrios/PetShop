@@ -94,7 +94,7 @@
             // TApellido
             // 
             this.TApellido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TApellido.Location = new System.Drawing.Point(424, 59);
+            this.TApellido.Location = new System.Drawing.Point(404, 59);
             this.TApellido.Name = "TApellido";
             this.TApellido.Size = new System.Drawing.Size(375, 26);
             this.TApellido.TabIndex = 101;
@@ -104,7 +104,7 @@
             this.LApellido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LApellido.AutoSize = true;
             this.LApellido.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LApellido.Location = new System.Drawing.Point(420, 31);
+            this.LApellido.Location = new System.Drawing.Point(400, 31);
             this.LApellido.Name = "LApellido";
             this.LApellido.Size = new System.Drawing.Size(73, 20);
             this.LApellido.TabIndex = 100;
@@ -113,7 +113,7 @@
             // TConfirmar
             // 
             this.TConfirmar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TConfirmar.Location = new System.Drawing.Point(424, 60);
+            this.TConfirmar.Location = new System.Drawing.Point(404, 60);
             this.TConfirmar.Name = "TConfirmar";
             this.TConfirmar.Size = new System.Drawing.Size(375, 26);
             this.TConfirmar.TabIndex = 98;
@@ -124,7 +124,7 @@
             this.LConfirmar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LConfirmar.AutoSize = true;
             this.LConfirmar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LConfirmar.Location = new System.Drawing.Point(420, 37);
+            this.LConfirmar.Location = new System.Drawing.Point(400, 37);
             this.LConfirmar.Name = "LConfirmar";
             this.LConfirmar.Size = new System.Drawing.Size(182, 20);
             this.LConfirmar.TabIndex = 97;
@@ -168,7 +168,7 @@
             this.BEliminarTodo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.BEliminarTodo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BEliminarTodo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BEliminarTodo.Location = new System.Drawing.Point(669, 526);
+            this.BEliminarTodo.Location = new System.Drawing.Point(649, 526);
             this.BEliminarTodo.Name = "BEliminarTodo";
             this.BEliminarTodo.Size = new System.Drawing.Size(167, 43);
             this.BEliminarTodo.TabIndex = 93;
@@ -187,7 +187,7 @@
             this.BGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BGuardar.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.BGuardar.Location = new System.Drawing.Point(476, 526);
+            this.BGuardar.Location = new System.Drawing.Point(456, 526);
             this.BGuardar.Name = "BGuardar";
             this.BGuardar.Size = new System.Drawing.Size(167, 43);
             this.BGuardar.TabIndex = 92;
@@ -237,7 +237,7 @@
             this.CBEstado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CBEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBEstado.FormattingEnabled = true;
-            this.CBEstado.Location = new System.Drawing.Point(424, 125);
+            this.CBEstado.Location = new System.Drawing.Point(404, 125);
             this.CBEstado.Name = "CBEstado";
             this.CBEstado.Size = new System.Drawing.Size(375, 28);
             this.CBEstado.TabIndex = 105;
@@ -247,7 +247,7 @@
             this.LEstado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LEstado.AutoSize = true;
             this.LEstado.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LEstado.Location = new System.Drawing.Point(420, 102);
+            this.LEstado.Location = new System.Drawing.Point(400, 102);
             this.LEstado.Name = "LEstado";
             this.LEstado.Size = new System.Drawing.Size(66, 20);
             this.LEstado.TabIndex = 104;
@@ -274,7 +274,7 @@
             this.GBDatos.ForeColor = System.Drawing.Color.Black;
             this.GBDatos.Location = new System.Drawing.Point(15, 52);
             this.GBDatos.Name = "GBDatos";
-            this.GBDatos.Size = new System.Drawing.Size(821, 247);
+            this.GBDatos.Size = new System.Drawing.Size(801, 247);
             this.GBDatos.TabIndex = 106;
             this.GBDatos.TabStop = false;
             this.GBDatos.Text = "DATOS PERSONALES";
@@ -299,7 +299,7 @@
             // TDni
             // 
             this.TDni.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TDni.Location = new System.Drawing.Point(424, 131);
+            this.TDni.Location = new System.Drawing.Point(404, 131);
             this.TDni.Name = "TDni";
             this.TDni.Size = new System.Drawing.Size(375, 26);
             this.TDni.TabIndex = 105;
@@ -307,7 +307,7 @@
             // TCorreo
             // 
             this.TCorreo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TCorreo.Location = new System.Drawing.Point(424, 201);
+            this.TCorreo.Location = new System.Drawing.Point(404, 201);
             this.TCorreo.Name = "TCorreo";
             this.TCorreo.Size = new System.Drawing.Size(375, 26);
             this.TCorreo.TabIndex = 107;
@@ -317,7 +317,7 @@
             this.LCorreo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LCorreo.AutoSize = true;
             this.LCorreo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LCorreo.Location = new System.Drawing.Point(420, 178);
+            this.LCorreo.Location = new System.Drawing.Point(400, 178);
             this.LCorreo.Name = "LCorreo";
             this.LCorreo.Size = new System.Drawing.Size(63, 20);
             this.LCorreo.TabIndex = 106;
@@ -328,7 +328,7 @@
             this.LDni.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LDni.AutoSize = true;
             this.LDni.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LDni.Location = new System.Drawing.Point(420, 107);
+            this.LDni.Location = new System.Drawing.Point(400, 107);
             this.LDni.Name = "LDni";
             this.LDni.Size = new System.Drawing.Size(40, 20);
             this.LDni.TabIndex = 104;
@@ -350,13 +350,14 @@
             this.GBSeguridad.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.GBSeguridad.Location = new System.Drawing.Point(15, 327);
             this.GBSeguridad.Name = "GBSeguridad";
-            this.GBSeguridad.Size = new System.Drawing.Size(821, 173);
+            this.GBSeguridad.Size = new System.Drawing.Size(801, 173);
             this.GBSeguridad.TabIndex = 107;
             this.GBSeguridad.TabStop = false;
             this.GBSeguridad.Text = "SEGURIDAD Y ROLES";
             // 
             // PanelContenedor
             // 
+            this.PanelContenedor.AutoScroll = true;
             this.PanelContenedor.AutoScrollMinSize = new System.Drawing.Size(830, 620);
             this.PanelContenedor.Controls.Add(this.GBDatos);
             this.PanelContenedor.Controls.Add(this.BVolver);
@@ -390,7 +391,7 @@
             this.LTitulo.ForeColor = System.Drawing.Color.SteelBlue;
             this.LTitulo.Location = new System.Drawing.Point(252, 24);
             this.LTitulo.Name = "LTitulo";
-            this.LTitulo.Size = new System.Drawing.Size(444, 40);
+            this.LTitulo.Size = new System.Drawing.Size(418, 40);
             this.LTitulo.TabIndex = 108;
             this.LTitulo.Text = "- MODIFICAR USUARIO -";
             this.LTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
