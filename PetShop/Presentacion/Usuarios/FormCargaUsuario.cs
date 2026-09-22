@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace PetShop.Presentacion.Usuarios
@@ -14,9 +15,19 @@ namespace PetShop.Presentacion.Usuarios
 
         private void FormCargaUsuario_Load(object sender, EventArgs e)
         {
-            // Bloquea la edición manual para que solo se pueda seleccionar de la lista
+            // 1. Ocultar caracteres de las contraseñas por defecto
+            TClave.UseSystemPasswordChar = true;
+            TConfirmar.UseSystemPasswordChar = true;
+
+            // 2. Configurar ComboBox de roles (bloquea la edición manual)
             CBRol.DropDownStyle = ComboBoxStyle.DropDownList;
             CargarRoles();
+
+            // 3. Vincular eventos KeyPress para filtrado de datos en tiempo real
+            TNombre.KeyPress += SoloLetras_KeyPress;
+            TApellido.KeyPress += SoloLetras_KeyPress;
+            TDni.KeyPress += SoloNumeros_KeyPress;
+            TTelefono.KeyPress += SoloNumeros_KeyPress;
         }
 
         private void CargarRoles()
@@ -33,16 +44,10 @@ namespace PetShop.Presentacion.Usuarios
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
-                        // 1. Desvincular binding previo
                         CBRol.DataSource = null;
-
-                        // 2. Definir qué mostrar y qué usar como ID PRIMERO
                         CBRol.DisplayMember = "nombre_rol";
                         CBRol.ValueMember = "id_rol";
-
-                        // 3. Asignar el DataTable RECIÉN AL FINAL
                         CBRol.DataSource = dt;
-
                     }
                 }
                 catch (Exception ex)
@@ -52,28 +57,119 @@ namespace PetShop.Presentacion.Usuarios
             }
         }
 
+
+        private void SoloLetras_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permite solo letras, espacios y teclas de control (Backspace)
+            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void SoloNumeros_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permite solo números y teclas de control
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        // Método auxiliar para validar correo electrónico
+        private bool EsCorreoValido(string correo)
+        {
+            if (string.IsNullOrWhiteSpace(correo)) return true; // Si está vacío pasa 
+            string patron = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(correo, patron);
+        }
+
+
+        private void BVerClave_Click(object sender, EventArgs e)
+        {
+            bool estaEnmascarado = TClave.UseSystemPasswordChar;
+
+            TClave.UseSystemPasswordChar = !estaEnmascarado;
+            TConfirmar.UseSystemPasswordChar = !estaEnmascarado;
+
+            if (sender is Button boton)
+            {
+                boton.Text = estaEnmascarado ? "👁‍🗨" : "👁";
+            }
+        }
+
+        private void BVerConfirmar_Click(object sender, EventArgs e)
+        {
+            bool estaEnmascarado = TConfirmar.UseSystemPasswordChar;
+            TConfirmar.UseSystemPasswordChar = !estaEnmascarado;
+            BVerConfirmar.Text = estaEnmascarado ? "👁‍🗨" : "👁";
+        }
+
+
         private void BGuardar_Click(object sender, EventArgs e)
         {
-            // Validar campos obligatorios básicos
+            // 1. Validar campos obligatorios básicos
             if (string.IsNullOrWhiteSpace(TNombre.Text) ||
                 string.IsNullOrWhiteSpace(TApellido.Text) ||
                 string.IsNullOrWhiteSpace(TNombreUsuario.Text) ||
                 string.IsNullOrWhiteSpace(TClave.Text) ||
-                CBRol.SelectedIndex == -1)
+                CBRol.SelectedIndex == -1 ||
+                CBRol.SelectedValue == null)
             {
                 MessageBox.Show("Por favor, complete los campos obligatorios (Nombre, Apellido, Usuario, Contraseña y Rol).", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Validar coincidencia de contraseñas
-            if (TClave.Text != TConfirmar.Text)
+            // 2. Validar longitud mínima de la contraseña
+            if (TClave.Text.Trim().Length < 6)
             {
-                MessageBox.Show("Las contraseñas ingresadas no coinciden.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("La contraseña debe tener al menos 6 caracteres.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                TClave.Focus();
                 return;
             }
 
-            string query = @"INSERT INTO Usuario (nombre, apellido, nombre_usuario, clave, dni, correo, telefono, estado, fecha_creacion, id_rol)
-                            VALUES (@Nombre, @Apellido, @Usuario, @Clave, @Dni, @Correo, @Telefono, 'Activo', GETDATE(), @IdRol)";
+            // 3. Validar coincidencia de contraseñas
+            if (TClave.Text != TConfirmar.Text)
+            {
+                MessageBox.Show("Las contraseñas ingresadas no coinciden.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                TConfirmar.Focus();
+                return;
+            }
+
+            // 4. Validar formato de correo electrónico
+            if (!EsCorreoValido(TCorreo.Text.Trim()))
+            {
+                MessageBox.Show("El formato del correo electrónico ingresado no es válido (ejemplo: usuario@correo.com).", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                TCorreo.Focus();
+                return;
+            }
+
+            // 5. Validar formato de DNI (opcional pero con longitud válida)
+            if (!string.IsNullOrWhiteSpace(TDni.Text) && (TDni.Text.Trim().Length < 7 || TDni.Text.Trim().Length > 8))
+            {
+                MessageBox.Show("El DNI debe tener entre 7 y 8 dígitos.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                TDni.Focus();
+                return;
+            }
+
+            // 6. Validar formato de Teléfono (opcional)
+            if (!string.IsNullOrWhiteSpace(TTelefono.Text) && TTelefono.Text.Trim().Length < 8)
+            {
+                MessageBox.Show("El número de teléfono ingresado es demasiado corto.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                TTelefono.Focus();
+                return;
+            }
+
+            // 7. Validar conversión correcta del IdRol seleccionado
+            if (!int.TryParse(CBRol.SelectedValue.ToString(), out int idRol))
+            {
+                MessageBox.Show("Seleccione un rol válido.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // --- INSERCIÓN EN LA BASE DE DATOS ---
+            string query = @"INSERT INTO Usuario (nombre, apellido, nombre_usuario, clave, dni, correo, telefono, estado, fecha_creacion, id_rol) 
+                            VALUES (@Nombre, @Apellido, @Usuario, @Clave, @Dni, @Correo, @Telefono, 1, GETDATE(), @IdRol)";
 
             using (SqlConnection con = Conexion.ObtenerConexion())
             {
@@ -87,18 +183,19 @@ namespace PetShop.Presentacion.Usuarios
                         cmd.Parameters.AddWithValue("@Usuario", TNombreUsuario.Text.Trim());
                         cmd.Parameters.AddWithValue("@Clave", TClave.Text.Trim());
 
-                        // Si los campos opcionales tienen texto se mandan, si no, se inserta DBNull
+                        // Campos opcionales guardados como DBNull si están vacíos
                         cmd.Parameters.AddWithValue("@Dni", string.IsNullOrWhiteSpace(TDni.Text) ? (object)DBNull.Value : TDni.Text.Trim());
                         cmd.Parameters.AddWithValue("@Correo", string.IsNullOrWhiteSpace(TCorreo.Text) ? (object)DBNull.Value : TCorreo.Text.Trim());
                         cmd.Parameters.AddWithValue("@Telefono", string.IsNullOrWhiteSpace(TTelefono.Text) ? (object)DBNull.Value : TTelefono.Text.Trim());
 
-                        cmd.Parameters.AddWithValue("@IdRol", Convert.ToInt32(CBRol.SelectedValue));
+                        cmd.Parameters.AddWithValue("@IdRol", idRol);
 
                         int filasAfectadas = cmd.ExecuteNonQuery();
 
                         if (filasAfectadas > 0)
                         {
                             MessageBox.Show("Usuario registrado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.DialogResult = DialogResult.OK;
                             this.Close();
                         }
                     }
@@ -114,8 +211,26 @@ namespace PetShop.Presentacion.Usuarios
             }
         }
 
+
         private void BEliminarTodo_Click(object sender, EventArgs e)
         {
+            // Comprobar si hay algún dato cargado antes de preguntar
+            bool hayDatosCargados = !string.IsNullOrWhiteSpace(TNombre.Text) ||
+                                    !string.IsNullOrWhiteSpace(TApellido.Text) ||
+                                    !string.IsNullOrWhiteSpace(TNombreUsuario.Text) ||
+                                    !string.IsNullOrWhiteSpace(TClave.Text) ||
+                                    !string.IsNullOrWhiteSpace(TConfirmar.Text) ||
+                                    !string.IsNullOrWhiteSpace(TDni.Text) ||
+                                    !string.IsNullOrWhiteSpace(TCorreo.Text) ||
+                                    !string.IsNullOrWhiteSpace(TTelefono.Text) ||
+                                    CBRol.SelectedIndex != -1;
+
+            if (!hayDatosCargados)
+            {
+                MessageBox.Show("No hay datos ingresados para borrar.", "Formulario Vacío", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             DialogResult respuesta = MessageBox.Show(
                 "¿Está seguro de que desea limpiar todos los campos cargados?",
                 "Confirmar Limpieza",
@@ -123,21 +238,19 @@ namespace PetShop.Presentacion.Usuarios
                 MessageBoxIcon.Question
             );
 
-            if (respuesta == DialogResult.No)
+            if (respuesta == DialogResult.Yes)
             {
-                return;
+                TNombre.Clear();
+                TApellido.Clear();
+                TNombreUsuario.Clear();
+                TClave.Clear();
+                TConfirmar.Clear();
+                TDni.Clear();
+                TCorreo.Clear();
+                TTelefono.Clear();
+                CBRol.SelectedIndex = -1;
+                TNombre.Focus();
             }
-
-            TNombre.Clear();
-            TApellido.Clear();
-            TNombreUsuario.Clear();
-            TClave.Clear();
-            TConfirmar.Clear();
-            TDni.Clear();
-            TCorreo.Clear();
-            TTelefono.Clear();
-            CBRol.SelectedIndex = -1;
-            TNombre.Focus();
         }
 
         private void BVolver_Click(object sender, EventArgs e)
@@ -145,9 +258,5 @@ namespace PetShop.Presentacion.Usuarios
             this.Close();
         }
 
-        private void LTitulo_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

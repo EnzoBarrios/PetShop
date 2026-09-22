@@ -53,7 +53,9 @@
             this.lblPetShop = new System.Windows.Forms.Label();
             this.GBDatos = new System.Windows.Forms.GroupBox();
             this.GBSeguridad = new System.Windows.Forms.GroupBox();
+            this.BVerClave = new System.Windows.Forms.Button();
             this.PanelContenedor = new System.Windows.Forms.Panel();
+            this.BVerConfirmar = new System.Windows.Forms.Button();
             this.GBDatos.SuspendLayout();
             this.GBSeguridad.SuspendLayout();
             this.PanelContenedor.SuspendLayout();
@@ -63,7 +65,7 @@
             // 
             this.TClave.Location = new System.Drawing.Point(16, 64);
             this.TClave.Name = "TClave";
-            this.TClave.Size = new System.Drawing.Size(375, 26);
+            this.TClave.Size = new System.Drawing.Size(335, 26);
             this.TClave.TabIndex = 78;
             this.TClave.UseSystemPasswordChar = true;
             // 
@@ -125,7 +127,6 @@
             this.LTitulo.Size = new System.Drawing.Size(550, 40);
             this.LTitulo.TabIndex = 73;
             this.LTitulo.Text = "- CARGAR NUEVO USUARIO -";
-            this.LTitulo.Click += new System.EventHandler(this.LTitulo_Click);
             // 
             // CBRol
             // 
@@ -139,6 +140,7 @@
             // TNombre
             // 
             this.TNombre.Location = new System.Drawing.Point(16, 66);
+            this.TNombre.MaxLength = 40;
             this.TNombre.Name = "TNombre";
             this.TNombre.Size = new System.Drawing.Size(375, 26);
             this.TNombre.TabIndex = 71;
@@ -167,7 +169,7 @@
             // 
             this.TConfirmar.Location = new System.Drawing.Point(425, 64);
             this.TConfirmar.Name = "TConfirmar";
-            this.TConfirmar.Size = new System.Drawing.Size(375, 26);
+            this.TConfirmar.Size = new System.Drawing.Size(334, 26);
             this.TConfirmar.TabIndex = 82;
             this.TConfirmar.UseSystemPasswordChar = true;
             // 
@@ -196,6 +198,7 @@
             // 
             this.TApellido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TApellido.Location = new System.Drawing.Point(425, 66);
+            this.TApellido.MaxLength = 40;
             this.TApellido.Name = "TApellido";
             this.TApellido.Size = new System.Drawing.Size(377, 26);
             this.TApellido.TabIndex = 85;
@@ -213,6 +216,7 @@
             // TNombreUsuario
             // 
             this.TNombreUsuario.Location = new System.Drawing.Point(16, 143);
+            this.TNombreUsuario.MaxLength = 15;
             this.TNombreUsuario.Name = "TNombreUsuario";
             this.TNombreUsuario.Size = new System.Drawing.Size(375, 26);
             this.TNombreUsuario.TabIndex = 87;
@@ -221,6 +225,7 @@
             // 
             this.TDni.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TDni.Location = new System.Drawing.Point(425, 143);
+            this.TDni.MaxLength = 8;
             this.TDni.Name = "TDni";
             this.TDni.Size = new System.Drawing.Size(375, 26);
             this.TDni.TabIndex = 89;
@@ -240,6 +245,7 @@
             // 
             this.TCorreo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TCorreo.Location = new System.Drawing.Point(425, 214);
+            this.TCorreo.MaxLength = 40;
             this.TCorreo.Name = "TCorreo";
             this.TCorreo.Size = new System.Drawing.Size(375, 26);
             this.TCorreo.TabIndex = 91;
@@ -258,6 +264,7 @@
             // TTelefono
             // 
             this.TTelefono.Location = new System.Drawing.Point(16, 214);
+            this.TTelefono.MaxLength = 15;
             this.TTelefono.Name = "TTelefono";
             this.TTelefono.Size = new System.Drawing.Size(375, 26);
             this.TTelefono.TabIndex = 93;
@@ -313,6 +320,8 @@
             // 
             this.GBSeguridad.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.GBSeguridad.Controls.Add(this.BVerConfirmar);
+            this.GBSeguridad.Controls.Add(this.BVerClave);
             this.GBSeguridad.Controls.Add(this.TClave);
             this.GBSeguridad.Controls.Add(this.LClave);
             this.GBSeguridad.Controls.Add(this.LConfirmar);
@@ -327,6 +336,18 @@
             this.GBSeguridad.TabStop = false;
             this.GBSeguridad.Text = "SEGURIDAD Y ROLES";
             // 
+            // BVerClave
+            // 
+            this.BVerClave.BackColor = System.Drawing.Color.Transparent;
+            this.BVerClave.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.BVerClave.Location = new System.Drawing.Point(353, 64);
+            this.BVerClave.Name = "BVerClave";
+            this.BVerClave.Size = new System.Drawing.Size(38, 38);
+            this.BVerClave.TabIndex = 83;
+            this.BVerClave.Text = "👁";
+            this.BVerClave.UseVisualStyleBackColor = false;
+            this.BVerClave.Click += new System.EventHandler(this.BVerClave_Click);
+            // 
             // PanelContenedor
             // 
             this.PanelContenedor.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -339,6 +360,18 @@
             this.PanelContenedor.Name = "PanelContenedor";
             this.PanelContenedor.Size = new System.Drawing.Size(861, 569);
             this.PanelContenedor.TabIndex = 94;
+            // 
+            // BVerConfirmar
+            // 
+            this.BVerConfirmar.BackColor = System.Drawing.Color.Transparent;
+            this.BVerConfirmar.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.BVerConfirmar.Location = new System.Drawing.Point(762, 64);
+            this.BVerConfirmar.Name = "BVerConfirmar";
+            this.BVerConfirmar.Size = new System.Drawing.Size(38, 38);
+            this.BVerConfirmar.TabIndex = 84;
+            this.BVerConfirmar.Text = "👁";
+            this.BVerConfirmar.UseVisualStyleBackColor = false;
+            this.BVerConfirmar.Click += new System.EventHandler(this.BVerConfirmar_Click);
             // 
             // FormCargaUsuario
             // 
@@ -390,5 +423,7 @@
         private System.Windows.Forms.GroupBox GBDatos;
         private System.Windows.Forms.GroupBox GBSeguridad;
         private System.Windows.Forms.Panel PanelContenedor;
+        private System.Windows.Forms.Button BVerClave;
+        private System.Windows.Forms.Button BVerConfirmar;
     }
 }
