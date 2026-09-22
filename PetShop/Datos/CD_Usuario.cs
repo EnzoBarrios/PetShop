@@ -16,7 +16,7 @@ namespace PetShop.Datos
         {
             List<Usuario> lista = new List<Usuario>();
 
-            using (SqlConnection conexion = new SqlConnection(Conexion.cadenaConexion))
+            using (SqlConnection conexion = new SqlConnection(Conexion.CadenaConexion))
             {
                 try
                 {
@@ -24,8 +24,10 @@ namespace PetShop.Datos
                         "u.correo, u.telefono, u.fecha_creacion, u.estado, r.id_rol, r.nombre_rol " +
                         "FROM Usuario u INNER JOIN Rol r ON u.id_rol = r.id_rol";
 
-                    SqlCommand cmd = new SqlCommand(query, conexion);
-                    cmd.CommandType = CommandType.Text;
+                    SqlCommand cmd = new SqlCommand(query, conexion)
+                    {
+                        CommandType = CommandType.Text
+                    };
 
                     conexion.Open();
 
