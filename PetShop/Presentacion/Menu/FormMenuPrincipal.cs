@@ -106,14 +106,12 @@ namespace PetShop.Presentacion.Menu
 
         private void AbrirFormularioEnMdi<T>() where T : Form, new()
         {
-            // Si ya está abierto el mismo formulario, no recarga
             if (_formularioActivo != null && _formularioActivo is T)
             {
                 _formularioActivo.BringToFront();
                 return;
             }
 
-            // Cierra y libera el formulario anterior si existe
             if (_formularioActivo != null)
             {
                 _formularioActivo.Close();
@@ -122,9 +120,9 @@ namespace PetShop.Presentacion.Menu
 
             _formularioActivo = new T
             {
-                TopLevel= false,
-                FormBorderStyle = FormBorderStyle.None, 
-                Dock = DockStyle.None
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill // <--- Esto hace que el formulario tome todo el tamaño del contenedor
             };
 
             // Calcula el centrado respecto al tamaño interno del contenedor
@@ -136,6 +134,7 @@ namespace PetShop.Presentacion.Menu
             contenedor.Controls.Clear();
             contenedor.Controls.Add(_formularioActivo);
             contenedor.Tag = _formularioActivo;
+
             _formularioActivo.Show();
             _formularioActivo.BringToFront();
         }

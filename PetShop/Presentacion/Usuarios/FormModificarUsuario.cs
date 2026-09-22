@@ -296,5 +296,10 @@ namespace PetShop.Presentacion.Usuarios
         {
             this.Close();
         }
+
+        private void LTitulo_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
