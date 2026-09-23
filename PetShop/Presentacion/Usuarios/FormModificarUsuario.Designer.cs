@@ -162,7 +162,7 @@
             this.CBRol.FormattingEnabled = true;
             this.CBRol.Location = new System.Drawing.Point(53, 125);
             this.CBRol.Name = "CBRol";
-            this.CBRol.Size = new System.Drawing.Size(267, 28);
+            this.CBRol.Size = new System.Drawing.Size(314, 28);
             this.CBRol.TabIndex = 91;
             // 
             // TNombre
@@ -358,11 +358,39 @@
             this.PanelContenedor.Controls.Add(this.GBSeguridad);
             this.PanelContenedor.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.PanelContenedor.Location = new System.Drawing.Point(55, 87);
+            this.PanelContenedor.Location = new System.Drawing.Point(49, 87);
             this.PanelContenedor.Name = "PanelContenedor";
             this.PanelContenedor.Size = new System.Drawing.Size(987, 611);
             this.PanelContenedor.TabIndex = 108;
             // 
             // btnVolver
+            // LTitulo
+            // 
+            this.LTitulo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LTitulo.ForeColor = System.Drawing.Color.SteelBlue;
+            this.LTitulo.Location = new System.Drawing.Point(352, 24);
+            this.LTitulo.Name = "LTitulo";
+            this.LTitulo.Size = new System.Drawing.Size(458, 40);
+            this.LTitulo.TabIndex = 108;
+            this.LTitulo.Text = "- MODIFICAR USUARIO -";
+            this.LTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblPetShop
+            // 
+            this.lblPetShop.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lblPetShop.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPetShop.Image = ((System.Drawing.Image)(resources.GetObject("lblPetShop.Image")));
+            this.lblPetShop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblPetShop.Location = new System.Drawing.Point(12, 6);
+            this.lblPetShop.Name = "lblPetShop";
+            this.lblPetShop.Size = new System.Drawing.Size(186, 72);
+            this.lblPetShop.TabIndex = 108;
+            this.lblPetShop.Text = "PetShop";
+            this.lblPetShop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // button3
             // 
             this.btnVolver.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
