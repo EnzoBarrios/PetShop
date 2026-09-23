@@ -43,7 +43,7 @@ namespace PetShop.Presentacion.Usuarios
 
         private void ConfigurarEstiloCamposLectura()
         {
-            // ÚNICAMENTE ROL Y ESTADO EN SOLO LECTURA
+           
             TRol.ReadOnly = true;
             TEstado.ReadOnly = true;
 

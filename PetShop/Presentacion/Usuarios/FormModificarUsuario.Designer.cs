@@ -56,13 +56,13 @@
             this.BVerConfirmar = new System.Windows.Forms.Button();
             this.BVerClave = new System.Windows.Forms.Button();
             this.PanelContenedor = new System.Windows.Forms.Panel();
-            this.btnVolver = new System.Windows.Forms.Button();
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
+            this.LTitulo = new System.Windows.Forms.Label();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.lblPetShop = new System.Windows.Forms.Label();
+            this.btnVolver = new System.Windows.Forms.Button();
             this.btnBorrar = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
-            this.LTitulo = new System.Windows.Forms.Label();
-            this.lblPetShop = new System.Windows.Forms.Label();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.GBDatos.SuspendLayout();
             this.GBSeguridad.SuspendLayout();
             this.PanelContenedor.SuspendLayout();
@@ -357,10 +357,51 @@
             this.PanelContenedor.Controls.Add(this.LFechaCreacion);
             this.PanelContenedor.Controls.Add(this.GBSeguridad);
             this.PanelContenedor.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.PanelContenedor.Location = new System.Drawing.Point(36, 87);
+            this.PanelContenedor.Location = new System.Drawing.Point(23, 87);
             this.PanelContenedor.Name = "PanelContenedor";
             this.PanelContenedor.Size = new System.Drawing.Size(987, 611);
             this.PanelContenedor.TabIndex = 108;
+            // 
+            // imageList2
+            // 
+            this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
+            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList2.Images.SetKeyName(0, "Volver.png");
+            this.imageList2.Images.SetKeyName(1, "Guardar.png");
+            this.imageList2.Images.SetKeyName(2, "Eliminar.png");
+            // 
+            // LTitulo
+            // 
+            this.LTitulo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LTitulo.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LTitulo.ForeColor = System.Drawing.Color.Black;
+            this.LTitulo.Location = new System.Drawing.Point(340, 24);
+            this.LTitulo.Name = "LTitulo";
+            this.LTitulo.Size = new System.Drawing.Size(368, 40);
+            this.LTitulo.TabIndex = 108;
+            this.LTitulo.Text = "Modificar Usuario";
+            this.LTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "Huella_Perro.png");
+            // 
+            // lblPetShop
+            // 
+            this.lblPetShop.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lblPetShop.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPetShop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblPetShop.ImageKey = "Huella_Perro.png";
+            this.lblPetShop.ImageList = this.imageList1;
+            this.lblPetShop.Location = new System.Drawing.Point(12, 6);
+            this.lblPetShop.Name = "lblPetShop";
+            this.lblPetShop.Size = new System.Drawing.Size(186, 72);
+            this.lblPetShop.TabIndex = 108;
+            this.lblPetShop.Text = "PetShop";
+            this.lblPetShop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btnVolver
             // 
@@ -379,14 +420,6 @@
             this.btnVolver.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnVolver.UseVisualStyleBackColor = false;
             this.btnVolver.Click += new System.EventHandler(this.BtnVolver_Click);
-            // 
-            // imageList2
-            // 
-            this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
-            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList2.Images.SetKeyName(0, "Volver.png");
-            this.imageList2.Images.SetKeyName(1, "Guardar.png");
-            this.imageList2.Images.SetKeyName(2, "Eliminar.png");
             // 
             // btnBorrar
             // 
@@ -428,39 +461,6 @@
             this.btnGuardar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnGuardar.UseVisualStyleBackColor = false;
             this.btnGuardar.Click += new System.EventHandler(this.BtnGuardar_Click);
-            // 
-            // LTitulo
-            // 
-            this.LTitulo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.LTitulo.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LTitulo.ForeColor = System.Drawing.Color.Black;
-            this.LTitulo.Location = new System.Drawing.Point(340, 24);
-            this.LTitulo.Name = "LTitulo";
-            this.LTitulo.Size = new System.Drawing.Size(394, 40);
-            this.LTitulo.TabIndex = 108;
-            this.LTitulo.Text = "Modificar Usuario";
-            this.LTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblPetShop
-            // 
-            this.lblPetShop.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.lblPetShop.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPetShop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblPetShop.ImageKey = "Huella_Perro.png";
-            this.lblPetShop.ImageList = this.imageList1;
-            this.lblPetShop.Location = new System.Drawing.Point(12, 6);
-            this.lblPetShop.Name = "lblPetShop";
-            this.lblPetShop.Size = new System.Drawing.Size(186, 72);
-            this.lblPetShop.TabIndex = 108;
-            this.lblPetShop.Text = "PetShop";
-            this.lblPetShop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "Huella_Perro.png");
             // 
             // FormModificarUsuario
             // 

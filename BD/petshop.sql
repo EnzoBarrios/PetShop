@@ -32,11 +32,11 @@ CREATE TABLE Usuario (
 	CONSTRAINT UQ_Usuario_Correo UNIQUE (correo)
 );
 GO
--- 1. Eliminar las restricciones UNIQUE actuales que rechazan múltiples NULLs
+
 ALTER TABLE Usuario DROP CONSTRAINT UQ_Usuario_Dni;
 ALTER TABLE Usuario DROP CONSTRAINT UQ_Usuario_Correo;
 
--- 2. Crear Índices Únicos Filtrados (solo validan duplicados si el campo NO es NULL)
+
 CREATE UNIQUE NONCLUSTERED INDEX UQ_Usuario_Dni_Filtered
 ON Usuario(dni)
 WHERE dni IS NOT NULL;
