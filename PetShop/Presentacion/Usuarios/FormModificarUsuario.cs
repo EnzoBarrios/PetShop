@@ -55,7 +55,7 @@ namespace PetShop.Presentacion.Usuarios
         private void BloquearCamposLectura()
         {
             // Bloquea e inactiva visualmente los campos que no deben ser modificados
-            TextBox[] camposBloqueados = { TNombre, TApellido, TNombreUsuario, TDni, TTelefono, TCorreo };
+            TextBox[] camposBloqueados = { TNombre, TApellido, TNombreUsuario, TDni, TTelefono, TCorreo};
 
             foreach (TextBox txt in camposBloqueados)
             {
@@ -64,6 +64,8 @@ namespace PetShop.Presentacion.Usuarios
                 txt.BackColor = System.Drawing.Color.FromArgb(220, 224, 230);
                 txt.ForeColor = System.Drawing.Color.FromArgb(80, 80, 80);
             }
+
+            CBEstado.Enabled = false;
         }
 
         private void CargarRoles()
@@ -283,7 +285,8 @@ namespace PetShop.Presentacion.Usuarios
             }
         }
 
-        private void BEliminarTodo_Click(object sender, EventArgs e)
+        // BOTON BORRAR
+        private void BtnBorrar_Click(object sender, EventArgs e)
         {
             DialogResult confirmacion = MessageBox.Show(
                 "¿Desea restablecer los campos a sus valores originales?",
