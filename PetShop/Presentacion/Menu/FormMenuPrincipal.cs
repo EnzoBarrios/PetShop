@@ -267,5 +267,19 @@ namespace PetShop.Presentacion.Menu
         {
             AbrirFormularioEnMdi<FormReportes>();
         }
+
+        private void miPerfilToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int idUsuarioActual = _usuarioActual?.IdUsuario ?? 0;
+
+            if (idUsuarioActual > 0)
+            {
+                AbrirFormularioEnMdi(new FormMiPerfil(idUsuarioActual));
+            }
+            else
+            {
+                MessageBox.Show("No se pudo obtener el ID del usuario actual.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
     }
 }

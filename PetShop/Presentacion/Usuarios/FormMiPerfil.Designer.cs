@@ -32,7 +32,6 @@
             this.lblPetShop = new System.Windows.Forms.Label();
             this.LTitulo = new System.Windows.Forms.Label();
             this.PanelContenedor = new System.Windows.Forms.Panel();
-            this.BEliminar = new System.Windows.Forms.Button();
             this.BGuardar = new System.Windows.Forms.Button();
             this.BVolver = new System.Windows.Forms.Button();
             this.GBClave = new System.Windows.Forms.GroupBox();
@@ -74,7 +73,7 @@
             this.lblPetShop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblPetShop.Location = new System.Drawing.Point(12, 9);
             this.lblPetShop.Name = "lblPetShop";
-            this.lblPetShop.Size = new System.Drawing.Size(186, 72);
+            this.lblPetShop.Size = new System.Drawing.Size(257, 72);
             this.lblPetShop.TabIndex = 109;
             this.lblPetShop.Text = "PetShop";
             this.lblPetShop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -85,44 +84,26 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LTitulo.ForeColor = System.Drawing.Color.SteelBlue;
-            this.LTitulo.Location = new System.Drawing.Point(291, 27);
+            this.LTitulo.Location = new System.Drawing.Point(312, 27);
             this.LTitulo.Name = "LTitulo";
-            this.LTitulo.Size = new System.Drawing.Size(264, 40);
+            this.LTitulo.Size = new System.Drawing.Size(649, 40);
             this.LTitulo.TabIndex = 110;
             this.LTitulo.Text = "- MI PERFIL -";
             this.LTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // PanelContenedor
             // 
-            this.PanelContenedor.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.PanelContenedor.Controls.Add(this.BEliminar);
+            this.PanelContenedor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.PanelContenedor.Controls.Add(this.BGuardar);
             this.PanelContenedor.Controls.Add(this.BVolver);
             this.PanelContenedor.Controls.Add(this.GBClave);
             this.PanelContenedor.Controls.Add(this.GBDatosSistema);
             this.PanelContenedor.Controls.Add(this.GBDatos);
-            this.PanelContenedor.Location = new System.Drawing.Point(17, 95);
+            this.PanelContenedor.Location = new System.Drawing.Point(9, 100);
             this.PanelContenedor.Name = "PanelContenedor";
-            this.PanelContenedor.Size = new System.Drawing.Size(839, 766);
+            this.PanelContenedor.Size = new System.Drawing.Size(1214, 766);
             this.PanelContenedor.TabIndex = 111;
-            // 
-            // BEliminar
-            // 
-            this.BEliminar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BEliminar.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.BEliminar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.BEliminar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.BEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BEliminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BEliminar.Image = global::PetShop.Properties.Resources.borrar1;
-            this.BEliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BEliminar.Location = new System.Drawing.Point(659, 676);
-            this.BEliminar.Name = "BEliminar";
-            this.BEliminar.Size = new System.Drawing.Size(154, 61);
-            this.BEliminar.TabIndex = 113;
-            this.BEliminar.Text = "Restablecer";
-            this.BEliminar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.BEliminar.UseVisualStyleBackColor = false;
             // 
             // BGuardar
             // 
@@ -134,13 +115,14 @@
             this.BGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BGuardar.Image = global::PetShop.Properties.Resources.guardar;
             this.BGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BGuardar.Location = new System.Drawing.Point(449, 676);
+            this.BGuardar.Location = new System.Drawing.Point(984, 674);
             this.BGuardar.Name = "BGuardar";
-            this.BGuardar.Size = new System.Drawing.Size(186, 61);
+            this.BGuardar.Size = new System.Drawing.Size(204, 61);
             this.BGuardar.TabIndex = 112;
             this.BGuardar.Text = "Guardar cambios";
             this.BGuardar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BGuardar.UseVisualStyleBackColor = false;
+            this.BGuardar.Click += new System.EventHandler(this.BGuardar_Click);
             // 
             // BVolver
             // 
@@ -151,11 +133,12 @@
             this.BVolver.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BVolver.Location = new System.Drawing.Point(26, 674);
             this.BVolver.Name = "BVolver";
-            this.BVolver.Size = new System.Drawing.Size(106, 61);
+            this.BVolver.Size = new System.Drawing.Size(128, 61);
             this.BVolver.TabIndex = 111;
             this.BVolver.Text = "Volver";
             this.BVolver.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BVolver.UseVisualStyleBackColor = false;
+            this.BVolver.Click += new System.EventHandler(this.BVolver_Click);
             // 
             // GBClave
             // 
@@ -171,7 +154,7 @@
             this.GBClave.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.GBClave.Location = new System.Drawing.Point(26, 525);
             this.GBClave.Name = "GBClave";
-            this.GBClave.Size = new System.Drawing.Size(787, 109);
+            this.GBClave.Size = new System.Drawing.Size(1162, 109);
             this.GBClave.TabIndex = 109;
             this.GBClave.TabStop = false;
             this.GBClave.Text = "CAMBIAR CONTRASEÑA";
@@ -181,12 +164,13 @@
             this.BVerConfirmar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BVerConfirmar.BackColor = System.Drawing.Color.Transparent;
             this.BVerConfirmar.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.BVerConfirmar.Location = new System.Drawing.Point(699, 54);
+            this.BVerConfirmar.Location = new System.Drawing.Point(1074, 54);
             this.BVerConfirmar.Name = "BVerConfirmar";
             this.BVerConfirmar.Size = new System.Drawing.Size(38, 38);
             this.BVerConfirmar.TabIndex = 107;
             this.BVerConfirmar.Text = "👁";
             this.BVerConfirmar.UseVisualStyleBackColor = false;
+            this.BVerConfirmar.Click += new System.EventHandler(this.BVerConfirmar_Click);
             // 
             // BVerClave
             // 
@@ -198,6 +182,7 @@
             this.BVerClave.TabIndex = 106;
             this.BVerClave.Text = "👁";
             this.BVerClave.UseVisualStyleBackColor = false;
+            this.BVerClave.Click += new System.EventHandler(this.BVerClave_Click);
             // 
             // TClave
             // 
@@ -220,7 +205,7 @@
             // TConfirmar
             // 
             this.TConfirmar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TConfirmar.Location = new System.Drawing.Point(423, 60);
+            this.TConfirmar.Location = new System.Drawing.Point(798, 60);
             this.TConfirmar.Name = "TConfirmar";
             this.TConfirmar.Size = new System.Drawing.Size(267, 26);
             this.TConfirmar.TabIndex = 98;
@@ -231,7 +216,7 @@
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(419, 37);
+            this.label4.Location = new System.Drawing.Point(794, 37);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(182, 20);
             this.label4.TabIndex = 97;
@@ -251,14 +236,15 @@
             this.GBDatosSistema.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.GBDatosSistema.Location = new System.Drawing.Point(26, 305);
             this.GBDatosSistema.Name = "GBDatosSistema";
-            this.GBDatosSistema.Size = new System.Drawing.Size(787, 190);
+            this.GBDatosSistema.Size = new System.Drawing.Size(1162, 190);
             this.GBDatosSistema.TabIndex = 108;
             this.GBDatosSistema.TabStop = false;
             this.GBDatosSistema.Text = "DATOS DEL SISTEMA";
             // 
             // TEstado
             // 
-            this.TEstado.Location = new System.Drawing.Point(423, 94);
+            this.TEstado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.TEstado.Location = new System.Drawing.Point(798, 94);
             this.TEstado.Name = "TEstado";
             this.TEstado.Size = new System.Drawing.Size(314, 26);
             this.TEstado.TabIndex = 106;
@@ -302,7 +288,7 @@
             this.LEstado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LEstado.AutoSize = true;
             this.LEstado.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LEstado.Location = new System.Drawing.Point(419, 71);
+            this.LEstado.Location = new System.Drawing.Point(794, 71);
             this.LEstado.Name = "LEstado";
             this.LEstado.Size = new System.Drawing.Size(66, 20);
             this.LEstado.TabIndex = 104;
@@ -327,7 +313,7 @@
             this.GBDatos.ForeColor = System.Drawing.Color.Black;
             this.GBDatos.Location = new System.Drawing.Point(26, 32);
             this.GBDatos.Name = "GBDatos";
-            this.GBDatos.Size = new System.Drawing.Size(787, 247);
+            this.GBDatos.Size = new System.Drawing.Size(1162, 247);
             this.GBDatos.TabIndex = 107;
             this.GBDatos.TabStop = false;
             this.GBDatos.Text = "DATOS PERSONALES Y CONTACTO";
@@ -351,8 +337,7 @@
             // 
             // TDni
             // 
-            this.TDni.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TDni.Location = new System.Drawing.Point(53, 131);
+            this.TDni.Location = new System.Drawing.Point(53, 132);
             this.TDni.Name = "TDni";
             this.TDni.Size = new System.Drawing.Size(314, 26);
             this.TDni.TabIndex = 105;
@@ -360,7 +345,7 @@
             // TCorreo
             // 
             this.TCorreo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TCorreo.Location = new System.Drawing.Point(423, 201);
+            this.TCorreo.Location = new System.Drawing.Point(798, 201);
             this.TCorreo.Name = "TCorreo";
             this.TCorreo.Size = new System.Drawing.Size(314, 26);
             this.TCorreo.TabIndex = 107;
@@ -370,7 +355,7 @@
             this.LCorreo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LCorreo.AutoSize = true;
             this.LCorreo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LCorreo.Location = new System.Drawing.Point(419, 178);
+            this.LCorreo.Location = new System.Drawing.Point(794, 178);
             this.LCorreo.Name = "LCorreo";
             this.LCorreo.Size = new System.Drawing.Size(63, 20);
             this.LCorreo.TabIndex = 106;
@@ -381,7 +366,7 @@
             this.LDni.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LDni.AutoSize = true;
             this.LDni.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LDni.Location = new System.Drawing.Point(49, 108);
+            this.LDni.Location = new System.Drawing.Point(49, 109);
             this.LDni.Name = "LDni";
             this.LDni.Size = new System.Drawing.Size(40, 20);
             this.LDni.TabIndex = 104;
@@ -410,7 +395,7 @@
             this.LApellido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LApellido.AutoSize = true;
             this.LApellido.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LApellido.Location = new System.Drawing.Point(419, 31);
+            this.LApellido.Location = new System.Drawing.Point(794, 31);
             this.LApellido.Name = "LApellido";
             this.LApellido.Size = new System.Drawing.Size(73, 20);
             this.LApellido.TabIndex = 100;
@@ -419,7 +404,7 @@
             // TApellido
             // 
             this.TApellido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TApellido.Location = new System.Drawing.Point(423, 59);
+            this.TApellido.Location = new System.Drawing.Point(798, 59);
             this.TApellido.Name = "TApellido";
             this.TApellido.Size = new System.Drawing.Size(314, 26);
             this.TApellido.TabIndex = 101;
@@ -429,14 +414,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.AutoScrollMinSize = new System.Drawing.Size(0, 1200);
+            this.AutoScrollMinSize = new System.Drawing.Size(1300, 1200);
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(899, 495);
+            this.ClientSize = new System.Drawing.Size(1258, 564);
             this.Controls.Add(this.PanelContenedor);
             this.Controls.Add(this.LTitulo);
             this.Controls.Add(this.lblPetShop);
             this.Name = "FormMiPerfil";
-            this.Text = "FormMiPerfil";
+            this.Load += new System.EventHandler(this.FormMiPerfil_Load);
             this.PanelContenedor.ResumeLayout(false);
             this.GBClave.ResumeLayout(false);
             this.GBClave.PerformLayout();
@@ -478,7 +463,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button BVolver;
         private System.Windows.Forms.Button BGuardar;
-        private System.Windows.Forms.Button BEliminar;
         private System.Windows.Forms.TextBox TEstado;
         private System.Windows.Forms.TextBox TRol;
     }

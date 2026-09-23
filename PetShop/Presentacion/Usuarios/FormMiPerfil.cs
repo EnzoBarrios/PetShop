@@ -36,33 +36,45 @@ namespace PetShop.Presentacion.Usuarios
 
             ConfigurarEstiloCamposLectura();
             ConfigurarEstiloBotones();
-            AsignarEventosValidacion();
+
             CargarDatosPerfil();
+            AsignarEventosValidacion();
         }
 
         private void ConfigurarEstiloCamposLectura()
         {
-            TNombreUsuario.ReadOnly = true;
+            // ÚNICAMENTE ROL Y ESTADO EN SOLO LECTURA
             TRol.ReadOnly = true;
             TEstado.ReadOnly = true;
-            TNombre.ReadOnly = true;
-            TApellido.ReadOnly = true;
-            TDni.ReadOnly = true;
 
-            TNombreUsuario.TabStop = false;
             TRol.TabStop = false;
             TEstado.TabStop = false;
-            TNombre.TabStop = false;
-            TApellido.TabStop = false;
-            TDni.TabStop = false;
 
             Color fondoLectura = Color.FromArgb(240, 240, 240);
-            TNombreUsuario.BackColor = fondoLectura;
             TRol.BackColor = fondoLectura;
             TEstado.BackColor = fondoLectura;
-            TNombre.BackColor = fondoLectura;
-            TApellido.BackColor = fondoLectura;
-            TDni.BackColor = fondoLectura;
+
+            // LOS DEMÁS CAMPOS SE MANTIENEN EDITABLES (ReadOnly = false y fondo blanco)
+            TNombreUsuario.ReadOnly = false;
+            TNombre.ReadOnly = false;
+            TApellido.ReadOnly = false;
+            TDni.ReadOnly = false;
+            TCorreo.ReadOnly = false;
+            TTelefono.ReadOnly = false;
+
+            TNombreUsuario.TabStop = true;
+            TNombre.TabStop = true;
+            TApellido.TabStop = true;
+            TDni.TabStop = true;
+            TCorreo.TabStop = true;
+            TTelefono.TabStop = true;
+
+            TNombreUsuario.BackColor = Color.White;
+            TNombre.BackColor = Color.White;
+            TApellido.BackColor = Color.White;
+            TDni.BackColor = Color.White;
+            TCorreo.BackColor = Color.White;
+            TTelefono.BackColor = Color.White;
 
             TClave.UseSystemPasswordChar = true;
             TConfirmar.UseSystemPasswordChar = true;
@@ -117,8 +129,17 @@ namespace PetShop.Presentacion.Usuarios
                                 TNombre.Text = reader["nombre"].ToString();
                                 TApellido.Text = reader["apellido"].ToString();
                                 TNombreUsuario.Text = reader["nombre_usuario"].ToString();
-                                TEstado.Text = reader["estado"].ToString();
                                 TRol.Text = reader["nombre_rol"].ToString();
+
+                                string estadoValor = reader["estado"].ToString().Trim();
+                                if (estadoValor == "1" || estadoValor.Equals("Activo", StringComparison.OrdinalIgnoreCase) || estadoValor.Equals("A", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    TEstado.Text = "Activo";
+                                }
+                                else
+                                {
+                                    TEstado.Text = "Inactivo";
+                                }
 
                                 TDni.Text = reader["dni"] != DBNull.Value ? reader["dni"].ToString() : string.Empty;
                                 TCorreo.Text = reader["correo"] != DBNull.Value ? reader["correo"].ToString() : string.Empty;
@@ -126,7 +147,7 @@ namespace PetShop.Presentacion.Usuarios
                             }
                             else
                             {
-                                MessageBox.Show("No se encontraron los datos del perfil.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBox.Show("No se encontraron los datos del perfil para el ID: " + _idUsuarioActual, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
                         }
                     }
@@ -208,6 +229,28 @@ namespace PetShop.Presentacion.Usuarios
             error.Clear();
             bool esValido = true;
 
+            // Validar Nombre Obligatorio
+            if (string.IsNullOrWhiteSpace(TNombre.Text))
+            {
+                error.SetError(TNombre, "El nombre no puede estar vacío.");
+                esValido = false;
+            }
+
+            // Validar Apellido Obligatorio
+            if (string.IsNullOrWhiteSpace(TApellido.Text))
+            {
+                error.SetError(TApellido, "El apellido no puede estar vacío.");
+                esValido = false;
+            }
+
+            // Validar Usuario Obligatorio
+            if (string.IsNullOrWhiteSpace(TNombreUsuario.Text))
+            {
+                error.SetError(TNombreUsuario, "El nombre de usuario no puede estar vacío.");
+                esValido = false;
+            }
+
+            // Validar Correo (Opcional)
             string correo = TCorreo.Text.Trim();
             if (!string.IsNullOrEmpty(correo))
             {
@@ -219,6 +262,7 @@ namespace PetShop.Presentacion.Usuarios
                 }
             }
 
+            // Validar Teléfono (Opcional)
             string telefono = TTelefono.Text.Trim();
             if (!string.IsNullOrEmpty(telefono))
             {
@@ -229,6 +273,7 @@ namespace PetShop.Presentacion.Usuarios
                 }
             }
 
+            // Validar Contraseña (Solo si decide cambiarla)
             bool contrasenaEscrita = !string.IsNullOrWhiteSpace(TClave.Text);
             bool confirmacionEscrita = !string.IsNullOrWhiteSpace(TConfirmar.Text);
 
@@ -282,7 +327,11 @@ namespace PetShop.Presentacion.Usuarios
             bool cambiarClave = !string.IsNullOrWhiteSpace(TClave.Text);
 
             string query = @"UPDATE Usuario 
-                            SET correo = @correo, 
+                            SET nombre = @nombre,
+                                apellido = @apellido,
+                                nombre_usuario = @nombre_usuario,
+                                dni = @dni,
+                                correo = @correo, 
                                 telefono = @telefono";
 
             if (cambiarClave)
@@ -299,6 +348,14 @@ namespace PetShop.Presentacion.Usuarios
                     con.Open();
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
+                        cmd.Parameters.AddWithValue("@nombre", TNombre.Text.Trim());
+                        cmd.Parameters.AddWithValue("@apellido", TApellido.Text.Trim());
+                        cmd.Parameters.AddWithValue("@nombre_usuario", TNombreUsuario.Text.Trim());
+
+                        cmd.Parameters.AddWithValue("@dni", string.IsNullOrWhiteSpace(TDni.Text)
+                            ? (object)DBNull.Value
+                            : TDni.Text.Trim());
+
                         cmd.Parameters.AddWithValue("@correo", string.IsNullOrWhiteSpace(TCorreo.Text)
                             ? (object)DBNull.Value
                             : TCorreo.Text.Trim());
@@ -324,6 +381,16 @@ namespace PetShop.Presentacion.Usuarios
                     return false;
                 }
             }
+        }
+
+        private void BVerClave_Click(object sender, EventArgs e)
+        {
+            TClave.UseSystemPasswordChar = !TClave.UseSystemPasswordChar;
+        }
+
+        private void BVerConfirmar_Click(object sender, EventArgs e)
+        {
+            TConfirmar.UseSystemPasswordChar = !TConfirmar.UseSystemPasswordChar;
         }
 
         private void BVolver_Click(object sender, EventArgs e)

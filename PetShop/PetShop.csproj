@@ -118,6 +118,12 @@
     <Compile Include="Presentacion\Usuarios\FormCargaUsuario.Designer.cs">
       <DependentUpon>FormCargaUsuario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentacion\Usuarios\FormMiPerfil.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Usuarios\FormMiPerfil.Designer.cs">
+      <DependentUpon>FormMiPerfil.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentacion\Usuarios\FormModificarUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -172,6 +178,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Usuarios\FormCargaUsuario.resx">
       <DependentUpon>FormCargaUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Usuarios\FormMiPerfil.resx">
+      <DependentUpon>FormMiPerfil.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Usuarios\FormModificarUsuario.resx">
       <DependentUpon>FormModificarUsuario.cs</DependentUpon>
