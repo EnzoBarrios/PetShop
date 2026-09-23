@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormVentas));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblTituloVenta = new System.Windows.Forms.Label();
             this.lblMetodoPago = new System.Windows.Forms.Label();
             this.gbInformacionPago = new System.Windows.Forms.GroupBox();
@@ -387,14 +387,14 @@
             // 
             // dgvVenta
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvVenta.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvVenta.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvVenta.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvVenta.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colCodigo,
@@ -409,7 +409,6 @@
             this.dgvVenta.RowTemplate.Height = 28;
             this.dgvVenta.Size = new System.Drawing.Size(920, 400);
             this.dgvVenta.TabIndex = 4;
-            this.dgvVenta.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvVenta_CellContentClick);
             this.dgvVenta.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.DgvVenta_CellPainting);
             // 
             // colCodigo
@@ -470,6 +469,7 @@
             // btnCancelarVenta
             // 
             this.btnCancelarVenta.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnCancelarVenta.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancelarVenta.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelarVenta.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnCancelarVenta.ImageIndex = 1;
@@ -486,6 +486,7 @@
             // btnConfirmarVenta
             // 
             this.btnConfirmarVenta.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnConfirmarVenta.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnConfirmarVenta.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConfirmarVenta.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnConfirmarVenta.ImageIndex = 2;
@@ -502,6 +503,7 @@
             // btnAgregrarProducto
             // 
             this.btnAgregrarProducto.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnAgregrarProducto.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAgregrarProducto.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAgregrarProducto.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnAgregrarProducto.ImageIndex = 0;

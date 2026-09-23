@@ -15,16 +15,13 @@ namespace PetShop.Presentacion.Menu
 {
     public partial class FormMenuPrincipal : Form
     {
-        // Variable para almacenar el usuario actual
-        private readonly Usuario _usuarioActual;
-
-        // Variable para rastrear el formulario secundario actualmente visible
-        private Form _formularioActivo = null;
+        private readonly Usuario _usuarioActual; // Variable para almacenar el usuario actual
+        
+        private Form _formularioActivo = null;// Variable para rastrear el formulario secundario actualmente visible
 
         public FormMenuPrincipal(Usuario usuario)
         {
             InitializeComponent();
-
             _usuarioActual = usuario;
         }
 
@@ -55,15 +52,22 @@ namespace PetShop.Presentacion.Menu
 
         private void ConfigurarPermisosPorRol()
         {
-            if (_usuarioActual?.Rol == null) return;
+            if (_usuarioActual == null || _usuarioActual.Rol == null) return;
 
             string rol = _usuarioActual.Rol.NombreRol.Trim();
 
+            // 1. Apagado preventivo de menús
             UsuariosToolStripMenuItem.Enabled = false;
             CatalogoToolStripMenuItem.Enabled = false;
             VentaToolStripMenuItem.Enabled = false;
             ReportesToolStripMenuItem.Enabled = false;
 
+            // 2. Apagado preventivo de accesos directos
+            btnRealizarVenta.Enabled = false;
+            btnHistorialVentas.Enabled = false;
+            btnReportes.Enabled = false;
+
+            // 3. Activación según perfil
             switch (rol)
             {
                 case "Administrador":
@@ -71,19 +75,32 @@ namespace PetShop.Presentacion.Menu
                     CatalogoToolStripMenuItem.Enabled = true;
                     VentaToolStripMenuItem.Enabled = true;
                     ReportesToolStripMenuItem.Enabled = true;
+
+                    btnHistorialVentas.Enabled = true;
+                    btnReportes.Enabled = true;
+
+                    NuevaVentaToolStripMenuItem.Enabled = false;
                     break;
 
                 case "Gerente":
-                    // El gerente no administra usuarios del sistema
+                    // El gerente supervisa ventas, catálogos y reportes
+                    UsuariosToolStripMenuItem.Enabled = true;
                     CatalogoToolStripMenuItem.Enabled = true;
                     VentaToolStripMenuItem.Enabled = true;
                     ReportesToolStripMenuItem.Enabled = true;
+
+                    btnRealizarVenta.Enabled = true;
+                    btnHistorialVentas.Enabled = true;
+                    btnReportes.Enabled = true;
                     break;
 
                 case "Vendedor":
                     // El vendedor solo opera ventas y consulta productos
                     CatalogoToolStripMenuItem.Enabled = true;
                     VentaToolStripMenuItem.Enabled = true;
+
+                    btnRealizarVenta.Enabled = true;
+                    btnHistorialVentas.Enabled = true;
                     break;
 
                 default:
@@ -111,55 +128,70 @@ namespace PetShop.Presentacion.Menu
             lblFecha.Text = $"{diaSemana}, {ahora.Day} de {mes} de {ahora.Year}";
         }
 
-        private void AbrirFormularioEnMdi<T>() where T : Form, new()
+
+        // Método base que incrusta cualquier instancia de formulario
+        private void AbrirFormularioEnMdi(Form nuevoFormulario)
         {
             // Si ya está abierto el mismo formulario y sigue, se trae al frente
-            if (_formularioActivo != null && !_formularioActivo.IsDisposed && _formularioActivo is T)
+            if (_formularioActivo != null && !_formularioActivo.IsDisposed && _formularioActivo.GetType() == nuevoFormulario.GetType())
             {
                 _formularioActivo.BringToFront();
+                nuevoFormulario.Dispose();
                 return;
             }
 
-            // Si había otro formulario secundario abierto, se cierra
-            if (_formularioActivo != null && !_formularioActivo.IsDisposed)
-            {
-                contenedor.Controls.Remove(_formularioActivo);
-                _formularioActivo.Close();
-                _formularioActivo = null;
-            }
+            contenedor.SuspendLayout();
 
-            // Crea una nueva instancia del formulario secundario
-            T nuevoFormulario = new T
+            try
             {
-                TopLevel = false,
-                FormBorderStyle = FormBorderStyle.None,
-                Dock = DockStyle.None
-            };
-
-            // Cuando el formulario se cierre con el boton volver
-            nuevoFormulario.FormClosed += (s, args) =>
-            {
-                if (_formularioActivo == s)
+                // Si había otro formulario secundario abierto, se cierra
+                if (_formularioActivo != null && !_formularioActivo.IsDisposed)
                 {
+                    contenedor.Controls.Remove(_formularioActivo);
+                    _formularioActivo.Close();
                     _formularioActivo = null;
                 }
-            };
 
-            // Calcula el centrado respecto al tamaño interno del contenedor
-            int posicionX = Math.Max(0, (contenedor.ClientSize.Width - nuevoFormulario.Width) / 2);
-            int posicionY = Math.Max(0, (contenedor.ClientSize.Height - nuevoFormulario.Height) / 2);
-            nuevoFormulario.Location = new Point(posicionX, posicionY);
+                nuevoFormulario.TopLevel = false;
+                nuevoFormulario.FormBorderStyle = FormBorderStyle.None;
+                nuevoFormulario.StartPosition = FormStartPosition.Manual;
 
-            _formularioActivo = nuevoFormulario;        // Asigna el formulario activo
-            contenedor.Tag = _formularioActivo;         // Almacena la referencia del formulario activo en el Tag del contenedor
-            contenedor.Controls.Add(_formularioActivo); // Agrega el formulario al contenedor
-            _formularioActivo.BringToFront();           // Asegura que el formulario esté al frente
-            _formularioActivo.Show();                   // Muestra el formulario secundario
+                // Cuando el formulario se cierre con el boton volver
+                nuevoFormulario.FormClosed += (s, args) =>
+                {
+                    if (_formularioActivo == s)
+                    {
+                        _formularioActivo = null;
+                    }
+
+                    this.ActiveControl = null;
+                };
+
+                _formularioActivo = nuevoFormulario;        // Asigna el formulario activo
+                contenedor.Tag = _formularioActivo;         // Almacena la referencia del formulario activo en el Tag del contenedor
+                contenedor.Controls.Add(_formularioActivo); // Agrega el formulario al contenedor
+                _formularioActivo.Show();                   // Muestra el formulario secundario
+                _formularioActivo.BringToFront();           // Asegura que el formulario esté al frente
+            }
+            finally
+            {
+                contenedor.ResumeLayout(true);
+            }
+        }
+
+        // Sobrecarga genérica para formularios sin parámetros
+        private void AbrirFormularioEnMdi<T>() where T : Form, new()
+        {
+            AbrirFormularioEnMdi(new T());
         }
 
         private void UsuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirFormularioEnMdi<FormUsuarios>();
+            // Pasa el ID y Rol del usuario logueado
+            int id = _usuarioActual?.IdUsuario ?? 0;
+            string rol = _usuarioActual?.Rol?.NombreRol ?? "Administrador";
+
+            AbrirFormularioEnMdi(new FormUsuarios(id, rol));
         }
 
         private void ProductosToolStripMenuItem_Click(object sender, EventArgs e)

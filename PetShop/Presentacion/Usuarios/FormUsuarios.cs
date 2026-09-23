@@ -1,14 +1,20 @@
-﻿using System;
+﻿using PetShop.Entidades;
+using PetShop.Negocio;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace PetShop.Presentacion.Usuarios
 {
     public partial class FormUsuarios : Form
     {
-        private int _idUsuarioLogueado;
-        private string _rolUsuarioLogueado;
+        // Variables para almacenar el ID y el Rol del usuario logueado
+        private readonly int _idUsuarioLogueado;
+        private readonly string _rolUsuarioLogueado;
+        private readonly CN_Usuario _cnUsuario = new CN_Usuario(); // Instancia de la capa de negocio para interactuar con la lógica de usuarios
 
         // Constructor principal que recibe el ID y el Rol del usuario logueado
         public FormUsuarios(int idUsuarioLogueado, string rolUsuarioLogueado)
@@ -23,73 +29,60 @@ namespace PetShop.Presentacion.Usuarios
         {
         }
 
+        // Evento que se dispara al cargar el formulario, invoca la carga inicial de usuarios
         private void FormUsuarios_Load(object sender, EventArgs e)
         {
             CargarUsuarios();
         }
 
+        // Método para cargar los usuarios en el DataGridView, con un filtro opcional
         private void CargarUsuarios(string filtro = "")
         {
-            string query = @"SELECT 
-                                u.id_usuario AS [ID],
-                                u.nombre AS [Nombre],
-                                u.apellido AS [Apellido],
-                                u.nombre_usuario AS [Usuario],
-                                r.nombre_rol AS [Rol],
-                                u.estado AS [Estado],
-                                u.fecha_creacion AS [Fecha Creación]
-                            FROM Usuario u
-                            INNER JOIN Rol r ON u.id_rol = r.id_rol
-                            WHERE ";
-
-            // Filtrado dinámico según el rol del usuario que está mirando la pantalla
-            if (_rolUsuarioLogueado.Equals("Gerente", StringComparison.OrdinalIgnoreCase))
+            try
             {
-                // El Gerente solo ve a los Vendedores
-                query += "r.nombre_rol = 'Vendedor' ";
-            }
-            else
-            {
-                // El Administrador ve tanto a Gerentes como a Vendedores
-                query += "r.nombre_rol IN ('Vendedor', 'Gerente') ";
-            }
+                // Lista tipada desde la capa de negocio
+                List<Usuario> listaUsuarios = _cnUsuario.CargarUsuariosParaGrilla(_rolUsuarioLogueado, filtro);
 
-            query += @"AND (u.nombre LIKE @Filtro 
-                       OR u.apellido LIKE @Filtro 
-                       OR u.nombre_usuario LIKE @Filtro)";
 
-            using (SqlConnection con = Conexion.ObtenerConexion())
-            {
-                try
+                // Lista anónima formateada para que coincida exactamente con las columnas del DataGridView
+                var datosGrilla = listaUsuarios.Select(u => new
                 {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        cmd.Parameters.AddWithValue("@Filtro", "%" + filtro + "%");
-                        SqlDataAdapter da = new SqlDataAdapter(cmd);
-                        DataTable dt = new DataTable();
-                        da.Fill(dt);
-                        DGVUsuarios.DataSource = dt;
-                    }
-                }
-                catch (Exception ex)
+                    Id = u.IdUsuario,
+                    Nom = u.Nombre,
+                    Ape = u.Apellido,
+                    Usuario = u.NombreUsuario,
+                    Rol = u.Rol?.NombreRol ?? "Sin Rol",
+                    Estado = u.Estado ? "Activo" : "Inactivo",
+                    FechaCreacion = u.FechaCreacion.ToString("dd/MM/yyyy")
+                }).ToList();
+
+                DGVUsuarios.DataSource = datosGrilla;
+
+                // Si existen columnas generadas automáticamente con encabezado largo, ajustamos el texto visual
+                if (DGVUsuarios.Columns.Contains("FechaCreacion"))
                 {
-                    MessageBox.Show("Error al cargar la lista de usuarios: " + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DGVUsuarios.Columns["FechaCreacion"].HeaderText = "Fecha Creación";
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar la lista de usuarios: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // 1. BOTÓN NUEVO USUARIO
-        private void BNuevoUsuario_Click(object sender, EventArgs e)
+        // BOTÓN NUEVO USUARIO
+        private void BtnNuevoUsuario_Click(object sender, EventArgs e)
         {
-            FormCargaUsuario formAlta = new FormCargaUsuario();
-            formAlta.ShowDialog();
+            using (FormCargaUsuario formAlta = new FormCargaUsuario())
+            {
+                formAlta.ShowDialog();
+            }
 
-            CargarUsuarios();
+            CargarUsuarios(TBuscar.Text.Trim());
         }
 
-        // 2. BOTÓN MODIFICAR
-        private void BModificar_Click(object sender, EventArgs e)
+        // BOTÓN MODIFICAR
+        private void BtnModificar_Click(object sender, EventArgs e)
         {
             if (DGVUsuarios.SelectedRows.Count > 0 && DGVUsuarios.CurrentRow != null)
             {
@@ -102,42 +95,34 @@ namespace PetShop.Presentacion.Usuarios
                     return;
                 }
 
-                FormModificarUsuario formModif = new FormModificarUsuario(idUsuarioSeleccionado);
-                formModif.ShowDialog();
+                using (FormModificarUsuario formModif = new FormModificarUsuario(idUsuarioSeleccionado))
+                {
+                    formModif.ShowDialog();
+                }
 
-                CargarUsuarios();
+                CargarUsuarios(TBuscar.Text.Trim());
             }
             else
             {
                 MessageBox.Show("Por favor, seleccione un usuario de la lista para modificar.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+
         }
 
-        // 3. BOTÓN CAMBIAR ESTADO (ACTIVAR / DESACTIVAR)
-        private void BEstado_Click(object sender, EventArgs e)
+        // BOTÓN CAMBIAR ESTADO (ACTIVAR / DESACTIVAR)
+        private void BtnEstado_Click(object sender, EventArgs e)
         {
             if (DGVUsuarios.SelectedRows.Count > 0 && DGVUsuarios.CurrentRow != null)
             {
                 int idUsuarioSeleccionado = Convert.ToInt32(DGVUsuarios.CurrentRow.Cells["ID"].Value);
-
-                // Validación: Evita desactivar la propia cuenta en sesión
-                if (idUsuarioSeleccionado == _idUsuarioLogueado)
-                {
-                    MessageBox.Show("No puede desactivar su propio usuario mientras tiene la sesión abierta.", "Acción denegada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
                 string usuarioNombre = DGVUsuarios.CurrentRow.Cells["Usuario"].Value?.ToString() ?? "";
                 string estadoTexto = DGVUsuarios.CurrentRow.Cells["Estado"].Value?.ToString().Trim() ?? "";
 
-                bool estadoActual = estadoTexto.Equals("Activo", StringComparison.OrdinalIgnoreCase)
-                                 || estadoTexto == "1"
-                                 || estadoTexto.Equals("True", StringComparison.OrdinalIgnoreCase);
+                bool estaActivo = estadoTexto.Equals("Activo", StringComparison.OrdinalIgnoreCase);
+                bool nuevoEstado = !estaActivo;
 
-                int nuevoEstadoBD = estadoActual ? 0 : 1;
-
-                string accionTexto = estadoActual ? "desactivar" : "activar";
-                string tituloConfirmacion = estadoActual ? "Confirmar Desactivación" : "Confirmar Activación";
+                string accionTexto = estaActivo ? "desactivar" : "activar";
+                string tituloConfirmacion = estaActivo ? "Confirmar Desactivación" : "Confirmar Activación";
 
                 DialogResult respuesta = MessageBox.Show(
                     $"¿Está seguro de que desea {accionTexto} al usuario '{usuarioNombre}'?",
@@ -148,8 +133,18 @@ namespace PetShop.Presentacion.Usuarios
 
                 if (respuesta == DialogResult.Yes)
                 {
-                    CambiarEstadoUsuario(idUsuarioSeleccionado, nuevoEstadoBD);
-                    CargarUsuarios();
+                    // La capa de negocio valida el ID y actualiza en BD
+                    bool exito = _cnUsuario.CambiarEstadoUsuario(idUsuarioSeleccionado, _idUsuarioLogueado, nuevoEstado, out string mensaje);
+
+                    if (exito)
+                    {
+                        MessageBox.Show(mensaje, "Operación Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CargarUsuarios(TBuscar.Text.Trim());
+                    }
+                    else
+                    {
+                        MessageBox.Show(mensaje, "Acción denegada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
             }
             else
@@ -158,38 +153,9 @@ namespace PetShop.Presentacion.Usuarios
             }
         }
 
-        private void CambiarEstadoUsuario(int idUsuario, int nuevoEstado)
-        {
-            string query = "UPDATE Usuario SET estado = @Estado WHERE id_usuario = @IdUsuario";
 
-            using (SqlConnection con = Conexion.ObtenerConexion())
-            {
-                try
-                {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        cmd.Parameters.AddWithValue("@Estado", nuevoEstado);
-                        cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
-
-                        int filasAfectadas = cmd.ExecuteNonQuery();
-
-                        if (filasAfectadas > 0)
-                        {
-                            string mensaje = (nuevoEstado == 1) ? "activado" : "desactivado";
-                            MessageBox.Show($"El usuario ha sido {mensaje} con éxito.", "Operación Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al actualizar el estado: " + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        // 4. BOTÓN VOLVER
-        private void BVolver_Click(object sender, EventArgs e)
+        // BOTÓN VOLVER
+        private void BtnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -209,12 +175,11 @@ namespace PetShop.Presentacion.Usuarios
                 if (valorEstado != null && valorEstado != DBNull.Value)
                 {
                     string estadoTexto = valorEstado.ToString().Trim();
-
                     bool estaActivo = estadoTexto.Equals("Activo", StringComparison.OrdinalIgnoreCase)
                                    || estadoTexto == "1"
                                    || estadoTexto.Equals("True", StringComparison.OrdinalIgnoreCase);
 
-                    BEstado.Text = estaActivo ? "Desactivar" : "Activar";
+                    btnEstado.Text = estaActivo ? "Desactivar" : "Activar";
                 }
             }
         }

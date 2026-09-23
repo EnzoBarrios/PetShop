@@ -100,7 +100,7 @@ namespace PetShop.Presentacion
                 return;
             }
             // Obtener el ID del producto seleccionado
-            int IDProductoSeleccionado = Convert.ToInt32(DGVProductos.SelectedRows[0].Cells["ID"].Value);
+            // int IDProductoSeleccionado = Convert.ToInt32(DGVProductos.SelectedRows[0].Cells["ID"].Value);
 
             // Abrir formulario de modificación de producto a traves del ID 
             /*
@@ -160,11 +160,9 @@ namespace PetShop.Presentacion
         }
 
         //Botón Volver
-        private void BVolver_Click(object sender, EventArgs e)
+        private void BtnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
-        
     }
 }

@@ -31,5 +31,10 @@ namespace PetShop
         {
 
         }
+
+        private void BVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -20,17 +20,8 @@ namespace PetShop.Presentacion.Autenticacion
             InitializeComponent();
         }
 
-        private void FormLogin_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void btnIngresar_Click(object sender, EventArgs e)
+        // BOTON INGRESAR
+        private void BtnIngresar_Click(object sender, EventArgs e)
         {
             string usuarioIngresado = txtUsuario.Text.Trim();
             string claveIngresada = txtClave.Text.Trim();
@@ -41,7 +32,7 @@ namespace PetShop.Presentacion.Autenticacion
                 return;
             }
 
-            Usuario usuarioLogeado = new CN_Usuario().Listar()
+            Usuario usuarioLogeado = new CN_Usuario().ListarUsuarios()
                 .FirstOrDefault(u => u.NombreUsuario.Trim().Equals(usuarioIngresado, StringComparison.OrdinalIgnoreCase)
                                   && u.Clave.Trim() == claveIngresada
                                   && u.Estado == true);
@@ -50,7 +41,7 @@ namespace PetShop.Presentacion.Autenticacion
             {
                 MessageBox.Show("Bienvenido al sistema", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 FormMenuPrincipal form = new FormMenuPrincipal(usuarioLogeado);
-                form.FormClosed += cerrar_sesion;
+                form.FormClosed += CerrarSesion;
 
                 this.Hide();
                 form.Show();
@@ -61,7 +52,14 @@ namespace PetShop.Presentacion.Autenticacion
             }
         }
 
-        private void cerrar_sesion(object sender, EventArgs e)
+        // BOTON CANCELAR
+        private void BtnCancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        // Método para cerrar sesión y volver al formulario de login
+        private void CerrarSesion(object sender, EventArgs e)
         {
             txtUsuario.Text = "";
             txtClave.Text = "";

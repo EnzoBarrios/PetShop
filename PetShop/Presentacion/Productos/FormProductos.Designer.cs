@@ -35,36 +35,39 @@
             this.BNuevoProducto = new System.Windows.Forms.Button();
             this.BModificarProducto = new System.Windows.Forms.Button();
             this.BCambiarEstado = new System.Windows.Forms.Button();
-            this.BVolver = new System.Windows.Forms.Button();
+            this.btnVolver = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DGVProductos)).BeginInit();
             this.SuspendLayout();
             // 
             // LTitulo
             // 
             this.LTitulo.AutoSize = true;
-            this.LTitulo.Font = new System.Drawing.Font("MS Reference Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LTitulo.ForeColor = System.Drawing.Color.SteelBlue;
-            this.LTitulo.Location = new System.Drawing.Point(219, 30);
+            this.LTitulo.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.LTitulo.ForeColor = System.Drawing.Color.Black;
+            this.LTitulo.Location = new System.Drawing.Point(510, 20);
             this.LTitulo.Name = "LTitulo";
-            this.LTitulo.Size = new System.Drawing.Size(337, 35);
+            this.LTitulo.Size = new System.Drawing.Size(260, 32);
             this.LTitulo.TabIndex = 0;
-            this.LTitulo.Text = "Gestión de productos";
+            this.LTitulo.Text = "Gestión de Productos";
             // 
             // TBuscar
             // 
-            this.TBuscar.Location = new System.Drawing.Point(111, 92);
+            this.TBuscar.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.TBuscar.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.TBuscar.Location = new System.Drawing.Point(100, 78);
+            this.TBuscar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TBuscar.Name = "TBuscar";
-            this.TBuscar.Size = new System.Drawing.Size(217, 26);
+            this.TBuscar.Size = new System.Drawing.Size(193, 25);
             this.TBuscar.TabIndex = 12;
             this.TBuscar.TextChanged += new System.EventHandler(this.TBuscar_TextChanged);
             // 
             // LBuscar
             // 
             this.LBuscar.AutoSize = true;
-            this.LBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LBuscar.Location = new System.Drawing.Point(40, 98);
+            this.LBuscar.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.LBuscar.Location = new System.Drawing.Point(40, 80);
             this.LBuscar.Name = "LBuscar";
-            this.LBuscar.Size = new System.Drawing.Size(65, 20);
+            this.LBuscar.Size = new System.Drawing.Size(49, 19);
             this.LBuscar.TabIndex = 11;
             this.LBuscar.Text = "Buscar";
             // 
@@ -72,62 +75,70 @@
             // 
             this.DGVProductos.AllowUserToAddRows = false;
             this.DGVProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGVProductos.Location = new System.Drawing.Point(32, 124);
+            this.DGVProductos.Location = new System.Drawing.Point(40, 110);
+            this.DGVProductos.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DGVProductos.MultiSelect = false;
             this.DGVProductos.Name = "DGVProductos";
             this.DGVProductos.ReadOnly = true;
             this.DGVProductos.RowHeadersWidth = 62;
             this.DGVProductos.RowTemplate.Height = 28;
             this.DGVProductos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGVProductos.Size = new System.Drawing.Size(734, 274);
+            this.DGVProductos.Size = new System.Drawing.Size(1200, 360);
             this.DGVProductos.TabIndex = 20;
             // 
             // BNuevoProducto
             // 
-            this.BNuevoProducto.Location = new System.Drawing.Point(32, 404);
+            this.BNuevoProducto.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.BNuevoProducto.Location = new System.Drawing.Point(250, 520);
+            this.BNuevoProducto.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BNuevoProducto.Name = "BNuevoProducto";
-            this.BNuevoProducto.Size = new System.Drawing.Size(132, 56);
+            this.BNuevoProducto.Size = new System.Drawing.Size(150, 50);
             this.BNuevoProducto.TabIndex = 21;
             this.BNuevoProducto.Text = "Nuevo Producto";
-            this.BNuevoProducto.UseVisualStyleBackColor = true;
+            this.BNuevoProducto.UseVisualStyleBackColor = false;
             this.BNuevoProducto.Click += new System.EventHandler(this.BNuevoProducto_Click);
             // 
             // BModificarProducto
             // 
-            this.BModificarProducto.Location = new System.Drawing.Point(309, 404);
+            this.BModificarProducto.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.BModificarProducto.Location = new System.Drawing.Point(565, 520);
+            this.BModificarProducto.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BModificarProducto.Name = "BModificarProducto";
-            this.BModificarProducto.Size = new System.Drawing.Size(153, 56);
+            this.BModificarProducto.Size = new System.Drawing.Size(150, 50);
             this.BModificarProducto.TabIndex = 22;
             this.BModificarProducto.Text = "Modificar";
-            this.BModificarProducto.UseVisualStyleBackColor = true;
+            this.BModificarProducto.UseVisualStyleBackColor = false;
             this.BModificarProducto.Click += new System.EventHandler(this.BModificarProducto_Click);
             // 
             // BCambiarEstado
             // 
-            this.BCambiarEstado.Location = new System.Drawing.Point(613, 404);
+            this.BCambiarEstado.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.BCambiarEstado.Location = new System.Drawing.Point(880, 520);
+            this.BCambiarEstado.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BCambiarEstado.Name = "BCambiarEstado";
-            this.BCambiarEstado.Size = new System.Drawing.Size(153, 56);
+            this.BCambiarEstado.Size = new System.Drawing.Size(150, 50);
             this.BCambiarEstado.TabIndex = 23;
             this.BCambiarEstado.Text = "Desactivar";
-            this.BCambiarEstado.UseVisualStyleBackColor = true;
+            this.BCambiarEstado.UseVisualStyleBackColor = false;
             this.BCambiarEstado.Click += new System.EventHandler(this.BEliminarProducto_Click);
             // 
-            // BVolver
+            // btnVolver
             // 
-            this.BVolver.Location = new System.Drawing.Point(9, 12);
-            this.BVolver.Name = "BVolver";
-            this.BVolver.Size = new System.Drawing.Size(96, 39);
-            this.BVolver.TabIndex = 25;
-            this.BVolver.Text = "Volver";
-            this.BVolver.UseVisualStyleBackColor = true;
-            this.BVolver.Click += new System.EventHandler(this.BVolver_Click);
+            this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnVolver.Location = new System.Drawing.Point(40, 20);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(75, 32);
+            this.btnVolver.TabIndex = 26;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.BtnVolver_Click);
             // 
             // FormProductos
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 502);
-            this.Controls.Add(this.BVolver);
+            this.ClientSize = new System.Drawing.Size(1280, 620);
+            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.BCambiarEstado);
             this.Controls.Add(this.BModificarProducto);
             this.Controls.Add(this.BNuevoProducto);
@@ -135,6 +146,8 @@
             this.Controls.Add(this.TBuscar);
             this.Controls.Add(this.LBuscar);
             this.Controls.Add(this.LTitulo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FormProductos";
             this.Text = "FormProductos";
             this.Load += new System.EventHandler(this.FormProductos_Load);
@@ -153,6 +166,6 @@
         private System.Windows.Forms.Button BNuevoProducto;
         private System.Windows.Forms.Button BModificarProducto;
         private System.Windows.Forms.Button BCambiarEstado;
-        private System.Windows.Forms.Button BVolver;
+        private System.Windows.Forms.Button btnVolver;
     }
 }

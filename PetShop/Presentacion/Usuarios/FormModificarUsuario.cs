@@ -3,13 +3,18 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using PetShop.Negocio;
+using PetShop.Entidades;
 
 namespace PetShop.Presentacion.Usuarios
 {
     public partial class FormModificarUsuario : Form
     {
-        private int _idUsuario;
-        private ErrorProvider ep = new ErrorProvider();
+        // Campo para almacenar el ID del usuario que se va a modificar
+        private readonly int _idUsuario;
+        private readonly ErrorProvider _ep = new ErrorProvider();
+        private readonly CN_Usuario _cnUsuario = new CN_Usuario();
+        private readonly CN_Rol _cnRol = new CN_Rol();
 
         public FormModificarUsuario(int idUsuario)
         {
@@ -31,8 +36,8 @@ namespace PetShop.Presentacion.Usuarios
             }
 
             // Configuración visual del ErrorProvider
-            ep.BlinkStyle = ErrorBlinkStyle.NeverBlink;
-            ep.Icon = System.Drawing.SystemIcons.Warning;
+            _ep.BlinkStyle = ErrorBlinkStyle.NeverBlink;
+            _ep.Icon = System.Drawing.SystemIcons.Warning;
 
             TClave.UseSystemPasswordChar = true;
             TConfirmar.UseSystemPasswordChar = true;
@@ -66,30 +71,21 @@ namespace PetShop.Presentacion.Usuarios
 
         private void CargarRoles()
         {
-            string query = "SELECT DISTINCT id_rol, nombre_rol FROM Rol WHERE nombre_rol <> 'Administrador'";
-
-            using (SqlConnection con = Conexion.ObtenerConexion())
+            try
             {
-                try
-                {
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        SqlDataAdapter da = new SqlDataAdapter(cmd);
-                        DataTable dt = new DataTable();
-                        da.Fill(dt);
+                var roles = _cnRol.ListarRoles();
+                roles.RemoveAll(r => r.NombreRol.Equals("Administrador", StringComparison.OrdinalIgnoreCase));
 
-                        CBRol.DataSource = null;
-                        CBRol.Items.Clear();
-
-                        CBRol.DisplayMember = "nombre_rol";
-                        CBRol.ValueMember = "id_rol";
-                        CBRol.DataSource = dt;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al cargar roles: " + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                CBRol.DataSource = null;
+                CBRol.Items.Clear();
+                CBRol.DisplayMember = "NombreRol";
+                CBRol.ValueMember = "IdRol";
+                CBRol.DataSource = roles;
+                   
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar roles: " + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -102,51 +98,33 @@ namespace PetShop.Presentacion.Usuarios
 
         private void CargarDatosUsuario()
         {
-            string query = @"SELECT nombre, apellido, nombre_usuario, dni, correo, telefono, id_rol, estado, fecha_creacion 
-                            FROM Usuario WHERE id_usuario = @id";
-
-            using (SqlConnection con = Conexion.ObtenerConexion())
+            try
             {
-                try
+                Usuario usuario = _cnUsuario.ObtenerPorId(_idUsuario);
+
+                if (usuario != null)
                 {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        cmd.Parameters.AddWithValue("@id", _idUsuario);
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                TNombre.Text = reader["nombre"].ToString();
-                                TApellido.Text = reader["apellido"].ToString();
-                                TNombreUsuario.Text = reader["nombre_usuario"].ToString();
+                    TNombre.Text = usuario.Nombre;
+                    TApellido.Text = usuario.Apellido;
+                    TNombreUsuario.Text = usuario.NombreUsuario;
 
-                                TDni.Text = reader["dni"] != DBNull.Value ? reader["dni"].ToString() : "";
-                                TCorreo.Text = reader["correo"] != DBNull.Value ? reader["correo"].ToString() : "";
-                                TTelefono.Text = reader["telefono"] != DBNull.Value ? reader["telefono"].ToString() : "";
+                    TDni.Text = usuario.Dni;
+                    TCorreo.Text = usuario.Correo;
+                    TTelefono.Text = usuario.Telefono;
 
-                                CBRol.SelectedValue = Convert.ToInt32(reader["id_rol"]);
+                    CBRol.SelectedValue = usuario.IdRol;
+                    CBEstado.Text = usuario.Estado ? "Activo" : "Inactivo";
 
-                                string estadoBD = reader["estado"].ToString().Trim();
-                                CBEstado.Text = estadoBD.Equals("1") || estadoBD.Equals("True") || estadoBD.Equals("Activo", StringComparison.OrdinalIgnoreCase) ? "Activo" : "Inactivo";
-
-                                if (reader["fecha_creacion"] != DBNull.Value)
-                                {
-                                    DateTime fecha = Convert.ToDateTime(reader["fecha_creacion"]);
-                                    LFechaCreacion.Text = "Fecha de creación: " + fecha.ToString("dd 'de' MMMM 'de' yyyy");
-                                }
-                            }
-                            else
-                            {
-                                MessageBox.Show("No se encontraron los datos del usuario en la base de datos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            }
-                        }
-                    }
+                    LFechaCreacion.Text = "Fecha de creación: " + usuario.FechaCreacion.ToString("dd 'de' MMMM 'de' yyyy");
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show("Error al cargar los datos del usuario: " + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("No se encontraron los datos del usuario en la base de datos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los datos del usuario: " + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -174,29 +152,29 @@ namespace PetShop.Presentacion.Usuarios
 
         private bool ValidarFormulario()
         {
-            ep.Clear();
+            _ep.Clear();
             bool esValido = true;
 
             if (string.IsNullOrWhiteSpace(TNombre.Text))
             {
-                ep.SetError(TNombre, "El nombre es obligatorio.");
+                _ep.SetError(TNombre, "El nombre es obligatorio.");
                 esValido = false;
             }
 
             if (string.IsNullOrWhiteSpace(TApellido.Text))
             {
-                ep.SetError(TApellido, "El apellido es obligatorio.");
+                _ep.SetError(TApellido, "El apellido es obligatorio.");
                 esValido = false;
             }
 
             if (string.IsNullOrWhiteSpace(TNombreUsuario.Text))
             {
-                ep.SetError(TNombreUsuario, "El nombre de usuario es obligatorio.");
+                _ep.SetError(TNombreUsuario, "El nombre de usuario es obligatorio.");
                 esValido = false;
             }
             else if (TNombreUsuario.Text.Trim().Length < 4)
             {
-                ep.SetError(TNombreUsuario, "Debe tener al menos 4 caracteres.");
+                _ep.SetError(TNombreUsuario, "Debe tener al menos 4 caracteres.");
                 esValido = false;
             }
 
@@ -208,33 +186,34 @@ namespace PetShop.Presentacion.Usuarios
             {
                 if (TClave.Text.Trim().Length < 6)
                 {
-                    ep.SetError(TClave, "La nueva contraseña debe tener al menos 6 caracteres.");
+                    _ep.SetError(TClave, "La nueva contraseña debe tener al menos 6 caracteres.");
                     esValido = false;
                 }
 
                 if (TConfirmar.Text != TClave.Text)
                 {
-                    ep.SetError(TConfirmar, "Las contraseñas no coinciden.");
+                    _ep.SetError(TConfirmar, "Las contraseñas no coinciden.");
                     esValido = false;
                 }
             }
 
             if (CBRol.SelectedIndex == -1 || CBRol.SelectedValue == null)
             {
-                ep.SetError(CBRol, "Debe seleccionar un rol.");
+                _ep.SetError(CBRol, "Debe seleccionar un rol.");
                 esValido = false;
             }
 
             if (CBEstado.SelectedIndex == -1 || string.IsNullOrWhiteSpace(CBEstado.Text))
             {
-                ep.SetError(CBEstado, "Debe seleccionar un estado.");
+                _ep.SetError(CBEstado, "Debe seleccionar un estado.");
                 esValido = false;
             }
 
             return esValido;
         }
 
-        private void BGuardar_Click(object sender, EventArgs e)
+        // BOTON GUARDAR
+        private void BtnGuardar_Click(object sender, EventArgs e)
         {
             if (!ValidarFormulario())
             {
@@ -249,84 +228,38 @@ namespace PetShop.Presentacion.Usuarios
                 MessageBoxIcon.Question
             );
 
-            if (confirmacion == DialogResult.Yes)
+            if (confirmacion == DialogResult.Yes) return;
+
+            bool actualizarClave = !string.IsNullOrWhiteSpace(TClave.Text);
+
+            Usuario usuarioModificado = new Usuario
             {
-                if (GuardarCambios())
-                {
-                    MessageBox.Show("Usuario modificado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.DialogResult = DialogResult.OK;
-                    this.Close();
-                }
+                IdUsuario = _idUsuario,
+                Nombre = TNombre.Text.Trim(),
+                Apellido = TApellido.Text.Trim(),
+                NombreUsuario = TNombreUsuario.Text.Trim(),
+                Clave = TClave.Text.Trim(),
+                IdRol = Convert.ToInt32(CBRol.SelectedValue),
+                Estado = CBEstado.Text.Trim().Equals("Activo", StringComparison.OrdinalIgnoreCase)
+            };
+
+            bool exito = _cnUsuario.ModificarUsuario(usuarioModificado, actualizarClave, out string mensaje);
+
+            if (exito)
+            {
+                MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else
+            {
+                _ep.SetError(TNombreUsuario, mensaje);
+                MessageBox.Show(mensaje, "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
-        private bool GuardarCambios()
-        {
-            bool contrasenaEscrita = !string.IsNullOrWhiteSpace(TClave.Text);
-
-            string query = @"UPDATE Usuario 
-                            SET nombre = @nombre, 
-                                apellido = @apellido, 
-                                nombre_usuario = @nombre_usuario, 
-                                id_rol = @id_rol, 
-                                estado = @estado";
-
-            if (contrasenaEscrita)
-            {
-                query += ", clave = @clave";
-            }
-
-            query += " WHERE id_usuario = @id";
-
-            using (SqlConnection con = Conexion.ObtenerConexion())
-            {
-                try
-                {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        cmd.Parameters.AddWithValue("@nombre", TNombre.Text.Trim());
-                        cmd.Parameters.AddWithValue("@apellido", TApellido.Text.Trim());
-                        cmd.Parameters.AddWithValue("@nombre_usuario", TNombreUsuario.Text.Trim());
-                        cmd.Parameters.AddWithValue("@id_rol", Convert.ToInt32(CBRol.SelectedValue));
-
-                        int estadoBD = CBEstado.Text.Trim().Equals("Activo", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
-                        cmd.Parameters.AddWithValue("@estado", estadoBD);
-
-                        cmd.Parameters.AddWithValue("@id", _idUsuario);
-
-                        if (contrasenaEscrita)
-                        {
-                            cmd.Parameters.AddWithValue("@clave", TClave.Text.Trim());
-                        }
-
-                        int filasAfectadas = cmd.ExecuteNonQuery();
-
-                        if (filasAfectadas > 0)
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            MessageBox.Show("No se encontró el usuario a modificar en la base de datos.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return false;
-                        }
-                    }
-                }
-                catch (SqlException ex) when (ex.Number == 2627 || ex.Number == 2601)
-                {
-                    ep.SetError(TNombreUsuario, "Este nombre de usuario ya está registrado.");
-                    MessageBox.Show("El nombre de usuario ingresado ya pertenece a otro registro.", "Usuario Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    return false;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al actualizar el usuario: " + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-            }
-        }
-        private void BEliminarTodo_Click(object sender, EventArgs e)
+        // BOTON BORRAR
+        private void BtnBorrar_Click(object sender, EventArgs e)
         {
             DialogResult confirmacion = MessageBox.Show(
                 "¿Desea restablecer los campos a sus valores originales?",
@@ -345,15 +278,14 @@ namespace PetShop.Presentacion.Usuarios
         {
             TClave.Clear();
             TConfirmar.Clear();
-            ep.Clear();
+            _ep.Clear();
             CargarDatosUsuario();
             TNombre.Focus();
         }
 
-        private void BVolver_Click(object sender, EventArgs e)
+        private void BtnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
     }
 }

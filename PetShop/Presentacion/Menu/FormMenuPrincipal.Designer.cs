@@ -66,11 +66,11 @@ namespace PetShop.Presentacion.Menu
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.lblUsuarioBienvenida = new System.Windows.Forms.Label();
             this.contenedor = new System.Windows.Forms.Panel();
-            this.btnReportes = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnRealizarVenta = new System.Windows.Forms.Button();
             this.imageList3 = new System.Windows.Forms.ImageList(this.components);
             this.btnHistorialVentas = new System.Windows.Forms.Button();
-            this.btnRealizarVenta = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnReportes = new System.Windows.Forms.Button();
             this.msPrincipal.SuspendLayout();
             this.gbSesionIniciada.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -415,21 +415,34 @@ namespace PetShop.Presentacion.Menu
             this.contenedor.Size = new System.Drawing.Size(1280, 620);
             this.contenedor.TabIndex = 3;
             // 
-            // btnReportes
+            // groupBox1
             // 
-            this.btnReportes.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btnReportes.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnReportes.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnReportes.ImageIndex = 2;
-            this.btnReportes.ImageList = this.imageList3;
-            this.btnReportes.Location = new System.Drawing.Point(640, 30);
-            this.btnReportes.Name = "btnReportes";
-            this.btnReportes.Size = new System.Drawing.Size(200, 100);
-            this.btnReportes.TabIndex = 4;
-            this.btnReportes.Text = "Visualizar Reportes Recientes";
-            this.btnReportes.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnReportes.UseVisualStyleBackColor = false;
-            this.btnReportes.Click += new System.EventHandler(this.BtnReportes_Click);
+            this.groupBox1.Controls.Add(this.btnRealizarVenta);
+            this.groupBox1.Controls.Add(this.btnHistorialVentas);
+            this.groupBox1.Controls.Add(this.btnReportes);
+            this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Location = new System.Drawing.Point(200, 200);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(880, 150);
+            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Acceso Rapidos";
+            // 
+            // btnRealizarVenta
+            // 
+            this.btnRealizarVenta.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnRealizarVenta.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRealizarVenta.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.btnRealizarVenta.ImageIndex = 0;
+            this.btnRealizarVenta.ImageList = this.imageList3;
+            this.btnRealizarVenta.Location = new System.Drawing.Point(40, 30);
+            this.btnRealizarVenta.Name = "btnRealizarVenta";
+            this.btnRealizarVenta.Size = new System.Drawing.Size(200, 100);
+            this.btnRealizarVenta.TabIndex = 2;
+            this.btnRealizarVenta.Text = "Realizar Nueva Venta";
+            this.btnRealizarVenta.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnRealizarVenta.UseVisualStyleBackColor = false;
+            this.btnRealizarVenta.Click += new System.EventHandler(this.BtnRealizarVenta_Click);
             // 
             // imageList3
             // 
@@ -455,34 +468,21 @@ namespace PetShop.Presentacion.Menu
             this.btnHistorialVentas.UseVisualStyleBackColor = false;
             this.btnHistorialVentas.Click += new System.EventHandler(this.BtnHistorialVentas_Click);
             // 
-            // btnRealizarVenta
+            // btnReportes
             // 
-            this.btnRealizarVenta.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btnRealizarVenta.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRealizarVenta.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnRealizarVenta.ImageIndex = 0;
-            this.btnRealizarVenta.ImageList = this.imageList3;
-            this.btnRealizarVenta.Location = new System.Drawing.Point(40, 30);
-            this.btnRealizarVenta.Name = "btnRealizarVenta";
-            this.btnRealizarVenta.Size = new System.Drawing.Size(200, 100);
-            this.btnRealizarVenta.TabIndex = 2;
-            this.btnRealizarVenta.Text = "Realizar Nueva Venta";
-            this.btnRealizarVenta.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnRealizarVenta.UseVisualStyleBackColor = false;
-            this.btnRealizarVenta.Click += new System.EventHandler(this.BtnRealizarVenta_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.btnRealizarVenta);
-            this.groupBox1.Controls.Add(this.btnHistorialVentas);
-            this.groupBox1.Controls.Add(this.btnReportes);
-            this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(200, 200);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(880, 150);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Acceso Rapidos";
+            this.btnReportes.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnReportes.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnReportes.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.btnReportes.ImageIndex = 2;
+            this.btnReportes.ImageList = this.imageList3;
+            this.btnReportes.Location = new System.Drawing.Point(640, 30);
+            this.btnReportes.Name = "btnReportes";
+            this.btnReportes.Size = new System.Drawing.Size(200, 100);
+            this.btnReportes.TabIndex = 4;
+            this.btnReportes.Text = "Visualizar Reportes Recientes";
+            this.btnReportes.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnReportes.UseVisualStyleBackColor = false;
+            this.btnReportes.Click += new System.EventHandler(this.BtnReportes_Click);
             // 
             // FormMenuPrincipal
             // 
@@ -494,7 +494,7 @@ namespace PetShop.Presentacion.Menu
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.msPrincipal);
             this.Controls.Add(this.menuStrip1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);

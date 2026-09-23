@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Datos\CD_Usuario.cs" />
     <Compile Include="Datos\Conexion.cs" />
+    <Compile Include="Datos\CD_Rol.cs" />
     <Compile Include="Entidades\Categoria.cs" />
     <Compile Include="Entidades\DetalleVenta.cs" />
     <Compile Include="Entidades\Especie.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Entidades\TipoVenta.cs" />
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Entidades\Venta.cs" />
+    <Compile Include="Negocio\CN_Rol.cs" />
     <Compile Include="Negocio\CN_Usuario.cs" />
     <Compile Include="Presentacion\Autenticacion\FormLogin.cs">
       <SubType>Form</SubType>

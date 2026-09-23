@@ -12,17 +12,28 @@ namespace PetShop.Presentacion
 {
     public partial class FormVentas : Form
     {
+        // Definicion de la imagen del icono de eliminación como un recurso estático
+        private static readonly Image _iconoEliminar = Properties.Resources.Eliminar;
+
         public FormVentas()
         {
             InitializeComponent();
+
+            // Habilitar DoubleBuffered para evitar parpadeos y acelerar CellPainting
+            typeof(DataGridView).InvokeMember("DoubleBuffered",
+                System.Reflection.BindingFlags.SetProperty |
+                System.Reflection.BindingFlags.Instance |
+                System.Reflection.BindingFlags.NonPublic,
+                null, dgvVenta, new object[] { true });
         }
 
+        /*
         private void DgvVenta_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
 
-            // Verifica que se haya presionado la columna del botón eliminar
-            if (dgvVenta.Columns[e.ColumnIndex].Name == "btnEliminar")
+            // Verifica que se haya presionado la columna del botón quitar producto
+            if (dgvVenta.Columns[e.ColumnIndex].Name == "btnQuitarProducto")
             {
                 dgvVenta.Rows.RemoveAt(e.RowIndex);
 
@@ -30,20 +41,18 @@ namespace PetShop.Presentacion
                 // CalcularTotal();
             }
         }
+        */
 
         private void DgvVenta_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            // 1. Evitar pintar en la fila de encabezados
+            // Evitar pintar en la fila de encabezados
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
 
-            // 2. Verificar que sea la columna de eliminación (usa el nombre que le diste a la columna)
+            // Verificar que sea la columna de eliminación
             if (dgvVenta.Columns[e.ColumnIndex].Name == "btnQuitarProducto")
             {
                 // Pinta las partes estándar de la celda (fondo, bordes de selección) excepto el contenido/texto
                 e.Paint(e.CellBounds, DataGridViewPaintParts.All);
-
-                // Obtenemos la imagen desde Properties.Resources
-                var icono = Properties.Resources.Eliminar; // Reemplaza con el nombre de tu recurso
 
                 // Dimensiones deseadas para el icono
                 int anchoIcono = 18;
@@ -54,7 +63,7 @@ namespace PetShop.Presentacion
                 int posicionY = e.CellBounds.Top + (e.CellBounds.Height - altoIcono) / 2;
 
                 // Dibujamos la imagen centrada
-                e.Graphics.DrawImage(icono, new Rectangle(posicionX, posicionY, anchoIcono, altoIcono));
+                e.Graphics.DrawImage(_iconoEliminar, new Rectangle(posicionX, posicionY, anchoIcono, altoIcono));
 
                 // Marcamos el evento como manejado para evitar que el DataGridView dibuje encima
                 e.Handled = true;
