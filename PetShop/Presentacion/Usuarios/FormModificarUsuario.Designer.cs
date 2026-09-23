@@ -347,7 +347,7 @@
             this.PanelContenedor.Controls.Add(this.GBDatos);
             this.PanelContenedor.Controls.Add(this.LFechaCreacion);
             this.PanelContenedor.Controls.Add(this.GBSeguridad);
-            this.PanelContenedor.Location = new System.Drawing.Point(62, 87);
+            this.PanelContenedor.Location = new System.Drawing.Point(88, 87);
             this.PanelContenedor.Name = "PanelContenedor";
             this.PanelContenedor.Size = new System.Drawing.Size(987, 611);
             this.PanelContenedor.TabIndex = 108;
@@ -412,9 +412,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LTitulo.ForeColor = System.Drawing.Color.SteelBlue;
-            this.LTitulo.Location = new System.Drawing.Point(301, 24);
+            this.LTitulo.Location = new System.Drawing.Point(340, 24);
             this.LTitulo.Name = "LTitulo";
-            this.LTitulo.Size = new System.Drawing.Size(509, 40);
+            this.LTitulo.Size = new System.Drawing.Size(483, 40);
             this.LTitulo.TabIndex = 108;
             this.LTitulo.Text = "- MODIFICAR USUARIO -";
             this.LTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;

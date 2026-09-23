@@ -175,32 +175,51 @@ namespace PetShop.Presentacion.Usuarios
 
         private void BGuardar_Click(object sender, EventArgs e)
         {
-            // 1. Si hay errores, dispara las marcas del ErrorProvider y avisa con un único MessageBox
+            // 1. Validaciones locales del formulario
             if (!ValidarFormulario())
             {
                 MessageBox.Show("Por favor, verifique los campos marcados con advertencias.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (!int.TryParse(CBRol.SelectedValue.ToString(), out int idRol))
+            if (!int.TryParse(CBRol.SelectedValue?.ToString(), out int idRol))
             {
                 MessageBox.Show("Seleccione un rol válido.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            string query = @"INSERT INTO Usuario (nombre, apellido, nombre_usuario, clave, dni, correo, telefono, estado, fecha_creacion, id_rol) 
-                            VALUES (@Nombre, @Apellido, @Usuario, @Clave, @Dni, @Correo, @Telefono, 1, GETDATE(), @IdRol)";
+            string nombreUsuario = TNombreUsuario.Text.Trim();
 
             using (SqlConnection con = Conexion.ObtenerConexion())
             {
                 try
                 {
                     con.Open();
-                    using (SqlCommand cmd = new SqlCommand(query, con))
+
+                    // 2. VERIFICACIÓN PREVIA DE DUPLICADO (Evita falsos positivos en el catch)
+                    string queryExiste = "SELECT COUNT(1) FROM Usuario WHERE LOWER(nombre_usuario) = LOWER(@Usuario)";
+                    using (SqlCommand cmdExiste = new SqlCommand(queryExiste, con))
+                    {
+                        cmdExiste.Parameters.AddWithValue("@Usuario", nombreUsuario);
+                        int cantidad = Convert.ToInt32(cmdExiste.ExecuteScalar());
+
+                        if (cantidad > 0)
+                        {
+                            ep.SetError(TNombreUsuario, "Este nombre de usuario ya está en uso.");
+                            MessageBox.Show("El nombre de usuario ingresado ya está registrado. Elija otro.", "Usuario Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                            return;
+                        }
+                    }
+
+                    // 3. INSERCIÓN DEL NUEVO USUARIO
+                    string queryInsert = @"INSERT INTO Usuario (nombre, apellido, nombre_usuario, clave, dni, correo, telefono, estado, fecha_creacion, id_rol) 
+                                 VALUES (@Nombre, @Apellido, @Usuario, @Clave, @Dni, @Correo, @Telefono, 1, GETDATE(), @IdRol)";
+
+                    using (SqlCommand cmd = new SqlCommand(queryInsert, con))
                     {
                         cmd.Parameters.AddWithValue("@Nombre", TNombre.Text.Trim());
                         cmd.Parameters.AddWithValue("@Apellido", TApellido.Text.Trim());
-                        cmd.Parameters.AddWithValue("@Usuario", TNombreUsuario.Text.Trim());
+                        cmd.Parameters.AddWithValue("@Usuario", nombreUsuario);
                         cmd.Parameters.AddWithValue("@Clave", TClave.Text.Trim());
 
                         cmd.Parameters.Add("@Dni", SqlDbType.VarChar).Value = string.IsNullOrWhiteSpace(TDni.Text) ? (object)DBNull.Value : TDni.Text.Trim();
@@ -219,14 +238,9 @@ namespace PetShop.Presentacion.Usuarios
                         }
                     }
                 }
-                catch (SqlException ex) when (ex.Number == 2627 || ex.Number == 2601)
-                {
-                    ep.SetError(TNombreUsuario, "Este nombre de usuario ya está en uso.");
-                    MessageBox.Show("El nombre de usuario ingresado ya está registrado. Elija otro.", "Usuario Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error al guardar el usuario: " + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Error al guardar el usuario en la base de datos: " + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
