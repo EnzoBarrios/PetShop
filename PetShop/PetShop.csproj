@@ -68,6 +68,18 @@
     <Compile Include="Presentacion\Autenticacion\FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentacion\Catalogos\FormCategorias.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Catalogos\FormCategorias.Designer.cs">
+      <DependentUpon>FormCategorias.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Catalogos\FormEspecies.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Catalogos\FormEspecies.Designer.cs">
+      <DependentUpon>FormEspecies.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentacion\Menu\FormMenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,6 +146,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Presentacion\Autenticacion\FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Catalogos\FormCategorias.resx">
+      <DependentUpon>FormCategorias.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Catalogos\FormEspecies.resx">
+      <DependentUpon>FormEspecies.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Menu\FormMenuPrincipal.resx">
       <DependentUpon>FormMenuPrincipal.cs</DependentUpon>

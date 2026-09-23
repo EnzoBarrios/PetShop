@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PetShop.Presentacion
+namespace PetShop.Presentacion.Catalogos
 {
-    public partial class FormReportes : Form
+    public partial class FormEspecies : Form
     {
-        public FormReportes()
+        public FormEspecies()
         {
             InitializeComponent();
         }

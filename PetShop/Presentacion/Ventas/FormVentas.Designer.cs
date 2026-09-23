@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormVentas));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblTituloVenta = new System.Windows.Forms.Label();
             this.lblMetodoPago = new System.Windows.Forms.Label();
             this.gbInformacionPago = new System.Windows.Forms.GroupBox();
@@ -61,16 +61,17 @@
             this.txtCodProducto = new System.Windows.Forms.TextBox();
             this.lblCodProducto = new System.Windows.Forms.Label();
             this.dgvVenta = new System.Windows.Forms.DataGridView();
-            this.btnAgregrarProducto = new System.Windows.Forms.Button();
-            this.imageList2 = new System.Windows.Forms.ImageList(this.components);
-            this.btnConfirmarVenta = new System.Windows.Forms.Button();
-            this.btnCancelarVenta = new System.Windows.Forms.Button();
             this.colCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSubTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnQuitarProducto = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.imageList2 = new System.Windows.Forms.ImageList(this.components);
+            this.btnCancelarVenta = new System.Windows.Forms.Button();
+            this.btnConfirmarVenta = new System.Windows.Forms.Button();
+            this.btnAgregrarProducto = new System.Windows.Forms.Button();
+            this.btnVolver = new System.Windows.Forms.Button();
             this.gbInformacionPago.SuspendLayout();
             this.gbInformacionProducto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVenta)).BeginInit();
@@ -79,10 +80,11 @@
             // lblTituloVenta
             // 
             this.lblTituloVenta.AutoSize = true;
-            this.lblTituloVenta.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTituloVenta.Location = new System.Drawing.Point(20, 20);
+            this.lblTituloVenta.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.lblTituloVenta.ForeColor = System.Drawing.Color.Black;
+            this.lblTituloVenta.Location = new System.Drawing.Point(546, 20);
             this.lblTituloVenta.Name = "lblTituloVenta";
-            this.lblTituloVenta.Size = new System.Drawing.Size(158, 28);
+            this.lblTituloVenta.Size = new System.Drawing.Size(188, 32);
             this.lblTituloVenta.TabIndex = 0;
             this.lblTituloVenta.Text = "Registrar Venta";
             // 
@@ -385,14 +387,14 @@
             // 
             // dgvVenta
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvVenta.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvVenta.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvVenta.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvVenta.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colCodigo,
@@ -409,62 +411,6 @@
             this.dgvVenta.TabIndex = 4;
             this.dgvVenta.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvVenta_CellContentClick);
             this.dgvVenta.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.DgvVenta_CellPainting);
-            // 
-            // btnAgregrarProducto
-            // 
-            this.btnAgregrarProducto.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btnAgregrarProducto.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAgregrarProducto.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnAgregrarProducto.ImageIndex = 0;
-            this.btnAgregrarProducto.ImageList = this.imageList2;
-            this.btnAgregrarProducto.Location = new System.Drawing.Point(1140, 80);
-            this.btnAgregrarProducto.Name = "btnAgregrarProducto";
-            this.btnAgregrarProducto.Size = new System.Drawing.Size(100, 90);
-            this.btnAgregrarProducto.TabIndex = 5;
-            this.btnAgregrarProducto.Text = "Agregar Producto";
-            this.btnAgregrarProducto.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnAgregrarProducto.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnAgregrarProducto.UseVisualStyleBackColor = false;
-            // 
-            // imageList2
-            // 
-            this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
-            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList2.Images.SetKeyName(0, "Agregar_Venta.png");
-            this.imageList2.Images.SetKeyName(1, "Cancelar_Venta.png");
-            this.imageList2.Images.SetKeyName(2, "Crear_Venta.png");
-            // 
-            // btnConfirmarVenta
-            // 
-            this.btnConfirmarVenta.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btnConfirmarVenta.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConfirmarVenta.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnConfirmarVenta.ImageIndex = 2;
-            this.btnConfirmarVenta.ImageList = this.imageList2;
-            this.btnConfirmarVenta.Location = new System.Drawing.Point(1143, 500);
-            this.btnConfirmarVenta.Name = "btnConfirmarVenta";
-            this.btnConfirmarVenta.Size = new System.Drawing.Size(100, 90);
-            this.btnConfirmarVenta.TabIndex = 6;
-            this.btnConfirmarVenta.Text = "Confirmar Venta";
-            this.btnConfirmarVenta.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnConfirmarVenta.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnConfirmarVenta.UseVisualStyleBackColor = false;
-            // 
-            // btnCancelarVenta
-            // 
-            this.btnCancelarVenta.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btnCancelarVenta.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelarVenta.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnCancelarVenta.ImageIndex = 1;
-            this.btnCancelarVenta.ImageList = this.imageList2;
-            this.btnCancelarVenta.Location = new System.Drawing.Point(983, 500);
-            this.btnCancelarVenta.Name = "btnCancelarVenta";
-            this.btnCancelarVenta.Size = new System.Drawing.Size(100, 90);
-            this.btnCancelarVenta.TabIndex = 7;
-            this.btnCancelarVenta.Text = "Cancelar Venta";
-            this.btnCancelarVenta.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnCancelarVenta.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnCancelarVenta.UseVisualStyleBackColor = false;
             // 
             // colCodigo
             // 
@@ -494,6 +440,7 @@
             this.colCantidad.HeaderText = "Cantidad";
             this.colCantidad.MinimumWidth = 6;
             this.colCantidad.Name = "colCantidad";
+            this.colCantidad.Width = 125;
             // 
             // colSubTotal
             // 
@@ -512,6 +459,73 @@
             this.btnQuitarProducto.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.btnQuitarProducto.Width = 40;
             // 
+            // imageList2
+            // 
+            this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
+            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList2.Images.SetKeyName(0, "Agregar_Venta.png");
+            this.imageList2.Images.SetKeyName(1, "Cancelar_Venta.png");
+            this.imageList2.Images.SetKeyName(2, "Crear_Venta.png");
+            // 
+            // btnCancelarVenta
+            // 
+            this.btnCancelarVenta.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnCancelarVenta.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelarVenta.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnCancelarVenta.ImageIndex = 1;
+            this.btnCancelarVenta.ImageList = this.imageList2;
+            this.btnCancelarVenta.Location = new System.Drawing.Point(983, 500);
+            this.btnCancelarVenta.Name = "btnCancelarVenta";
+            this.btnCancelarVenta.Size = new System.Drawing.Size(100, 90);
+            this.btnCancelarVenta.TabIndex = 7;
+            this.btnCancelarVenta.Text = "Cancelar Venta";
+            this.btnCancelarVenta.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnCancelarVenta.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnCancelarVenta.UseVisualStyleBackColor = false;
+            // 
+            // btnConfirmarVenta
+            // 
+            this.btnConfirmarVenta.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnConfirmarVenta.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConfirmarVenta.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnConfirmarVenta.ImageIndex = 2;
+            this.btnConfirmarVenta.ImageList = this.imageList2;
+            this.btnConfirmarVenta.Location = new System.Drawing.Point(1143, 500);
+            this.btnConfirmarVenta.Name = "btnConfirmarVenta";
+            this.btnConfirmarVenta.Size = new System.Drawing.Size(100, 90);
+            this.btnConfirmarVenta.TabIndex = 6;
+            this.btnConfirmarVenta.Text = "Confirmar Venta";
+            this.btnConfirmarVenta.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnConfirmarVenta.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnConfirmarVenta.UseVisualStyleBackColor = false;
+            // 
+            // btnAgregrarProducto
+            // 
+            this.btnAgregrarProducto.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnAgregrarProducto.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAgregrarProducto.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnAgregrarProducto.ImageIndex = 0;
+            this.btnAgregrarProducto.ImageList = this.imageList2;
+            this.btnAgregrarProducto.Location = new System.Drawing.Point(1140, 80);
+            this.btnAgregrarProducto.Name = "btnAgregrarProducto";
+            this.btnAgregrarProducto.Size = new System.Drawing.Size(100, 90);
+            this.btnAgregrarProducto.TabIndex = 5;
+            this.btnAgregrarProducto.Text = "Agregar Producto";
+            this.btnAgregrarProducto.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnAgregrarProducto.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnAgregrarProducto.UseVisualStyleBackColor = false;
+            // 
+            // btnVolver
+            // 
+            this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnVolver.Location = new System.Drawing.Point(40, 20);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(75, 32);
+            this.btnVolver.TabIndex = 10;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.BtnVolver_Click);
+            // 
             // FormVentas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -519,6 +533,7 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1280, 620);
+            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnCancelarVenta);
             this.Controls.Add(this.btnConfirmarVenta);
             this.Controls.Add(this.btnAgregrarProducto);
@@ -581,5 +596,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colCantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSubTotal;
         private System.Windows.Forms.DataGridViewButtonColumn btnQuitarProducto;
+        private System.Windows.Forms.Button btnVolver;
     }
 }

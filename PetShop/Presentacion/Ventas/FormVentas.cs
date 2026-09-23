@@ -60,5 +60,10 @@ namespace PetShop.Presentacion
                 e.Handled = true;
             }
         }
+
+        private void BtnVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
