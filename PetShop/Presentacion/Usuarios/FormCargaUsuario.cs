@@ -196,14 +196,12 @@ namespace PetShop.Presentacion.Usuarios
                 {
                     con.Open();
 
-                    // 2. VERIFICACIÓN PREVIA DE DUPLICADO (Evita falsos positivos en el catch)
-                    string queryExiste = "SELECT COUNT(1) FROM Usuario WHERE LOWER(nombre_usuario) = LOWER(@Usuario)";
-                    using (SqlCommand cmdExiste = new SqlCommand(queryExiste, con))
+                    // 2. Verificación de Nombre de Usuario duplicado
+                    string queryUsuarioExiste = "SELECT COUNT(1) FROM Usuario WHERE LOWER(nombre_usuario) = LOWER(@Usuario)";
+                    using (SqlCommand cmdUsuario = new SqlCommand(queryUsuarioExiste, con))
                     {
-                        cmdExiste.Parameters.AddWithValue("@Usuario", nombreUsuario);
-                        int cantidad = Convert.ToInt32(cmdExiste.ExecuteScalar());
-
-                        if (cantidad > 0)
+                        cmdUsuario.Parameters.AddWithValue("@Usuario", nombreUsuario);
+                        if (Convert.ToInt32(cmdUsuario.ExecuteScalar()) > 0)
                         {
                             ep.SetError(TNombreUsuario, "Este nombre de usuario ya está en uso.");
                             MessageBox.Show("El nombre de usuario ingresado ya está registrado. Elija otro.", "Usuario Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
@@ -211,7 +209,39 @@ namespace PetShop.Presentacion.Usuarios
                         }
                     }
 
-                    // 3. INSERCIÓN DEL NUEVO USUARIO
+                    // 3. Verificación de DNI duplicado (solo si se ingresó un DNI)
+                    if (!string.IsNullOrWhiteSpace(TDni.Text))
+                    {
+                        string queryDniExiste = "SELECT COUNT(1) FROM Usuario WHERE dni = @Dni";
+                        using (SqlCommand cmdDni = new SqlCommand(queryDniExiste, con))
+                        {
+                            cmdDni.Parameters.AddWithValue("@Dni", TDni.Text.Trim());
+                            if (Convert.ToInt32(cmdDni.ExecuteScalar()) > 0)
+                            {
+                                ep.SetError(TDni, "Este DNI ya pertenece a otro usuario.");
+                                MessageBox.Show("El DNI ingresado ya está registrado.", "DNI Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                                return;
+                            }
+                        }
+                    }
+
+                    // 4. Verificación de Correo duplicado (solo si se ingresó un correo)
+                    if (!string.IsNullOrWhiteSpace(TCorreo.Text))
+                    {
+                        string queryCorreoExiste = "SELECT COUNT(1) FROM Usuario WHERE LOWER(correo) = LOWER(@Correo)";
+                        using (SqlCommand cmdCorreo = new SqlCommand(queryCorreoExiste, con))
+                        {
+                            cmdCorreo.Parameters.AddWithValue("@Correo", TCorreo.Text.Trim());
+                            if (Convert.ToInt32(cmdCorreo.ExecuteScalar()) > 0)
+                            {
+                                ep.SetError(TCorreo, "Este correo ya pertenece a otro usuario.");
+                                MessageBox.Show("El correo electrónico ingresado ya está registrado.", "Correo Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                                return;
+                            }
+                        }
+                    }
+
+                    // 5. Inserción en la base de datos
                     string queryInsert = @"INSERT INTO Usuario (nombre, apellido, nombre_usuario, clave, dni, correo, telefono, estado, fecha_creacion, id_rol) 
                                  VALUES (@Nombre, @Apellido, @Usuario, @Clave, @Dni, @Correo, @Telefono, 1, GETDATE(), @IdRol)";
 
@@ -222,6 +252,7 @@ namespace PetShop.Presentacion.Usuarios
                         cmd.Parameters.AddWithValue("@Usuario", nombreUsuario);
                         cmd.Parameters.AddWithValue("@Clave", TClave.Text.Trim());
 
+                        // ACÁ VAN LOS CAMPOS OPCIONALES CON DBNull.Value:
                         cmd.Parameters.Add("@Dni", SqlDbType.VarChar).Value = string.IsNullOrWhiteSpace(TDni.Text) ? (object)DBNull.Value : TDni.Text.Trim();
                         cmd.Parameters.Add("@Correo", SqlDbType.VarChar).Value = string.IsNullOrWhiteSpace(TCorreo.Text) ? (object)DBNull.Value : TCorreo.Text.Trim();
                         cmd.Parameters.Add("@Telefono", SqlDbType.VarChar).Value = string.IsNullOrWhiteSpace(TTelefono.Text) ? (object)DBNull.Value : TTelefono.Text.Trim();
