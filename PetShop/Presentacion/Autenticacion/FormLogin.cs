@@ -32,15 +32,21 @@ namespace PetShop.Presentacion.Autenticacion
                 return;
             }
 
-            Usuario usuarioLogeado = new CN_Usuario().ListarUsuarios()
+            Usuario usuarioLogueado = new CN_Usuario().ListarUsuarios()
                 .FirstOrDefault(u => u.NombreUsuario.Trim().Equals(usuarioIngresado, StringComparison.OrdinalIgnoreCase)
-                                  && u.Clave.Trim() == claveIngresada
-                                  && u.Estado == true);
+                                  && u.Clave.Trim() == claveIngresada);
 
-            if (usuarioLogeado != null)
+            if (!usuarioLogueado.Estado)
+            {
+                MessageBox.Show($"El usuario '{usuarioLogueado.NombreUsuario}' se encuentra inactivo.\nContacte al administrador para habilitar el acceso.",
+                                "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (usuarioLogueado != null)
             {
                 MessageBox.Show("Bienvenido al sistema", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                FormMenuPrincipal form = new FormMenuPrincipal(usuarioLogeado);
+                FormMenuPrincipal form = new FormMenuPrincipal(usuarioLogueado);
                 form.FormClosed += CerrarSesion;
 
                 this.Hide();
