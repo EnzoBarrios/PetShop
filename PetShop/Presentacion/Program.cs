@@ -21,16 +21,16 @@ namespace PetShop
             Application.SetCompatibleTextRenderingDefault(false);
 
             // 1. Crear un usuario de prueba como Administrador para habilitar los menús
-            Usuario usuarioPrueba = new Usuario
-            {
-                IdUsuario = 1,
-                NombreUsuario = "admin",
-                Rol = new Rol { IdRol = 1, NombreRol = "Administrador" }
-            };
+            // Usuario usuarioPrueba = new Usuario
+            // {
+            //      IdUsuario = 1,
+            //     NombreUsuario = "admin",
+            //     Rol = new Rol { IdRol = 1, NombreRol = "Administrador" }
+            //};
 
             // 2. Iniciar directamente el Menú Principal pasándole el usuario simulado
-            Application.Run(new FormMenuPrincipal(usuarioPrueba));
-            //Application.Run(new FormLogin());
+            // Application.Run(new FormMenuPrincipal(usuarioPrueba));
+            Application.Run(new FormLogin());
         }
     }
 }

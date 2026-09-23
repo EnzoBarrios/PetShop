@@ -92,12 +92,6 @@
     <Compile Include="Presentacion\Productos\FormProductos.Designer.cs">
       <DependentUpon>FormProductos.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentacion\Proveedores\FormProveedores.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentacion\Proveedores\FormProveedores.Designer.cs">
-      <DependentUpon>FormProveedores.cs</DependentUpon>
-    </Compile>
     <Compile Include="Presentacion\Reportes\FormReportes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,9 +147,6 @@
     <EmbeddedResource Include="Presentacion\Productos\FormProductos.resx">
       <DependentUpon>FormProductos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentacion\Proveedores\FormProveedores.resx">
-      <DependentUpon>FormProveedores.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Reportes\FormReportes.resx">
       <DependentUpon>FormReportes.cs</DependentUpon>
     </EmbeddedResource>
@@ -197,9 +188,14 @@
   <ItemGroup>
     <None Include="Presentacion\App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Presentacion\Imagenes\Eliminar.png" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Presentacion\Imagenes\Tienda.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Huella_Perro.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

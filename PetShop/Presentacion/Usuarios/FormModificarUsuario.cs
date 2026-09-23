@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace PetShop.Presentacion.Usuarios
@@ -16,7 +17,6 @@ namespace PetShop.Presentacion.Usuarios
             _idUsuario = idUsuario;
         }
 
-        // Constructor por defecto prevenido para evitar ID = 0
         public FormModificarUsuario() : this(0)
         {
         }
@@ -30,18 +30,43 @@ namespace PetShop.Presentacion.Usuarios
                 return;
             }
 
+            // Configuración visual del ErrorProvider
+            ep.BlinkStyle = ErrorBlinkStyle.NeverBlink;
+            ep.Icon = System.Drawing.SystemIcons.Warning;
+
+            TClave.UseSystemPasswordChar = true;
+            TConfirmar.UseSystemPasswordChar = true;
+
             CBRol.DropDownStyle = ComboBoxStyle.DropDownList;
             CBEstado.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            // Oscurecer y proteger campos personales (DNI, Teléfono, Correo)
+            BloquearCamposPersonales();
+
+            TNombre.KeyPress += SoloLetras_KeyPress;
+            TApellido.KeyPress += SoloLetras_KeyPress;
 
             CargarRoles();
             CargarEstados();
             CargarDatosUsuario();
         }
 
+        private void BloquearCamposPersonales()
+        {
+            TextBox[] camposBloqueados = { TDni, TTelefono, TCorreo };
+
+            foreach (TextBox txt in camposBloqueados)
+            {
+                txt.ReadOnly = true;
+                txt.TabStop = false;
+                txt.BackColor = System.Drawing.Color.FromArgb(220, 224, 230);
+                txt.ForeColor = System.Drawing.Color.FromArgb(100, 100, 100);
+            }
+        }
+
         private void CargarRoles()
         {
-            // Usamos DISTINCT para garantizar que la BD no devuelva roles repetidos
-            string query = "SELECT DISTINCT id_rol, nombre_rol FROM Rol";
+            string query = "SELECT DISTINCT id_rol, nombre_rol FROM Rol WHERE nombre_rol <> 'Administrador'";
 
             using (SqlConnection con = Conexion.ObtenerConexion())
             {
@@ -53,15 +78,11 @@ namespace PetShop.Presentacion.Usuarios
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
-                        // 1. Limpieza total del control antes de bindear
                         CBRol.DataSource = null;
                         CBRol.Items.Clear();
 
-                        // 2. Asignar las propiedades de texto y valor PRIMERO
                         CBRol.DisplayMember = "nombre_rol";
                         CBRol.ValueMember = "id_rol";
-
-                        // 3. Asignar la tabla de datos
                         CBRol.DataSource = dt;
                     }
                 }
@@ -71,16 +92,18 @@ namespace PetShop.Presentacion.Usuarios
                 }
             }
         }
+
         private void CargarEstados()
         {
-            // Limpia la colección para evitar que se dupliquen "Activo" e "Inactivo"
             CBEstado.Items.Clear();
             CBEstado.Items.Add("Activo");
             CBEstado.Items.Add("Inactivo");
         }
+
         private void CargarDatosUsuario()
         {
-            string query = "SELECT nombre, apellido, nombre_usuario, id_rol, estado, fecha_creacion FROM Usuario WHERE id_usuario = @id";
+            string query = @"SELECT nombre, apellido, nombre_usuario, dni, correo, telefono, id_rol, estado, fecha_creacion 
+                            FROM Usuario WHERE id_usuario = @id";
 
             using (SqlConnection con = Conexion.ObtenerConexion())
             {
@@ -97,11 +120,15 @@ namespace PetShop.Presentacion.Usuarios
                                 TNombre.Text = reader["nombre"].ToString();
                                 TApellido.Text = reader["apellido"].ToString();
                                 TNombreUsuario.Text = reader["nombre_usuario"].ToString();
+
+                                TDni.Text = reader["dni"] != DBNull.Value ? reader["dni"].ToString() : "";
+                                TCorreo.Text = reader["correo"] != DBNull.Value ? reader["correo"].ToString() : "";
+                                TTelefono.Text = reader["telefono"] != DBNull.Value ? reader["telefono"].ToString() : "";
+
                                 CBRol.SelectedValue = Convert.ToInt32(reader["id_rol"]);
 
-                                // Corrección en la selección del Estado
-                                string estadoBD = reader["estado"].ToString();
-                                CBEstado.Text = estadoBD;
+                                string estadoBD = reader["estado"].ToString().Trim();
+                                CBEstado.Text = estadoBD.Equals("1") || estadoBD.Equals("True") || estadoBD.Equals("Activo", StringComparison.OrdinalIgnoreCase) ? "Activo" : "Inactivo";
 
                                 if (reader["fecha_creacion"] != DBNull.Value)
                                 {
@@ -121,6 +148,28 @@ namespace PetShop.Presentacion.Usuarios
                     MessageBox.Show("Error al cargar los datos del usuario: " + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void SoloLetras_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void BVerClave_Click(object sender, EventArgs e)
+        {
+            bool estaEnmascarado = TClave.UseSystemPasswordChar;
+            TClave.UseSystemPasswordChar = !estaEnmascarado;
+            if (sender is Button boton) boton.Text = estaEnmascarado ? "👁‍🗨" : "👁";
+        }
+
+        private void BVerConfirmar_Click(object sender, EventArgs e)
+        {
+            bool estaEnmascarado = TConfirmar.UseSystemPasswordChar;
+            TConfirmar.UseSystemPasswordChar = !estaEnmascarado;
+            if (sender is Button boton) boton.Text = estaEnmascarado ? "👁‍🗨" : "👁";
         }
 
         private bool ValidarFormulario()
@@ -151,14 +200,15 @@ namespace PetShop.Presentacion.Usuarios
                 esValido = false;
             }
 
+            // La clave solo se valida si el administrador escribió algo para cambiarla
             bool contrasenaEscrita = !string.IsNullOrWhiteSpace(TClave.Text);
             bool confirmacionEscrita = !string.IsNullOrWhiteSpace(TConfirmar.Text);
 
             if (contrasenaEscrita || confirmacionEscrita)
             {
-                if (TClave.Text.Length < 6)
+                if (TClave.Text.Trim().Length < 6)
                 {
-                    ep.SetError(TClave, "La contraseña debe tener al menos 6 caracteres.");
+                    ep.SetError(TClave, "La nueva contraseña debe tener al menos 6 caracteres.");
                     esValido = false;
                 }
 
@@ -186,7 +236,11 @@ namespace PetShop.Presentacion.Usuarios
 
         private void BGuardar_Click(object sender, EventArgs e)
         {
-            if (!ValidarFormulario()) return;
+            if (!ValidarFormulario())
+            {
+                MessageBox.Show("Por favor, verifique los campos marcados con advertencias.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             DialogResult confirmacion = MessageBox.Show(
                 "¿Está seguro de que desea guardar los cambios del usuario?",
@@ -200,6 +254,7 @@ namespace PetShop.Presentacion.Usuarios
                 if (GuardarCambios())
                 {
                     MessageBox.Show("Usuario modificado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
             }
@@ -234,7 +289,10 @@ namespace PetShop.Presentacion.Usuarios
                         cmd.Parameters.AddWithValue("@apellido", TApellido.Text.Trim());
                         cmd.Parameters.AddWithValue("@nombre_usuario", TNombreUsuario.Text.Trim());
                         cmd.Parameters.AddWithValue("@id_rol", Convert.ToInt32(CBRol.SelectedValue));
-                        cmd.Parameters.AddWithValue("@estado", CBEstado.Text.Trim());
+
+                        int estadoBD = CBEstado.Text.Trim().Equals("Activo", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
+                        cmd.Parameters.AddWithValue("@estado", estadoBD);
+
                         cmd.Parameters.AddWithValue("@id", _idUsuario);
 
                         if (contrasenaEscrita)
@@ -257,6 +315,7 @@ namespace PetShop.Presentacion.Usuarios
                 }
                 catch (SqlException ex) when (ex.Number == 2627 || ex.Number == 2601)
                 {
+                    ep.SetError(TNombreUsuario, "Este nombre de usuario ya está registrado.");
                     MessageBox.Show("El nombre de usuario ingresado ya pertenece a otro registro.", "Usuario Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return false;
                 }
@@ -267,7 +326,6 @@ namespace PetShop.Presentacion.Usuarios
                 }
             }
         }
-
         private void BEliminarTodo_Click(object sender, EventArgs e)
         {
             DialogResult confirmacion = MessageBox.Show(
@@ -297,9 +355,5 @@ namespace PetShop.Presentacion.Usuarios
             this.Close();
         }
 
-        private void LTitulo_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

@@ -99,7 +99,7 @@ namespace PetShop.Presentacion.Menu
             this.usuariosToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.usuariosToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("usuariosToolStripMenuItem.Image")));
             this.usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
-            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(95, 76);
+            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(89, 76);
             this.usuariosToolStripMenuItem.Text = "Usuarios";
             this.usuariosToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.usuariosToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -256,7 +256,7 @@ namespace PetShop.Presentacion.Menu
             this.gbSesionIniciada.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.gbSesionIniciada.Name = "gbSesionIniciada";
             this.gbSesionIniciada.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.gbSesionIniciada.Size = new System.Drawing.Size(225, 112);
+            this.gbSesionIniciada.Size = new System.Drawing.Size(450, 112);
             this.gbSesionIniciada.TabIndex = 11;
             this.gbSesionIniciada.TabStop = false;
             this.gbSesionIniciada.Text = "Sesión Iniciada";
@@ -353,7 +353,7 @@ namespace PetShop.Presentacion.Menu
             this.panel1.Controls.Add(this.gbFechaHora);
             this.panel1.Controls.Add(this.gbSesionIniciada);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 921);
+            this.panel1.Location = new System.Drawing.Point(0, 950);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1440, 125);
@@ -364,10 +364,10 @@ namespace PetShop.Presentacion.Menu
             this.contenedor.AutoScroll = true;
             this.contenedor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contenedor.Location = new System.Drawing.Point(0, 175);
-            this.contenedor.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.contenedor.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.contenedor.Name = "contenedor";
-            this.contenedor.Padding = new System.Windows.Forms.Padding(15);
-            this.contenedor.Size = new System.Drawing.Size(1440, 746);
+            this.contenedor.Padding = new System.Windows.Forms.Padding(17, 19, 17, 19);
+            this.contenedor.Size = new System.Drawing.Size(1440, 775);
             this.contenedor.TabIndex = 13;
             // 
             // menuStrip1
@@ -407,13 +407,13 @@ namespace PetShop.Presentacion.Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1440, 1046);
+            this.ClientSize = new System.Drawing.Size(1440, 1075);
             this.Controls.Add(this.lblPetShop);
             this.Controls.Add(this.contenedor);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.msPrincipal);
             this.Controls.Add(this.menuStrip1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);

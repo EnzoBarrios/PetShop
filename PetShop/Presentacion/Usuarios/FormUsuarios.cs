@@ -81,19 +81,25 @@ namespace PetShop.Presentacion.Usuarios
             }
         }
 
-        // 3. BOTÓN ACTIVAR / DESACTIVAR (Alternar Estado)
         private void BEstado_Click(object sender, EventArgs e)
         {
-            if (DGVUsuarios.SelectedRows.Count > 0)
+            if (DGVUsuarios.SelectedRows.Count > 0 && DGVUsuarios.CurrentRow != null)
             {
                 int idUsuario = Convert.ToInt32(DGVUsuarios.CurrentRow.Cells["ID"].Value);
-                string usuarioNombre = DGVUsuarios.CurrentRow.Cells["Usuario"].Value.ToString();
-                string estadoActual = DGVUsuarios.CurrentRow.Cells["Estado"].Value.ToString();
+                string usuarioNombre = DGVUsuarios.CurrentRow.Cells["Usuario"].Value?.ToString() ?? "";
+                string estadoTexto = DGVUsuarios.CurrentRow.Cells["Estado"].Value?.ToString().Trim() ?? "";
 
-                // Definir el nuevo estado y las etiquetas dinamicas
-                string nuevoEstadoBD = (estadoActual == "Inactivo") ? "Activo" : "Inactivo";
-                string accionTexto = (estadoActual == "Inactivo") ? "activar" : "desactivar";
-                string tituloConfirmacion = (estadoActual == "Inactivo") ? "Confirmar Activación" : "Confirmar Desactivación";
+                // 1. Obtener el estado actual de forma segura (verifica texto o número sin romper por conversión)
+                bool estadoActual = estadoTexto.Equals("Activo", StringComparison.OrdinalIgnoreCase)
+                                 || estadoTexto == "1"
+                                 || estadoTexto.Equals("True", StringComparison.OrdinalIgnoreCase);
+
+                // 2. Definir el nuevo estado numérico/bit para SQL (1 = Activo, 0 = Inactivo)
+                int nuevoEstadoBD = estadoActual ? 0 : 1;
+
+                // 3. Etiquetas dinámicas
+                string accionTexto = estadoActual ? "desactivar" : "activar";
+                string tituloConfirmacion = estadoActual ? "Confirmar Desactivación" : "Confirmar Activación";
 
                 // Pedir confirmación
                 DialogResult respuesta = MessageBox.Show(
@@ -116,7 +122,7 @@ namespace PetShop.Presentacion.Usuarios
         }
 
         // Método auxiliar para actualizar el estado en la base de datos
-        private void CambiarEstadoUsuario(int idUsuario, string nuevoEstado)
+        private void CambiarEstadoUsuario(int idUsuario, int nuevoEstado)
         {
             string query = "UPDATE Usuario SET estado = @Estado WHERE id_usuario = @IdUsuario";
 
@@ -134,7 +140,7 @@ namespace PetShop.Presentacion.Usuarios
 
                         if (filasAfectadas > 0)
                         {
-                            string mensaje = (nuevoEstado == "Activo") ? "activado" : "desactivado";
+                            string mensaje = (nuevoEstado == 1) ? "activado" : "desactivado";
                             MessageBox.Show($"El usuario ha sido {mensaje} con éxito.", "Operación Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
@@ -166,8 +172,15 @@ namespace PetShop.Presentacion.Usuarios
 
                 if (valorEstado != null && valorEstado != DBNull.Value)
                 {
-                    string estadoActual = valorEstado.ToString();
-                    BEstado.Text = (estadoActual == "Inactivo") ? "Activar" : "Desactivar";
+                    string estadoTexto = valorEstado.ToString().Trim();
+
+                    // Evaluamos si el usuario está activo (ya sea que la celda diga "Activo", "1" o "True")
+                    bool estaActivo = estadoTexto.Equals("Activo", StringComparison.OrdinalIgnoreCase)
+                                   || estadoTexto == "1"
+                                   || estadoTexto.Equals("True", StringComparison.OrdinalIgnoreCase);
+
+                    // Si está activo muestra "Desactivar", si está inactivo muestra "Activar"
+                    BEstado.Text = estaActivo ? "Desactivar" : "Activar";
                 }
             }
         }
