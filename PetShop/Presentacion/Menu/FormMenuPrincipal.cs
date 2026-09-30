@@ -154,7 +154,7 @@ namespace PetShop.Presentacion.Menu
 
                 nuevoFormulario.TopLevel = false;
                 nuevoFormulario.FormBorderStyle = FormBorderStyle.None;
-                nuevoFormulario.Dock = DockStyle.Fill;
+                nuevoFormulario.Dock = DockStyle.None;
 
                 // Cuando el formulario se cierre con el boton volver
                 nuevoFormulario.FormClosed += (s, args) =>
@@ -268,7 +268,7 @@ namespace PetShop.Presentacion.Menu
             AbrirFormularioEnMdi<FormReportes>();
         }
 
-        private void miPerfilToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MiPerfilToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int idUsuarioActual = _usuarioActual?.IdUsuario ?? 0;
 

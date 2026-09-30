@@ -204,6 +204,7 @@ namespace PetShop.Datos
                 cmd.Parameters.Add("@Telefono", SqlDbType.VarChar).Value = string.IsNullOrWhiteSpace(obj.Telefono) ? (object)DBNull.Value : obj.Telefono.Trim();
 
                 conexion.Open();
+
                 return cmd.ExecuteNonQuery() > 0;
             }
         }

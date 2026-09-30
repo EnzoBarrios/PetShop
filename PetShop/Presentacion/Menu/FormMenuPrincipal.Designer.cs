@@ -44,7 +44,7 @@ namespace PetShop.Presentacion.Menu
             this.HistorialDeVentasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SistemaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.miPerfilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MiPerfilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CerrarSesiónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SalirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
@@ -98,6 +98,7 @@ namespace PetShop.Presentacion.Menu
             this.msPrincipal.Name = "msPrincipal";
             this.msPrincipal.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
             this.msPrincipal.Size = new System.Drawing.Size(1440, 100);
+            this.msPrincipal.Size = new System.Drawing.Size(1280, 80);
             this.msPrincipal.TabIndex = 1;
             this.msPrincipal.Text = "PetShop";
             // 
@@ -195,7 +196,7 @@ namespace PetShop.Presentacion.Menu
             // 
             this.SistemaToolStripMenuItem.AutoSize = false;
             this.SistemaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miPerfilToolStripMenuItem,
+            this.MiPerfilToolStripMenuItem,
             this.CerrarSesiónToolStripMenuItem,
             this.SalirToolStripMenuItem});
             this.SistemaToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("SistemaToolStripMenuItem.Image")));
@@ -205,19 +206,21 @@ namespace PetShop.Presentacion.Menu
             this.SistemaToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.SistemaToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
-            // miPerfilToolStripMenuItem
+            // MiPerfilToolStripMenuItem
             // 
-            this.miPerfilToolStripMenuItem.Image = global::PetShop.Properties.Resources.hombre;
-            this.miPerfilToolStripMenuItem.Name = "miPerfilToolStripMenuItem";
-            this.miPerfilToolStripMenuItem.Size = new System.Drawing.Size(246, 42);
-            this.miPerfilToolStripMenuItem.Text = "Mi Perfil";
-            this.miPerfilToolStripMenuItem.Click += new System.EventHandler(this.miPerfilToolStripMenuItem_Click);
+            this.MiPerfilToolStripMenuItem.Image = global::PetShop.Properties.Resources.hombre;
+            this.MiPerfilToolStripMenuItem.Name = "MiPerfilToolStripMenuItem";
+            this.MiPerfilToolStripMenuItem.Size = new System.Drawing.Size(246, 42);
+            this.MiPerfilToolStripMenuItem.Size = new System.Drawing.Size(207, 38);
+            this.MiPerfilToolStripMenuItem.Text = "Mi Perfil";
+            this.MiPerfilToolStripMenuItem.Click += new System.EventHandler(this.MiPerfilToolStripMenuItem_Click);
             // 
             // CerrarSesiónToolStripMenuItem
             // 
             this.CerrarSesiónToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("CerrarSesiónToolStripMenuItem.Image")));
             this.CerrarSesiónToolStripMenuItem.Name = "CerrarSesiónToolStripMenuItem";
             this.CerrarSesiónToolStripMenuItem.Size = new System.Drawing.Size(246, 42);
+            this.CerrarSesiónToolStripMenuItem.Size = new System.Drawing.Size(207, 38);
             this.CerrarSesiónToolStripMenuItem.Text = "Cerrar Sesión";
             this.CerrarSesiónToolStripMenuItem.Click += new System.EventHandler(this.CerrarSesiónToolStripMenuItem_Click);
             // 
@@ -226,6 +229,7 @@ namespace PetShop.Presentacion.Menu
             this.SalirToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("SalirToolStripMenuItem.Image")));
             this.SalirToolStripMenuItem.Name = "SalirToolStripMenuItem";
             this.SalirToolStripMenuItem.Size = new System.Drawing.Size(246, 42);
+            this.SalirToolStripMenuItem.Size = new System.Drawing.Size(207, 38);
             this.SalirToolStripMenuItem.Text = "Salir";
             this.SalirToolStripMenuItem.Click += new System.EventHandler(this.SalirToolStripMenuItem_Click);
             // 
@@ -387,6 +391,7 @@ namespace PetShop.Presentacion.Menu
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
             this.menuStrip1.Size = new System.Drawing.Size(1440, 75);
+            this.menuStrip1.Size = new System.Drawing.Size(1280, 60);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -432,6 +437,8 @@ namespace PetShop.Presentacion.Menu
             this.contenedor.Name = "contenedor";
             this.contenedor.Padding = new System.Windows.Forms.Padding(17, 19, 17, 19);
             this.contenedor.Size = new System.Drawing.Size(1440, 775);
+            this.contenedor.Padding = new System.Windows.Forms.Padding(15);
+            this.contenedor.Size = new System.Drawing.Size(1280, 620);
             this.contenedor.TabIndex = 3;
             // 
             // groupBox1
@@ -522,6 +529,7 @@ namespace PetShop.Presentacion.Menu
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMenuPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PetShop - Sistema de Gestión Veterinaria";
@@ -581,7 +589,7 @@ namespace PetShop.Presentacion.Menu
         private Button btnHistorialVentas;
         private ImageList imageList3;
         private GroupBox groupBox1;
-        private ToolStripMenuItem miPerfilToolStripMenuItem;
+        private ToolStripMenuItem MiPerfilToolStripMenuItem;
     }
 }
 
