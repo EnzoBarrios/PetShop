@@ -39,11 +39,11 @@ namespace PetShop.Presentacion.Usuarios
 
             CargarDatosPerfil();
             AsignarEventosValidacion();
+            AsignarEventosRestriccionTeclas();
         }
 
         private void ConfigurarEstiloCamposLectura()
         {
-            // ÚNICAMENTE ROL Y ESTADO EN SOLO LECTURA
             TRol.ReadOnly = true;
             TEstado.ReadOnly = true;
 
@@ -54,7 +54,6 @@ namespace PetShop.Presentacion.Usuarios
             TRol.BackColor = fondoLectura;
             TEstado.BackColor = fondoLectura;
 
-            // LOS DEMÁS CAMPOS SE MANTIENEN EDITABLES (ReadOnly = false y fondo blanco)
             TNombreUsuario.ReadOnly = false;
             TNombre.ReadOnly = false;
             TApellido.ReadOnly = false;
@@ -106,6 +105,38 @@ namespace PetShop.Presentacion.Usuarios
             TConfirmar.Validating += TConfirmar_Validating;
         }
 
+        private void AsignarEventosRestriccionTeclas()
+        {
+            TNombre.KeyPress += SoloLetras_KeyPress;
+            TApellido.KeyPress += SoloLetras_KeyPress;
+            TDni.KeyPress += SoloNumeros_KeyPress;
+            TTelefono.KeyPress += SoloTelefono_KeyPress;
+        }
+
+        private void SoloLetras_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void SoloNumeros_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void SoloTelefono_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != ' ' && e.KeyChar != '-' && e.KeyChar != '+')
+            {
+                e.Handled = true;
+            }
+        }
+
         private void CargarDatosPerfil()
         {
             string query = @"SELECT u.nombre, u.apellido, u.nombre_usuario, u.dni, u.correo, u.telefono, u.estado, r.nombre_rol 
@@ -131,15 +162,30 @@ namespace PetShop.Presentacion.Usuarios
                                 TNombreUsuario.Text = reader["nombre_usuario"].ToString();
                                 TRol.Text = reader["nombre_rol"].ToString();
 
-                                string estadoValor = reader["estado"].ToString().Trim();
-                                if (estadoValor == "1" || estadoValor.Equals("Activo", StringComparison.OrdinalIgnoreCase) || estadoValor.Equals("A", StringComparison.OrdinalIgnoreCase))
+                                object rawEstado = reader["estado"];
+                                bool esActivo = false;
+
+                                if (rawEstado != DBNull.Value)
                                 {
-                                    TEstado.Text = "Activo";
+                                    if (rawEstado is bool b)
+                                    {
+                                        esActivo = b;
+                                    }
+                                    else if (rawEstado is byte || rawEstado is int || rawEstado is short)
+                                    {
+                                        esActivo = Convert.ToInt32(rawEstado) == 1;
+                                    }
+                                    else
+                                    {
+                                        string val = rawEstado.ToString().Trim();
+                                        esActivo = val == "1" ||
+                                                   val.Equals("True", StringComparison.OrdinalIgnoreCase) ||
+                                                   val.Equals("Activo", StringComparison.OrdinalIgnoreCase) ||
+                                                   val.Equals("A", StringComparison.OrdinalIgnoreCase);
+                                    }
                                 }
-                                else
-                                {
-                                    TEstado.Text = "Inactivo";
-                                }
+
+                                TEstado.Text = esActivo ? "Activo" : "Inactivo";
 
                                 TDni.Text = reader["dni"] != DBNull.Value ? reader["dni"].ToString() : string.Empty;
                                 TCorreo.Text = reader["correo"] != DBNull.Value ? reader["correo"].ToString() : string.Empty;
@@ -158,8 +204,6 @@ namespace PetShop.Presentacion.Usuarios
                 }
             }
         }
-
-        #region VALIDACIONES DINÁMICAS (EVENTOS VALIDATING)
 
         private void TCorreo_Validating(object sender, CancelEventArgs e)
         {
@@ -222,35 +266,29 @@ namespace PetShop.Presentacion.Usuarios
             error.SetError(TConfirmar, string.Empty);
         }
 
-        #endregion
-
         private bool ValidarFormulario()
         {
             error.Clear();
             bool esValido = true;
 
-            // Validar Nombre Obligatorio
             if (string.IsNullOrWhiteSpace(TNombre.Text))
             {
                 error.SetError(TNombre, "El nombre no puede estar vacío.");
                 esValido = false;
             }
 
-            // Validar Apellido Obligatorio
             if (string.IsNullOrWhiteSpace(TApellido.Text))
             {
                 error.SetError(TApellido, "El apellido no puede estar vacío.");
                 esValido = false;
             }
 
-            // Validar Usuario Obligatorio
             if (string.IsNullOrWhiteSpace(TNombreUsuario.Text))
             {
                 error.SetError(TNombreUsuario, "El nombre de usuario no puede estar vacío.");
                 esValido = false;
             }
 
-            // Validar Correo (Opcional)
             string correo = TCorreo.Text.Trim();
             if (!string.IsNullOrEmpty(correo))
             {
@@ -262,7 +300,6 @@ namespace PetShop.Presentacion.Usuarios
                 }
             }
 
-            // Validar Teléfono (Opcional)
             string telefono = TTelefono.Text.Trim();
             if (!string.IsNullOrEmpty(telefono))
             {
@@ -273,7 +310,6 @@ namespace PetShop.Presentacion.Usuarios
                 }
             }
 
-            // Validar Contraseña (Solo si decide cambiarla)
             bool contrasenaEscrita = !string.IsNullOrWhiteSpace(TClave.Text);
             bool confirmacionEscrita = !string.IsNullOrWhiteSpace(TConfirmar.Text);
 

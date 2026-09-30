@@ -154,7 +154,7 @@ namespace PetShop.Presentacion.Menu
 
                 nuevoFormulario.TopLevel = false;
                 nuevoFormulario.FormBorderStyle = FormBorderStyle.None;
-                nuevoFormulario.Dock = DockStyle.Fill;
+                nuevoFormulario.Dock = DockStyle.None;
 
                 // Cuando el formulario se cierre con el boton volver
                 nuevoFormulario.FormClosed += (s, args) =>

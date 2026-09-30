@@ -44,9 +44,9 @@ namespace PetShop.Presentacion.Menu
             this.HistorialDeVentasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SistemaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miPerfilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CerrarSesiónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SalirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.miPerfilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.object_e3c5580b_6d24_4dcc_8c22_cda8350d0a46 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -96,7 +96,6 @@ namespace PetShop.Presentacion.Menu
             this.SistemaToolStripMenuItem});
             this.msPrincipal.Location = new System.Drawing.Point(0, 60);
             this.msPrincipal.Name = "msPrincipal";
-            this.msPrincipal.Padding = new System.Windows.Forms.Padding(6, 2, 0, 2);
             this.msPrincipal.Size = new System.Drawing.Size(1280, 80);
             this.msPrincipal.TabIndex = 1;
             this.msPrincipal.Text = "PetShop";
@@ -205,11 +204,19 @@ namespace PetShop.Presentacion.Menu
             this.SistemaToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.SistemaToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
+            // miPerfilToolStripMenuItem
+            // 
+            this.miPerfilToolStripMenuItem.Image = global::PetShop.Properties.Resources.hombre;
+            this.miPerfilToolStripMenuItem.Name = "miPerfilToolStripMenuItem";
+            this.miPerfilToolStripMenuItem.Size = new System.Drawing.Size(207, 38);
+            this.miPerfilToolStripMenuItem.Text = "Mi Perfil";
+            this.miPerfilToolStripMenuItem.Click += new System.EventHandler(this.miPerfilToolStripMenuItem_Click);
+            // 
             // CerrarSesiónToolStripMenuItem
             // 
             this.CerrarSesiónToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("CerrarSesiónToolStripMenuItem.Image")));
             this.CerrarSesiónToolStripMenuItem.Name = "CerrarSesiónToolStripMenuItem";
-            this.CerrarSesiónToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
+            this.CerrarSesiónToolStripMenuItem.Size = new System.Drawing.Size(207, 38);
             this.CerrarSesiónToolStripMenuItem.Text = "Cerrar Sesión";
             this.CerrarSesiónToolStripMenuItem.Click += new System.EventHandler(this.CerrarSesiónToolStripMenuItem_Click);
             // 
@@ -217,17 +224,9 @@ namespace PetShop.Presentacion.Menu
             // 
             this.SalirToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("SalirToolStripMenuItem.Image")));
             this.SalirToolStripMenuItem.Name = "SalirToolStripMenuItem";
-            this.SalirToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
+            this.SalirToolStripMenuItem.Size = new System.Drawing.Size(207, 38);
             this.SalirToolStripMenuItem.Text = "Salir";
             this.SalirToolStripMenuItem.Click += new System.EventHandler(this.SalirToolStripMenuItem_Click);
-            // 
-            // miPerfilToolStripMenuItem
-            // 
-            this.miPerfilToolStripMenuItem.Image = global::PetShop.Properties.Resources.hombre;
-            this.miPerfilToolStripMenuItem.Name = "miPerfilToolStripMenuItem";
-            this.miPerfilToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
-            this.miPerfilToolStripMenuItem.Text = "Mi Perfil";
-            this.miPerfilToolStripMenuItem.Click += new System.EventHandler(this.miPerfilToolStripMenuItem_Click);
             // 
             // imageList1
             // 
@@ -378,7 +377,6 @@ namespace PetShop.Presentacion.Menu
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(6, 2, 0, 2);
             this.menuStrip1.Size = new System.Drawing.Size(1280, 60);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
@@ -423,7 +421,7 @@ namespace PetShop.Presentacion.Menu
             this.contenedor.Location = new System.Drawing.Point(0, 140);
             this.contenedor.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.contenedor.Name = "contenedor";
-            this.contenedor.Padding = new System.Windows.Forms.Padding(15, 15, 15, 15);
+            this.contenedor.Padding = new System.Windows.Forms.Padding(15);
             this.contenedor.Size = new System.Drawing.Size(1280, 620);
             this.contenedor.TabIndex = 3;
             // 
@@ -509,7 +507,7 @@ namespace PetShop.Presentacion.Menu
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMenuPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PetShop - Sistema de Gestión Veterinaria";
