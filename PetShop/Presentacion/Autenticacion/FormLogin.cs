@@ -15,9 +15,16 @@ namespace PetShop.Presentacion.Autenticacion
 {
     public partial class FormLogin : Form
     {
+        private readonly CN_Usuario _cnUsuario = new CN_Usuario();
+
         public FormLogin()
         {
             InitializeComponent();
+        }
+
+        public void FormLoginLoad(object sender, EventArgs e)
+        {
+            txtClave.UseSystemPasswordChar = true;
         }
 
         // BOTON INGRESAR
@@ -26,44 +33,36 @@ namespace PetShop.Presentacion.Autenticacion
             string usuarioIngresado = txtUsuario.Text.Trim();
             string claveIngresada = txtClave.Text.Trim();
 
-            if (string.IsNullOrEmpty(usuarioIngresado) || string.IsNullOrEmpty(claveIngresada))
-            {
-                MessageBox.Show("Debe completar todos los campos.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            Usuario usuarioLogueado = new CN_Usuario().ListarUsuarios()
-                .FirstOrDefault(u => u.NombreUsuario.Trim().Equals(usuarioIngresado, StringComparison.OrdinalIgnoreCase)
-                                  && u.Clave.Trim() == claveIngresada
-                                  && u.Estado == true);
+            Usuario usuarioLogueado = _cnUsuario.IniciarSesion(usuarioIngresado, claveIngresada, out string mensajeError);
 
             if (usuarioLogueado != null)
             {
-                MessageBox.Show("Bienvenido al sistema", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                FormMenuPrincipal form = new FormMenuPrincipal(usuarioLogueado);
-                form.FormClosed += CerrarSesion;
+                FormMenuPrincipal formMenu = new FormMenuPrincipal(usuarioLogueado);
+                formMenu.FormClosed += CerrarSesion;
 
                 this.Hide();
-                form.Show();
+                formMenu.Show();
             }
             else
             {
-                MessageBox.Show("Usuario o contraseña incorrectos", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(mensajeError, "Atención", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtClave.Clear();
+                txtClave.Focus();
             }
         }
 
         // BOTON CANCELAR
         private void BtnCancelar_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Application.Exit();
         }
 
         // Método para cerrar sesión y volver al formulario de login
         private void CerrarSesion(object sender, EventArgs e)
         {
-            txtUsuario.Text = "";
-            txtClave.Text = "";
-
+            txtUsuario.Clear();
+            txtClave.Clear();
+            txtUsuario.Focus();
             this.Show();
         }
     }

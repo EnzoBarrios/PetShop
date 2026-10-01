@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Windows.Forms;
 using PetShop.Negocio;
 using PetShop.Entidades;
+using System.Collections.Generic;
 
 namespace PetShop.Presentacion.Usuarios
 {
@@ -38,15 +39,14 @@ namespace PetShop.Presentacion.Usuarios
             _ep.BlinkStyle = ErrorBlinkStyle.NeverBlink;
             _ep.Icon = System.Drawing.SystemIcons.Warning;
 
-            TClave.UseSystemPasswordChar = true;
-            TConfirmar.UseSystemPasswordChar = true;
+            txtClave.UseSystemPasswordChar = true;
+            txtConfirmar.UseSystemPasswordChar = true;
 
-            CBRol.DropDownStyle = ComboBoxStyle.DropDownList;
-            CBEstado.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbxRol.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbxEstado.DropDownStyle = ComboBoxStyle.DropDownList;
 
             // Bloquear todos los campos de datos personales e identificación
             BloquearCamposLectura();
-
             CargarRoles();
             CargarEstados();
             CargarDatosUsuario();
@@ -55,7 +55,7 @@ namespace PetShop.Presentacion.Usuarios
         private void BloquearCamposLectura()
         {
             // Bloquea e inactiva visualmente los campos que no deben ser modificados
-            TextBox[] camposBloqueados = { TNombre, TApellido, TNombreUsuario, TDni, TTelefono, TCorreo};
+            TextBox[] camposBloqueados = { textNombre, textApellido, txtNombreUsuario, txtDni, txtTelefono, txtCorreo};
 
             foreach (TextBox txt in camposBloqueados)
             {
@@ -64,23 +64,20 @@ namespace PetShop.Presentacion.Usuarios
                 txt.BackColor = System.Drawing.Color.FromArgb(220, 224, 230);
                 txt.ForeColor = System.Drawing.Color.FromArgb(80, 80, 80);
             }
-
-            CBEstado.Enabled = false;
         }
 
         private void CargarRoles()
         {
             try
             {
-                var roles = _cnRol.ListarRoles();
+                List<Rol> roles = _cnRol.ListarRoles();
                 roles.RemoveAll(r => r.NombreRol.Equals("Administrador", StringComparison.OrdinalIgnoreCase));
 
-                CBRol.DataSource = null;
-                CBRol.Items.Clear();
-                CBRol.DisplayMember = "NombreRol";
-                CBRol.ValueMember = "IdRol";
-                CBRol.DataSource = roles;
-                   
+                cbxRol.DataSource = null;
+                cbxRol.Items.Clear();
+                cbxRol.DisplayMember = "NombreRol";
+                cbxRol.ValueMember = "IdRol";
+                cbxRol.DataSource = roles;
             }
             catch (Exception ex)
             {
@@ -90,9 +87,9 @@ namespace PetShop.Presentacion.Usuarios
 
         private void CargarEstados()
         {
-            CBEstado.Items.Clear();
-            CBEstado.Items.Add("Activo");
-            CBEstado.Items.Add("Inactivo");
+            cbxEstado.Items.Clear();
+            cbxEstado.Items.Add("Activo");
+            cbxEstado.Items.Add("Inactivo");
         }
 
         private void CargarDatosUsuario()
@@ -103,16 +100,16 @@ namespace PetShop.Presentacion.Usuarios
 
                 if (usuario != null)
                 {
-                    TNombre.Text = usuario.Nombre;
-                    TApellido.Text = usuario.Apellido;
-                    TNombreUsuario.Text = usuario.NombreUsuario;
+                    textNombre.Text = usuario.Nombre;
+                    textApellido.Text = usuario.Apellido;
+                    txtNombreUsuario.Text = usuario.NombreUsuario;
 
-                    TDni.Text = usuario.Dni;
-                    TCorreo.Text = usuario.Correo;
-                    TTelefono.Text = usuario.Telefono;
+                    txtDni.Text = usuario.Dni;
+                    txtCorreo.Text = usuario.Correo;
+                    txtTelefono.Text = usuario.Telefono;
 
-                    CBRol.SelectedValue = usuario.IdRol;
-                    CBEstado.Text = usuario.Estado ? "Activo" : "Inactivo";
+                    cbxRol.SelectedValue = usuario.IdRol;
+                    cbxEstado.Text = usuario.Estado ? "Activo" : "Inactivo";
 
                     LFechaCreacion.Text = "Fecha de creación: " + usuario.FechaCreacion.ToString("dd 'de' MMMM 'de' yyyy");
                 }
@@ -127,17 +124,18 @@ namespace PetShop.Presentacion.Usuarios
             }
         }
 
-        private void BVerClave_Click(object sender, EventArgs e)
+        // BOTONES PARA MOSTRAR/OCULTAR CONTRASEÑA
+        private void BtnVerClave_Click(object sender, EventArgs e)
         {
-            bool estaEnmascarado = TClave.UseSystemPasswordChar;
-            TClave.UseSystemPasswordChar = !estaEnmascarado;
+            bool estaEnmascarado = txtClave.UseSystemPasswordChar;
+            txtClave.UseSystemPasswordChar = !estaEnmascarado;
             if (sender is Button boton) boton.Text = estaEnmascarado ? "👁‍🗨" : "👁";
         }
 
-        private void BVerConfirmar_Click(object sender, EventArgs e)
+        private void BtnVerConfirmar_Click(object sender, EventArgs e)
         {
-            bool estaEnmascarado = TConfirmar.UseSystemPasswordChar;
-            TConfirmar.UseSystemPasswordChar = !estaEnmascarado;
+            bool estaEnmascarado = txtConfirmar.UseSystemPasswordChar;
+            txtConfirmar.UseSystemPasswordChar = !estaEnmascarado;
             if (sender is Button boton) boton.Text = estaEnmascarado ? "👁‍🗨" : "👁";
         }
 
@@ -148,35 +146,35 @@ namespace PetShop.Presentacion.Usuarios
             bool esValido = true;
 
             // La contraseña solo se valida si se escribió algo en alguno de los campos de clave
-            bool contrasenaEscrita = !string.IsNullOrWhiteSpace(TClave.Text);
-            bool confirmacionEscrita = !string.IsNullOrWhiteSpace(TConfirmar.Text);
+            bool contrasenaEscrita = !string.IsNullOrWhiteSpace(txtClave.Text);
+            bool confirmacionEscrita = !string.IsNullOrWhiteSpace(txtConfirmar.Text);
 
             if (contrasenaEscrita || confirmacionEscrita)
             {
-                if (TClave.Text.Trim().Length < 6)
+                if (txtClave.Text.Trim().Length < 6)
                 {
-                    _ep.SetError(TClave, "La nueva contraseña debe tener al menos 6 caracteres.");
+                    _ep.SetError(txtClave, "La nueva contraseña debe tener al menos 6 caracteres.");
                     esValido = false;
                 }
 
-                if (TConfirmar.Text != TClave.Text)
+                if (txtConfirmar.Text != txtClave.Text)
                 {
-                    _ep.SetError(TConfirmar, "Las contraseñas no coinciden.");
+                    _ep.SetError(txtConfirmar, "Las contraseñas no coinciden.");
                     esValido = false;
                 }
             }
 
             // Validación de Selección de Rol
-            if (CBRol.SelectedIndex == -1 || CBRol.SelectedValue == null)
+            if (cbxRol.SelectedIndex == -1 || cbxRol.SelectedValue == null)
             {
-                _ep.SetError(CBRol, "Debe seleccionar un rol.");
+                _ep.SetError(cbxRol, "Debe seleccionar un rol.");
                 esValido = false;
             }
 
             // Validación de Selección de Estado
-            if (CBEstado.SelectedIndex == -1 || string.IsNullOrWhiteSpace(CBEstado.Text))
+            if (cbxEstado.SelectedIndex == -1 || string.IsNullOrWhiteSpace(cbxEstado.Text))
             {
-                _ep.SetError(CBEstado, "Debe seleccionar un estado.");
+                _ep.SetError(cbxEstado, "Debe seleccionar un estado.");
                 esValido = false;
             }
 
@@ -199,19 +197,22 @@ namespace PetShop.Presentacion.Usuarios
                 MessageBoxIcon.Question
             );
 
-            if (confirmacion == DialogResult.Yes) return;
+            if (confirmacion != DialogResult.Yes) return;
 
-            bool actualizarClave = !string.IsNullOrWhiteSpace(TClave.Text);
+            bool actualizarClave = !string.IsNullOrWhiteSpace(txtClave.Text);
 
             Usuario usuarioModificado = new Usuario
             {
                 IdUsuario = _idUsuario,
-                Nombre = TNombre.Text.Trim(),
-                Apellido = TApellido.Text.Trim(),
-                NombreUsuario = TNombreUsuario.Text.Trim(),
-                Clave = TClave.Text.Trim(),
-                IdRol = Convert.ToInt32(CBRol.SelectedValue),
-                Estado = CBEstado.Text.Trim().Equals("Activo", StringComparison.OrdinalIgnoreCase)
+                Nombre = textNombre.Text.Trim(),
+                Apellido = textApellido.Text.Trim(),
+                NombreUsuario = txtNombreUsuario.Text.Trim(),
+                Clave = txtClave.Text.Trim(),
+                Dni = string.IsNullOrWhiteSpace(txtDni.Text) ? null : txtDni.Text.Trim(),
+                Correo = string.IsNullOrWhiteSpace(txtCorreo.Text) ? null : txtCorreo.Text.Trim(), 
+                Telefono = string.IsNullOrWhiteSpace(txtTelefono.Text) ? null : txtTelefono.Text.Trim(),
+                IdRol = Convert.ToInt32(cbxRol.SelectedValue),
+                Estado = cbxEstado.Text.Trim().Equals("Activo", StringComparison.OrdinalIgnoreCase)
             };
 
             bool exito = _cnUsuario.ModificarUsuario(usuarioModificado, actualizarClave, out string mensaje);
@@ -224,64 +225,8 @@ namespace PetShop.Presentacion.Usuarios
             }
             else
             {
-                _ep.SetError(TNombreUsuario, mensaje);
+                _ep.SetError(txtNombreUsuario, mensaje);
                 MessageBox.Show(mensaje, "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        private bool GuardarCambios()
-        {
-            bool contrasenaEscrita = !string.IsNullOrWhiteSpace(TClave.Text);
-
-            // Únicamente actualizamos Rol, Estado y opcionalmente Clave
-            string query = @"UPDATE Usuario 
-                            SET id_rol = @id_rol, 
-                                estado = @estado";
-
-            if (contrasenaEscrita)
-            {
-                query += ", clave = @clave";
-            }
-
-            query += " WHERE id_usuario = @id";
-
-            using (SqlConnection con = Conexion.ObtenerConexion())
-            {
-                try
-                {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        cmd.Parameters.AddWithValue("@id_rol", Convert.ToInt32(CBRol.SelectedValue));
-
-                        int estadoBD = CBEstado.Text.Trim().Equals("Activo", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
-                        cmd.Parameters.AddWithValue("@estado", estadoBD);
-
-                        cmd.Parameters.AddWithValue("@id", _idUsuario);
-
-                        if (contrasenaEscrita)
-                        {
-                            cmd.Parameters.AddWithValue("@clave", TClave.Text.Trim());
-                        }
-
-                        int filasAfectadas = cmd.ExecuteNonQuery();
-
-                        if (filasAfectadas > 0)
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            MessageBox.Show("No se encontró el usuario a modificar en la base de datos.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return false;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al actualizar el usuario: " + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
             }
         }
 
@@ -303,12 +248,13 @@ namespace PetShop.Presentacion.Usuarios
 
         private void LimpiarCampos()
         {
-            TClave.Clear();
-            TConfirmar.Clear();
+            txtClave.Clear();
+            txtConfirmar.Clear();
             _ep.Clear();
             CargarDatosUsuario();
         }
 
+        // BOTON VOLVER
         private void BtnVolver_Click(object sender, EventArgs e)
         {
             this.Close();

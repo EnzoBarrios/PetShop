@@ -32,6 +32,7 @@ namespace PetShop.Presentacion.Usuarios
         // Evento que se dispara al cargar el formulario, invoca la carga inicial de usuarios
         private void FormUsuarios_Load(object sender, EventArgs e)
         {
+            DGVUsuarios.AutoGenerateColumns = false;
             CargarUsuarios();
         }
 
@@ -43,9 +44,7 @@ namespace PetShop.Presentacion.Usuarios
                 // Lista tipada desde la capa de negocio
                 List<Usuario> listaUsuarios = _cnUsuario.CargarUsuariosParaGrilla(_rolUsuarioLogueado, filtro);
 
-
-                // Lista anónima formateada para que coincida exactamente con las columnas del DataGridView
-                var datosGrilla = listaUsuarios.Select(u => new
+                DGVUsuarios.DataSource = listaUsuarios.Select(u => new
                 {
                     Id = u.IdUsuario,
                     Nom = u.Nombre,
@@ -56,17 +55,27 @@ namespace PetShop.Presentacion.Usuarios
                     FechaCreacion = u.FechaCreacion.ToString("dd/MM/yyyy")
                 }).ToList();
 
-                DGVUsuarios.DataSource = datosGrilla;
-
-                // Si existen columnas generadas automáticamente con encabezado largo, ajustamos el texto visual
-                if (DGVUsuarios.Columns.Contains("FechaCreacion"))
-                {
-                    DGVUsuarios.Columns["FechaCreacion"].HeaderText = "Fecha Creación";
-                }
+                ActualizarTextoBotonEstado();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al cargar la lista de usuarios: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ActualizarTextoBotonEstado()
+        {
+            if (DGVUsuarios.SelectedRows.Count > 0 && DGVUsuarios.CurrentRow != null)
+            {
+                string estadoTexto = DGVUsuarios.CurrentRow.Cells["colEstado"].Value?.ToString().Trim() ?? "";
+                bool estadoActivo = estadoTexto.Equals("Activo", StringComparison.OrdinalIgnoreCase);
+                btnEstado.Text = estadoActivo ? "Desactivar" : "Activar";
+                btnEstado.Enabled = true;
+            }
+            else
+            {
+                btnEstado.Text = "Cambiar Estado";
+                btnEstado.Enabled = false; 
             }
         }
 
@@ -75,10 +84,11 @@ namespace PetShop.Presentacion.Usuarios
         {
             using (FormCargaUsuario formAlta = new FormCargaUsuario())
             {
-                formAlta.ShowDialog();
+                if(formAlta.ShowDialog() == DialogResult.OK)
+                {
+                    CargarUsuarios(txtBuscar.Text.Trim());
+                }
             }
-
-            CargarUsuarios(TBuscar.Text.Trim());
         }
 
         // BOTÓN MODIFICAR
@@ -86,7 +96,7 @@ namespace PetShop.Presentacion.Usuarios
         {
             if (DGVUsuarios.SelectedRows.Count > 0 && DGVUsuarios.CurrentRow != null)
             {
-                int idUsuarioSeleccionado = Convert.ToInt32(DGVUsuarios.CurrentRow.Cells["ID"].Value);
+                int idUsuarioSeleccionado = Convert.ToInt32(DGVUsuarios.CurrentRow.Cells["colId"].Value);
 
                 // Validación: Evita modificar la propia cuenta en sesión
                 if (idUsuarioSeleccionado == _idUsuarioLogueado)
@@ -97,10 +107,12 @@ namespace PetShop.Presentacion.Usuarios
 
                 using (FormModificarUsuario formModif = new FormModificarUsuario(idUsuarioSeleccionado))
                 {
+                    if(formModif.ShowDialog() == DialogResult.OK)
+                    {
+                        CargarUsuarios(txtBuscar.Text.Trim());
+                    }
                     formModif.ShowDialog();
                 }
-
-                CargarUsuarios(TBuscar.Text.Trim());
             }
             else
             {
@@ -114,9 +126,9 @@ namespace PetShop.Presentacion.Usuarios
         {
             if (DGVUsuarios.SelectedRows.Count > 0 && DGVUsuarios.CurrentRow != null)
             {
-                int idUsuarioSeleccionado = Convert.ToInt32(DGVUsuarios.CurrentRow.Cells["ID"].Value);
-                string usuarioNombre = DGVUsuarios.CurrentRow.Cells["Usuario"].Value?.ToString() ?? "";
-                string estadoTexto = DGVUsuarios.CurrentRow.Cells["Estado"].Value?.ToString().Trim() ?? "";
+                int idUsuarioSeleccionado = Convert.ToInt32(DGVUsuarios.CurrentRow.Cells["colId"].Value);
+                string usuarioNombre = DGVUsuarios.CurrentRow.Cells["colUsuario"].Value?.ToString() ?? string.Empty;
+                string estadoTexto = DGVUsuarios.CurrentRow.Cells["colEstado"].Value?.ToString().Trim() ?? string.Empty;
 
                 bool estaActivo = estadoTexto.Equals("Activo", StringComparison.OrdinalIgnoreCase);
                 bool nuevoEstado = !estaActivo;
@@ -139,7 +151,7 @@ namespace PetShop.Presentacion.Usuarios
                     if (exito)
                     {
                         MessageBox.Show(mensaje, "Operación Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        CargarUsuarios(TBuscar.Text.Trim());
+                        CargarUsuarios(txtBuscar.Text.Trim());
                     }
                     else
                     {
@@ -153,35 +165,21 @@ namespace PetShop.Presentacion.Usuarios
             }
         }
 
+        // Evento que actualiza dinámicamente el texto del botón BEstado al seleccionar una fila
+        private void DGVUsuarios_SelectionChanged(object sender, EventArgs e)
+        {
+            ActualizarTextoBotonEstado();
+        }
+
+        private void TxtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            CargarUsuarios(txtBuscar.Text.Trim());
+        }
 
         // BOTÓN VOLVER
         private void BtnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void TBuscar_TextChanged(object sender, EventArgs e)
-        {
-            CargarUsuarios(TBuscar.Text.Trim());
-        }
-
-        // Evento que actualiza dinámicamente el texto del botón BEstado al seleccionar una fila
-        private void DGVUsuarios_SelectionChanged(object sender, EventArgs e)
-        {
-            if (DGVUsuarios.SelectedRows.Count > 0 && DGVUsuarios.CurrentRow != null)
-            {
-                object valorEstado = DGVUsuarios.CurrentRow.Cells["Estado"].Value;
-
-                if (valorEstado != null && valorEstado != DBNull.Value)
-                {
-                    string estadoTexto = valorEstado.ToString().Trim();
-                    bool estaActivo = estadoTexto.Equals("Activo", StringComparison.OrdinalIgnoreCase)
-                                   || estadoTexto == "1"
-                                   || estadoTexto.Equals("True", StringComparison.OrdinalIgnoreCase);
-
-                    btnEstado.Text = estaActivo ? "Desactivar" : "Activar";
-                }
-            }
         }
     }
 }

@@ -28,26 +28,14 @@ CREATE TABLE Usuario (
 	CONSTRAINT PK_Usuario PRIMARY KEY (id_usuario),
 	CONSTRAINT FK_Usuario_Rol FOREIGN KEY (id_rol) REFERENCES Rol(id_rol),
 	CONSTRAINT UQ_Usuario_Nombre UNIQUE (nombre_usuario),
-	CONSTRAINT UQ_Usuario_Dni UNIQUE (dni),
-	CONSTRAINT UQ_Usuario_Correo UNIQUE (correo)
+	INDEX IX_UQ_Usuario_Dni UNIQUE NONCLUSTERED (dni) 
+        WHERE dni IS NOT NULL, 
+    INDEX IX_UQ_Usuario_Correo UNIQUE NONCLUSTERED (correo) 
+        WHERE correo IS NOT NULL,   
+    INDEX IX_UQ_Usuario_Telefono UNIQUE NONCLUSTERED (telefono) 
+        WHERE telefono IS NOT NULL
 );
 GO
-
-ALTER TABLE Usuario DROP CONSTRAINT UQ_Usuario_Dni;
-ALTER TABLE Usuario DROP CONSTRAINT UQ_Usuario_Correo;
-
-
-CREATE UNIQUE NONCLUSTERED INDEX UQ_Usuario_Dni_Filtered
-ON Usuario(dni)
-WHERE dni IS NOT NULL;
-
-CREATE UNIQUE NONCLUSTERED INDEX UQ_Usuario_Correo_Filtered
-ON Usuario(correo)
-WHERE correo IS NOT NULL;
-
-CREATE UNIQUE NONCLUSTERED INDEX UQ_Usuario_Telefono_Filtered
-ON Usuario(telefono)
-WHERE telefono IS NOT NULL;
 
 -- 3. Tabla Especie
 CREATE TABLE Especie (
@@ -104,7 +92,10 @@ CREATE TABLE Producto (
 	CONSTRAINT FK_Producto_EspecieTamano FOREIGN KEY (id_especie, id_tamano) REFERENCES Especie_tamano(id_especie, id_tamano),
 	CONSTRAINT UQ_Producto_Codigo UNIQUE (codigo_barra),
 	CONSTRAINT CK_Producto_Precios CHECK (precio_compra >= 0 AND precio_venta >= precio_compra),
-	CONSTRAINT CK_Productos_Stock CHECK (stock_actual >= 0 AND stock_minimo >= 0)
+	CONSTRAINT CK_Productos_Stock CHECK (stock_actual >= 0 AND stock_minimo >= 0),
+	CONSTRAINT CK_Producto_EspecieTamano_Consistencia 
+		CHECK ((id_especie IS NULL AND id_tamano IS NULL) 
+		OR	   (id_especie IS NOT NULL AND id_tamano IS NOT NULL))
 );
 GO
 
@@ -137,7 +128,8 @@ CREATE TABLE Venta (
 	CONSTRAINT FK_Venta_TipoVenta FOREIGN KEY (id_tipo_venta) REFERENCES Tipo_venta(id_tipo_venta),
 	CONSTRAINT FK_Venta_Usuario FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario),
 	CONSTRAINT UQ_Venta_NroFactura UNIQUE (nro_factura),
-	CONSTRAINT CK_Venta_Total CHECK (total >= 0)
+	CONSTRAINT CK_Venta_Total CHECK (total >= 0),
+	CONSTRAINT CK_Venta_Estado CHECK (estado IN ('Completada', 'Anulada'))
 );
 GO
 
@@ -149,7 +141,7 @@ CREATE TABLE Pago (
 	CONSTRAINT PK_Pago PRIMARY KEY (id_venta, id_metodo_pago),
 	CONSTRAINT FK_Pago_Venta FOREIGN KEY (id_venta) REFERENCES Venta(id_venta),
 	CONSTRAINT FK_Pago_MetodoPago FOREIGN KEY (id_metodo_pago) REFERENCES Metodo_pago(id_metodo_pago),
-	CONSTRAINT CK_Pago_Monto CHECK (monto >= 0)
+	CONSTRAINT CK_Pago_Monto CHECK (monto > 0)
 );
 GO
 
@@ -163,12 +155,11 @@ CREATE TABLE Detalle_Venta (
 	CONSTRAINT PK_DetalleVenta PRIMARY KEY (id_venta, id_producto),
 	CONSTRAINT FK_DetalleVenta_Venta FOREIGN KEY (id_venta) REFERENCES Venta(id_venta),
 	CONSTRAINT FK_DetalleVenta_Producto FOREIGN KEY (id_producto) REFERENCES Producto(id_producto),
-	CONSTRAINT CK_DetalleVenta_Cantidad CHECK (cantidad >= 0),
-	CONSTRAINT CK_DetalleVenta_Precios CHECK (precio_unitario >= 0 AND subtotal >= 0)
+	CONSTRAINT CK_DetalleVenta_Cantidad CHECK (cantidad > 0),
+	CONSTRAINT CK_DetalleVenta_Precios CHECK (precio_unitario >= 0 AND subtotal >= 0),
+	CONSTRAINT CK_DetalleVenta_Subtotal CHECK (subtotal = cantidad * precio_unitario)
 );
 GO
-
-SELECT * FROM Usuario;
 
 INSERT INTO Rol (nombre_rol) 
 VALUES ('Administrador'), ('Gerente'), ('Vendedor');
@@ -211,3 +202,5 @@ INSERT INTO Metodo_pago (nombre_metodo)
 VALUES ('Efectivo'), ('Transferencia'), ('Qr');
 GO
 
+SELECT * FROM Rol;
+SELECT * FROM Usuario;

@@ -1,4 +1,5 @@
 ﻿using PetShop.Entidades;
+using PetShop.Negocio;
 using PetShop.Presentacion.Catalogos;
 using PetShop.Presentacion.Usuarios;
 using System;
@@ -15,9 +16,11 @@ namespace PetShop.Presentacion.Menu
 {
     public partial class FormMenuPrincipal : Form
     {
-        private readonly Usuario _usuarioActual; // Variable para almacenar el usuario actual
+        private Usuario _usuarioActual; // Variable para almacenar el usuario actual
         
         private Form _formularioActivo = null;// Variable para rastrear el formulario secundario actualmente visible
+
+        private readonly CN_Usuario _cnUsuario = new CN_Usuario();
 
         public FormMenuPrincipal(Usuario usuario)
         {
@@ -34,6 +37,19 @@ namespace PetShop.Presentacion.Menu
         private void FormMenuPrincipal_Shown(object sender, EventArgs e)
         {
             this.ActiveControl = null; // Desactiva el enfoque inicial en cualquier control
+        }
+
+        public void RefrescarDatosUsuario()
+        {
+            if (_usuarioActual == null) return;
+
+            // Recarga los datos frescos de la BD a través de la capa de negocio
+            Usuario usuarioActualizado = _cnUsuario.ObtenerPorId(_usuarioActual.IdUsuario);
+            if (usuarioActualizado != null)
+            {
+                _usuarioActual = usuarioActualizado;
+                CargarDatosUsuario();
+            }
         }
 
         private void CargarDatosUsuario()
@@ -224,6 +240,41 @@ namespace PetShop.Presentacion.Menu
             AbrirFormularioEnMdi<FormReportes>();
         }
 
+        private void BtnRealizarVenta_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnMdi<FormVentas>();
+        }
+
+        private void BtnHistorialVentas_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnMdi<FormHistorialVentas>();
+        }
+
+        private void BtnReportes_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnMdi<FormReportes>();
+        }
+
+        private void MiPerfilToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int idUsuarioActual = _usuarioActual?.IdUsuario ?? 0;
+
+            if (idUsuarioActual > 0)
+            {
+                FormMiPerfil formMiPerfil = new FormMiPerfil(idUsuarioActual);
+                formMiPerfil.FormClosed += (s, args) =>
+                {
+                    RefrescarDatosUsuario();
+                };
+
+                AbrirFormularioEnMdi(formMiPerfil);
+            }
+            else
+            {
+                MessageBox.Show("No se pudo obtener el ID del usuario actual.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
         private void CerrarSesiónToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult respuesta = MessageBox.Show(
@@ -250,35 +301,6 @@ namespace PetShop.Presentacion.Menu
             if (respuesta == DialogResult.Yes)
             {
                 Application.Exit();
-            }
-        }
-
-        private void BtnRealizarVenta_Click(object sender, EventArgs e)
-        {
-            AbrirFormularioEnMdi<FormVentas>();
-        }
-
-        private void BtnHistorialVentas_Click(object sender, EventArgs e)
-        {
-            AbrirFormularioEnMdi<FormHistorialVentas>();
-        }
-
-        private void BtnReportes_Click(object sender, EventArgs e)
-        {
-            AbrirFormularioEnMdi<FormReportes>();
-        }
-
-        private void MiPerfilToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            int idUsuarioActual = _usuarioActual?.IdUsuario ?? 0;
-
-            if (idUsuarioActual > 0)
-            {
-                AbrirFormularioEnMdi(new FormMiPerfil(idUsuarioActual));
-            }
-            else
-            {
-                MessageBox.Show("No se pudo obtener el ID del usuario actual.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

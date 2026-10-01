@@ -15,27 +15,31 @@ namespace PetShop.Negocio
         // Obtiene todos los roles sin restricciones
         public List<Rol> ListarRoles()
         {
-            return _cdRol.Listar();
+            return _cdRol.Listar() ?? new List<Rol>();
         }
 
         // Filtra los roles disponibles según quién esté registrando/modificando
         public List<Rol> ObtenerRolesPermitidos(string rolUsuarioLogueado)
         {
-            List<Rol> todosLosRoles = _cdRol.Listar();
-
-            if (rolUsuarioLogueado.Equals("Gerente", StringComparison.OrdinalIgnoreCase))
-            {
-                // El gerente solo puede crear o asignar rol "Vendedor"
-                return todosLosRoles
-                    .Where(r => r.NombreRol.Equals("Vendedor", StringComparison.OrdinalIgnoreCase))
-                    .ToList();
-            }
+            List<Rol> todosLosRoles = _cdRol.Listar() ?? new List<Rol>();
+            string rolOperador = rolUsuarioLogueado?.Trim() ?? string.Empty;
 
             if (rolUsuarioLogueado.Equals("Administrador", StringComparison.OrdinalIgnoreCase))
             {
                 // El administrador puede asignar "Gerente" o "Vendedor"
                 return todosLosRoles
-                    .Where(r => !r.NombreRol.Equals("Administrador", StringComparison.OrdinalIgnoreCase))
+                    .Where(r => r.NombreRol != null &&
+                                !r.NombreRol.Trim().Equals("Administrador", StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+
+            if (rolUsuarioLogueado.Equals("Gerente", StringComparison.OrdinalIgnoreCase))
+            {
+                // El gerente solo puede crear o asignar rol "Vendedor"
+                return todosLosRoles
+                    .Where(r => r.NombreRol != null && 
+                                r.NombreRol.Trim().Equals("Vendedor", StringComparison.OrdinalIgnoreCase))
                     .ToList();
             }
 
