@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnEstado = new System.Windows.Forms.Button();
             this.btnModificarUsuario = new System.Windows.Forms.Button();
             this.btnNuevoUsuario = new System.Windows.Forms.Button();
-            this.DGVUsuarios = new System.Windows.Forms.DataGridView();
+            this.dgvUsuarios = new System.Windows.Forms.DataGridView();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.LBuscar = new System.Windows.Forms.Label();
             this.LTitulo = new System.Windows.Forms.Label();
@@ -47,7 +47,7 @@
             this.colRol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.DGVUsuarios)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.PanelSuperior.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -91,23 +91,23 @@
             this.btnNuevoUsuario.UseVisualStyleBackColor = false;
             this.btnNuevoUsuario.Click += new System.EventHandler(this.BtnNuevoUsuario_Click);
             // 
-            // DGVUsuarios
+            // dgvUsuarios
             // 
-            this.DGVUsuarios.AllowUserToAddRows = false;
-            this.DGVUsuarios.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvUsuarios.AllowUserToAddRows = false;
+            this.dgvUsuarios.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.DGVUsuarios.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVUsuarios.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.DGVUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGVUsuarios.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvUsuarios.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvUsuarios.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUsuarios.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
             this.colNombre,
             this.colApellido,
@@ -115,16 +115,17 @@
             this.colRol,
             this.colEstado,
             this.colFecha});
-            this.DGVUsuarios.Location = new System.Drawing.Point(40, 93);
-            this.DGVUsuarios.MultiSelect = false;
-            this.DGVUsuarios.Name = "DGVUsuarios";
-            this.DGVUsuarios.ReadOnly = true;
-            this.DGVUsuarios.RowHeadersWidth = 62;
-            this.DGVUsuarios.RowTemplate.Height = 28;
-            this.DGVUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGVUsuarios.Size = new System.Drawing.Size(1200, 400);
-            this.DGVUsuarios.TabIndex = 29;
-            this.DGVUsuarios.SelectionChanged += new System.EventHandler(this.DGVUsuarios_SelectionChanged);
+            this.dgvUsuarios.Location = new System.Drawing.Point(40, 93);
+            this.dgvUsuarios.MultiSelect = false;
+            this.dgvUsuarios.Name = "dgvUsuarios";
+            this.dgvUsuarios.ReadOnly = true;
+            this.dgvUsuarios.RowHeadersWidth = 62;
+            this.dgvUsuarios.RowTemplate.Height = 28;
+            this.dgvUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvUsuarios.Size = new System.Drawing.Size(1200, 400);
+            this.dgvUsuarios.TabIndex = 29;
+            this.dgvUsuarios.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DgvUsuarios_CellFormatting);
+            this.dgvUsuarios.SelectionChanged += new System.EventHandler(this.DgvUsuarios_SelectionChanged);
             // 
             // txtBuscar
             // 
@@ -206,7 +207,7 @@
             // 
             // colId
             // 
-            this.colId.DataPropertyName = "Id";
+            this.colId.DataPropertyName = "colId";
             this.colId.HeaderText = "Id";
             this.colId.MinimumWidth = 6;
             this.colId.Name = "colId";
@@ -216,7 +217,7 @@
             // 
             // colNombre
             // 
-            this.colNombre.DataPropertyName = "Nom";
+            this.colNombre.DataPropertyName = "colNombre";
             this.colNombre.HeaderText = "Nombre";
             this.colNombre.MinimumWidth = 6;
             this.colNombre.Name = "colNombre";
@@ -225,7 +226,7 @@
             // 
             // colApellido
             // 
-            this.colApellido.DataPropertyName = "Ape";
+            this.colApellido.DataPropertyName = "colApellido";
             this.colApellido.HeaderText = "Apellido";
             this.colApellido.MinimumWidth = 6;
             this.colApellido.Name = "colApellido";
@@ -234,7 +235,7 @@
             // 
             // colUsuario
             // 
-            this.colUsuario.DataPropertyName = "Usuario";
+            this.colUsuario.DataPropertyName = "colUsuario";
             this.colUsuario.HeaderText = "Usuario";
             this.colUsuario.MinimumWidth = 6;
             this.colUsuario.Name = "colUsuario";
@@ -243,7 +244,7 @@
             // 
             // colRol
             // 
-            this.colRol.DataPropertyName = "Rol";
+            this.colRol.DataPropertyName = "colRol";
             this.colRol.HeaderText = "Rol";
             this.colRol.MinimumWidth = 6;
             this.colRol.Name = "colRol";
@@ -252,7 +253,7 @@
             // 
             // colEstado
             // 
-            this.colEstado.DataPropertyName = "Estado";
+            this.colEstado.DataPropertyName = "colEstado";
             this.colEstado.HeaderText = "Estado";
             this.colEstado.MinimumWidth = 6;
             this.colEstado.Name = "colEstado";
@@ -261,7 +262,7 @@
             // 
             // colFecha
             // 
-            this.colFecha.DataPropertyName = "FechaCreacion";
+            this.colFecha.DataPropertyName = "colFecha";
             this.colFecha.HeaderText = "Fecha Creación";
             this.colFecha.MinimumWidth = 6;
             this.colFecha.Name = "colFecha";
@@ -277,13 +278,13 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.PanelBotones);
             this.Controls.Add(this.PanelSuperior);
-            this.Controls.Add(this.DGVUsuarios);
+            this.Controls.Add(this.dgvUsuarios);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FormUsuarios";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormUsuarios";
             this.Load += new System.EventHandler(this.FormUsuarios_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.DGVUsuarios)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).EndInit();
             this.PanelSuperior.ResumeLayout(false);
             this.PanelSuperior.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -295,7 +296,7 @@
         private System.Windows.Forms.Button btnEstado;
         private System.Windows.Forms.Button btnModificarUsuario;
         private System.Windows.Forms.Button btnNuevoUsuario;
-        private System.Windows.Forms.DataGridView DGVUsuarios;
+        private System.Windows.Forms.DataGridView dgvUsuarios;
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.Label LBuscar;
         private System.Windows.Forms.Label LTitulo;

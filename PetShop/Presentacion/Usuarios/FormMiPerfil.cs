@@ -1,7 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -30,7 +28,8 @@ namespace PetShop.Presentacion.Usuarios
         {
             if (_idUsuarioActual <= 0)
             {
-                MessageBox.Show("No se detectó una sesión de usuario válida.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("No se detectó una sesión de usuario válida.", 
+                    "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.Close();
                 return;
             }
@@ -38,16 +37,22 @@ namespace PetShop.Presentacion.Usuarios
             this.AutoValidate = AutoValidate.EnableAllowFocusChange;
 
             CargarDatosPerfil();
-            AsignarEventosValidacion();
+            ConfigurarControles();
             AsignarEventosRestriccionTeclas();
         }
 
-        private void AsignarEventosValidacion()
+        private void ConfigurarControles()
         {
-            txtCorreo.Validating += ValidarCorreo;
-            txtTelefono.Validating += ValidarTelefono;
-            txtClave.Validating += ValidarClave;
-            txtConfirmar.Validating += ValidarConfirmacion;
+            _ep.BlinkStyle = ErrorBlinkStyle.NeverBlink;
+            _ep.Icon = SystemIcons.Warning;
+
+            txtClave.UseSystemPasswordChar = true;
+            txtConfirmar.UseSystemPasswordChar = true;
+
+            // El rol no es editable por el propio usuario
+            txtRol.ReadOnly = true;
+            txtRol.TabStop = false;
+            txtRol.BackColor = Color.FromArgb(235, 238, 242);
         }
 
         private void AsignarEventosRestriccionTeclas()
@@ -109,67 +114,6 @@ namespace PetShop.Presentacion.Usuarios
             }
         }
 
-        private void ValidarCorreo(object sender, CancelEventArgs e)
-        {
-            string correo = txtCorreo.Text.Trim();
-            if (!string.IsNullOrEmpty(correo))
-            {
-                string patronEmail = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-                if (!Regex.IsMatch(correo, patronEmail))
-                {
-                    _ep.SetError(txtCorreo, "Ingrese un correo electrónico válido (ejemplo@dominio.com).");
-                    return;
-                }
-            }
-            _ep.SetError(txtCorreo, string.Empty);
-        }
-
-        private void ValidarTelefono(object sender, CancelEventArgs e)
-        {
-            string telefono = txtTelefono.Text.Trim();
-            if (!string.IsNullOrEmpty(telefono))
-            {
-                if (!Regex.IsMatch(telefono, @"^[0-9+\s\-]+$"))
-                {
-                    _ep.SetError(txtTelefono, "El teléfono solo debe contener números, espacios o guiones.");
-                    return;
-                }
-            }
-            _ep.SetError(txtTelefono, string.Empty);
-        }
-
-        private void ValidarClave(object sender, CancelEventArgs e)
-        {
-            bool contrasenaEscrita = !string.IsNullOrWhiteSpace(txtClave.Text);
-            bool confirmacionEscrita = !string.IsNullOrWhiteSpace(txtConfirmar.Text);
-
-            if (contrasenaEscrita || confirmacionEscrita)
-            {
-                if (txtClave.Text.Length < 6)
-                {
-                    _ep.SetError(txtClave, "La contraseña debe tener al menos 6 caracteres.");
-                    return;
-                }
-            }
-            _ep.SetError(txtClave, string.Empty);
-        }
-
-        private void ValidarConfirmacion(object sender, CancelEventArgs e)
-        {
-            bool contrasenaEscrita = !string.IsNullOrWhiteSpace(txtClave.Text);
-            bool confirmacionEscrita = !string.IsNullOrWhiteSpace(txtConfirmar.Text);
-
-            if (contrasenaEscrita || confirmacionEscrita)
-            {
-                if (txtConfirmar.Text != txtClave.Text)
-                {
-                    _ep.SetError(txtConfirmar, "Las contraseñas no coinciden.");
-                    return;
-                }
-            }
-            _ep.SetError(txtConfirmar, string.Empty);
-        }
-
         private bool ValidarFormulario()
         {
             _ep.Clear();
@@ -219,13 +163,13 @@ namespace PetShop.Presentacion.Usuarios
 
             if (contrasenaEscrita || confirmacionEscrita)
             {
-                if (txtClave.Text.Length < 6)
+                if (txtClave.Text.Trim().Length < 6)
                 {
                     _ep.SetError(txtClave, "La contraseña debe tener al menos 6 caracteres.");
                     esValido = false;
                 }
 
-                if (txtConfirmar.Text != txtClave.Text)
+                if (!txtConfirmar.Text.Equals(txtClave.Text))
                 {
                     _ep.SetError(txtConfirmar, "Las contraseñas no coinciden.");
                     esValido = false;
@@ -253,6 +197,7 @@ namespace PetShop.Presentacion.Usuarios
             if (confirmacion != DialogResult.Yes) return;
 
             bool actualizarClave = !string.IsNullOrWhiteSpace(txtClave.Text);
+            string claveNueva = txtClave.Text.Trim();
 
             Usuario usuarioActualizado = new Usuario
             {
@@ -263,10 +208,9 @@ namespace PetShop.Presentacion.Usuarios
                 Dni = string.IsNullOrWhiteSpace(txtDni.Text) ? null : txtDni.Text.Trim(),
                 Correo = string.IsNullOrWhiteSpace(txtCorreo.Text) ? null : txtCorreo.Text.Trim(),
                 Telefono = string.IsNullOrWhiteSpace(txtTelefono.Text) ? null : txtTelefono.Text.Trim(),
-                Clave = actualizarClave ? txtClave.Text : null
             };
 
-            bool exito = _cnUsuario.ActualizarPerfilUsuario(usuarioActualizado, actualizarClave, out string mensaje);
+            bool exito = _cnUsuario.ModificarUsuario(usuarioActualizado, actualizarClave, claveNueva, out string mensaje);
 
             if (exito)
             {
@@ -276,21 +220,45 @@ namespace PetShop.Presentacion.Usuarios
                 txtConfirmar.Clear();
                 _ep.Clear();
             }
-            else
-            {
-                _ep.SetError(txtNombreUsuario, mensaje);
-                MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else {
+                if (mensaje.IndexOf("usuario", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    _ep.SetError(txtNombreUsuario, mensaje);
+                    txtNombreUsuario.Focus();
+                }
+                else if (mensaje.IndexOf("correo", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    _ep.SetError(txtCorreo, mensaje);
+                    txtCorreo.Focus();
+                }
+                else if (mensaje.IndexOf("dni", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    _ep.SetError(txtDni, mensaje);
+                    txtDni.Focus();
+                }
+                else
+                {
+                    MessageBox.Show(mensaje, "Validación de Negocio", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
-        private void BtnVerClave_Click(object sender, EventArgs e)
+        private void CambiarVisibilidadClave(TextBox claveTexto, Button botonCambiar)
         {
-            txtClave.UseSystemPasswordChar = !txtClave.UseSystemPasswordChar;
+            claveTexto.UseSystemPasswordChar = !claveTexto.UseSystemPasswordChar;
+            botonCambiar.Text = claveTexto.UseSystemPasswordChar ? "👁‍🗨" : "👁";
         }
 
+        // BOTON VER CLAVE
+        private void BtnVerClave_Click(object sender, EventArgs e)
+        {
+            CambiarVisibilidadClave(txtClave, (Button)sender);
+        }
+
+        // BOTON VER CONFIRMACION
         private void BtnVerConfirmar_Click(object sender, EventArgs e)
         {
-            txtConfirmar.UseSystemPasswordChar = !txtConfirmar.UseSystemPasswordChar;
+            CambiarVisibilidadClave(txtConfirmar, (Button)sender);
         }
 
         private void BtnVolver_Click(object sender, EventArgs e)

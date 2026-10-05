@@ -1,11 +1,11 @@
-﻿using PetShop.Entidades;
-using PetShop.Negocio;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using PetShop.Entidades;
+using PetShop.Negocio;
 
 namespace PetShop.Presentacion.Usuarios
 {
@@ -15,13 +15,21 @@ namespace PetShop.Presentacion.Usuarios
         private readonly ErrorProvider _ep = new ErrorProvider();
         private readonly CN_Usuario _cnUsuario = new CN_Usuario();
         private readonly CN_Rol _cnRol = new CN_Rol();
-        
-        public FormCargaUsuario()
+        private readonly string _rolOperadorActual;
+
+        public FormCargaUsuario(string rolOperadorActual = CN_Rol.ROL_ADMINISTRADOR)
         {
             InitializeComponent();
+            _rolOperadorActual = rolOperadorActual;
         }
 
         private void FormCargaUsuario_Load(object sender, EventArgs e)
+        {
+            ConfigurarControles();
+            CargarRoles();
+        }
+
+        private void ConfigurarControles()
         {
             // Configuración visual del ErrorProvider (estático, ícono de advertencia)
             _ep.BlinkStyle = ErrorBlinkStyle.NeverBlink;
@@ -32,8 +40,7 @@ namespace PetShop.Presentacion.Usuarios
             txtConfirmar.UseSystemPasswordChar = true;
 
             // Bloquear edición manual en ComboBox
-            cbxRol.DropDownStyle = ComboBoxStyle.DropDownList;
-            CargarRoles();
+            cbxRol.DropDownStyle = ComboBoxStyle.DropDownList;;
 
             // Filtrado de teclas en vivo (KeyPress)
             txtNombre.KeyPress += SoloLetras_KeyPress;
@@ -41,22 +48,23 @@ namespace PetShop.Presentacion.Usuarios
             txtDni.KeyPress += SoloNumeros_KeyPress;
             txtTelefono.KeyPress += SoloNumeros_KeyPress;
         }
+
         private void CargarRoles()
         {
             try
             {
-                List<Rol> roles = _cnRol.ListarRoles();
-                roles.RemoveAll(r => r.NombreRol.Equals("Administrador", StringComparison.OrdinalIgnoreCase));
+                List<Rol> rolesPermitidos = _cnRol.ObtenerRolesPermitidos(_rolOperadorActual);
 
                 cbxRol.DataSource = null;
-                cbxRol.DisplayMember = "NombreRol";
-                cbxRol.ValueMember = "IdRol";
-                cbxRol.DataSource = roles;
+                cbxRol.DisplayMember = nameof(Rol.NombreRol);
+                cbxRol.ValueMember = nameof(Rol.IdRol);
+                cbxRol.DataSource = rolesPermitidos;
                 cbxRol.SelectedIndex = -1; // No seleccionar ningún rol por defecto
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar roles: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al cargar roles: " + ex.Message, 
+                                "Error de Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -74,27 +82,24 @@ namespace PetShop.Presentacion.Usuarios
             {
                 e.Handled = true;
             }
-        }
+        }     
 
-        private bool EsCorreoValido(string correo)
+        private void CambiarVisibilidadClave(TextBox claveTexto, Button botonCambiar)
         {
-            if (string.IsNullOrWhiteSpace(correo)) return true;
-            string patron = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            return Regex.IsMatch(correo, patron);
+            claveTexto.UseSystemPasswordChar = !claveTexto.UseSystemPasswordChar;
+            botonCambiar.Text = claveTexto.UseSystemPasswordChar ? "👁‍🗨" : "👁";
         }
 
+        // BOTON VER CLAVE
         private void BtnVerClave_Click(object sender, EventArgs e)
         {
-            bool estaEnmascarado = txtClave.UseSystemPasswordChar;
-            txtClave.UseSystemPasswordChar = !estaEnmascarado;
-            if (sender is Button boton) boton.Text = estaEnmascarado ? "👁‍🗨" : "👁";
+            CambiarVisibilidadClave(txtClave, (Button)sender);
         }
 
+        // BOTON VER CONFIRMACION
         private void BtnVerConfirmar_Click(object sender, EventArgs e)
         {
-            bool estaEnmascarado = txtConfirmar.UseSystemPasswordChar;
-            txtConfirmar.UseSystemPasswordChar = !estaEnmascarado;
-            if (sender is Button boton) boton.Text = estaEnmascarado ? "👁‍🗨" : "👁";
+            CambiarVisibilidadClave(txtConfirmar, (Button)sender);
         }
 
         private bool ValidarFormulario()
@@ -148,7 +153,8 @@ namespace PetShop.Presentacion.Usuarios
                 esValido = false;
             }
 
-            if (!string.IsNullOrWhiteSpace(txtDni.Text) && (txtDni.Text.Trim().Length < 7 || txtDni.Text.Trim().Length > 8))
+            if (!string.IsNullOrWhiteSpace(txtDni.Text) && 
+                (txtDni.Text.Trim().Length < 7 || txtDni.Text.Trim().Length > 8))
             {
                 _ep.SetError(txtDni, "El DNI debe tener entre 7 y 8 dígitos.");
                 esValido = false;
@@ -162,11 +168,18 @@ namespace PetShop.Presentacion.Usuarios
 
             if (cbxRol.SelectedIndex == -1 || cbxRol.SelectedValue == null)
             {
-                _ep.SetError(cbxRol, "Debe seleccionar un rol.");
+                _ep.SetError(cbxRol, "Debe seleccionar un rol para el usuario.");
                 esValido = false;
             }
 
             return esValido;
+        }
+
+        private bool EsCorreoValido(string correo)
+        {
+            if (string.IsNullOrWhiteSpace(correo)) return true;
+            const string patron = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(correo, patron);
         }
 
         // BOTON GUARDAR
@@ -179,9 +192,10 @@ namespace PetShop.Presentacion.Usuarios
                 return;
             }
 
-            if (!int.TryParse(cbxRol.SelectedValue?.ToString(), out int idRol))
+            if (!int.TryParse(cbxRol.SelectedValue?.ToString(), out int idRolSeleccionado))
             {
-                MessageBox.Show("Seleccione un rol válido.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Seleccione un rol válido.", "Atención", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -191,17 +205,19 @@ namespace PetShop.Presentacion.Usuarios
                 Nombre = txtNombre.Text.Trim(),
                 Apellido = txtpellido.Text.Trim(),
                 NombreUsuario = txtNombreUsuario.Text.Trim(),
-                Clave = txtClave.Text.Trim(),
                 Dni = string.IsNullOrWhiteSpace(txtDni.Text) ? null : txtDni.Text.Trim(),
                 Correo = string.IsNullOrWhiteSpace(txtCorreo.Text) ? null : txtCorreo.Text.Trim(),
                 Telefono = string.IsNullOrWhiteSpace(txtTelefono.Text) ? null : txtTelefono.Text.Trim(),
-                IdRol = idRol
+                Estado = true,
+                Rol = new Rol { IdRol = idRolSeleccionado}
             };
 
-            // Transferir datos a la Capa de Negocio
-            bool resultado = _cnUsuario.RegistrarUsuario(nuevoUsuario, out string mensaje); 
+            string claveTexto = txtClave.Text.Trim();
 
-            if(resultado)
+            // Transferir datos a la Capa de Negocio
+            bool registrado = _cnUsuario.RegistrarUsuario(nuevoUsuario, claveTexto, out string mensaje); 
+
+            if(registrado)
             {
                 MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
@@ -209,12 +225,30 @@ namespace PetShop.Presentacion.Usuarios
             }
             else
             {
-                MessageBox.Show(mensaje, "Atención", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (mensaje.IndexOf("usuario", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    _ep.SetError(txtNombreUsuario, mensaje);
+                    txtNombreUsuario.Focus();
+                }
+                else if (mensaje.IndexOf("dni", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    _ep.SetError(txtDni, mensaje);
+                    txtDni.Focus();
+                }
+                else if (mensaje.IndexOf("correo", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    _ep.SetError(txtCorreo, mensaje);
+                    txtCorreo.Focus();
+                }
+                else
+                {
+                    MessageBox.Show(mensaje, "Validación de Negocio", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
 
-        // BOTON ELIMINAR TODO
+        // BOTON BORRAR
         private void BtnBorrar_Click(object sender, EventArgs e)
         {
             bool hayDatosCargados = !string.IsNullOrWhiteSpace(txtNombre.Text) ||
@@ -257,7 +291,6 @@ namespace PetShop.Presentacion.Usuarios
         }
 
         // BOTON VOLVER 
-
         private void BtnVolver_Click(object sender, EventArgs e)
         {
             this.Close();

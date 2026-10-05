@@ -1,11 +1,9 @@
-﻿using PetShop.Entidades;
-using PetShop.Negocio;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Forms;
+using PetShop.Entidades;
+using PetShop.Negocio;
 
 namespace PetShop.Presentacion.Usuarios
 {
@@ -14,63 +12,79 @@ namespace PetShop.Presentacion.Usuarios
         // Variables para almacenar el ID y el Rol del usuario logueado
         private readonly int _idUsuarioLogueado;
         private readonly string _rolUsuarioLogueado;
-        private readonly CN_Usuario _cnUsuario = new CN_Usuario(); // Instancia de la capa de negocio para interactuar con la lógica de usuarios
+        private readonly CN_Usuario _cnUsuario; // Instancia de la capa de negocio para interactuar con la lógica de usuarios
 
         // Constructor principal que recibe el ID y el Rol del usuario logueado
         public FormUsuarios(int idUsuarioLogueado, string rolUsuarioLogueado)
         {
             InitializeComponent();
             _idUsuarioLogueado = idUsuarioLogueado;
-            _rolUsuarioLogueado = rolUsuarioLogueado ?? "";
-        }
-
-        // Constructor por defecto (para evitar errores en el diseñador visual)
-        public FormUsuarios() : this(0, "Administrador")
-        {
+            _rolUsuarioLogueado = rolUsuarioLogueado ?? string.Empty;
+            _cnUsuario = new CN_Usuario(); 
         }
 
         // Evento que se dispara al cargar el formulario, invoca la carga inicial de usuarios
         private void FormUsuarios_Load(object sender, EventArgs e)
         {
-            DGVUsuarios.AutoGenerateColumns = false;
+            ConfigurarDatosGrilla();
             CargarUsuarios();
         }
 
+        private void ConfigurarDatosGrilla()
+        {
+            dgvUsuarios.AutoGenerateColumns = false;
+
+            // Mapeo seguro contra las propiedades públicas de la Entidad Usuario
+            colId.DataPropertyName = nameof(Usuario.IdUsuario);
+            colNombre.DataPropertyName = nameof(Usuario.Nombre);
+            colApellido.DataPropertyName = nameof(Usuario.Apellido);
+            colUsuario.DataPropertyName = nameof(Usuario.NombreUsuario);
+            colEstado.DataPropertyName = nameof(Usuario.Estado);
+            colFecha.DataPropertyName = nameof(Usuario.FechaCreacion);
+        }
+
         // Método para cargar los usuarios en el DataGridView, con un filtro opcional
-        private void CargarUsuarios(string filtro = "")
+        private void CargarUsuarios()
         {
             try
             {
+                string filtro = txtBuscar.Text.Trim();
+
                 // Lista tipada desde la capa de negocio
                 List<Usuario> listaUsuarios = _cnUsuario.CargarUsuariosParaGrilla(_rolUsuarioLogueado, filtro);
 
-                DGVUsuarios.DataSource = listaUsuarios.Select(u => new
-                {
-                    Id = u.IdUsuario,
-                    Nom = u.Nombre,
-                    Ape = u.Apellido,
-                    Usuario = u.NombreUsuario,
-                    Rol = u.Rol?.NombreRol ?? "Sin Rol",
-                    Estado = u.Estado ? "Activo" : "Inactivo",
-                    FechaCreacion = u.FechaCreacion.ToString("dd/MM/yyyy")
-                }).ToList();
+                dgvUsuarios.DataSource = null;
+                dgvUsuarios.DataSource = listaUsuarios;
 
                 ActualizarTextoBotonEstado();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar la lista de usuarios: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al cargar la lista de usuarios: " + ex.Message, 
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private Usuario ObtenerUsuarioSeleccionado()
+        {
+            if (dgvUsuarios.Rows.Count == 0 ||
+                dgvUsuarios.CurrentCell == null || 
+                dgvUsuarios.SelectedRows.Count == 0)
+            {
+                return null;
+            }
+
+            return dgvUsuarios.CurrentRow.DataBoundItem as Usuario;
         }
 
         private void ActualizarTextoBotonEstado()
         {
-            if (DGVUsuarios.SelectedRows.Count > 0 && DGVUsuarios.CurrentRow != null)
+            Usuario usuario = ObtenerUsuarioSeleccionado();
+
+            if (usuario != null)
             {
-                string estadoTexto = DGVUsuarios.CurrentRow.Cells["colEstado"].Value?.ToString().Trim() ?? "";
-                bool estadoActivo = estadoTexto.Equals("Activo", StringComparison.OrdinalIgnoreCase);
-                btnEstado.Text = estadoActivo ? "Desactivar" : "Activar";
-                btnEstado.Enabled = true;
+                btnEstado.Text = usuario.Estado ? "Desactivar" : "Activar";
+                btnEstado.Enabled = true;                    
             }
             else
             {
@@ -79,14 +93,54 @@ namespace PetShop.Presentacion.Usuarios
             }
         }
 
+        private void DgvUsuarios_SelectionChanged(object sender, EventArgs e)
+        {
+            ActualizarTextoBotonEstado();
+        }
+
+        private void DgvUsuarios_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex >= dgvUsuarios.Rows.Count) return;
+
+            string columna = dgvUsuarios.Columns[e.ColumnIndex].Name;
+            
+            if (dgvUsuarios.Rows[e.RowIndex].DataBoundItem is Usuario usuario)
+            {
+                if (columna == "colRol")
+                {
+                    // Formato para columna Rol (Navegación u.Rol.NombreRol)
+                    e.Value = usuario.Rol?.NombreRol ?? "Sin Rol";
+                    e.FormattingApplied = true;
+            
+                }
+                else if (columna == "colEstado")
+                {
+                    // Formato de texto para el booleano Estado
+                    e.Value = usuario.Estado ? "Activo" : "Inactivo";
+                    e.FormattingApplied = true;
+                }
+                // Formato de fecha uniforme
+                else if (columna == "colFecha")
+                {
+                    e.Value = usuario.FechaCreacion.ToString("dd/MM/yyyy");
+                    e.FormattingApplied = true;
+                }
+            }
+        }
+
+        private void TxtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            CargarUsuarios();
+        }
+
         // BOTÓN NUEVO USUARIO
         private void BtnNuevoUsuario_Click(object sender, EventArgs e)
         {
-            using (FormCargaUsuario formAlta = new FormCargaUsuario())
+            using (FormCargaUsuario formAlta = new FormCargaUsuario(_rolUsuarioLogueado))
             {
                 if(formAlta.ShowDialog() == DialogResult.OK)
                 {
-                    CargarUsuarios(txtBuscar.Text.Trim());
+                    CargarUsuarios();
                 }
             }
         }
@@ -94,86 +148,74 @@ namespace PetShop.Presentacion.Usuarios
         // BOTÓN MODIFICAR
         private void BtnModificar_Click(object sender, EventArgs e)
         {
-            if (DGVUsuarios.SelectedRows.Count > 0 && DGVUsuarios.CurrentRow != null)
-            {
-                int idUsuarioSeleccionado = Convert.ToInt32(DGVUsuarios.CurrentRow.Cells["colId"].Value);
+            Usuario usuario = ObtenerUsuarioSeleccionado();
 
-                // Validación: Evita modificar la propia cuenta en sesión
-                if (idUsuarioSeleccionado == _idUsuarioLogueado)
-                {
-                    MessageBox.Show("No puede modificar los datos de su propia cuenta activa desde este panel.", "Acción denegada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                using (FormModificarUsuario formModif = new FormModificarUsuario(idUsuarioSeleccionado))
-                {
-                    if(formModif.ShowDialog() == DialogResult.OK)
-                    {
-                        CargarUsuarios(txtBuscar.Text.Trim());
-                    }
-                    formModif.ShowDialog();
-                }
-            }
-            else
+            if (usuario == null)
             {
-                MessageBox.Show("Por favor, seleccione un usuario de la lista para modificar.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, seleccione un usuario de la lista para modificar.",
+                                "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
 
+            // Validación: Evita modificar la propia cuenta en sesión
+            if (usuario.IdUsuario == _idUsuarioLogueado)
+            {
+                MessageBox.Show("No puede modificar los datos de su propia cuenta activa desde este panel.", "Acción denegada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (FormModificarUsuario formModif = new FormModificarUsuario(usuario.IdUsuario, _rolUsuarioLogueado))
+            {
+                if(formModif.ShowDialog() == DialogResult.OK)
+                {
+                    CargarUsuarios();
+                }
+            }
         }
 
         // BOTÓN CAMBIAR ESTADO (ACTIVAR / DESACTIVAR)
         private void BtnEstado_Click(object sender, EventArgs e)
         {
-            if (DGVUsuarios.SelectedRows.Count > 0 && DGVUsuarios.CurrentRow != null)
+            Usuario usuario = ObtenerUsuarioSeleccionado();
+
+            if (usuario == null)
             {
-                int idUsuarioSeleccionado = Convert.ToInt32(DGVUsuarios.CurrentRow.Cells["colId"].Value);
-                string usuarioNombre = DGVUsuarios.CurrentRow.Cells["colUsuario"].Value?.ToString() ?? string.Empty;
-                string estadoTexto = DGVUsuarios.CurrentRow.Cells["colEstado"].Value?.ToString().Trim() ?? string.Empty;
+                MessageBox.Show("Por favor, seleccione un usuario de la lista.",
+                                "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                bool estaActivo = estadoTexto.Equals("Activo", StringComparison.OrdinalIgnoreCase);
-                bool nuevoEstado = !estaActivo;
+            bool nuevoEstado = !usuario.Estado;
+            string accionTexto = usuario.Estado ? "desactivar" : "activar";
+            string tituloConfirmacion = usuario.Estado ? "Confirmar Desactivación" : "Confirmar Activación";
 
-                string accionTexto = estaActivo ? "desactivar" : "activar";
-                string tituloConfirmacion = estaActivo ? "Confirmar Desactivación" : "Confirmar Activación";
 
-                DialogResult respuesta = MessageBox.Show(
-                    $"¿Está seguro de que desea {accionTexto} al usuario '{usuarioNombre}'?",
-                    tituloConfirmacion,
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question
-                );
+            DialogResult respuesta = MessageBox.Show(
+                $"¿Está seguro de que desea {accionTexto} al usuario '{usuario.NombreUsuario}'?",
+                tituloConfirmacion,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
 
-                if (respuesta == DialogResult.Yes)
+            if (respuesta == DialogResult.Yes)
+            {
+                // La capa de negocio valida el ID y actualiza en BD
+                bool exito = _cnUsuario.CambiarEstadoUsuario(usuario.IdUsuario, _idUsuarioLogueado, nuevoEstado, out string mensaje);
+
+                if (exito)
                 {
-                    // La capa de negocio valida el ID y actualiza en BD
-                    bool exito = _cnUsuario.CambiarEstadoUsuario(idUsuarioSeleccionado, _idUsuarioLogueado, nuevoEstado, out string mensaje);
-
-                    if (exito)
-                    {
-                        MessageBox.Show(mensaje, "Operación Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        CargarUsuarios(txtBuscar.Text.Trim());
-                    }
-                    else
-                    {
-                        MessageBox.Show(mensaje, "Acción denegada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
+                    MessageBox.Show(mensaje, "Operación Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CargarUsuarios();
+                }
+                else
+                {
+                    MessageBox.Show(mensaje, "Acción denegada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
             {
                 MessageBox.Show("Por favor, seleccione un usuario de la lista.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }
-
-        // Evento que actualiza dinámicamente el texto del botón BEstado al seleccionar una fila
-        private void DGVUsuarios_SelectionChanged(object sender, EventArgs e)
-        {
-            ActualizarTextoBotonEstado();
-        }
-
-        private void TxtBuscar_TextChanged(object sender, EventArgs e)
-        {
-            CargarUsuarios(txtBuscar.Text.Trim());
         }
 
         // BOTÓN VOLVER

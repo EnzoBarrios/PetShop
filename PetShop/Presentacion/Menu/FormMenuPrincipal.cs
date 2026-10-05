@@ -1,16 +1,13 @@
-﻿using PetShop.Entidades;
-using PetShop.Negocio;
+﻿using System;
 using PetShop.Presentacion.Catalogos;
 using PetShop.Presentacion.Usuarios;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using PetShop.Entidades;
+using PetShop.Negocio;
 
 namespace PetShop.Presentacion.Menu
 {
@@ -18,14 +15,15 @@ namespace PetShop.Presentacion.Menu
     {
         private Usuario _usuarioActual; // Variable para almacenar el usuario actual
         
-        private Form _formularioActivo = null;// Variable para rastrear el formulario secundario actualmente visible
+        private Form _formularioActivo;// Variable para rastrear el formulario secundario actualmente visible
 
-        private readonly CN_Usuario _cnUsuario = new CN_Usuario();
+        private readonly CN_Usuario _cnUsuario;
 
         public FormMenuPrincipal(Usuario usuario)
         {
             InitializeComponent();
-            _usuarioActual = usuario;
+            _usuarioActual = usuario ?? throw new ArgumentNullException(nameof(usuario));
+            _cnUsuario = new CN_Usuario();
         }
 
         private void FormMenuPrincipal_Load(object sender, EventArgs e)
@@ -41,34 +39,45 @@ namespace PetShop.Presentacion.Menu
 
         public void RefrescarDatosUsuario()
         {
-            if (_usuarioActual == null) return;
-
-            // Recarga los datos frescos de la BD a través de la capa de negocio
-            Usuario usuarioActualizado = _cnUsuario.ObtenerPorId(_usuarioActual.IdUsuario);
-            if (usuarioActualizado != null)
+            if (_usuarioActual == null)
             {
-                _usuarioActual = usuarioActualizado;
-                CargarDatosUsuario();
+                return;
+            }
+
+            try 
+            { 
+                // Recarga los datos frescos de la BD a través de la capa de negocio
+                Usuario usuarioActualizado = _cnUsuario.ObtenerPorId(_usuarioActual.IdUsuario);
+
+                if (usuarioActualizado != null)
+                {
+                    _usuarioActual = usuarioActualizado;
+                    CargarDatosUsuario();
+                    ConfigurarPermisosPorRol();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al sincronizar datos del perfil: {ex.Message}",
+                                "Error de Sincronización", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void CargarDatosUsuario()
         {
-            if (_usuarioActual != null)
+            if (_usuarioActual == null)
             {
-                lblUsuarioLogueado.Text = _usuarioActual.NombreUsuario;
-                lblUsuarioBienvenida.Text = $"¡Bienvenido: {_usuarioActual.Apellido} {_usuarioActual.Nombre}!";
-
-                if (_usuarioActual.Rol != null)
-                {
-                    lblRolLogeado.Text = _usuarioActual.Rol.NombreRol;
-                }
+                return;
             }
+
+            lblUsuarioLogueado.Text = _usuarioActual.NombreUsuario;
+            lblUsuarioBienvenida.Text = $"¡Bienvenido: {_usuarioActual.Apellido} {_usuarioActual.Nombre}!";
+            lblRolLogeado.Text = _usuarioActual.Rol?.NombreRol ?? "Sin Rol";
         }
 
         private void ConfigurarPermisosPorRol()
         {
-            if (_usuarioActual == null || _usuarioActual.Rol == null) return;
+            if (_usuarioActual.Rol == null) return;
 
             string rol = _usuarioActual.Rol.NombreRol.Trim();
 
@@ -86,7 +95,7 @@ namespace PetShop.Presentacion.Menu
             // 3. Activación según perfil
             switch (rol)
             {
-                case "Administrador":
+                case CN_Rol.ROL_ADMINISTRADOR:
                     UsuariosToolStripMenuItem.Enabled = true;
                     CatalogoToolStripMenuItem.Enabled = true;
                     VentaToolStripMenuItem.Enabled = true;
@@ -98,7 +107,7 @@ namespace PetShop.Presentacion.Menu
                     NuevaVentaToolStripMenuItem.Enabled = false;
                     break;
 
-                case "Gerente":
+                case CN_Rol.ROL_GERENTE:
                     // El gerente supervisa ventas, catálogos y reportes
                     UsuariosToolStripMenuItem.Enabled = true;
                     CatalogoToolStripMenuItem.Enabled = true;
@@ -110,7 +119,7 @@ namespace PetShop.Presentacion.Menu
                     btnReportes.Enabled = true;
                     break;
 
-                case "Vendedor":
+                case CN_Rol.ROL_VENDEDOR:
                     // El vendedor solo opera ventas y consulta productos
                     CatalogoToolStripMenuItem.Enabled = true;
                     VentaToolStripMenuItem.Enabled = true;
@@ -148,8 +157,25 @@ namespace PetShop.Presentacion.Menu
         // Método base que incrusta cualquier instancia de formulario
         private void AbrirFormularioEnMdi(Form nuevoFormulario)
         {
+            // Validación de entrada (Fail-Fast): evita procesar instancias nulas
+            if (nuevoFormulario == null)
+            {
+                MessageBox.Show("No se pudo inicializar la ventana solicitada.",
+                                "Error de Navegación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (contenedor == null)
+            {
+                MessageBox.Show("El contenedor visual principal no está disponible.",
+                                "Error de Interfaz", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             // Si ya está abierto el mismo formulario y sigue, se trae al frente
-            if (_formularioActivo != null && !_formularioActivo.IsDisposed && _formularioActivo.GetType() == nuevoFormulario.GetType())
+            if (_formularioActivo != null && 
+               !_formularioActivo.IsDisposed && 
+                _formularioActivo.GetType() == nuevoFormulario.GetType())
             {
                 _formularioActivo.BringToFront();
                 nuevoFormulario.Dispose();
@@ -163,36 +189,51 @@ namespace PetShop.Presentacion.Menu
                 // Si había otro formulario secundario abierto, se cierra
                 if (_formularioActivo != null && !_formularioActivo.IsDisposed)
                 {
-                    contenedor.Controls.Remove(_formularioActivo);
-                    _formularioActivo.Close();
+                    Form formularioAnterior = _formularioActivo;
                     _formularioActivo = null;
+
+                    formularioAnterior.FormClosed -= FormularioHijo_FormClosed;
+
+                    contenedor.Controls.Remove(formularioAnterior);
+                    formularioAnterior.Close();
+                    formularioAnterior.Dispose();
                 }
 
                 nuevoFormulario.TopLevel = false;
                 nuevoFormulario.FormBorderStyle = FormBorderStyle.None;
-                nuevoFormulario.Dock = DockStyle.None;
+                nuevoFormulario.Dock = DockStyle.Fill;
 
-                // Cuando el formulario se cierre con el boton volver
-                nuevoFormulario.FormClosed += (s, args) =>
-                {
-                    if (_formularioActivo == s)
-                    {
-                        _formularioActivo = null;
-                    }
-
-                    this.ActiveControl = null;
-                };
+                nuevoFormulario.FormClosed += FormularioHijo_FormClosed;
 
                 _formularioActivo = nuevoFormulario;        // Asigna el formulario activo
-                contenedor.Tag = _formularioActivo;         // Almacena la referencia del formulario activo en el Tag del contenedor
                 contenedor.Controls.Add(_formularioActivo); // Agrega el formulario al contenedor
                 _formularioActivo.Show();                   // Muestra el formulario secundario
                 _formularioActivo.BringToFront();           // Asegura que el formulario esté al frente
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ocurrió un error al cargar la vista: {ex.Message}",
+                                "Error de Interfaz", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
                 contenedor.ResumeLayout(true);
             }
+        }
+
+        private void FormularioHijo_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (sender is Form formCerrado)
+            {
+                formCerrado.FormClosed -= FormularioHijo_FormClosed;
+
+                if (_formularioActivo == formCerrado)
+                {
+                    _formularioActivo = null;
+                }
+            }
+
+            this.ActiveControl = null;
         }
 
         // Sobrecarga genérica para formularios sin parámetros
@@ -201,11 +242,11 @@ namespace PetShop.Presentacion.Menu
             AbrirFormularioEnMdi(new T());
         }
 
+        // ACCIONES DE MENÚ Y ACCESOS DIRECTOS
         private void UsuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Pasa el ID y Rol del usuario logueado
             int id = _usuarioActual?.IdUsuario ?? 0;
-            string rol = _usuarioActual?.Rol?.NombreRol ?? "Administrador";
+            string rol = _usuarioActual?.Rol?.NombreRol ?? string.Empty;
 
             AbrirFormularioEnMdi(new FormUsuarios(id, rol));
         }
@@ -217,7 +258,7 @@ namespace PetShop.Presentacion.Menu
 
         private void CategoriasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirFormularioEnMdi<FormCategorias>();
+            AbrirFormularioEnMdi<FormCategoria>();
         }
 
         private void EspeciesToolStripMenuItem_Click(object sender, EventArgs e)

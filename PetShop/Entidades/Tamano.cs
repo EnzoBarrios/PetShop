@@ -11,6 +11,7 @@ namespace PetShop.Entidades
         // Atributos directos de la tabla Tamano
         public int IdTamano { get; set; } // Clave primaria de la tabla Tamano
         public string NombreTamano { get; set; }
+        public bool Estado { get; set; }
 
         // Constructor vacío
         public Tamano()
@@ -22,6 +23,7 @@ namespace PetShop.Entidades
         {
             IdTamano = idTamano;
             NombreTamano = nombreTamano;
+            Estado = true;
         }
 
     }

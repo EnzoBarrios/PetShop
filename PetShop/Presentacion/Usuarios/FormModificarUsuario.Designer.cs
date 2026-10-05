@@ -32,15 +32,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormModificarUsuario));
             this.txtNombreUsuario = new System.Windows.Forms.TextBox();
             this.LNombreUsuario = new System.Windows.Forms.Label();
-            this.textApellido = new System.Windows.Forms.TextBox();
+            this.txtApellido = new System.Windows.Forms.TextBox();
             this.LApellido = new System.Windows.Forms.Label();
             this.txtConfirmar = new System.Windows.Forms.TextBox();
             this.LConfirmar = new System.Windows.Forms.Label();
-            this.LFechaCreacion = new System.Windows.Forms.Label();
+            this.lblFechaCreacion = new System.Windows.Forms.Label();
             this.txtClave = new System.Windows.Forms.TextBox();
             this.LClave = new System.Windows.Forms.Label();
             this.cbxRol = new System.Windows.Forms.ComboBox();
-            this.textNombre = new System.Windows.Forms.TextBox();
+            this.txtNombre = new System.Windows.Forms.TextBox();
             this.LRol = new System.Windows.Forms.Label();
             this.LNombre = new System.Windows.Forms.Label();
             this.cbxEstado = new System.Windows.Forms.ComboBox();
@@ -86,14 +86,14 @@
             this.LNombreUsuario.TabIndex = 102;
             this.LNombreUsuario.Text = "Nombre de usuario";
             // 
-            // textApellido
+            // txtApellido
             // 
-            this.textApellido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textApellido.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.textApellido.Location = new System.Drawing.Point(574, 59);
-            this.textApellido.Name = "textApellido";
-            this.textApellido.Size = new System.Drawing.Size(314, 27);
-            this.textApellido.TabIndex = 101;
+            this.txtApellido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtApellido.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtApellido.Location = new System.Drawing.Point(574, 59);
+            this.txtApellido.Name = "txtApellido";
+            this.txtApellido.Size = new System.Drawing.Size(314, 27);
+            this.txtApellido.TabIndex = 101;
             // 
             // LApellido
             // 
@@ -128,17 +128,17 @@
             this.LConfirmar.TabIndex = 97;
             this.LConfirmar.Text = "Confirmar Contraseña";
             // 
-            // LFechaCreacion
+            // lblFechaCreacion
             // 
-            this.LFechaCreacion.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.LFechaCreacion.AutoSize = true;
-            this.LFechaCreacion.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LFechaCreacion.Location = new System.Drawing.Point(431, 29);
-            this.LFechaCreacion.Name = "LFechaCreacion";
-            this.LFechaCreacion.Size = new System.Drawing.Size(140, 20);
-            this.LFechaCreacion.TabIndex = 96;
-            this.LFechaCreacion.Text = "Fecha De Creación:";
-            this.LFechaCreacion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblFechaCreacion.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblFechaCreacion.AutoSize = true;
+            this.lblFechaCreacion.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFechaCreacion.Location = new System.Drawing.Point(431, 29);
+            this.lblFechaCreacion.Name = "lblFechaCreacion";
+            this.lblFechaCreacion.Size = new System.Drawing.Size(140, 20);
+            this.lblFechaCreacion.TabIndex = 96;
+            this.lblFechaCreacion.Text = "Fecha De Creación:";
+            this.lblFechaCreacion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // txtClave
             // 
@@ -170,14 +170,14 @@
             this.cbxRol.Size = new System.Drawing.Size(314, 28);
             this.cbxRol.TabIndex = 91;
             // 
-            // textNombre
+            // txtNombre
             // 
-            this.textNombre.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.textNombre.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.textNombre.Location = new System.Drawing.Point(53, 59);
-            this.textNombre.Name = "textNombre";
-            this.textNombre.Size = new System.Drawing.Size(314, 27);
-            this.textNombre.TabIndex = 90;
+            this.txtNombre.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.txtNombre.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtNombre.Location = new System.Drawing.Point(53, 59);
+            this.txtNombre.Name = "txtNombre";
+            this.txtNombre.Size = new System.Drawing.Size(314, 27);
+            this.txtNombre.TabIndex = 90;
             // 
             // LRol
             // 
@@ -232,11 +232,11 @@
             this.GBDatos.Controls.Add(this.txtCorreo);
             this.GBDatos.Controls.Add(this.LCorreo);
             this.GBDatos.Controls.Add(this.LDni);
-            this.GBDatos.Controls.Add(this.textNombre);
+            this.GBDatos.Controls.Add(this.txtNombre);
             this.GBDatos.Controls.Add(this.LNombre);
             this.GBDatos.Controls.Add(this.LApellido);
             this.GBDatos.Controls.Add(this.txtNombreUsuario);
-            this.GBDatos.Controls.Add(this.textApellido);
+            this.GBDatos.Controls.Add(this.txtApellido);
             this.GBDatos.Controls.Add(this.LNombreUsuario);
             this.GBDatos.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GBDatos.ForeColor = System.Drawing.Color.Black;
@@ -360,10 +360,10 @@
             this.PanelContenedor.Controls.Add(this.btnBorrar);
             this.PanelContenedor.Controls.Add(this.btnGuardar);
             this.PanelContenedor.Controls.Add(this.GBDatos);
-            this.PanelContenedor.Controls.Add(this.LFechaCreacion);
+            this.PanelContenedor.Controls.Add(this.lblFechaCreacion);
             this.PanelContenedor.Controls.Add(this.GBSeguridad);
             this.PanelContenedor.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.PanelContenedor.Location = new System.Drawing.Point(-9, 87);
+            this.PanelContenedor.Location = new System.Drawing.Point(-31, 87);
             this.PanelContenedor.Name = "PanelContenedor";
             this.PanelContenedor.Size = new System.Drawing.Size(987, 611);
             this.PanelContenedor.TabIndex = 108;
@@ -444,7 +444,7 @@
             this.LTitulo.ForeColor = System.Drawing.Color.Black;
             this.LTitulo.Location = new System.Drawing.Point(340, 24);
             this.LTitulo.Name = "LTitulo";
-            this.LTitulo.Size = new System.Drawing.Size(305, 40);
+            this.LTitulo.Size = new System.Drawing.Size(263, 40);
             this.LTitulo.TabIndex = 108;
             this.LTitulo.Text = "Modificar Usuario";
             this.LTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -499,15 +499,15 @@
         #endregion
         private System.Windows.Forms.TextBox txtNombreUsuario;
         private System.Windows.Forms.Label LNombreUsuario;
-        private System.Windows.Forms.TextBox textApellido;
+        private System.Windows.Forms.TextBox txtApellido;
         private System.Windows.Forms.Label LApellido;
         private System.Windows.Forms.TextBox txtConfirmar;
         private System.Windows.Forms.Label LConfirmar;
-        private System.Windows.Forms.Label LFechaCreacion;
+        private System.Windows.Forms.Label lblFechaCreacion;
         private System.Windows.Forms.TextBox txtClave;
         private System.Windows.Forms.Label LClave;
         private System.Windows.Forms.ComboBox cbxRol;
-        private System.Windows.Forms.TextBox textNombre;
+        private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.Label LRol;
         private System.Windows.Forms.Label LNombre;
         private System.Windows.Forms.ComboBox cbxEstado;

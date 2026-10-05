@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -16,20 +15,60 @@ namespace PetShop.Presentacion.Autenticacion
     public partial class FormLogin : Form
     {
         private readonly CN_Usuario _cnUsuario = new CN_Usuario();
+        private readonly ErrorProvider _ep = new ErrorProvider();
 
         public FormLogin()
         {
             InitializeComponent();
         }
 
-        public void FormLoginLoad(object sender, EventArgs e)
+        private void FormLogin_Load(object sender, EventArgs e)
+        {
+            ConfigurarControles();
+        }
+
+        private void ConfigurarControles()
         {
             txtClave.UseSystemPasswordChar = true;
+
+            // Configuración visual del validador
+            _ep.BlinkStyle = ErrorBlinkStyle.NeverBlink;
+            _ep.Icon = System.Drawing.SystemIcons.Warning;
+
+            // Asignación de atajos de teclado Enter y Esc
+            this.AcceptButton = btnIngresar;
+            this.CancelButton = btnCancelar;
+        }
+        
+        // 
+        private bool ValidarCamposLogin()
+        {
+            _ep.Clear();
+            bool esValido = true;
+
+            if (string.IsNullOrWhiteSpace(txtUsuario.Text))
+            {
+                _ep.SetError(txtUsuario, "Ingrese su nombre de Usuario");
+                esValido = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtClave.Text))
+            {
+                _ep.SetError(txtClave, "Ingrese su contraseña");
+                esValido = false;
+            }
+
+            return esValido;
         }
 
         // BOTON INGRESAR
         private void BtnIngresar_Click(object sender, EventArgs e)
         {
+            if (!ValidarCamposLogin())
+            {
+                return;
+            }
+
             string usuarioIngresado = txtUsuario.Text.Trim();
             string claveIngresada = txtClave.Text.Trim();
 
@@ -37,6 +76,8 @@ namespace PetShop.Presentacion.Autenticacion
 
             if (usuarioLogueado != null)
             {
+                txtClave.Clear();
+
                 FormMenuPrincipal formMenu = new FormMenuPrincipal(usuarioLogueado);
                 formMenu.FormClosed += CerrarSesion;
 
@@ -60,9 +101,16 @@ namespace PetShop.Presentacion.Autenticacion
         // Método para cerrar sesión y volver al formulario de login
         private void CerrarSesion(object sender, EventArgs e)
         {
+            if (sender is Form formCerrado)
+            {
+                formCerrado.FormClosed -= CerrarSesion;
+            }
+
             txtUsuario.Clear();
             txtClave.Clear();
+            _ep.Clear();
             txtUsuario.Focus();
+
             this.Show();
         }
     }

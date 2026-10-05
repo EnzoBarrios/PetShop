@@ -18,6 +18,7 @@ namespace PetShop.Entidades
         public int StockActual { get; set; }
         public int StockMinimo { get; set; }
         public bool Estado { get; set; }
+        public DateTime FechaCreacion { get; set; }
 
         // Relacion con Categoria
         public int IdCategoria { get; set; }        // Clave foránea para la categoría
@@ -32,8 +33,9 @@ namespace PetShop.Entidades
         public Producto()
         {
             Categoria = new Categoria();            // Inicializa el objeto Categoria para evitar referencias nulas
-            EspecieTamano = new EspecieTamano();    // Inicializa el objeto EspecieTamano para evitar referencias nulas
+            EspecieTamano = null;                   // Inicializa el objeto EspecieTamano como nulo, ya que puede no aplicarse a todos los productos
             Estado = true;                          // Por defecto activo
+            FechaCreacion = DateTime.Now;          // Asigna la fecha de creación
         }
 
         // Constructor con parámetros
@@ -50,6 +52,7 @@ namespace PetShop.Entidades
             StockActual = stockActual;
             StockMinimo = stockMinimo;
             Estado = estado;
+            FechaCreacion = DateTime.Now;
 
             IdCategoria = idCategoria; 
             Categoria = new Categoria { IdCategoria = idCategoria }; 

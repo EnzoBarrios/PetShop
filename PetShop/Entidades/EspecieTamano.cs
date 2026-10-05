@@ -19,6 +19,8 @@ namespace PetShop.Entidades
         // Constructor vacío
         public EspecieTamano()
         {
+            Especie = new Especie();  // Inicializa el objeto Especie para evitar referencias nulas
+            Tamano = new Tamano();    // Inicializa el objeto Tamano para evitar referencias nulas
         }
 
         // Constructor con parámetros

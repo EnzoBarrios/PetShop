@@ -15,6 +15,7 @@ namespace PetShop.Presentacion
 
         // Guardamos la tabla a nivel de clase para que los filtros funcionen
         private DataTable tablaProductos;
+
         public FormProductos()
         {
             InitializeComponent();

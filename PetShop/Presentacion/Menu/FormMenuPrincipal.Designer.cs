@@ -409,9 +409,8 @@ namespace PetShop.Presentacion.Menu
             this.contenedor.Controls.Add(this.lblUsuarioBienvenida);
             this.contenedor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contenedor.Location = new System.Drawing.Point(0, 140);
-            this.contenedor.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.contenedor.Margin = new System.Windows.Forms.Padding(0);
             this.contenedor.Name = "contenedor";
-            this.contenedor.Padding = new System.Windows.Forms.Padding(13, 12, 13, 12);
             this.contenedor.Size = new System.Drawing.Size(1280, 620);
             this.contenedor.TabIndex = 3;
             // 

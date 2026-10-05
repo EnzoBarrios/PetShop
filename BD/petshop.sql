@@ -28,6 +28,8 @@ CREATE TABLE Usuario (
 	CONSTRAINT PK_Usuario PRIMARY KEY (id_usuario),
 	CONSTRAINT FK_Usuario_Rol FOREIGN KEY (id_rol) REFERENCES Rol(id_rol),
 	CONSTRAINT UQ_Usuario_Nombre UNIQUE (nombre_usuario),
+
+	-- Índices filtrados únicos para campos opcionales
 	INDEX IX_UQ_Usuario_Dni UNIQUE NONCLUSTERED (dni) 
         WHERE dni IS NOT NULL, 
     INDEX IX_UQ_Usuario_Correo UNIQUE NONCLUSTERED (correo) 
@@ -37,15 +39,7 @@ CREATE TABLE Usuario (
 );
 GO
 
--- 3. Tabla Especie
-CREATE TABLE Especie (
-	id_especie INT IDENTITY(1,1),
-	nombre_especie VARCHAR(50) NOT NULL,
-	CONSTRAINT PK_Especie PRIMARY KEY (id_especie)
-);
-GO
-
--- 4. Tabla Categoria
+-- 3. Tabla Categoria
 CREATE TABLE Categoria (
 	id_categoria INT IDENTITY(1,1),
 	nombre_categoria VARCHAR(50) NOT NULL,
@@ -55,10 +49,20 @@ CREATE TABLE Categoria (
 );
 GO
 
+-- 4. Tabla Especie
+CREATE TABLE Especie (
+	id_especie INT IDENTITY(1,1),
+	nombre_especie VARCHAR(50) NOT NULL,
+	estado BIT NOT NULL DEFAULT 1,
+	CONSTRAINT PK_Especie PRIMARY KEY (id_especie)
+);
+GO
+
 -- 5. Tabla Tamano
 CREATE TABLE Tamano (
 	id_tamano INT IDENTITY(1,1),
 	nombre_tamano VARCHAR(50) NOT NULL,
+	estado BIT NOT NULL DEFAULT 1,
 	CONSTRAINT PK_Tamano PRIMARY KEY (id_tamano)
 );
 GO
@@ -84,6 +88,7 @@ CREATE TABLE Producto (
 	stock_actual INT NOT NULL DEFAULT 0,
 	stock_minimo INT NOT NULL DEFAULT 0,
 	estado BIT NOT NULL DEFAULT 1, -- 1: Activo, 0: Inactivo
+	fecha_creacion DATETIME NOT NULL DEFAULT GETDATE(),
 	id_categoria INT NOT NULL,
 	id_especie INT NULL,
 	id_tamano INT NULL,
@@ -93,9 +98,9 @@ CREATE TABLE Producto (
 	CONSTRAINT UQ_Producto_Codigo UNIQUE (codigo_barra),
 	CONSTRAINT CK_Producto_Precios CHECK (precio_compra >= 0 AND precio_venta >= precio_compra),
 	CONSTRAINT CK_Productos_Stock CHECK (stock_actual >= 0 AND stock_minimo >= 0),
-	CONSTRAINT CK_Producto_EspecieTamano_Consistencia 
-		CHECK ((id_especie IS NULL AND id_tamano IS NULL) 
-		OR	   (id_especie IS NOT NULL AND id_tamano IS NOT NULL))
+	CONSTRAINT CK_Producto_EspecieTamano_Consistencia CHECK (
+		(id_especie IS NULL AND id_tamano IS NULL) OR
+		(id_especie IS NOT NULL AND id_tamano IS NOT NULL))
 );
 GO
 
@@ -151,7 +156,7 @@ CREATE TABLE Detalle_Venta (
 	id_producto INT NOT NULL,
 	cantidad INT NOT NULL,
 	precio_unitario DECIMAL(10,2) NOT NULL,
-	subtotal DECIMAL(10,2) NOT NULL,
+	subtotal AS (cantidad * precio_unitario),
 	CONSTRAINT PK_DetalleVenta PRIMARY KEY (id_venta, id_producto),
 	CONSTRAINT FK_DetalleVenta_Venta FOREIGN KEY (id_venta) REFERENCES Venta(id_venta),
 	CONSTRAINT FK_DetalleVenta_Producto FOREIGN KEY (id_producto) REFERENCES Producto(id_producto),
@@ -204,3 +209,8 @@ GO
 
 SELECT * FROM Rol;
 SELECT * FROM Usuario;
+SELECT * FROM Categoria;
+SELECT * FROM Especie;
+SELECT * FROM Tamano;
+SELECT * FROM Especie_Tamano;
+SELECT * FROM Producto;

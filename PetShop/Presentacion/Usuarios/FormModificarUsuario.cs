@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Data;
-using System.Data.SqlClient;
 using System.Windows.Forms;
 using PetShop.Negocio;
 using PetShop.Entidades;
@@ -12,18 +10,16 @@ namespace PetShop.Presentacion.Usuarios
     {
         // Campo para almacenar el ID del usuario que se va a modificar
         private readonly int _idUsuario;
+        private readonly string _rolOperadorActual;
         private readonly ErrorProvider _ep = new ErrorProvider();
         private readonly CN_Usuario _cnUsuario = new CN_Usuario();
         private readonly CN_Rol _cnRol = new CN_Rol();
 
-        public FormModificarUsuario(int idUsuario)
+        public FormModificarUsuario(int idUsuario, string rolOperadorActual = CN_Rol.ROL_ADMINISTRADOR)
         {
             InitializeComponent();
             _idUsuario = idUsuario;
-        }
-
-        public FormModificarUsuario() : this(0)
-        {
+            _rolOperadorActual = rolOperadorActual;
         }
 
         private void FormModificarUsuario_Load(object sender, EventArgs e)
@@ -35,6 +31,16 @@ namespace PetShop.Presentacion.Usuarios
                 return;
             }
 
+            // Bloquear todos los campos de datos personales e identificación
+            ConfigurarControles();
+            BloquearCamposLectura();
+            CargarRoles();
+            CargarEstados();
+            CargarDatosUsuario();
+        }
+
+        private void ConfigurarControles()
+        {
             // Configuración visual del ErrorProvider
             _ep.BlinkStyle = ErrorBlinkStyle.NeverBlink;
             _ep.Icon = System.Drawing.SystemIcons.Warning;
@@ -44,18 +50,12 @@ namespace PetShop.Presentacion.Usuarios
 
             cbxRol.DropDownStyle = ComboBoxStyle.DropDownList;
             cbxEstado.DropDownStyle = ComboBoxStyle.DropDownList;
-
-            // Bloquear todos los campos de datos personales e identificación
-            BloquearCamposLectura();
-            CargarRoles();
-            CargarEstados();
-            CargarDatosUsuario();
         }
 
         private void BloquearCamposLectura()
         {
             // Bloquea e inactiva visualmente los campos que no deben ser modificados
-            TextBox[] camposBloqueados = { textNombre, textApellido, txtNombreUsuario, txtDni, txtTelefono, txtCorreo};
+            TextBox[] camposBloqueados = { txtNombre, txtApellido, txtNombreUsuario, txtDni, txtTelefono, txtCorreo};
 
             foreach (TextBox txt in camposBloqueados)
             {
@@ -70,18 +70,18 @@ namespace PetShop.Presentacion.Usuarios
         {
             try
             {
-                List<Rol> roles = _cnRol.ListarRoles();
-                roles.RemoveAll(r => r.NombreRol.Equals("Administrador", StringComparison.OrdinalIgnoreCase));
+                List<Rol> rolesPermitidos = _cnRol.ObtenerRolesPermitidos(_rolOperadorActual);
 
                 cbxRol.DataSource = null;
                 cbxRol.Items.Clear();
-                cbxRol.DisplayMember = "NombreRol";
-                cbxRol.ValueMember = "IdRol";
-                cbxRol.DataSource = roles;
+                cbxRol.DisplayMember = nameof(Rol.NombreRol);
+                cbxRol.ValueMember = nameof(Rol.IdRol);
+                cbxRol.DataSource = rolesPermitidos;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar roles: " + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al cargar roles: " + ex.Message, 
+                    "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -98,45 +98,52 @@ namespace PetShop.Presentacion.Usuarios
             {
                 Usuario usuario = _cnUsuario.ObtenerPorId(_idUsuario);
 
-                if (usuario != null)
+                if (usuario == null)
                 {
-                    textNombre.Text = usuario.Nombre;
-                    textApellido.Text = usuario.Apellido;
+                    MessageBox.Show("No se encontró el registro en la base de datos.",
+                                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.Close();
+                    return;
+                }
+
+                    txtNombre.Text = usuario.Nombre;
+                    txtApellido.Text = usuario.Apellido;
                     txtNombreUsuario.Text = usuario.NombreUsuario;
 
-                    txtDni.Text = usuario.Dni;
-                    txtCorreo.Text = usuario.Correo;
-                    txtTelefono.Text = usuario.Telefono;
+                    txtDni.Text = usuario.Dni ?? string.Empty;
+                    txtCorreo.Text = usuario.Correo ?? string.Empty;
+                    txtTelefono.Text = usuario.Telefono ?? string.Empty;
 
-                    cbxRol.SelectedValue = usuario.IdRol;
-                    cbxEstado.Text = usuario.Estado ? "Activo" : "Inactivo";
-
-                    LFechaCreacion.Text = "Fecha de creación: " + usuario.FechaCreacion.ToString("dd 'de' MMMM 'de' yyyy");
-                }
-                else
+                if (usuario.Rol != null)
                 {
-                    MessageBox.Show("No se encontraron los datos del usuario en la base de datos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cbxRol.SelectedValue = usuario.Rol.IdRol;
                 }
+
+                    cbxEstado.Text = usuario.Estado ? "Activo" : "Inactivo";
+                    lblFechaCreacion.Text = "Fecha de creación: " + usuario.FechaCreacion.ToString("dd 'de' MMMM 'de' yyyy");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar los datos del usuario: " + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al cargar los datos del usuario: " + ex.Message, 
+                    "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+ 
+        private void CambiarVisibilidadClave(TextBox claveTexto, Button botonCambiar)
+        {
+            claveTexto.UseSystemPasswordChar = !claveTexto.UseSystemPasswordChar;
+            botonCambiar.Text = claveTexto.UseSystemPasswordChar ? "👁" : "👁‍🗨";
         }
 
         // BOTONES PARA MOSTRAR/OCULTAR CONTRASEÑA
         private void BtnVerClave_Click(object sender, EventArgs e)
         {
-            bool estaEnmascarado = txtClave.UseSystemPasswordChar;
-            txtClave.UseSystemPasswordChar = !estaEnmascarado;
-            if (sender is Button boton) boton.Text = estaEnmascarado ? "👁‍🗨" : "👁";
+            CambiarVisibilidadClave(txtClave, (Button)sender);
         }
 
         private void BtnVerConfirmar_Click(object sender, EventArgs e)
         {
-            bool estaEnmascarado = txtConfirmar.UseSystemPasswordChar;
-            txtConfirmar.UseSystemPasswordChar = !estaEnmascarado;
-            if (sender is Button boton) boton.Text = estaEnmascarado ? "👁‍🗨" : "👁";
+            CambiarVisibilidadClave(txtConfirmar, (Button)sender);
         }
 
         private bool ValidarFormulario()
@@ -146,10 +153,10 @@ namespace PetShop.Presentacion.Usuarios
             bool esValido = true;
 
             // La contraseña solo se valida si se escribió algo en alguno de los campos de clave
-            bool contrasenaEscrita = !string.IsNullOrWhiteSpace(txtClave.Text);
-            bool confirmacionEscrita = !string.IsNullOrWhiteSpace(txtConfirmar.Text);
+            bool ingresoClave = !string.IsNullOrWhiteSpace(txtClave.Text);
+            bool ingresoConfirmacion = !string.IsNullOrWhiteSpace(txtConfirmar.Text);
 
-            if (contrasenaEscrita || confirmacionEscrita)
+            if (ingresoClave || ingresoConfirmacion)
             {
                 if (txtClave.Text.Trim().Length < 6)
                 {
@@ -186,7 +193,8 @@ namespace PetShop.Presentacion.Usuarios
         {
             if (!ValidarFormulario())
             {
-                MessageBox.Show("Por favor, verifique los campos marcados con advertencias.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, verifique los campos marcados con advertencias.", 
+                    "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -200,22 +208,22 @@ namespace PetShop.Presentacion.Usuarios
             if (confirmacion != DialogResult.Yes) return;
 
             bool actualizarClave = !string.IsNullOrWhiteSpace(txtClave.Text);
+            string claveNueva = txtClave.Text.Trim();
 
             Usuario usuarioModificado = new Usuario
             {
                 IdUsuario = _idUsuario,
-                Nombre = textNombre.Text.Trim(),
-                Apellido = textApellido.Text.Trim(),
+                Nombre = txtNombre.Text.Trim(),
+                Apellido = txtApellido.Text.Trim(),
                 NombreUsuario = txtNombreUsuario.Text.Trim(),
-                Clave = txtClave.Text.Trim(),
                 Dni = string.IsNullOrWhiteSpace(txtDni.Text) ? null : txtDni.Text.Trim(),
                 Correo = string.IsNullOrWhiteSpace(txtCorreo.Text) ? null : txtCorreo.Text.Trim(), 
                 Telefono = string.IsNullOrWhiteSpace(txtTelefono.Text) ? null : txtTelefono.Text.Trim(),
-                IdRol = Convert.ToInt32(cbxRol.SelectedValue),
-                Estado = cbxEstado.Text.Trim().Equals("Activo", StringComparison.OrdinalIgnoreCase)
+                Estado = cbxEstado.Text.Trim().Equals("Activo", StringComparison.OrdinalIgnoreCase),
+                Rol = new Rol { IdRol = Convert.ToInt32(cbxRol.SelectedValue) }
             };
 
-            bool exito = _cnUsuario.ModificarUsuario(usuarioModificado, actualizarClave, out string mensaje);
+            bool exito = _cnUsuario.ModificarUsuario(usuarioModificado, actualizarClave, claveNueva,out string mensaje);
 
             if (exito)
             {

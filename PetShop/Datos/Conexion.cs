@@ -2,50 +2,50 @@
 using System.Configuration; // Requiere agregar la referencia si marca error
 using System.Data.SqlClient;
 
-namespace PetShop
+namespace PetShop.Datos
 {
-    public static class Conexion
+    public static class ConexionBd
     {
-        private static string _cadenaConexion;
+        private static readonly string _cadenaConexion;
 
-        public static string CadenaConexion
-        {
-            get
+        static ConexionBd()
+        {   
+            string cadenaExpress = ConfigurationManager.ConnectionStrings["PetShop_Express"]?.ConnectionString;
+            string cadenaLocal = ConfigurationManager.ConnectionStrings["PetShop_Local"]?.ConnectionString;
+
+            if (!string.IsNullOrWhiteSpace(cadenaExpress) && ProbarConexion(cadenaExpress))
             {
-                // Si ya encontramos la cadena válida previamente, la reutilizamos
-                if (!string.IsNullOrEmpty(_cadenaConexion))
-                    return _cadenaConexion;
-
-                string cadenaExpress = ConfigurationManager.ConnectionStrings["PetShop_Express"]?.ConnectionString;
-                string cadenaLocal = ConfigurationManager.ConnectionStrings["PetShop_Local"]?.ConnectionString;
-
                 // 1. Prueba la conexión de SQL Express (Franco)
-                if (!string.IsNullOrEmpty(cadenaExpress) && ProbarConexion(cadenaExpress))
-                {
-                    _cadenaConexion = cadenaExpress;
-                    return _cadenaConexion;
-                }
-
-                // 2. Prueba tu conexión local (.)
-                if (!string.IsNullOrEmpty(cadenaLocal) && ProbarConexion(cadenaLocal))
-                {
-                    _cadenaConexion = cadenaLocal;
-                    return _cadenaConexion;
-                }
-
+                _cadenaConexion = cadenaExpress;
+            }
+            else if (!string.IsNullOrWhiteSpace(cadenaExpress) && ProbarConexion(cadenaLocal))
+            {
+                // Prueba la conexión de SQL Developer (Enzo)
+                _cadenaConexion = cadenaLocal;
+            }
+            else
+            {
                 // Si ninguna conectó, asigna la local por defecto para que salte la excepción habitual al consultar
-                _cadenaConexion = cadenaLocal ?? cadenaExpress;
-                return _cadenaConexion;
+                _cadenaConexion = cadenaLocal ?? cadenaExpress ?? string.Empty;
             }
         }
 
-        public static SqlConnection ObtenerConexion()
+        public static SqlConnection CrearConexion()
         {
-            return new SqlConnection(CadenaConexion);
+            if (string.IsNullOrWhiteSpace(_cadenaConexion))
+            {
+                throw new InvalidOperationException("No se ha configurado ninguna cadena de conexión válida en App.config.");
+            }
+
+            return new SqlConnection(_cadenaConexion);
         }
 
         private static bool ProbarConexion(string conexionString)
         {
+            if (string.IsNullOrWhiteSpace(conexionString)) {
+                return false;
+            }
+
             try
             {
                 // Timeout reducido a 2 segundos para no demorar el inicio del sistema
@@ -56,11 +56,11 @@ namespace PetShop
 
                 using (SqlConnection con = new SqlConnection(builder.ConnectionString))
                 {
-                    con.Open();
+                    con.Open(); // Prueba física de enlace al motor
                     return true;
                 }
             }
-            catch
+            catch (SqlException)
             {
                 return false;
             }

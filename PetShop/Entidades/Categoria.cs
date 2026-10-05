@@ -10,17 +10,13 @@ namespace PetShop.Entidades
     {
         public int IdCategoria { get; set; } // Clave primaria de la tabla Categoria
         public string NombreCategoria { get; set; }
+        public string Descripcion { get; set; }
+        public bool Estado { get; set; }
 
         // Constructor vacío
         public Categoria ()
         {
-        }
-
-        // Constructor con parámetros
-        public Categoria(int idCategoria, string nombreCategoria)
-        {
-            IdCategoria = idCategoria;
-            NombreCategoria = nombreCategoria;
+            Estado = true; // Por defecto activo
         }
     }
 }
