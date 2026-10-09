@@ -10,20 +10,15 @@ namespace PetShop.Entidades
     {
         // Atributos directos de la tabla Especie
         public int IdEspecie { get; set; } // Clave primaria de la tabla Especie
-        public string NombreEspecie { get; set; }
+        public string Nombre { get; set; }
         public bool Estado { get; set; }
 
         // Constructor vacío    
         public Especie()
         {
-        }
-
-        // Constructor con parámetros
-        public Especie(int idEspecie, string nombreEspecie)
-        {
-            IdEspecie = idEspecie;
-            NombreEspecie = nombreEspecie;
             Estado = true;
         }
+
+        public override string ToString() => Nombre;
     }
 }

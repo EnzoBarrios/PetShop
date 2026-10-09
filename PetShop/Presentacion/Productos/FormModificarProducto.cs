@@ -12,7 +12,7 @@ namespace PetShop
 {
     public partial class FormModificarProducto : Form
     {
-        private int idProducto;
+        private readonly int idProducto;
         
         // 1. Constructor sin parámetros (por defecto)
         public FormModificarProducto()

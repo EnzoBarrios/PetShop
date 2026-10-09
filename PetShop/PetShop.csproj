@@ -69,8 +69,11 @@
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Entidades\Venta.cs" />
     <Compile Include="Negocio\CN_Categoria.cs" />
+    <Compile Include="Negocio\CN_Especie.cs" />
+    <Compile Include="Negocio\CN_EspecieTamano.cs" />
     <Compile Include="Negocio\CN_Producto.cs" />
     <Compile Include="Negocio\CN_Rol.cs" />
+    <Compile Include="Negocio\CN_Tamano.cs" />
     <Compile Include="Negocio\CN_Usuario.cs" />
     <Compile Include="Negocio\CN_Venta.cs" />
     <Compile Include="Negocio\SeguridadHelper.cs" />
@@ -80,11 +83,29 @@
     <Compile Include="Presentacion\Autenticacion\FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentacion\Catalogos\FormAsignarEspecieTamano.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Catalogos\FormAsignarEspecieTamano.Designer.cs">
+      <DependentUpon>FormAsignarEspecieTamano.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentacion\Catalogos\FormCargaCategoria.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentacion\Catalogos\FormCargaCategoria.Designer.cs">
       <DependentUpon>FormCargaCategoria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Catalogos\FormCargaEspecie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Catalogos\FormCargaEspecie.Designer.cs">
+      <DependentUpon>FormCargaEspecie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Catalogos\FormCargaTamano.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Catalogos\FormCargaTamano.Designer.cs">
+      <DependentUpon>FormCargaTamano.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentacion\Catalogos\FormCategoria.cs">
       <SubType>Form</SubType>
@@ -92,17 +113,29 @@
     <Compile Include="Presentacion\Catalogos\FormCategoria.Designer.cs">
       <DependentUpon>FormCategoria.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentacion\Catalogos\FormEspecies.cs">
+    <Compile Include="Presentacion\Catalogos\FormEspecieTamano.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentacion\Catalogos\FormEspecies.Designer.cs">
-      <DependentUpon>FormEspecies.cs</DependentUpon>
+    <Compile Include="Presentacion\Catalogos\FormEspecieTamano.Designer.cs">
+      <DependentUpon>FormEspecieTamano.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentacion\Catalogos\FormModificarCategoria.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentacion\Catalogos\FormModificarCategoria.Designer.cs">
       <DependentUpon>FormModificarCategoria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Catalogos\FormModificarEspecie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Catalogos\FormModificarEspecie.Designer.cs">
+      <DependentUpon>FormModificarEspecie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Catalogos\FormModificarTamano.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Catalogos\FormModificarTamano.Designer.cs">
+      <DependentUpon>FormModificarTamano.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentacion\Menu\FormMenuPrincipal.cs">
       <SubType>Form</SubType>
@@ -177,17 +210,32 @@
     <EmbeddedResource Include="Presentacion\Autenticacion\FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Catalogos\FormAsignarEspecieTamano.resx">
+      <DependentUpon>FormAsignarEspecieTamano.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Catalogos\FormCargaCategoria.resx">
       <DependentUpon>FormCargaCategoria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Catalogos\FormCargaEspecie.resx">
+      <DependentUpon>FormCargaEspecie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Catalogos\FormCargaTamano.resx">
+      <DependentUpon>FormCargaTamano.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Catalogos\FormCategoria.resx">
       <DependentUpon>FormCategoria.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentacion\Catalogos\FormEspecies.resx">
-      <DependentUpon>FormEspecies.cs</DependentUpon>
+    <EmbeddedResource Include="Presentacion\Catalogos\FormEspecieTamano.resx">
+      <DependentUpon>FormEspecieTamano.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Catalogos\FormModificarCategoria.resx">
       <DependentUpon>FormModificarCategoria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Catalogos\FormModificarEspecie.resx">
+      <DependentUpon>FormModificarEspecie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Catalogos\FormModificarTamano.resx">
+      <DependentUpon>FormModificarTamano.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Menu\FormMenuPrincipal.resx">
       <DependentUpon>FormMenuPrincipal.cs</DependentUpon>

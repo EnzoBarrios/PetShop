@@ -10,8 +10,8 @@ namespace PetShop.Entidades
     {
         // Propiedades de la clase Producto
         public int IdProducto { get; set; } // Clave primaria de la tabla Producto
-        public string CodigoBarra { get; set; }
-        public string NombreProducto { get; set; }
+        public string Codigo { get; set; }
+        public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public decimal PrecioCompra { get; set; }
         public decimal PrecioVenta { get; set; }
@@ -21,31 +21,28 @@ namespace PetShop.Entidades
         public DateTime FechaCreacion { get; set; }
 
         // Relacion con Categoria
-        public int IdCategoria { get; set; }        // Clave foránea para la categoría
         public Categoria Categoria { get; set; }    // Objeto completo para tener acceso al nombre de la categoría
 
         // Relacion compuesta con Especie_Tamano
-        public int? IdEspecie { get; set; }                  // Clave foránea para la especie
-        public int? IdTamano { get; set; }                   // Clave foránea para el tamaño
         public EspecieTamano EspecieTamano { get; set; }    // Objeto completo para tener acceso a la especie y tamaño
 
         // Constructor vacío
         public Producto()
         {
             Categoria = new Categoria();            // Inicializa el objeto Categoria para evitar referencias nulas
-            EspecieTamano = null;                   // Inicializa el objeto EspecieTamano como nulo, ya que puede no aplicarse a todos los productos
+            EspecieTamano = new EspecieTamano();   
             Estado = true;                          // Por defecto activo
             FechaCreacion = DateTime.Now;          // Asigna la fecha de creación
         }
 
         // Constructor con parámetros
-        public Producto(int idProducto, string codigo, string nombreProducto, string descripcion, decimal precioCompra, 
-            decimal precioVenta, int stockActual, int stockMinimo, bool estado, int idCategoria, 
-            int? idEspecie, int? idTamano)
+        public Producto(int idProducto, string codigo, string nombreProducto, string descripcion, 
+            decimal precioCompra, decimal precioVenta, int stockActual, int stockMinimo, bool estado, 
+            int idCategoria, int idEspecie, int idTamano)
         {
             IdProducto = idProducto;
-            CodigoBarra = codigo;
-            NombreProducto = nombreProducto;
+            Codigo = codigo;
+            Nombre = nombreProducto;
             Descripcion = descripcion;
             PrecioCompra = precioCompra;
             PrecioVenta = precioVenta;
@@ -54,15 +51,8 @@ namespace PetShop.Entidades
             Estado = estado;
             FechaCreacion = DateTime.Now;
 
-            IdCategoria = idCategoria; 
             Categoria = new Categoria { IdCategoria = idCategoria }; 
-
-            IdEspecie = idEspecie;
-            IdTamano = idTamano;
-            if (idEspecie.HasValue && idTamano.HasValue)
-            {
-                EspecieTamano = new EspecieTamano (IdEspecie.Value, IdTamano.Value);
-            }
+            EspecieTamano = new EspecieTamano { IdEspecie = idEspecie, IdTamano = idTamano};
         }
     }
 }

@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PetShop.Entidades;
 
 namespace PetShop.Datos
@@ -15,14 +12,24 @@ namespace PetShop.Datos
         {
             List<Producto> lista = new List<Producto>();
 
-            string query = @"SELECT p.id_producto, p.codigo_barra, p.nombre_producto, p.descripcion, p.precio_compra, p.precio_venta,
-                                        p.stock_actual, p.stock_minimo, p.estado, p.fecha_creacion
-                                FROM Producto p
-                                INNER JOIN Categoria c ON (p.id_categoria = c.id_categoria)
-                                LEFT JOIN Especie_Tamano et ON (p.id_especie = et.id_especie AND p.id_tamano = et.id_tamano)
-                                LEFT JOIN Especie e ON (et.id_especie = e.id_especie)
-                                LEFT JOIN Tamano t ON (et.id_tamano = t.id_tamano)
-                                ORDER BY p.nombre_producto ASC";
+            string query = @"
+                SELECT p.id_producto, p.codigo_barra, p.nombre_producto, p.descripcion, 
+                       p.precio_compra, p.precio_venta, p.stock_actual, p.stock_minimo, 
+                       p.estado, p.fecha_creacion,
+                       c.id_categoria, c.nombre_categoria, 
+                       c.descripcion AS descrip_categoria, 
+                       c.estado AS estado_categoria,
+                       ISNULL(et.id_especie, 0) AS id_especie, 
+                       ISNULL(et.id_tamano, 0) AS id_tamano,
+                       ISNULL(et.estado, 0) AS estado_et,
+                       ISNULL(e.nombre_especie, '') AS nombre_especie,
+                       ISNULL(t.nombre_tamano, '') AS nombre_tamano
+                FROM Producto p
+                INNER JOIN Categoria c ON (p.id_categoria = c.id_categoria)
+                LEFT JOIN Especie_Tamano et ON (p.id_especie = et.id_especie AND p.id_tamano = et.id_tamano)
+                LEFT JOIN Especie e ON (et.id_especie = e.id_especie)
+                LEFT JOIN Tamano t ON (et.id_tamano = t.id_tamano)
+                ORDER BY p.nombre_producto ASC";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
 
@@ -30,7 +37,7 @@ namespace PetShop.Datos
             {
                 cmd.CommandType = CommandType.Text;
                 conexion.Open();
-                    
+
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
                     while (dr.Read())
@@ -43,260 +50,219 @@ namespace PetShop.Datos
             return lista;
         }
 
-        public int Resgistrar(Producto obj, out string mensaje)
+        public Producto ObtenerPorId(int idProducto)
         {
-            int idProductoGenerado = 0;
-            mensaje = string.Empty;
-
-            string query = @"INSERT INTO Producto ( codigo_barra, nombre_producto, descripcion, precio_compra, precio_venta, 
-                                                        stock_actual, stock_minimo, id_categoria, id_especie, id_tamano) 
-                                VALUES (@CodigoBarra, @NombreProducto, @Descripcion, @PrecioCompra, @PrecioVenta, @StockActual, 
-                                        @StockMinimo, @IdCategoria, @IdEspecie, @IdTamano); 
-                                SELECT SCOPE_IDENTITY();";
+            string query = @"
+                SELECT id_producto
+                FROM Producto 
+                WHERE id_producto = @IdProducto";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
-                
-                
-            using (SqlCommand cmd = new SqlCommand(query, conexion))
-            {
-                cmd.CommandType = CommandType.Text;
-                CargarParametrosProducto(cmd, obj);
-
-                try
-                {
-                    conexion.Open();
-                    idProductoGenerado = Convert.ToInt32(cmd.ExecuteScalar());
-                }
-                catch (Exception ex)
-                {
-                    idProductoGenerado = 0;
-                    mensaje = "Error en la BD al registrar el producto: " + ex.Message;
-                }
-            }
-
-            return idProductoGenerado;
-        }
-
-        public bool Modificar(Producto obj, out string mensaje)
-        {
-            bool resultado = false;
-            mensaje = string.Empty;
-
-            string query = @"UPDATE Producto 
-                                SET codigo_barra = @CodigoBarra, nombre_producto = @NombreProducto, descripcion = @Descripcion, 
-                                    precio_compra = @PrecioCompra, precio_venta = @PrecioVenta, stock_actual = @StockActual, 
-                                    stock_minimo = @StockMinimo, id_categoria = @IdCategoria, id_especie = @IdEspecie, id_tamano = @IdTamano
-                                WHERE id_producto = @IdProducto";
-
-            using (SqlConnection conexion = ConexionBd.CrearConexion())
-                
 
             using (SqlCommand cmd = new SqlCommand(query, conexion))
             {
                 cmd.CommandType = CommandType.Text;
-                cmd.Parameters.AddWithValue("@IdProducto", obj.IdProducto);
-                CargarParametrosProducto(cmd, obj);
-
-                try
-                {
-                    conexion.Open();
-                    resultado = cmd.ExecuteNonQuery() > 0;
-                }
-                catch (Exception ex)
-                {
-                    resultado = false;
-                    mensaje = "Error en la BD al modificar el producto: " + ex.Message;
-                }
-            }
-
-            return resultado;
-        }
-
-        public bool CambiarEstado(int idProducto, bool nuevoEstado)
-        {
-            string query = @"UPDATE Producto 
-                                SET estado = @NuevoEstado 
-                                WHERE id_producto = @IdProducto";
-
-            using (SqlConnection conexion = ConexionBd.CrearConexion())
-                
-
-            using (SqlCommand cmd = new SqlCommand(query, conexion))
-            {
-                cmd.CommandType = CommandType.Text;
-                cmd.Parameters.AddWithValue("@IdProducto", idProducto);
-                cmd.Parameters.AddWithValue("@NuevoEstado", nuevoEstado);
-
-                try
-                {
-                    conexion.Open();
-                    return cmd.ExecuteNonQuery() > 0;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Error al cambiar el estado del producto.", ex);
-                }
-            }
-        }
-
-        public bool ExisteCodigoBarra(string codigoBarra)
-        {
-            string query = @"SELECT COUNT(1) 
-                                 FROM Producto 
-                                 WHERE LOWER(codigo_barra) = LOWER(@CodigoBarra)";
-
-            using (SqlConnection conexion = ConexionBd.CrearConexion())
-                
-
-            using (SqlCommand cmd = new SqlCommand(query, conexion))
-            {
-                cmd.CommandType = CommandType.Text;
-                cmd.Parameters.AddWithValue("@CodigoBarra", codigoBarra);
-                                        
-                conexion.Open();
-                return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
-                    
-            }
-        }
-
-        public bool ExisteCodigoBarraParaOtro(string codigoBarra, int idProductoActual)
-        {
-            string query = @"SELECT COUNT(1) 
-                                 FROM Producto 
-                                 WHERE LOWER(codigo_barra) = LOWER(@CodigoBarra) 
-                                    AND id_producto <> @IdProducto";
-
-            using (SqlConnection conexion = ConexionBd.CrearConexion())
-            
-            using (SqlCommand cmd = new SqlCommand(query, conexion))
-            {
-                cmd.CommandType = CommandType.Text;
-                cmd.Parameters.AddWithValue("@CodigoBarra", codigoBarra.Trim());
-                cmd.Parameters.AddWithValue("@IdProducto", idProductoActual);
-                    
-                conexion.Open();
-                return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
-            }
-        }
-
-        public Producto ObtenerProductoPorCodigo(string codigoBarra)
-        {
-            Producto producto = null;
-
-            string query = @"SELECT p.id_producto, p.codigo_barra, p.nombre_producto, p.descripcion, p.precio_compra, p.precio_venta,
-                                        p.stock_actual, p.stock_minimo, p.estado, p.fecha_creacion,
-                                        c.id_categoria, c.nombre_categoria,
-                                        et.id_especie, et.id_tamano,
-                                        e.nombre_especie,
-                                        t.nombre_tamano
-                                FROM Producto p
-                                INNER JOIN Categoria c ON (p.id_categoria = c.id_categoria)
-                                LEFT JOIN Especie_Tamano et ON (p.id_especie = et.id_especie AND p.id_tamano = et.id_tamano)
-                                LEFT JOIN Especie e ON (et.id_especie = e.id_especie)
-                                LEFT JOIN Tamano t ON (et.id_tamano = t.id_tamano)
-                                WHERE LOWER(p.codigo_barra) = LOWER(@CodigoBarra)";
-
-            using (SqlConnection conexion = ConexionBd.CrearConexion())
-            
-            using (SqlCommand cmd = new SqlCommand(query, conexion))
-            {
-                cmd.CommandType = CommandType.Text;
-                cmd.Parameters.AddWithValue("@CodigoBarra", codigoBarra.Trim());
+                cmd.Parameters.Add("@IdProducto", SqlDbType.Int).Value = idProducto;
 
                 conexion.Open();
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
                     if (dr.Read())
                     {
-                        producto = MapearProducto(dr);
+                        return MapearProducto(dr);
                     }
                 }
-                
             }
-
-            return producto;
+            return null;
         }
 
-        public static void CargarParametrosProducto(SqlCommand cmd, Producto obj)
+        public int Registrar(Producto producto)
         {
-            cmd.Parameters.AddWithValue("@CodigoBarra", obj.CodigoBarra.Trim());
-            cmd.Parameters.AddWithValue("@NombreProducto", obj.NombreProducto.Trim());
-            cmd.Parameters.AddWithValue("@PrecioCompra", obj.PrecioCompra);
-            cmd.Parameters.AddWithValue("@PrecioVenta", obj.PrecioVenta);
-            cmd.Parameters.AddWithValue("@StockActual", obj.StockActual);
-            cmd.Parameters.AddWithValue("@StockMinimo", obj.StockMinimo);
-            cmd.Parameters.AddWithValue("@Estado", obj.Estado ? 1 : 0);
-            cmd.Parameters.AddWithValue("@Categoria", obj.Categoria);
+            int idProductoGenerado = 0;
 
-            // Manejo de nulos para descripción
-            cmd.Parameters.Add("@Descripcion", SqlDbType.VarChar, 255).Value = 
-                string.IsNullOrWhiteSpace(obj.Descripcion) ? (object)DBNull.Value : obj.Descripcion.Trim();
+            string query = @"
+                INSERT INTO Producto (
+                    codigo_barra, nombre_producto, descripcion, precio_compra, precio_venta, 
+                    stock_actual, stock_minimo, id_categoria, id_especie, id_tamano) 
+                VALUES (
+                    @Codigo, @Nombre, @Descripcion, @PrecioCompra, @PrecioVenta, 
+                    @StockActual, @StockMinimo, @IdCategoria, @IdEspecie, @IdTamano); 
+                SELECT CAST(SCOPE_IDENTITY() AS INT);";
+
+            using (SqlConnection conexion = ConexionBd.CrearConexion())
+
+            using (SqlCommand cmd = new SqlCommand(query, conexion))
+            {
+                cmd.CommandType = CommandType.Text;
+                CargarParametrosProducto(cmd, producto);
+
+                conexion.Open();
+                idProductoGenerado = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+
+            return idProductoGenerado;
+        }
+
+        public bool Modificar(Producto producto)
+        {
+            string query = @"
+                UPDATE Producto 
+                SET codigo_barra    = @Codigo,     
+                    nombre_producto = @Nombre, 
+                    descripcion     = @Descripcion, 
+                    precio_compra   = @PrecioCompra, 
+                    precio_venta    = @PrecioVenta, 
+                    stock_actual    = @StockActual, 
+                    stock_minimo    = @StockMinimo, 
+                    id_categoria    = @IdCategoria, 
+                    id_especie      = @IdEspecie, 
+                    id_tamano       = @IdTamano
+                WHERE id_producto = @IdProducto";
+
+            using (SqlConnection conexion = ConexionBd.CrearConexion())
+
+            using (SqlCommand cmd = new SqlCommand(query, conexion))
+            {
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.Add("@IdProducto", SqlDbType.Int).Value = producto.IdProducto;
+                CargarParametrosProducto(cmd, producto);
+
+                conexion.Open();
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+        public bool CambiarEstado(int idProducto, bool nuevoEstado)
+        {
+            string query = @"
+                UPDATE Producto 
+                SET estado = @NuevoEstado 
+                WHERE id_producto = @IdProducto";
+
+            using (SqlConnection conexion = ConexionBd.CrearConexion())
+
+            using (SqlCommand cmd = new SqlCommand(query, conexion))
+            { 
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.Add("@IdProducto", SqlDbType.Int).Value = idProducto;
+                cmd.Parameters.Add("@NuevoEstado", SqlDbType.Bit).Value = nuevoEstado;
+
+                conexion.Open();
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+        public bool ExisteCodigoBarra(string codigoBarra, int idProductoActual = 0)
+        {
+            string query = @"
+                SELECT COUNT(1) 
+                FROM Producto 
+                WHERE LOWER(codigo_barra) = LOWER(@CodigoBarra)
+                    AND (@IdProducto = 0 OR id_producto <> @IdProducto)";
+
+            using (SqlConnection conexion = ConexionBd.CrearConexion())
+
+            using (SqlCommand cmd = new SqlCommand(query, conexion))
+            {
+                cmd.Parameters.Add("@CodigoBarra", SqlDbType.VarChar, 50).Value = codigoBarra.Trim();
+                cmd.Parameters.Add("@IdProducto", SqlDbType.Int).Value = idProductoActual;
+
+                conexion.Open();
+                return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
+            }
+        }
+
+
+        public static void CargarParametrosProducto(SqlCommand cmd, Producto producto)
+        {
+            cmd.Parameters.Add("@Codigo", SqlDbType.VarChar, 50).Value = producto.Codigo.Trim();
+            cmd.Parameters.Add("@Nombre", SqlDbType.VarChar, 100).Value = producto.Nombre.Trim();
+            cmd.Parameters.Add("@PrecioCompra", SqlDbType.Decimal).Value = producto.PrecioCompra;
+            cmd.Parameters.Add("@PrecioVenta", SqlDbType.Decimal).Value = producto.PrecioVenta;
+            cmd.Parameters.Add("@StockActual", SqlDbType.Int).Value = producto.StockActual;
+            cmd.Parameters.Add("@StockMinimo", SqlDbType.Int).Value = producto.StockMinimo;
+            cmd.Parameters.Add("@IdCategoria", SqlDbType.Int).Value = producto.Categoria.IdCategoria;
+            cmd.Parameters.Add("@Estado", SqlDbType.Bit).Value = producto.Estado;
+
+            cmd.Parameters.Add("@Descripcion", SqlDbType.VarChar, 255).Value =
+                string.IsNullOrWhiteSpace(producto.Descripcion) ? (object)DBNull.Value : producto.Descripcion.Trim();
 
             // Manejo de nulos para IdEspecie y IdTamano respetando la consistencia (ambos o ninguno)
-            if (obj.IdEspecie.HasValue && obj.IdTamano.HasValue && obj.IdEspecie.Value > 0 && obj.IdTamano.Value > 0)
+            if (producto.EspecieTamano != null &&
+                producto.EspecieTamano.IdEspecie > 0 &&
+                producto.EspecieTamano.IdTamano > 0)
             {
-                cmd.Parameters.AddWithValue("@IdEspecie", obj.IdEspecie.Value);
-                cmd.Parameters.AddWithValue("@IdTamano", obj.IdTamano.Value);
+                cmd.Parameters.Add("@IdEspecie", SqlDbType.Int).Value = producto.EspecieTamano.IdEspecie;
+                cmd.Parameters.Add("@IdTamano", SqlDbType.Int).Value = producto.EspecieTamano.IdTamano;
             }
             else
             {
-                cmd.Parameters.AddWithValue("@IdEspecie", DBNull.Value);
-                cmd.Parameters.AddWithValue("@IdTamano", DBNull.Value);
+                cmd.Parameters.Add("@IdEspecie", SqlDbType.Int).Value = DBNull.Value;
+                cmd.Parameters.Add("@IdTamano", SqlDbType.Int).Value = DBNull.Value;
             }
         }
 
         private Producto MapearProducto(SqlDataReader dr)
         {
+            int ordIdProducto = dr.GetOrdinal("id_producto");
+            int ordCodigo = dr.GetOrdinal("codigo_barra");
+            int ordNombreProducto = dr.GetOrdinal("nombre_producto");
+            int ordDescripcionProducto = dr.GetOrdinal("descripcion");
+            int ordPrecioCompra = dr.GetOrdinal("precio_compra");
+            int ordPrecioVenta = dr.GetOrdinal("precio_venta");
+            int ordStockActual = dr.GetOrdinal("stock_actual");
+            int ordStockminimo = dr.GetOrdinal("stock_minimo");
+            int ordEstadoProducto = dr.GetOrdinal("estado");
+            int ordFecha = dr.GetOrdinal("fecha_creacion");
 
-            Producto producto = new Producto
+            int ordIdCategoria = dr.GetOrdinal("id_categoria");
+            int ordNombreCategoria = dr.GetOrdinal("nombre_categoria");
+            int ordDescripcionCategoria = dr.GetOrdinal("descrip_categoria");
+            int ordEstadoCategoria = dr.GetOrdinal("estado_categoria");
+
+            int ordIdEspecie = dr.GetOrdinal("id_especie");
+            int ordIdTamano = dr.GetOrdinal("id_tamano");
+            int ordEstadoEspecieTamano = dr.GetOrdinal("estado_et");
+            int ordNombreEspecie = dr.GetOrdinal("nombre_especie");
+            int ordNombreTamano = dr.GetOrdinal("nombre_tamano");
+
+            Producto producto = new Producto()
             {
-                IdProducto = Convert.ToInt32(dr["id_producto"]),
-                CodigoBarra = dr["codigo_barra"].ToString(),
-                NombreProducto = dr["nombre_producto"].ToString(),
-                Descripcion = dr["descripcion"].ToString(),
-                PrecioCompra = Convert.ToDecimal(dr["precio_compra"]),
-                PrecioVenta = Convert.ToDecimal(dr["precio_venta"]),
-                StockActual = Convert.ToInt32(dr["stock_actual"]),
-                StockMinimo = Convert.ToInt32(dr["stock_minimo"]),
-                Estado = Convert.ToBoolean(dr["estado"]),
-                FechaCreacion = Convert.ToDateTime(dr["fecha_creacion"]),
-                IdCategoria = Convert.ToInt32(dr["id_categoria"]),
+                IdProducto = dr.GetInt32(ordIdProducto),
+                Codigo = dr.GetString(ordCodigo),
+                Nombre = dr.GetString(ordNombreProducto),
+                Descripcion = dr.IsDBNull(ordDescripcionProducto) ? string.Empty : dr.GetString(ordDescripcionProducto),
+                PrecioCompra = dr.GetDecimal(ordPrecioCompra),
+                PrecioVenta = dr.GetDecimal(ordPrecioVenta),
+                StockActual = dr.GetInt32(ordStockActual),
+                StockMinimo = dr.GetInt32(ordStockminimo),
+                Estado = dr.GetBoolean(ordEstadoProducto),
+                FechaCreacion = dr.GetDateTime(ordFecha),
+
                 Categoria = new Categoria
                 {
-                    IdCategoria = Convert.ToInt32(dr["id_categoria"]),
-                    NombreCategoria = dr["nombre_categoria"].ToString()
-                },
+                    IdCategoria = dr.GetInt32(ordIdCategoria),
+                    NombreCategoria = dr.GetString(ordNombreCategoria),
+                    Descripcion = dr.IsDBNull(ordDescripcionCategoria) ? string.Empty : dr.GetString(ordDescripcionCategoria),
+                    Estado = dr.GetBoolean(ordEstadoCategoria),
+                }
             };
 
-            if (dr["id_especie"] != DBNull.Value && dr["id_tamano"] != DBNull.Value)
-            {
-                int idEspecie = Convert.ToInt32(dr["id_especie"]);
-                int idTamano = Convert.ToInt32(dr["id_tamano"]);
+            int idEspecie = dr.GetInt32(ordIdEspecie);
+            int idTamano = dr.GetInt32(ordIdTamano);
 
-                producto.IdEspecie = Convert.ToInt32(dr["id_especie"]);
-                producto.IdTamano = Convert.ToInt32(dr["id_tamano"]);
+            if (idEspecie > 0 && idTamano > 0)
+            {
                 producto.EspecieTamano = new EspecieTamano
                 {
                     IdEspecie = idEspecie,
                     IdTamano = idTamano,
-                    Especie = new Especie
-                    {
-                        IdEspecie = idEspecie,
-                        NombreEspecie = dr["nombre_especie"].ToString()
-                    },
-                    Tamano = new Tamano
-                    {
-                        IdTamano = idTamano,
-                        NombreTamano = dr["nombre_tamano"].ToString()
-                    }
+                    Estado = dr.GetBoolean(ordEstadoEspecieTamano),
+                    Especie = new Especie { IdEspecie = idEspecie, Nombre = dr.GetString(ordNombreEspecie) },
+                    Tamano = new Tamano { IdTamano = idTamano, Nombre = dr.GetString(ordNombreTamano) }
                 };
             }
-            else
-            {
-                producto.IdEspecie = null;
-                producto.IdTamano = null;
-                producto.EspecieTamano = null;
-            }
+
             return producto;
         }
     }

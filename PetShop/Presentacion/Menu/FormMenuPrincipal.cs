@@ -263,7 +263,7 @@ namespace PetShop.Presentacion.Menu
 
         private void EspeciesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirFormularioEnMdi<FormEspecies>();
+            AbrirFormularioEnMdi<FormEspecieTamano>();
         }
 
         private void NuevaVentaToolStripMenuItem_Click_1(object sender, EventArgs e)

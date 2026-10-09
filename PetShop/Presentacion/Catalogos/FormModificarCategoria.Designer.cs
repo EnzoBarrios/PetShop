@@ -47,7 +47,7 @@
             // 
             this.btnCancelar.ImageIndex = 1;
             this.btnCancelar.ImageList = this.imgListBotones;
-            this.btnCancelar.Location = new System.Drawing.Point(665, 408);
+            this.btnCancelar.Location = new System.Drawing.Point(664, 412);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(120, 50);
             this.btnCancelar.TabIndex = 17;
@@ -92,7 +92,7 @@
             this.txtDescripcion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDescripcion.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDescripcion.Location = new System.Drawing.Point(23, 184);
+            this.txtDescripcion.Location = new System.Drawing.Point(24, 185);
             this.txtDescripcion.MaxLength = 255;
             this.txtDescripcion.Multiline = true;
             this.txtDescripcion.Name = "txtDescripcion";
@@ -103,30 +103,30 @@
             // lblDescripcion
             // 
             this.lblDescripcion.AutoSize = true;
-            this.lblDescripcion.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescripcion.Location = new System.Drawing.Point(23, 159);
+            this.lblDescripcion.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDescripcion.Location = new System.Drawing.Point(20, 160);
             this.lblDescripcion.Name = "lblDescripcion";
-            this.lblDescripcion.Size = new System.Drawing.Size(86, 19);
+            this.lblDescripcion.Size = new System.Drawing.Size(95, 19);
             this.lblDescripcion.TabIndex = 13;
             this.lblDescripcion.Text = "Descripcion: ";
             // 
             // txtNombre
             // 
             this.txtNombre.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNombre.Location = new System.Drawing.Point(190, 108);
+            this.txtNombre.Location = new System.Drawing.Point(24, 125);
             this.txtNombre.MaxLength = 50;
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(100, 25);
+            this.txtNombre.Size = new System.Drawing.Size(200, 25);
             this.txtNombre.TabIndex = 12;
             this.txtNombre.TextChanged += new System.EventHandler(this.TxtDescripCategoria_TextChanged);
             // 
             // lblNombre
             // 
             this.lblNombre.AutoSize = true;
-            this.lblNombre.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombre.Location = new System.Drawing.Point(23, 110);
+            this.lblNombre.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNombre.Location = new System.Drawing.Point(20, 100);
             this.lblNombre.Name = "lblNombre";
-            this.lblNombre.Size = new System.Drawing.Size(136, 19);
+            this.lblNombre.Size = new System.Drawing.Size(152, 19);
             this.lblNombre.TabIndex = 11;
             this.lblNombre.Text = "Modificar Categoria: ";
             // 
@@ -176,6 +176,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormModificarCategoria";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.FormModificarCategoria_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
