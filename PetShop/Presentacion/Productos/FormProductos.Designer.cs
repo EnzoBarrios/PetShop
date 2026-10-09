@@ -54,7 +54,7 @@
             // 
             this.TBuscar.BackColor = System.Drawing.Color.WhiteSmoke;
             this.TBuscar.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.TBuscar.Location = new System.Drawing.Point(100, 78);
+            this.TBuscar.Location = new System.Drawing.Point(95, 71);
             this.TBuscar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TBuscar.Name = "TBuscar";
             this.TBuscar.Size = new System.Drawing.Size(193, 25);
@@ -65,7 +65,7 @@
             // 
             this.LBuscar.AutoSize = true;
             this.LBuscar.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.LBuscar.Location = new System.Drawing.Point(40, 80);
+            this.LBuscar.Location = new System.Drawing.Point(40, 74);
             this.LBuscar.Name = "LBuscar";
             this.LBuscar.Size = new System.Drawing.Size(49, 19);
             this.LBuscar.TabIndex = 11;
@@ -75,7 +75,7 @@
             // 
             this.DGVProductos.AllowUserToAddRows = false;
             this.DGVProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGVProductos.Location = new System.Drawing.Point(40, 110);
+            this.DGVProductos.Location = new System.Drawing.Point(40, 100);
             this.DGVProductos.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DGVProductos.MultiSelect = false;
             this.DGVProductos.Name = "DGVProductos";
@@ -89,7 +89,7 @@
             // BNuevoProducto
             // 
             this.BNuevoProducto.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.BNuevoProducto.Location = new System.Drawing.Point(250, 520);
+            this.BNuevoProducto.Location = new System.Drawing.Point(40, 500);
             this.BNuevoProducto.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BNuevoProducto.Name = "BNuevoProducto";
             this.BNuevoProducto.Size = new System.Drawing.Size(150, 50);
@@ -101,7 +101,7 @@
             // BModificarProducto
             // 
             this.BModificarProducto.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.BModificarProducto.Location = new System.Drawing.Point(565, 520);
+            this.BModificarProducto.Location = new System.Drawing.Point(565, 500);
             this.BModificarProducto.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BModificarProducto.Name = "BModificarProducto";
             this.BModificarProducto.Size = new System.Drawing.Size(150, 50);
@@ -113,7 +113,7 @@
             // BCambiarEstado
             // 
             this.BCambiarEstado.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.BCambiarEstado.Location = new System.Drawing.Point(880, 520);
+            this.BCambiarEstado.Location = new System.Drawing.Point(1090, 500);
             this.BCambiarEstado.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BCambiarEstado.Name = "BCambiarEstado";
             this.BCambiarEstado.Size = new System.Drawing.Size(150, 50);

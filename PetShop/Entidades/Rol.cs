@@ -23,5 +23,11 @@ namespace PetShop.Entidades
             IdRol = idRol; // Asigna el ID del rol
             NombreRol = nombreRol; 
         }
+
+        // Sobrescribe el método ToString para mostrar el nombre del rol en lugar del nombre de la clase
+        public override string ToString()
+        {
+            return NombreRol;
+        }
     }
 }

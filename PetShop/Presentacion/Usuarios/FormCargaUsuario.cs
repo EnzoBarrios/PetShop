@@ -1,10 +1,11 @@
-﻿using PetShop.Entidades;
-using PetShop.Negocio;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using PetShop.Entidades;
+using PetShop.Negocio;
 
 namespace PetShop.Presentacion.Usuarios
 {
@@ -14,53 +15,56 @@ namespace PetShop.Presentacion.Usuarios
         private readonly ErrorProvider _ep = new ErrorProvider();
         private readonly CN_Usuario _cnUsuario = new CN_Usuario();
         private readonly CN_Rol _cnRol = new CN_Rol();
+        private readonly string _rolOperadorActual;
 
-        public FormCargaUsuario()
+        public FormCargaUsuario(string rolOperadorActual = CN_Rol.ROL_ADMINISTRADOR)
         {
             InitializeComponent();
+            _rolOperadorActual = rolOperadorActual;
         }
 
         private void FormCargaUsuario_Load(object sender, EventArgs e)
+        {
+            ConfigurarControles();
+            CargarRoles();
+        }
+
+        private void ConfigurarControles()
         {
             // Configuración visual del ErrorProvider (estático, ícono de advertencia)
             _ep.BlinkStyle = ErrorBlinkStyle.NeverBlink;
             _ep.Icon = System.Drawing.SystemIcons.Warning;
 
             // Ocultar caracteres de contraseñas por defecto
-            TClave.UseSystemPasswordChar = true;
-            TConfirmar.UseSystemPasswordChar = true;
+            txtClave.UseSystemPasswordChar = true;
+            txtConfirmar.UseSystemPasswordChar = true;
 
             // Bloquear edición manual en ComboBox
-            CBRol.DropDownStyle = ComboBoxStyle.DropDownList;
-            CargarRoles();
+            cbxRol.DropDownStyle = ComboBoxStyle.DropDownList;;
 
             // Filtrado de teclas en vivo (KeyPress)
-            TNombre.KeyPress += SoloLetras_KeyPress;
-            TApellido.KeyPress += SoloLetras_KeyPress;
-            TDni.KeyPress += SoloNumeros_KeyPress;
-            TTelefono.KeyPress += SoloNumeros_KeyPress;
+            txtNombre.KeyPress += SoloLetras_KeyPress;
+            txtpellido.KeyPress += SoloLetras_KeyPress;
+            txtDni.KeyPress += SoloNumeros_KeyPress;
+            txtTelefono.KeyPress += SoloNumeros_KeyPress;
         }
 
         private void CargarRoles()
         {
-            using (SqlConnection con = Conexion.ObtenerConexion())
+            try
             {
-                try
-                {
-                    var roles = _cnRol.ListarRoles();
+                List<Rol> rolesPermitidos = _cnRol.ObtenerRolesPermitidos(_rolOperadorActual);
 
-                    roles.RemoveAll(r => r.NombreRol.Equals("Administrador", StringComparison.OrdinalIgnoreCase));
-
-                    CBRol.DataSource = null;
-                    CBRol.DisplayMember = "NombreRol";
-                    CBRol.ValueMember = "IdRol";
-                    CBRol.DataSource = roles;
-                    CBRol.SelectedIndex = -1; // No seleccionar ningún rol por defecto
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al cargar roles: " + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                cbxRol.DataSource = null;
+                cbxRol.DisplayMember = nameof(Rol.NombreRol);
+                cbxRol.ValueMember = nameof(Rol.IdRol);
+                cbxRol.DataSource = rolesPermitidos;
+                cbxRol.SelectedIndex = -1; // No seleccionar ningún rol por defecto
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar roles: " + ex.Message, 
+                                "Error de Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -78,27 +82,24 @@ namespace PetShop.Presentacion.Usuarios
             {
                 e.Handled = true;
             }
+        }     
+
+        private void CambiarVisibilidadClave(TextBox claveTexto, Button botonCambiar)
+        {
+            claveTexto.UseSystemPasswordChar = !claveTexto.UseSystemPasswordChar;
+            botonCambiar.Text = claveTexto.UseSystemPasswordChar ? "👁‍🗨" : "👁";
         }
 
-        private bool EsCorreoValido(string correo)
+        // BOTON VER CLAVE
+        private void BtnVerClave_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(correo)) return true;
-            string patron = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            return Regex.IsMatch(correo, patron);
+            CambiarVisibilidadClave(txtClave, (Button)sender);
         }
 
-        private void BVerClave_Click(object sender, EventArgs e)
+        // BOTON VER CONFIRMACION
+        private void BtnVerConfirmar_Click(object sender, EventArgs e)
         {
-            bool estaEnmascarado = TClave.UseSystemPasswordChar;
-            TClave.UseSystemPasswordChar = !estaEnmascarado;
-            if (sender is Button boton) boton.Text = estaEnmascarado ? "👁‍🗨" : "👁";
-        }
-
-        private void BVerConfirmar_Click(object sender, EventArgs e)
-        {
-            bool estaEnmascarado = TConfirmar.UseSystemPasswordChar;
-            TConfirmar.UseSystemPasswordChar = !estaEnmascarado;
-            if (sender is Button boton) boton.Text = estaEnmascarado ? "👁‍🗨" : "👁";
+            CambiarVisibilidadClave(txtConfirmar, (Button)sender);
         }
 
         private bool ValidarFormulario()
@@ -106,71 +107,79 @@ namespace PetShop.Presentacion.Usuarios
             _ep.Clear();
             bool esValido = true;
 
-            if (string.IsNullOrWhiteSpace(TNombre.Text))
+            if (string.IsNullOrWhiteSpace(txtNombre.Text))
             {
-                _ep.SetError(TNombre, "El nombre es obligatorio.");
+                _ep.SetError(txtNombre, "El nombre es obligatorio.");
                 esValido = false;
             }
 
-            if (string.IsNullOrWhiteSpace(TApellido.Text))
+            if (string.IsNullOrWhiteSpace(txtpellido.Text))
             {
-                _ep.SetError(TApellido, "El apellido es obligatorio.");
+                _ep.SetError(txtpellido, "El apellido es obligatorio.");
                 esValido = false;
             }
 
-            if (string.IsNullOrWhiteSpace(TNombreUsuario.Text))
+            if (string.IsNullOrWhiteSpace(txtNombreUsuario.Text))
             {
-                _ep.SetError(TNombreUsuario, "El nombre de usuario es obligatorio.");
+                _ep.SetError(txtNombreUsuario, "El nombre de usuario es obligatorio.");
                 esValido = false;
             }
-            else if (TNombreUsuario.Text.Trim().Length < 4)
+            else if (txtNombreUsuario.Text.Trim().Length < 4)
             {
-                _ep.SetError(TNombreUsuario, "El usuario debe tener al menos 4 caracteres.");
-                esValido = false;
-            }
-
-            if (string.IsNullOrWhiteSpace(TClave.Text))
-            {
-                _ep.SetError(TClave, "La contraseña es obligatoria.");
-                esValido = false;
-            }
-            else if (TClave.Text.Trim().Length < 6)
-            {
-                _ep.SetError(TClave, "La contraseña debe tener al menos 6 caracteres.");
+                _ep.SetError(txtNombreUsuario, "El usuario debe tener al menos 4 caracteres.");
                 esValido = false;
             }
 
-            if (TConfirmar.Text != TClave.Text)
+            if (string.IsNullOrWhiteSpace(txtClave.Text))
             {
-                _ep.SetError(TConfirmar, "Las contraseñas no coinciden.");
+                _ep.SetError(txtClave, "La contraseña es obligatoria.");
+                esValido = false;
+            }
+            else if (txtClave.Text.Trim().Length < 6)
+            {
+                _ep.SetError(txtClave, "La contraseña debe tener al menos 6 caracteres.");
                 esValido = false;
             }
 
-            if (!EsCorreoValido(TCorreo.Text.Trim()))
+            if (txtConfirmar.Text != txtClave.Text)
             {
-                _ep.SetError(TCorreo, "El formato del correo electrónico no es válido.");
+                _ep.SetError(txtConfirmar, "Las contraseñas no coinciden.");
                 esValido = false;
             }
 
-            if (!string.IsNullOrWhiteSpace(TDni.Text) && (TDni.Text.Trim().Length < 7 || TDni.Text.Trim().Length > 8))
+            if (!EsCorreoValido(txtCorreo.Text.Trim()))
             {
-                _ep.SetError(TDni, "El DNI debe tener entre 7 y 8 dígitos.");
+                _ep.SetError(txtCorreo, "El formato del correo electrónico no es válido.");
                 esValido = false;
             }
 
-            if (!string.IsNullOrWhiteSpace(TTelefono.Text) && TTelefono.Text.Trim().Length < 8)
+            if (!string.IsNullOrWhiteSpace(txtDni.Text) && 
+                (txtDni.Text.Trim().Length < 7 || txtDni.Text.Trim().Length > 8))
             {
-                _ep.SetError(TTelefono, "El teléfono debe tener al menos 8 dígitos.");
+                _ep.SetError(txtDni, "El DNI debe tener entre 7 y 8 dígitos.");
                 esValido = false;
             }
 
-            if (CBRol.SelectedIndex == -1 || CBRol.SelectedValue == null)
+            if (!string.IsNullOrWhiteSpace(txtTelefono.Text) && txtTelefono.Text.Trim().Length < 8)
             {
-                _ep.SetError(CBRol, "Debe seleccionar un rol.");
+                _ep.SetError(txtTelefono, "El teléfono debe tener al menos 8 dígitos.");
+                esValido = false;
+            }
+
+            if (cbxRol.SelectedIndex == -1 || cbxRol.SelectedValue == null)
+            {
+                _ep.SetError(cbxRol, "Debe seleccionar un rol para el usuario.");
                 esValido = false;
             }
 
             return esValido;
+        }
+
+        private bool EsCorreoValido(string correo)
+        {
+            if (string.IsNullOrWhiteSpace(correo)) return true;
+            const string patron = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(correo, patron);
         }
 
         // BOTON GUARDAR
@@ -183,29 +192,32 @@ namespace PetShop.Presentacion.Usuarios
                 return;
             }
 
-            if (!int.TryParse(CBRol.SelectedValue?.ToString(), out int idRol))
+            if (!int.TryParse(cbxRol.SelectedValue?.ToString(), out int idRolSeleccionado))
             {
-                MessageBox.Show("Seleccione un rol válido.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Seleccione un rol válido.", "Atención", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             // Entidad Usuario para transferir los datos
             Usuario nuevoUsuario = new Usuario
             {
-                Nombre = TNombre.Text.Trim(),
-                Apellido = TApellido.Text.Trim(),
-                NombreUsuario = TNombreUsuario.Text.Trim(),
-                Clave = TClave.Text.Trim(),
-                Dni = TDni.Text.Trim(),
-                Correo = TCorreo.Text.Trim(),
-                Telefono = TTelefono.Text.Trim(),
-                IdRol = idRol
+                Nombre = txtNombre.Text.Trim(),
+                Apellido = txtpellido.Text.Trim(),
+                NombreUsuario = txtNombreUsuario.Text.Trim(),
+                Dni = string.IsNullOrWhiteSpace(txtDni.Text) ? null : txtDni.Text.Trim(),
+                Correo = string.IsNullOrWhiteSpace(txtCorreo.Text) ? null : txtCorreo.Text.Trim(),
+                Telefono = string.IsNullOrWhiteSpace(txtTelefono.Text) ? null : txtTelefono.Text.Trim(),
+                Estado = true,
+                Rol = new Rol { IdRol = idRolSeleccionado}
             };
 
-            // Transferir datos a la Capa de Negocio
-            bool resultado = _cnUsuario.RegistrarUsuario(nuevoUsuario, out string mensaje);
+            string claveTexto = txtClave.Text.Trim();
 
-            if(resultado)
+            // Transferir datos a la Capa de Negocio
+            bool registrado = _cnUsuario.RegistrarUsuario(nuevoUsuario, claveTexto, out string mensaje); 
+
+            if(registrado)
             {
                 MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
@@ -213,23 +225,41 @@ namespace PetShop.Presentacion.Usuarios
             }
             else
             {
-                MessageBox.Show(mensaje, "Atención", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (mensaje.IndexOf("usuario", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    _ep.SetError(txtNombreUsuario, mensaje);
+                    txtNombreUsuario.Focus();
+                }
+                else if (mensaje.IndexOf("dni", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    _ep.SetError(txtDni, mensaje);
+                    txtDni.Focus();
+                }
+                else if (mensaje.IndexOf("correo", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    _ep.SetError(txtCorreo, mensaje);
+                    txtCorreo.Focus();
+                }
+                else
+                {
+                    MessageBox.Show(mensaje, "Validación de Negocio", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
 
-        // BOTON ELIMINAR TODO
+        // BOTON BORRAR
         private void BtnBorrar_Click(object sender, EventArgs e)
         {
-            bool hayDatosCargados = !string.IsNullOrWhiteSpace(TNombre.Text) ||
-                                    !string.IsNullOrWhiteSpace(TApellido.Text) ||
-                                    !string.IsNullOrWhiteSpace(TNombreUsuario.Text) ||
-                                    !string.IsNullOrWhiteSpace(TClave.Text) ||
-                                    !string.IsNullOrWhiteSpace(TConfirmar.Text) ||
-                                    !string.IsNullOrWhiteSpace(TDni.Text) ||
-                                    !string.IsNullOrWhiteSpace(TCorreo.Text) ||
-                                    !string.IsNullOrWhiteSpace(TTelefono.Text) ||
-                                    CBRol.SelectedIndex != -1;
+            bool hayDatosCargados = !string.IsNullOrWhiteSpace(txtNombre.Text) ||
+                                    !string.IsNullOrWhiteSpace(txtpellido.Text) ||
+                                    !string.IsNullOrWhiteSpace(txtNombreUsuario.Text) ||
+                                    !string.IsNullOrWhiteSpace(txtClave.Text) ||
+                                    !string.IsNullOrWhiteSpace(txtConfirmar.Text) ||
+                                    !string.IsNullOrWhiteSpace(txtDni.Text) ||
+                                    !string.IsNullOrWhiteSpace(txtCorreo.Text) ||
+                                    !string.IsNullOrWhiteSpace(txtTelefono.Text) ||
+                                    cbxRol.SelectedIndex != -1;
 
             if (!hayDatosCargados)
             {
@@ -246,22 +276,21 @@ namespace PetShop.Presentacion.Usuarios
 
             if (respuesta == DialogResult.Yes)
             {
-                TNombre.Clear();
-                TApellido.Clear();
-                TNombreUsuario.Clear();
-                TClave.Clear();
-                TConfirmar.Clear();
-                TDni.Clear();
-                TCorreo.Clear();
-                TTelefono.Clear();
-                CBRol.SelectedIndex = -1;
+                txtNombre.Clear();
+                txtpellido.Clear();
+                txtNombreUsuario.Clear();
+                txtClave.Clear();
+                txtConfirmar.Clear();
+                txtDni.Clear();
+                txtCorreo.Clear();
+                txtTelefono.Clear();
+                cbxRol.SelectedIndex = -1;
                 _ep.Clear();
-                TNombre.Focus();
+                txtNombre.Focus();
             }
         }
 
-        // BOTON VOLVER
-
+        // BOTON VOLVER 
         private void BtnVolver_Click(object sender, EventArgs e)
         {
             this.Close();

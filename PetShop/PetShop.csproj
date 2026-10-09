@@ -47,6 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Datos\CD_Categoria.cs" />
+    <Compile Include="Datos\CD_Especie.cs" />
+    <Compile Include="Datos\CD_EspecieTamano.cs" />
+    <Compile Include="Datos\CD_Producto.cs" />
+    <Compile Include="Datos\CD_Tamano.cs" />
     <Compile Include="Datos\CD_Usuario.cs" />
     <Compile Include="Datos\Conexion.cs" />
     <Compile Include="Datos\CD_Rol.cs" />
@@ -62,25 +67,40 @@
     <Compile Include="Entidades\TipoVenta.cs" />
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Entidades\Venta.cs" />
+    <Compile Include="Negocio\CN_Categoria.cs" />
+    <Compile Include="Negocio\CN_Producto.cs" />
     <Compile Include="Negocio\CN_Rol.cs" />
     <Compile Include="Negocio\CN_Usuario.cs" />
+    <Compile Include="Negocio\SeguridadHelper.cs" />
     <Compile Include="Presentacion\Autenticacion\FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentacion\Autenticacion\FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentacion\Catalogos\FormCategorias.cs">
+    <Compile Include="Presentacion\Catalogos\FormCargaCategoria.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentacion\Catalogos\FormCategorias.Designer.cs">
-      <DependentUpon>FormCategorias.cs</DependentUpon>
+    <Compile Include="Presentacion\Catalogos\FormCargaCategoria.Designer.cs">
+      <DependentUpon>FormCargaCategoria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Catalogos\FormCategoria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Catalogos\FormCategoria.Designer.cs">
+      <DependentUpon>FormCategoria.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentacion\Catalogos\FormEspecies.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentacion\Catalogos\FormEspecies.Designer.cs">
       <DependentUpon>FormEspecies.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentacion\Catalogos\FormModificarCategoria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentacion\Catalogos\FormModificarCategoria.Designer.cs">
+      <DependentUpon>FormModificarCategoria.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentacion\Menu\FormMenuPrincipal.cs">
       <SubType>Form</SubType>
@@ -155,14 +175,21 @@
     <EmbeddedResource Include="Presentacion\Autenticacion\FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentacion\Catalogos\FormCategorias.resx">
-      <DependentUpon>FormCategorias.cs</DependentUpon>
+    <EmbeddedResource Include="Presentacion\Catalogos\FormCargaCategoria.resx">
+      <DependentUpon>FormCargaCategoria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Catalogos\FormCategoria.resx">
+      <DependentUpon>FormCategoria.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Catalogos\FormEspecies.resx">
       <DependentUpon>FormEspecies.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Presentacion\Catalogos\FormModificarCategoria.resx">
+      <DependentUpon>FormModificarCategoria.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Menu\FormMenuPrincipal.resx">
       <DependentUpon>FormMenuPrincipal.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Productos\FormCargaProducto.resx">
       <DependentUpon>FormCargaProducto.cs</DependentUpon>

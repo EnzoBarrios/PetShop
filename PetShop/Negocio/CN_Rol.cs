@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PetShop.Datos;
 using PetShop.Entidades;
 
@@ -12,30 +10,50 @@ namespace PetShop.Negocio
     {
         private readonly CD_Rol _cdRol = new CD_Rol();
 
+        public const string ROL_ADMINISTRADOR = "Administrador";
+        public const string ROL_GERENTE = "Gerente";
+        public const string ROL_VENDEDOR = "Vendedor";
+
         // Obtiene todos los roles sin restricciones
         public List<Rol> ListarRoles()
         {
-            return _cdRol.Listar();
+            try
+            {
+                return _cdRol.Listar() ?? new List<Rol>();
+            }
+            catch (Exception)
+            {
+                return new List<Rol>();
+            }
         }
 
         // Filtra los roles disponibles según quién esté registrando/modificando
         public List<Rol> ObtenerRolesPermitidos(string rolUsuarioLogueado)
         {
-            List<Rol> todosLosRoles = _cdRol.Listar();
-
-            if (rolUsuarioLogueado.Equals("Gerente", StringComparison.OrdinalIgnoreCase))
+            if (string.IsNullOrWhiteSpace(rolUsuarioLogueado))
             {
-                // El gerente solo puede crear o asignar rol "Vendedor"
+                return new List<Rol>();
+            }
+
+            string rolOperador = rolUsuarioLogueado.Trim();
+            List<Rol> todosLosRoles = ListarRoles();
+
+            if (rolOperador.Equals(ROL_ADMINISTRADOR, StringComparison.OrdinalIgnoreCase))
+            {
+                // El administrador gestiona a los gerentes o vendedores
                 return todosLosRoles
-                    .Where(r => r.NombreRol.Equals("Vendedor", StringComparison.OrdinalIgnoreCase))
+                    .Where(r => r.NombreRol != null &&
+                               (r.NombreRol.Trim().Equals(ROL_GERENTE, StringComparison.OrdinalIgnoreCase) ||
+                                r.NombreRol.Trim().Equals(ROL_VENDEDOR, StringComparison.OrdinalIgnoreCase)))
                     .ToList();
             }
 
-            if (rolUsuarioLogueado.Equals("Administrador", StringComparison.OrdinalIgnoreCase))
+            if (rolOperador.Equals(ROL_GERENTE, StringComparison.OrdinalIgnoreCase))
             {
-                // El administrador puede asignar "Gerente" o "Vendedor"
+                // El gerente gestiona solo a los vendedores
                 return todosLosRoles
-                    .Where(r => !r.NombreRol.Equals("Administrador", StringComparison.OrdinalIgnoreCase))
+                    .Where(r => r.NombreRol != null && 
+                                r.NombreRol.Trim().Equals(ROL_VENDEDOR, StringComparison.OrdinalIgnoreCase))
                     .ToList();
             }
 

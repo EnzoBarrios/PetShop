@@ -63,6 +63,16 @@ namespace PetShop.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap activar {
+            get {
+                object obj = ResourceManager.GetObject("activar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap borrar {
             get {
                 object obj = ResourceManager.GetObject("borrar", resourceCulture);
@@ -76,6 +86,16 @@ namespace PetShop.Properties {
         internal static System.Drawing.Bitmap borrar1 {
             get {
                 object obj = ResourceManager.GetObject("borrar1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap desactivar {
+            get {
+                object obj = ResourceManager.GetObject("desactivar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
