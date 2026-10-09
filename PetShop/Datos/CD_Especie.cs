@@ -16,10 +16,11 @@ namespace PetShop.Datos
         {
             List<Especie> lista = new List<Especie>();
 
-            string query = @"SELECT id_especie, nombre_especie, estado
-                                 FROM Especies
-                                 WHERE (@Texto = '' OR nombre_especie LIKE @TextoLike)
-                                 ORDER BY nombre_especie ASC";
+            string query = @"
+                SELECT id_especie, nombre_especie, estado
+                FROM Especie
+                WHERE (@Texto = '' OR nombre_especie LIKE @TextoLike)
+                ORDER BY nombre_especie ASC";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
 
@@ -45,11 +46,57 @@ namespace PetShop.Datos
             return lista;
         }
 
+        public Especie ObtenerPorId(int idEspecie)
+        {
+            string query = @"
+                SELECT id_especie, nombre_especie, estado
+                FROM Especie 
+                WHERE id_especie = @IdEspecie";
+
+            using (SqlConnection conexion = ConexionBd.CrearConexion())
+
+            using (SqlCommand cmd = new SqlCommand(query, conexion))
+            {
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.Add("@IdEspecie", SqlDbType.Int).Value = idEspecie;
+
+                conexion.Open();
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        return MapearEspecie(dr);
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public bool ExisteNombre(string nombreEspecie)
+        {
+            const string query = @"
+                SELECT COUNT(1) 
+                FROM Especie 
+                WHERE LOWER(TRIM(nombre_especie)) = LOWER(TRIM(@Nombre));";
+
+            using (SqlConnection conexion = ConexionBd.CrearConexion())
+            using (SqlCommand cmd = new SqlCommand(query, conexion))
+            {
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.Add("@Nombre", SqlDbType.VarChar, 50).Value = nombreEspecie.Trim();
+
+                conexion.Open();
+                return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
+            }
+        }
+
         public int Registrar(Especie especie)
         {
-            string query = @"INSERT INTO Especies (nombre_especie, estado)
-                                 VALUES (@NombreEspecie, @Estado)
-                                 SELECT SCOPE_IDENTITY();";
+            string query = @"
+                INSERT INTO Especie (nombre_especie, estado)
+                VALUES (@Nombre, @Estado);
+                SELECT SCOPE_IDENTITY();";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
 
@@ -57,28 +104,66 @@ namespace PetShop.Datos
             {
                 cmd.CommandType = CommandType.Text;
 
-                cmd.Parameters.Add("@NombreEspecie", SqlDbType.VarChar, 50).Value = especie.NombreEspecie;
-                cmd.Parameters.AddWithValue("@Estado", SqlDbType.Bit).Value = especie.Estado;
+                cmd.Parameters.Add("@Nombre", SqlDbType.VarChar, 50).Value = especie.Nombre;
+                cmd.Parameters.Add("@Estado", SqlDbType.Bit).Value = especie.Estado;
 
                 conexion.Open();
                 return Convert.ToInt32(cmd.ExecuteScalar());
             }
         }
 
+        public bool Modificar(Especie especie)
+        {
+            const string query = @"
+                UPDATE Especie 
+                SET nombre_especie = @Nombre, estado = @Estado 
+                WHERE id_especie = @Id;";
+
+            using (SqlConnection conexion = ConexionBd.CrearConexion())
+            using (SqlCommand cmd = new SqlCommand(query, conexion))
+            {
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.Add("@Nombre", SqlDbType.VarChar, 50).Value = especie.Nombre.Trim();
+                cmd.Parameters.Add("@Estado", SqlDbType.Bit).Value = especie.Estado;
+                cmd.Parameters.Add("@Id", SqlDbType.Int).Value = especie.IdEspecie;
+
+                conexion.Open();
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+        public bool CambiarEstado(int idEspecie, bool nuevoEstado)
+        {
+            string query = @"
+                UPDATE Especie  
+                SET estado = @Estado 
+                WHERE id_especie = @IdEspecie";
+
+            using (SqlConnection conexion = ConexionBd.CrearConexion())
+
+            using (SqlCommand cmd = new SqlCommand(query, conexion))
+            {
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.Add("@IdEspecie", SqlDbType.Int).Value = idEspecie;
+                cmd.Parameters.Add("@Estado", SqlDbType.Bit).Value = nuevoEstado;
+
+                conexion.Open();
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
         private Especie MapearEspecie(SqlDataReader dr)
         {
-            int ordId = dr.GetOrdinal("id_usuario");
+            int ordId = dr.GetOrdinal("id_especie");
             int ordNombre = dr.GetOrdinal("nombre_especie");
             int ordEstado = dr.GetOrdinal("estado");
 
             return new Especie()
             {
                 IdEspecie = dr.GetInt32(ordId),
-                NombreEspecie = dr.GetString(ordNombre),
+                Nombre = dr.GetString(ordNombre),
                 Estado = dr.GetBoolean(ordEstado)
             };
         }
     }
 }
-
-                    

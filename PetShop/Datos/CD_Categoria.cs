@@ -15,9 +15,10 @@ namespace PetShop.Datos
         {
             List<Categoria> lista = new List<Categoria>();
 
-            string query = @"SELECT id_categoria, nombre_categoria, descripcion, estado
-                             FROM Categoria 
-                             ORDER BY nombre_categoria ASC";
+            string query = @"
+                SELECT id_categoria, nombre_categoria, descripcion, estado
+                FROM Categoria 
+                ORDER BY nombre_categoria ASC";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
             
@@ -40,9 +41,10 @@ namespace PetShop.Datos
 
         public Categoria ObtenerPorId(int idCategoria)
         {
-            string query = @"SELECT id_categoria, nombre_categoria, descripcion, estado
-                             FROM Categoria 
-                             WHERE id_categoria = @IdCategoria";
+            string query = @"
+                SELECT id_categoria, nombre_categoria, descripcion, estado
+                FROM Categoria 
+                WHERE id_categoria = @IdCategoria";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
 
@@ -65,12 +67,12 @@ namespace PetShop.Datos
 
         public int Registrar(Categoria categoria)
         {
-            string query = @"INSERT INTO Categoria (nombre_categoria, descripcion, estado)
-                                    VALUES (@NombreCategoria, @Descripcion, @Estado);
-                                    SELECT SCOPE_IDENTITY();";
+            string query = @"
+                INSERT INTO Categoria (nombre_categoria, descripcion, estado)
+                VALUES (@NombreCategoria, @Descripcion, @Estado);
+                SELECT SCOPE_IDENTITY();";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
-                
 
             using (SqlCommand cmd = new SqlCommand(query, conexion))
             {
@@ -89,10 +91,10 @@ namespace PetShop.Datos
 
         public bool Modificar(Categoria categoria)
         {
-            string query = @"UPDATE Categoria
-                             SET nombre_categoria = @NombreCategoria,
-                                 descripcion = @Descripcion
-                             WHERE id_categoria = @IdCategoria";
+            string query = @"
+                UPDATE Categoria
+                SET nombre_categoria = @NombreCategoria, descripcion = @Descripcion
+                WHERE id_categoria = @IdCategoria";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
                 
@@ -113,9 +115,10 @@ namespace PetShop.Datos
 
         public bool CambiarEstado(int idCategoria, bool nuevoEstado)
         {
-            string query = @"UPDATE Categoria  
-                             SET estado = @Estado 
-                             WHERE id_categoria = @IdCategoria";
+            string query = @"
+                UPDATE Categoria  
+                SET estado = @Estado 
+                WHERE id_categoria = @IdCategoria";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
                 
@@ -132,10 +135,11 @@ namespace PetShop.Datos
 
         public bool ExisteNombre(string nombreCategoria, int idCategoriaActual = 0)
         {
-            string query = @"SELECT COUNT(1) 
-                             FROM Categoria 
-                             WHERE LOWER(nombre_categoria) = LOWER(@NombreCategoria) 
-                             AND (id_categoria <> @IdCategoria OR @IdCategoria = 0)";
+            string query = @"
+                SELECT COUNT(1) 
+                FROM Categoria 
+                WHERE LOWER(nombre_categoria) = LOWER(@NombreCategoria) 
+                AND (id_categoria <> @IdCategoria OR @IdCategoria = 0)";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
 

@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCategoria));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.imgListBotones = new System.Windows.Forms.ImageList(this.components);
             this.gbFiltroCategoria = new System.Windows.Forms.GroupBox();
             this.rbInactivos = new System.Windows.Forms.RadioButton();
@@ -41,15 +41,15 @@
             this.lblBuscar = new System.Windows.Forms.Label();
             this.lblTituloGestionCategoria = new System.Windows.Forms.Label();
             this.dgvCategorias = new System.Windows.Forms.DataGridView();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnVolver = new System.Windows.Forms.Button();
             this.btnEstado = new System.Windows.Forms.Button();
             this.imgListEstado = new System.Windows.Forms.ImageList(this.components);
             this.btnModificarCategoria = new System.Windows.Forms.Button();
             this.btnAgregarCategoria = new System.Windows.Forms.Button();
+            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbFiltroCategoria.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCategorias)).BeginInit();
             this.SuspendLayout();
@@ -160,14 +160,14 @@
             this.dgvCategorias.AllowUserToAddRows = false;
             this.dgvCategorias.AllowUserToDeleteRows = false;
             this.dgvCategorias.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCategorias.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCategorias.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvCategorias.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCategorias.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
@@ -185,42 +185,6 @@
             this.dgvCategorias.TabIndex = 10;
             this.dgvCategorias.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DgvCategorias_CellFormatting);
             this.dgvCategorias.SelectionChanged += new System.EventHandler(this.DgvCategorias_SelectionChanged);
-            // 
-            // colId
-            // 
-            this.colId.DataPropertyName = "Id";
-            this.colId.HeaderText = "Id";
-            this.colId.MinimumWidth = 100;
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            this.colId.Visible = false;
-            // 
-            // colCategoria
-            // 
-            this.colCategoria.DataPropertyName = "Categoria";
-            this.colCategoria.FillWeight = 9.625671F;
-            this.colCategoria.HeaderText = "Categoria";
-            this.colCategoria.MinimumWidth = 180;
-            this.colCategoria.Name = "colCategoria";
-            this.colCategoria.ReadOnly = true;
-            // 
-            // colDescripcion
-            // 
-            this.colDescripcion.DataPropertyName = "Descrip";
-            this.colDescripcion.FillWeight = 280.7487F;
-            this.colDescripcion.HeaderText = "Descripcion";
-            this.colDescripcion.MinimumWidth = 200;
-            this.colDescripcion.Name = "colDescripcion";
-            this.colDescripcion.ReadOnly = true;
-            // 
-            // colEstado
-            // 
-            this.colEstado.DataPropertyName = "Estado";
-            this.colEstado.FillWeight = 9.625671F;
-            this.colEstado.HeaderText = "Estado";
-            this.colEstado.MinimumWidth = 120;
-            this.colEstado.Name = "colEstado";
-            this.colEstado.ReadOnly = true;
             // 
             // btnVolver
             // 
@@ -286,6 +250,42 @@
             this.btnAgregarCategoria.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnAgregarCategoria.UseVisualStyleBackColor = false;
             this.btnAgregarCategoria.Click += new System.EventHandler(this.BtnAgregar_Click);
+            // 
+            // colEstado
+            // 
+            this.colEstado.DataPropertyName = "Estado";
+            this.colEstado.FillWeight = 9.625671F;
+            this.colEstado.HeaderText = "Estado";
+            this.colEstado.MinimumWidth = 120;
+            this.colEstado.Name = "colEstado";
+            this.colEstado.ReadOnly = true;
+            // 
+            // colDescripcion
+            // 
+            this.colDescripcion.DataPropertyName = "Descrip";
+            this.colDescripcion.FillWeight = 280.7487F;
+            this.colDescripcion.HeaderText = "Descripcion";
+            this.colDescripcion.MinimumWidth = 200;
+            this.colDescripcion.Name = "colDescripcion";
+            this.colDescripcion.ReadOnly = true;
+            // 
+            // colCategoria
+            // 
+            this.colCategoria.DataPropertyName = "Categoria";
+            this.colCategoria.FillWeight = 9.625671F;
+            this.colCategoria.HeaderText = "Categoria";
+            this.colCategoria.MinimumWidth = 180;
+            this.colCategoria.Name = "colCategoria";
+            this.colCategoria.ReadOnly = true;
+            // 
+            // colId
+            // 
+            this.colId.DataPropertyName = "Id";
+            this.colId.HeaderText = "Id";
+            this.colId.MinimumWidth = 100;
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            this.colId.Visible = false;
             // 
             // FormCategoria
             // 

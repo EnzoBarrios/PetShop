@@ -1,4 +1,8 @@
-﻿using System;
+﻿using PetShop.Datos;
+using PetShop.Entidades;
+using PetShop.Negocio;
+using PetShop.Presentacion.Usuarios;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,151 +16,205 @@ namespace PetShop.Presentacion
 {
     public partial class FormProductos : Form
     {
-
-        // Guardamos la tabla a nivel de clase para que los filtros funcionen
-        private DataTable tablaProductos;
+        private readonly CN_Producto _cnProducto;
 
         public FormProductos()
         {
             InitializeComponent();
+            _cnProducto = new CN_Producto();
         }
 
         private void FormProductos_Load(object sender, EventArgs e)
         {
-            // Cargar los datos de prueba en el DataGridView al cargar el formulario
-            CargarGrillaProductos();
+            ConfigurarGrilla();
+            CargarProductos();
         }
 
-        public void CargarGrillaProductos()
+        private void ConfigurarGrilla()
         {
-            tablaProductos = new DataTable();
+            dgvProductos.AutoGenerateColumns = false;
 
-            // Definir las columnas
-            tablaProductos.Columns.Add("ID", typeof(int));
-            tablaProductos.Columns.Add("Código barra", typeof(string));
-            tablaProductos.Columns.Add("Nombre", typeof(string));
-            tablaProductos.Columns.Add("Descripción", typeof(string));
-            tablaProductos.Columns.Add("Especie", typeof(string));
-            tablaProductos.Columns.Add("Categoría", typeof(string));
-            tablaProductos.Columns.Add("Proveedor", typeof(string));
-            tablaProductos.Columns.Add("Precio compra", typeof(decimal));
-            tablaProductos.Columns.Add("Precio venta", typeof(decimal));
-            tablaProductos.Columns.Add("Cantidad", typeof(int));
+            colId.DataPropertyName = nameof(Producto.IdProducto);
+            colCodigo.DataPropertyName = nameof(Producto.Codigo);
+            colNombre.DataPropertyName = nameof(Producto.Nombre);
+            colDescripcion.DataPropertyName = nameof(Producto.Descripcion);
+            colCategoria.DataPropertyName = nameof(Producto.Categoria.NombreCategoria);
+            colStock.DataPropertyName = nameof(Producto.StockActual);
+            colEstado.DataPropertyName = nameof(Producto.Estado);
+        }
 
-            // Cargar filas de prueba
-            tablaProductos.Rows.Add(
-                1,
-                "77912345",
-                "Sieger Adulto 20kg",
-                "Alimento balanceado perros raza grande",
-                "Perro",
-                "Alimentos",
-                "Distribuidora Pet",
-                32000.00m,
-                45000.00m,
-                10
-            );
-
-            tablaProductos.Rows.Add(
-                2,
-                "77956789",
-                "Cat Chow Pescado 3kg",
-                "Alimento seco para gatos adultos",
-                "Gato",
-                "Alimentos",
-                "Purina Oficial",
-                8500.00m,
-                12000.00m,
-                5
-            );
-
-            // Asignar la tabla como origen de datos del DataGridView
-            DGVProductos.DataSource = tablaProductos;
-
-            // Oculta la columna ID
-            if (DGVProductos.Columns["ID"] != null)
+        public void CargarProductos()
+        {
+            try
             {
-                DGVProductos.Columns["ID"].Visible = false;
+                string filtro = txtBuscar.Text.Trim();
+
+                // Lista tipada desde la capa de negocio
+                List<Producto> listaProductos = _cnProducto.ListarProductos(filtro);
+
+                dgvProductos.DataSource = null;
+                dgvProductos.DataSource = listaProductos;
+
+                ActualizarTextoBotonEstado();
+            }
+            catch (Exception ex)
+            {
+                // Registro del error en log de servidor/consola (Seguridad por diseño)
+                System.Diagnostics.Debug.WriteLine($"[Error CargarProductos]: {ex}");
+
+                // Mensaje claro y seguro para el usuario
+                MessageBox.Show(
+                    "Ocurrió un inconveniente al cargar el listado de productos. Por favor, intente nuevamente.",
+                    "Atención",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
             }
         }
 
-        //Botón Nuevo Producto
-        private void BNuevoProducto_Click(object sender, EventArgs e)
+        private Producto ObtenerProductoSeleccionado()
         {
-            FormCargaProducto formCargarProducto = new FormCargaProducto();
-
-            //bloquea la interacción con las demás ventanas hasta que el usuario la cierre
-            if (formCargarProducto.ShowDialog() == DialogResult.OK)
+            if (dgvProductos.Rows.Count == 0 ||
+                dgvProductos.CurrentCell == null ||
+                dgvProductos.SelectedRows.Count == 0)
             {
-                CargarGrillaProductos(); //Actualiza la grilla de productos después de cerrar el formulario de carga
+                return null;
+            }
+
+            return dgvProductos.CurrentRow.DataBoundItem as Producto;
+        }
+
+        private void ActualizarTextoBotonEstado()
+        {
+            Producto producto = ObtenerProductoSeleccionado();
+
+            if (producto != null)
+            {
+                btnEstado.Text = producto.Estado ? "Desactivar" : "Activar";
+                btnEstado.Enabled = true;
+            }
+            else
+            {
+                btnEstado.Text = "Cambiar Estado";
+                btnEstado.Enabled = false;
             }
         }
 
-        //Botón Modificar 
-        private void BModificarProducto_Click(object sender, EventArgs e)
+        private void DgvProductos_SelectionChanged(object sender, EventArgs e)
         {
-            if (DGVProductos.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Por favor, seleccione un producto para modificar.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            // Obtener el ID del producto seleccionado
-            // int IDProductoSeleccionado = Convert.ToInt32(DGVProductos.SelectedRows[0].Cells["ID"].Value);
+            ActualizarTextoBotonEstado();
+        }
 
-            // Abrir formulario de modificación de producto a traves del ID 
-            /*
-            FormModificarProducto formModificar = new FormModificarProducto(IDProductoSeleccionado);
-            if (formModificar.ShowDialog() == DialogResult.OK)
+        private void DgvProductos_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex >= dgvProductos.Rows.Count) return;
+
+            string columna = dgvProductos.Columns[e.ColumnIndex].Name;
+
+            if (dgvProductos.Rows[e.RowIndex].DataBoundItem is Producto producto)
             {
-                CargarGrillaProductos(); //Actualiza la grilla de productos después de cerrar el formulario de modificación
+                if (columna == "colCategoria")
+                {
+                    e.Value = producto.Categoria?.NombreCategoria ?? "Sin Categoria";
+                    e.FormattingApplied = true;
+
+                }
+                else if (columna == "colEstado")
+                {
+                    // Formato de texto para el booleano Estado
+                    e.Value = producto.Estado ? "Activo" : "Inactivo";
+                    e.FormattingApplied = true;
+                }
+                // Formato de fecha uniforme
+                else if (columna == "colFecha")
+                {
+                    e.Value = producto.FechaCreacion.ToString("dd/MM/yyyy");
+                    e.FormattingApplied = true;
+                }
             }
-            */
         }
 
         //Filtro en la caja de texto de Buscar
-        private void TBuscar_TextChanged(object sender, EventArgs e)
+        private void TxtBuscar_TextChanged(object sender, EventArgs e)
         {
-            if(tablaProductos != null && tablaProductos.DefaultView != null)
+            CargarProductos();
+        }
+
+        // BOTON AGREGAR PRODUCTO
+        private void BtnAgregarProducto_Click(object sender, EventArgs e)
+        {
+            using (FormCargaProducto formAlta = new FormCargaProducto())
             {
-                string filtro = TBuscar.Text.Trim().Replace("'", "''");
-                // Filtra tanto por columna Nombre como por Código
-                tablaProductos.DefaultView.RowFilter = string.Format("Nombre LIKE '%{0}%' OR [Código barra] LIKE '%{0}%'", filtro);
+                if (formAlta.ShowDialog() == DialogResult.OK)
+                {
+                    CargarProductos();
+                }
             }
         }
 
-        //Botón Eliminar 
-        private void BEliminarProducto_Click(object sender, EventArgs e)
+        // BOTON MODIFICAR PRODUCTO 
+        private void BtnModificarProducto_Click(object sender, EventArgs e)
         {
-            // 1. Validar que el usuario haya seleccionado una fila en la grilla
-            if (DGVProductos.SelectedRows.Count == 0)
+            Producto producto = ObtenerProductoSeleccionado();
+
+            if (producto == null)
             {
-                MessageBox.Show("Por favor, seleccione un producto de la lista para eliminar.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, seleccione un producto de la lista para modificar.",
+                                "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // 2. Obtener el ID y el Nombre del producto seleccionado para mostrar en el mensaje
-            int idSeleccionado = Convert.ToInt32(DGVProductos.SelectedRows[0].Cells["ID"].Value);
-            string nombreProducto = DGVProductos.SelectedRows[0].Cells["Nombre"].Value.ToString();
+            using (FormModificarProducto formModif = new FormModificarProducto(producto.IdProducto))
+            {
+                if (formModif.ShowDialog() == DialogResult.OK)
+                {
+                    CargarProductos();
+                }
+            }
+        }
 
-            // 3. Pedir confirmación al usuario antes de borrar
-            DialogResult resultado = MessageBox.Show(
-                "¿Está seguro de que desea eliminar el producto '" + nombreProducto + "'?",
-                "Confirmar eliminación",
+        // BOTON CAMBIAR ESTADO
+        private void BtnEstado_Click(object sender, EventArgs e)
+        {
+            Producto producto = ObtenerProductoSeleccionado();
+
+            if (producto == null)
+            {
+                MessageBox.Show("Por favor, seleccione un producto de la lista.",
+                                "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            bool nuevoEstado = !producto.Estado;
+            string accionTexto = producto.Estado ? "desactivar" : "activar";
+            string tituloConfirmacion = producto.Estado ? "Confirmar Desactivación" : "Confirmar Activación";
+
+
+            DialogResult respuesta = MessageBox.Show(
+                $"¿Está seguro de que desea {accionTexto} al producto '{producto.Nombre}'?",
+                tituloConfirmacion,
                 MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question,
-                MessageBoxDefaultButton.Button2 // Deja seleccionado "No" por seguridad
+                MessageBoxIcon.Question
             );
 
-            if (resultado == DialogResult.Yes)
+            if (respuesta == DialogResult.Yes)
             {
-                // 4. eliminar la fila de la DataTable en memoria
-                DataRow[] filas = tablaProductos.Select("ID = " + idSeleccionado);
-                foreach (DataRow fila in filas)
-                {
-                    tablaProductos.Rows.Remove(fila);
-                }
+                // La capa de negocio valida el ID y actualiza en BD
+                bool exito = _cnProducto.CambiarEstado(producto.IdProducto, nuevoEstado, out string mensaje);
 
-                MessageBox.Show("El producto se ha eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (exito)
+                {
+                    MessageBox.Show(mensaje, "Operación Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CargarProductos();
+                }
+                else
+                {
+                    MessageBox.Show(mensaje, "Acción denegada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione un producto de la lista.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

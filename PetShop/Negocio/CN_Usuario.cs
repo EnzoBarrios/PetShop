@@ -170,8 +170,6 @@ namespace PetShop.Negocio
                 return false;
             }
 
-            
-
             try
             {
                 usuario.Clave = SeguridadHelper.GenerarHashSha256(clave.Trim());
