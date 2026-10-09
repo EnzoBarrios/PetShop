@@ -35,32 +35,22 @@ namespace PetShop.Presentacion.Usuarios
             this.AutoValidate = AutoValidate.EnableAllowFocusChange;
 
             ConfigurarEstiloCamposLectura();
-            ConfigurarEstiloBotones();
 
             CargarDatosPerfil();
             AsignarEventosValidacion();
+            AsignarEventosRestriccionTeclas();
         }
 
         private void ConfigurarEstiloCamposLectura()
         {
-           
             TRol.ReadOnly = true;
             TEstado.ReadOnly = true;
 
             TRol.TabStop = false;
             TEstado.TabStop = false;
 
-            Color fondoLectura = Color.FromArgb(240, 240, 240);
-            TRol.BackColor = fondoLectura;
-            TEstado.BackColor = fondoLectura;
-
-            // LOS DEMÁS CAMPOS SE MANTIENEN EDITABLES (ReadOnly = false y fondo blanco)
-            TNombreUsuario.ReadOnly = false;
-            TNombre.ReadOnly = false;
-            TApellido.ReadOnly = false;
-            TDni.ReadOnly = false;
-            TCorreo.ReadOnly = false;
-            TTelefono.ReadOnly = false;
+            TRol.BackColor = Color.Gray;
+            TEstado.BackColor = Color.Gray;
 
             TNombreUsuario.TabStop = true;
             TNombre.TabStop = true;
@@ -69,34 +59,10 @@ namespace PetShop.Presentacion.Usuarios
             TCorreo.TabStop = true;
             TTelefono.TabStop = true;
 
-            TNombreUsuario.BackColor = Color.White;
-            TNombre.BackColor = Color.White;
-            TApellido.BackColor = Color.White;
-            TDni.BackColor = Color.White;
-            TCorreo.BackColor = Color.White;
-            TTelefono.BackColor = Color.White;
-
             TClave.UseSystemPasswordChar = true;
             TConfirmar.UseSystemPasswordChar = true;
         }
 
-        private void ConfigurarEstiloBotones()
-        {
-            BGuardar.FlatStyle = FlatStyle.Flat;
-            BGuardar.BackColor = Color.White;
-            BGuardar.ForeColor = Color.FromArgb(20, 80, 20);
-            BGuardar.FlatAppearance.BorderSize = 1;
-            BGuardar.FlatAppearance.BorderColor = Color.FromArgb(144, 238, 144);
-            BGuardar.FlatAppearance.MouseOverBackColor = Color.FromArgb(144, 238, 144);
-            BGuardar.FlatAppearance.MouseDownBackColor = Color.FromArgb(100, 210, 120);
-
-            BVolver.FlatStyle = FlatStyle.Flat;
-            BVolver.BackColor = Color.White;
-            BVolver.ForeColor = Color.Black;
-            BVolver.FlatAppearance.BorderSize = 1;
-            BVolver.FlatAppearance.BorderColor = Color.LightGray;
-            BVolver.FlatAppearance.MouseOverBackColor = Color.Gainsboro;
-        }
 
         private void AsignarEventosValidacion()
         {
@@ -104,6 +70,38 @@ namespace PetShop.Presentacion.Usuarios
             TTelefono.Validating += TTelefono_Validating;
             TClave.Validating += TClave_Validating;
             TConfirmar.Validating += TConfirmar_Validating;
+        }
+
+        private void AsignarEventosRestriccionTeclas()
+        {
+            TNombre.KeyPress += SoloLetras_KeyPress;
+            TApellido.KeyPress += SoloLetras_KeyPress;
+            TDni.KeyPress += SoloNumeros_KeyPress;
+            TTelefono.KeyPress += SoloTelefono_KeyPress;
+        }
+
+        private void SoloLetras_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void SoloNumeros_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void SoloTelefono_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != ' ' && e.KeyChar != '-' && e.KeyChar != '+')
+            {
+                e.Handled = true;
+            }
         }
 
         private void CargarDatosPerfil()
@@ -131,15 +129,30 @@ namespace PetShop.Presentacion.Usuarios
                                 TNombreUsuario.Text = reader["nombre_usuario"].ToString();
                                 TRol.Text = reader["nombre_rol"].ToString();
 
-                                string estadoValor = reader["estado"].ToString().Trim();
-                                if (estadoValor == "1" || estadoValor.Equals("Activo", StringComparison.OrdinalIgnoreCase) || estadoValor.Equals("A", StringComparison.OrdinalIgnoreCase))
+                                object rawEstado = reader["estado"];
+                                bool esActivo = false;
+
+                                if (rawEstado != DBNull.Value)
                                 {
-                                    TEstado.Text = "Activo";
+                                    if (rawEstado is bool b)
+                                    {
+                                        esActivo = b;
+                                    }
+                                    else if (rawEstado is byte || rawEstado is int || rawEstado is short)
+                                    {
+                                        esActivo = Convert.ToInt32(rawEstado) == 1;
+                                    }
+                                    else
+                                    {
+                                        string val = rawEstado.ToString().Trim();
+                                        esActivo = val == "1" ||
+                                                   val.Equals("True", StringComparison.OrdinalIgnoreCase) ||
+                                                   val.Equals("Activo", StringComparison.OrdinalIgnoreCase) ||
+                                                   val.Equals("A", StringComparison.OrdinalIgnoreCase);
+                                    }
                                 }
-                                else
-                                {
-                                    TEstado.Text = "Inactivo";
-                                }
+
+                                TEstado.Text = esActivo ? "Activo" : "Inactivo";
 
                                 TDni.Text = reader["dni"] != DBNull.Value ? reader["dni"].ToString() : string.Empty;
                                 TCorreo.Text = reader["correo"] != DBNull.Value ? reader["correo"].ToString() : string.Empty;
@@ -158,8 +171,6 @@ namespace PetShop.Presentacion.Usuarios
                 }
             }
         }
-
-        #region VALIDACIONES DINÁMICAS (EVENTOS VALIDATING)
 
         private void TCorreo_Validating(object sender, CancelEventArgs e)
         {
@@ -222,35 +233,29 @@ namespace PetShop.Presentacion.Usuarios
             error.SetError(TConfirmar, string.Empty);
         }
 
-        #endregion
-
         private bool ValidarFormulario()
         {
             error.Clear();
             bool esValido = true;
 
-            // Validar Nombre Obligatorio
             if (string.IsNullOrWhiteSpace(TNombre.Text))
             {
                 error.SetError(TNombre, "El nombre no puede estar vacío.");
                 esValido = false;
             }
 
-            // Validar Apellido Obligatorio
             if (string.IsNullOrWhiteSpace(TApellido.Text))
             {
                 error.SetError(TApellido, "El apellido no puede estar vacío.");
                 esValido = false;
             }
 
-            // Validar Usuario Obligatorio
             if (string.IsNullOrWhiteSpace(TNombreUsuario.Text))
             {
                 error.SetError(TNombreUsuario, "El nombre de usuario no puede estar vacío.");
                 esValido = false;
             }
 
-            // Validar Correo (Opcional)
             string correo = TCorreo.Text.Trim();
             if (!string.IsNullOrEmpty(correo))
             {
@@ -262,7 +267,6 @@ namespace PetShop.Presentacion.Usuarios
                 }
             }
 
-            // Validar Teléfono (Opcional)
             string telefono = TTelefono.Text.Trim();
             if (!string.IsNullOrEmpty(telefono))
             {
@@ -273,7 +277,6 @@ namespace PetShop.Presentacion.Usuarios
                 }
             }
 
-            // Validar Contraseña (Solo si decide cambiarla)
             bool contrasenaEscrita = !string.IsNullOrWhiteSpace(TClave.Text);
             bool confirmacionEscrita = !string.IsNullOrWhiteSpace(TConfirmar.Text);
 

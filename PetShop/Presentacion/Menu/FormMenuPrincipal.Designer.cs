@@ -426,7 +426,6 @@ namespace PetShop.Presentacion.Menu
             this.contenedor.BackColor = System.Drawing.Color.White;
             this.contenedor.Controls.Add(this.groupBox1);
             this.contenedor.Controls.Add(this.lblUsuarioBienvenida);
-            this.contenedor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contenedor.Location = new System.Drawing.Point(0, 175);
             this.contenedor.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.contenedor.Name = "contenedor";

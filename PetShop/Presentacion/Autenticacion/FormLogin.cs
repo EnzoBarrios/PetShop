@@ -36,12 +36,6 @@ namespace PetShop.Presentacion.Autenticacion
                 .FirstOrDefault(u => u.NombreUsuario.Trim().Equals(usuarioIngresado, StringComparison.OrdinalIgnoreCase)
                                   && u.Clave.Trim() == claveIngresada);
 
-            if (!usuarioLogueado.Estado)
-            {
-                MessageBox.Show($"El usuario '{usuarioLogueado.NombreUsuario}' se encuentra inactivo.\nContacte al administrador para habilitar el acceso.",
-                                "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
 
             if (usuarioLogueado != null)
             {

@@ -37,8 +37,8 @@
             this.LTitulo = new System.Windows.Forms.Label();
             this.PanelBotones = new System.Windows.Forms.Panel();
             this.PanelSuperior = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.btnVolver = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.DGVUsuarios)).BeginInit();
             this.PanelSuperior.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -49,7 +49,7 @@
             this.btnEstado.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnEstado.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btnEstado.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnEstado.Location = new System.Drawing.Point(1086, 7);
+            this.btnEstado.Location = new System.Drawing.Point(1206, 7);
             this.btnEstado.Name = "btnEstado";
             this.btnEstado.Size = new System.Drawing.Size(132, 56);
             this.btnEstado.TabIndex = 32;
@@ -62,7 +62,7 @@
             this.btnModificarUsuario.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnModificarUsuario.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btnModificarUsuario.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnModificarUsuario.Location = new System.Drawing.Point(547, 3);
+            this.btnModificarUsuario.Location = new System.Drawing.Point(607, 3);
             this.btnModificarUsuario.Name = "btnModificarUsuario";
             this.btnModificarUsuario.Size = new System.Drawing.Size(132, 60);
             this.btnModificarUsuario.TabIndex = 31;
@@ -99,7 +99,7 @@
             this.DGVUsuarios.RowHeadersWidth = 62;
             this.DGVUsuarios.RowTemplate.Height = 28;
             this.DGVUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGVUsuarios.Size = new System.Drawing.Size(1221, 397);
+            this.DGVUsuarios.Size = new System.Drawing.Size(1367, 297);
             this.DGVUsuarios.TabIndex = 29;
             this.DGVUsuarios.SelectionChanged += new System.EventHandler(this.DGVUsuarios_SelectionChanged);
             // 
@@ -108,7 +108,7 @@
             this.TBuscar.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.TBuscar.Location = new System.Drawing.Point(109, 64);
             this.TBuscar.Name = "TBuscar";
-            this.TBuscar.Size = new System.Drawing.Size(217, 25);
+            this.TBuscar.Size = new System.Drawing.Size(217, 29);
             this.TBuscar.TabIndex = 28;
             this.TBuscar.TextChanged += new System.EventHandler(this.TBuscar_TextChanged);
             // 
@@ -119,7 +119,7 @@
             this.LBuscar.ForeColor = System.Drawing.Color.Black;
             this.LBuscar.Location = new System.Drawing.Point(29, 64);
             this.LBuscar.Name = "LBuscar";
-            this.LBuscar.Size = new System.Drawing.Size(49, 19);
+            this.LBuscar.Size = new System.Drawing.Size(56, 21);
             this.LBuscar.TabIndex = 27;
             this.LBuscar.Text = "Buscar";
             // 
@@ -132,7 +132,7 @@
             this.LTitulo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.LTitulo.Location = new System.Drawing.Point(263, 0);
             this.LTitulo.Name = "LTitulo";
-            this.LTitulo.Size = new System.Drawing.Size(755, 48);
+            this.LTitulo.Size = new System.Drawing.Size(875, 48);
             this.LTitulo.TabIndex = 26;
             this.LTitulo.Text = "Gestión de Usuarios";
             this.LTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -155,20 +155,8 @@
             this.PanelSuperior.Dock = System.Windows.Forms.DockStyle.Top;
             this.PanelSuperior.Location = new System.Drawing.Point(0, 0);
             this.PanelSuperior.Name = "PanelSuperior";
-            this.PanelSuperior.Size = new System.Drawing.Size(1280, 93);
+            this.PanelSuperior.Size = new System.Drawing.Size(1400, 93);
             this.PanelSuperior.TabIndex = 35;
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.btnModificarUsuario);
-            this.panel1.Controls.Add(this.btnNuevoUsuario);
-            this.panel1.Controls.Add(this.btnEstado);
-            this.panel1.Location = new System.Drawing.Point(30, 496);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1221, 68);
-            this.panel1.TabIndex = 36;
             // 
             // btnVolver
             // 
@@ -181,13 +169,25 @@
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.BtnVolver_Click);
             // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.btnModificarUsuario);
+            this.panel1.Controls.Add(this.btnNuevoUsuario);
+            this.panel1.Controls.Add(this.btnEstado);
+            this.panel1.Location = new System.Drawing.Point(30, 396);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1367, 68);
+            this.panel1.TabIndex = 36;
+            // 
             // FormUsuarios
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
-            this.AutoScrollMinSize = new System.Drawing.Size(800, 450);
+            this.AutoScrollMinSize = new System.Drawing.Size(1400, 600);
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(1280, 620);
+            this.ClientSize = new System.Drawing.Size(1400, 500);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.PanelBotones);
             this.Controls.Add(this.PanelSuperior);
