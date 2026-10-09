@@ -1,46 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PetShop.Entidades
 {
     public class Venta
     {
         // Atributos directos de la tabla Venta
-        public int IdVenta { get; set; } // Clave primaria de la tabla Venta
-        public int NroFactura { get; set; }
+        public int IdVenta { get; set; }
+        public string NroFactura { get; set; }
         public DateTime FechaHora { get; set; }
         public decimal Total { get; set; }
-        public bool Estado { get; set; }
+        public string Estado { get; set; } // 'Completada' o 'Anulada'
 
-        // Relacion con TipoVenta
-        public int IdTipoVenta { get; set; }        // Clave foránea para TipoVenta
-        public TipoVenta TipoVenta { get; set; }    // Objeto completo para tener acceso al nombre del tipo de venta    
+        // Relación con TipoVenta y Usuario
+        public int IdTipoVenta { get; set; }
+        public TipoVenta TipoVenta { get; set; }
 
-        // Relacion con Usuario
-        public int IdUsuario { get; set; }      // Clave foránea para Usuario
-        public Usuario Usuario { get; set; }    // Objeto completo para tener acceso al nombre del usuario
+        public int IdUsuario { get; set; }
+        public Usuario Usuario { get; set; }
 
-        // Renglones de productos y pagos asociados
-        public List<DetalleVenta> Detalles { get; set; }    // Lista de detalles de la venta (productos)
-        public List<Pago> Pagos { get; set; }               // Lista de pagos asociados a la venta
+        // Listas asociadas
+        public List<DetalleVenta> Detalles { get; set; }
+        public List<Pago> Pagos { get; set; }
 
         // Constructor vacío
         public Venta()
         {
-            FechaHora = DateTime.Now;               // Por defecto la fecha y hora actual
-            Estado = true;                          // Por defecto activo
-            TipoVenta = new TipoVenta();            // Inicializa el objeto TipoVenta para evitar referencias nulas
-            Usuario = new Usuario();                // Inicializa el objeto Usuario para evitar referencias nulas
-            Detalles = new List<DetalleVenta>();    // Inicializa la lista de detalles para evitar referencias nulas
-            Pagos = new List<Pago>();               // Inicializa la lista de pagos para evitar referencias nulas
+            NroFactura = string.Empty;
+            FechaHora = DateTime.Now;
+            Estado = "Completada";
+            TipoVenta = new TipoVenta();
+            Usuario = new Usuario();
+            Detalles = new List<DetalleVenta>();
+            Pagos = new List<Pago>();
         }
 
         // Constructor con parámetros
-        public Venta(int idVenta, int nroFactura, DateTime fechaHora, decimal total, bool estado, int idTipoVenta, 
-            int idUsuario)
+        public Venta(int idVenta, string nroFactura, DateTime fechaHora, decimal total, string estado, int idTipoVenta, int idUsuario)
         {
             IdVenta = idVenta;
             NroFactura = nroFactura;
@@ -58,7 +54,7 @@ namespace PetShop.Entidades
             Pagos = new List<Pago>();
         }
 
-        // Método auxiliar para recalcular el total sumando subtotales
+        // Recalcular total
         public void CalcularTotal()
         {
             decimal suma = 0;

@@ -53,6 +53,7 @@
     <Compile Include="Datos\CD_Producto.cs" />
     <Compile Include="Datos\CD_Tamano.cs" />
     <Compile Include="Datos\CD_Usuario.cs" />
+    <Compile Include="Datos\CD_Venta.cs" />
     <Compile Include="Datos\Conexion.cs" />
     <Compile Include="Datos\CD_Rol.cs" />
     <Compile Include="Entidades\Categoria.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Negocio\CN_Producto.cs" />
     <Compile Include="Negocio\CN_Rol.cs" />
     <Compile Include="Negocio\CN_Usuario.cs" />
+    <Compile Include="Negocio\CN_Venta.cs" />
     <Compile Include="Negocio\SeguridadHelper.cs" />
     <Compile Include="Presentacion\Autenticacion\FormLogin.cs">
       <SubType>Form</SubType>

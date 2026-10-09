@@ -87,39 +87,7 @@ namespace PetShop.Presentacion.Usuarios
             }
         }
 
-        private void AsignarEventosRestriccionTeclas()
-        {
-            TNombre.KeyPress += SoloLetras_KeyPress;
-            TApellido.KeyPress += SoloLetras_KeyPress;
-            TDni.KeyPress += SoloNumeros_KeyPress;
-            TTelefono.KeyPress += SoloTelefono_KeyPress;
-        }
-
-        private void SoloLetras_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void SoloNumeros_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void SoloTelefono_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != ' ' && e.KeyChar != '-' && e.KeyChar != '+')
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void CargarDatosPerfil()
+       private void CargarDatosPerfil()
         {
             try
             {
