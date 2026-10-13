@@ -92,7 +92,6 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(100, 25);
             this.txtNombre.TabIndex = 3;
-            this.txtNombre.TextChanged += new System.EventHandler(this.TxtDescripCategoria_TextChanged);
             // 
             // lblDescripcion
             // 

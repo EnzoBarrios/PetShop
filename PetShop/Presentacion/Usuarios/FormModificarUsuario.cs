@@ -106,13 +106,13 @@ namespace PetShop.Presentacion.Usuarios
                     return;
                 }
 
-                    txtNombre.Text = usuario.Nombre;
-                    txtApellido.Text = usuario.Apellido;
-                    txtNombreUsuario.Text = usuario.NombreUsuario;
+                txtNombre.Text = usuario.Nombre;
+                txtApellido.Text = usuario.Apellido;
+                txtNombreUsuario.Text = usuario.NombreUsuario;
 
-                    txtDni.Text = usuario.Dni ?? string.Empty;
-                    txtCorreo.Text = usuario.Correo ?? string.Empty;
-                    txtTelefono.Text = usuario.Telefono ?? string.Empty;
+                txtDni.Text = usuario.Dni ?? string.Empty;
+                txtCorreo.Text = usuario.Correo ?? string.Empty;
+                txtTelefono.Text = usuario.Telefono ?? string.Empty;
 
                 if (usuario.Rol != null)
                 {

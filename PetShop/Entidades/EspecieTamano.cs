@@ -19,6 +19,14 @@ namespace PetShop.Entidades
 
         public string NombreEspecie => Especie?.Nombre ?? string.Empty;
         public string NombreTamano => Tamano?.Nombre ?? string.Empty;
+        public string NombreRelacion
+        {
+            get { return $"{NombreEspecie} - {NombreTamano}".Trim(' ', '-'); }
+        }
+        public string IdRelacion
+        {
+            get { return $"{IdEspecie}-{IdTamano}"; }
+        }
 
         // Constructor vacío
         public EspecieTamano()
