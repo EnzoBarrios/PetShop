@@ -1,4 +1,4 @@
-﻿namespace PetShop.Presentacion
+﻿namespace PetShop.Presentacion.Productos
 {
     partial class FormCargaProducto
     {
@@ -43,13 +43,17 @@
             this.TBDescripcion = new System.Windows.Forms.TextBox();
             this.CBEspecie = new System.Windows.Forms.ComboBox();
             this.CBCategoria = new System.Windows.Forms.ComboBox();
-            this.tbxTamano = new System.Windows.Forms.TextBox();
             this.TBPrecioCompra = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.TBPrecioVenta = new System.Windows.Forms.TextBox();
             this.TBCantidad = new System.Windows.Forms.TextBox();
             this.BVolver = new System.Windows.Forms.Button();
             this.BGuardar = new System.Windows.Forms.Button();
             this.BEliminar = new System.Windows.Forms.Button();
+            this.CBTamano = new System.Windows.Forms.ComboBox();
+            this.TBStockMin = new System.Windows.Forms.TextBox();
+            this.LStockMin = new System.Windows.Forms.Label();
+            this.panel = new System.Windows.Forms.Panel();
+            this.panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // LTitulo
@@ -57,7 +61,7 @@
             this.LTitulo.AutoSize = true;
             this.LTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LTitulo.ForeColor = System.Drawing.Color.SteelBlue;
-            this.LTitulo.Location = new System.Drawing.Point(203, 32);
+            this.LTitulo.Location = new System.Drawing.Point(199, 32);
             this.LTitulo.Name = "LTitulo";
             this.LTitulo.Size = new System.Drawing.Size(402, 37);
             this.LTitulo.TabIndex = 0;
@@ -67,7 +71,7 @@
             // 
             this.LNombre.AutoSize = true;
             this.LNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LNombre.Location = new System.Drawing.Point(49, 163);
+            this.LNombre.Location = new System.Drawing.Point(12, 93);
             this.LNombre.Name = "LNombre";
             this.LNombre.Size = new System.Drawing.Size(71, 20);
             this.LNombre.TabIndex = 1;
@@ -77,7 +81,7 @@
             // 
             this.LCodigo.AutoSize = true;
             this.LCodigo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LCodigo.Location = new System.Drawing.Point(49, 110);
+            this.LCodigo.Location = new System.Drawing.Point(12, 27);
             this.LCodigo.Name = "LCodigo";
             this.LCodigo.Size = new System.Drawing.Size(112, 20);
             this.LCodigo.TabIndex = 2;
@@ -87,7 +91,7 @@
             // 
             this.LDescripcion.AutoSize = true;
             this.LDescripcion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LDescripcion.Location = new System.Drawing.Point(364, 132);
+            this.LDescripcion.Location = new System.Drawing.Point(351, 227);
             this.LDescripcion.Name = "LDescripcion";
             this.LDescripcion.Size = new System.Drawing.Size(103, 20);
             this.LDescripcion.TabIndex = 3;
@@ -97,7 +101,7 @@
             // 
             this.LEspecie.AutoSize = true;
             this.LEspecie.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LEspecie.Location = new System.Drawing.Point(49, 237);
+            this.LEspecie.Location = new System.Drawing.Point(351, 93);
             this.LEspecie.Name = "LEspecie";
             this.LEspecie.Size = new System.Drawing.Size(73, 20);
             this.LEspecie.TabIndex = 4;
@@ -107,7 +111,7 @@
             // 
             this.LCategoria.AutoSize = true;
             this.LCategoria.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LCategoria.Location = new System.Drawing.Point(364, 237);
+            this.LCategoria.Location = new System.Drawing.Point(347, 27);
             this.LCategoria.Name = "LCategoria";
             this.LCategoria.Size = new System.Drawing.Size(87, 20);
             this.LCategoria.TabIndex = 5;
@@ -117,7 +121,7 @@
             // 
             this.lblTamano.AutoSize = true;
             this.lblTamano.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTamano.Location = new System.Drawing.Point(49, 303);
+            this.lblTamano.Location = new System.Drawing.Point(351, 161);
             this.lblTamano.Name = "lblTamano";
             this.lblTamano.Size = new System.Drawing.Size(73, 20);
             this.lblTamano.TabIndex = 6;
@@ -127,7 +131,7 @@
             // 
             this.LPrecioCompra.AutoSize = true;
             this.LPrecioCompra.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LPrecioCompra.Location = new System.Drawing.Point(49, 368);
+            this.LPrecioCompra.Location = new System.Drawing.Point(12, 164);
             this.LPrecioCompra.Name = "LPrecioCompra";
             this.LPrecioCompra.Size = new System.Drawing.Size(123, 20);
             this.LPrecioCompra.TabIndex = 7;
@@ -137,7 +141,7 @@
             // 
             this.LPrecioVenta.AutoSize = true;
             this.LPrecioVenta.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LPrecioVenta.Location = new System.Drawing.Point(364, 368);
+            this.LPrecioVenta.Location = new System.Drawing.Point(12, 227);
             this.LPrecioVenta.Name = "LPrecioVenta";
             this.LPrecioVenta.Size = new System.Drawing.Size(108, 20);
             this.LPrecioVenta.TabIndex = 8;
@@ -148,7 +152,7 @@
             // 
             this.LCantidad.AutoSize = true;
             this.LCantidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LCantidad.Location = new System.Drawing.Point(364, 303);
+            this.LCantidad.Location = new System.Drawing.Point(12, 290);
             this.LCantidad.Name = "LCantidad";
             this.LCantidad.Size = new System.Drawing.Size(81, 20);
             this.LCantidad.TabIndex = 9;
@@ -156,87 +160,66 @@
             // 
             // TBCodigo
             // 
-            this.TBCodigo.Location = new System.Drawing.Point(169, 104);
+            this.TBCodigo.Location = new System.Drawing.Point(132, 19);
             this.TBCodigo.Name = "TBCodigo";
             this.TBCodigo.Size = new System.Drawing.Size(161, 26);
             this.TBCodigo.TabIndex = 10;
-            this.TBCodigo.TextChanged += new System.EventHandler(this.TBCodigo_TextChanged);
             // 
             // TBNombre
             // 
-            this.TBNombre.Location = new System.Drawing.Point(128, 157);
+            this.TBNombre.Location = new System.Drawing.Point(91, 85);
             this.TBNombre.Name = "TBNombre";
             this.TBNombre.Size = new System.Drawing.Size(202, 26);
             this.TBNombre.TabIndex = 11;
             // 
             // TBDescripcion
             // 
-            this.TBDescripcion.Location = new System.Drawing.Point(473, 100);
+            this.TBDescripcion.Location = new System.Drawing.Point(460, 227);
             this.TBDescripcion.Multiline = true;
             this.TBDescripcion.Name = "TBDescripcion";
-            this.TBDescripcion.Size = new System.Drawing.Size(277, 83);
+            this.TBDescripcion.Size = new System.Drawing.Size(202, 138);
             this.TBDescripcion.TabIndex = 12;
             // 
             // CBEspecie
             // 
             this.CBEspecie.FormattingEnabled = true;
-            this.CBEspecie.Items.AddRange(new object[] {
-            "Ave",
-            "Conejo",
-            "Gato",
-            "Perro",
-            "Pez"});
-            this.CBEspecie.Location = new System.Drawing.Point(128, 229);
+            this.CBEspecie.Location = new System.Drawing.Point(460, 83);
             this.CBEspecie.Name = "CBEspecie";
             this.CBEspecie.Size = new System.Drawing.Size(202, 28);
             this.CBEspecie.TabIndex = 13;
-            this.CBEspecie.SelectedIndexChanged += new System.EventHandler(this.CBEspecie_SelectedIndexChanged);
             // 
             // CBCategoria
             // 
             this.CBCategoria.FormattingEnabled = true;
-            this.CBCategoria.Items.AddRange(new object[] {
-            "Accesorio",
-            "Alimento",
-            "Higiene",
-            "Juguete",
-            "Salud"});
-            this.CBCategoria.Location = new System.Drawing.Point(473, 229);
+            this.CBCategoria.Location = new System.Drawing.Point(460, 19);
             this.CBCategoria.Name = "CBCategoria";
             this.CBCategoria.Size = new System.Drawing.Size(202, 28);
             this.CBCategoria.TabIndex = 14;
             // 
-            // tbxTamano
-            // 
-            this.tbxTamano.Location = new System.Drawing.Point(145, 297);
-            this.tbxTamano.Name = "tbxTamano";
-            this.tbxTamano.Size = new System.Drawing.Size(185, 26);
-            this.tbxTamano.TabIndex = 15;
-            // 
             // TBPrecioCompra
             // 
-            this.TBPrecioCompra.Location = new System.Drawing.Point(178, 362);
+            this.TBPrecioCompra.Location = new System.Drawing.Point(141, 155);
             this.TBPrecioCompra.Name = "TBPrecioCompra";
             this.TBPrecioCompra.Size = new System.Drawing.Size(152, 26);
             this.TBPrecioCompra.TabIndex = 16;
             // 
-            // textBox1
+            // TBPrecioVenta
             // 
-            this.textBox1.Location = new System.Drawing.Point(473, 362);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(152, 26);
-            this.textBox1.TabIndex = 17;
+            this.TBPrecioVenta.Location = new System.Drawing.Point(141, 221);
+            this.TBPrecioVenta.Name = "TBPrecioVenta";
+            this.TBPrecioVenta.Size = new System.Drawing.Size(152, 26);
+            this.TBPrecioVenta.TabIndex = 17;
             // 
             // TBCantidad
             // 
-            this.TBCantidad.Location = new System.Drawing.Point(473, 297);
+            this.TBCantidad.Location = new System.Drawing.Point(121, 284);
             this.TBCantidad.Name = "TBCantidad";
             this.TBCantidad.Size = new System.Drawing.Size(78, 26);
             this.TBCantidad.TabIndex = 18;
             // 
             // BVolver
             // 
-            this.BVolver.Location = new System.Drawing.Point(12, 12);
+            this.BVolver.Location = new System.Drawing.Point(12, 30);
             this.BVolver.Name = "BVolver";
             this.BVolver.Size = new System.Drawing.Size(96, 39);
             this.BVolver.TabIndex = 19;
@@ -245,7 +228,7 @@
             // 
             // BGuardar
             // 
-            this.BGuardar.Location = new System.Drawing.Point(452, 438);
+            this.BGuardar.Location = new System.Drawing.Point(421, 480);
             this.BGuardar.Name = "BGuardar";
             this.BGuardar.Size = new System.Drawing.Size(150, 65);
             this.BGuardar.TabIndex = 20;
@@ -254,43 +237,80 @@
             // 
             // BEliminar
             // 
-            this.BEliminar.Location = new System.Drawing.Point(624, 438);
+            this.BEliminar.Location = new System.Drawing.Point(593, 480);
             this.BEliminar.Name = "BEliminar";
             this.BEliminar.Size = new System.Drawing.Size(150, 65);
             this.BEliminar.TabIndex = 21;
             this.BEliminar.Text = "Eliminar todo";
             this.BEliminar.UseVisualStyleBackColor = true;
             // 
+            // CBTamano
+            // 
+            this.CBTamano.FormattingEnabled = true;
+            this.CBTamano.Location = new System.Drawing.Point(460, 153);
+            this.CBTamano.Name = "CBTamano";
+            this.CBTamano.Size = new System.Drawing.Size(202, 28);
+            this.CBTamano.TabIndex = 22;
+            // 
+            // TBStockMin
+            // 
+            this.TBStockMin.Location = new System.Drawing.Point(121, 339);
+            this.TBStockMin.Name = "TBStockMin";
+            this.TBStockMin.Size = new System.Drawing.Size(78, 26);
+            this.TBStockMin.TabIndex = 24;
+            // 
+            // LStockMin
+            // 
+            this.LStockMin.AutoSize = true;
+            this.LStockMin.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LStockMin.Location = new System.Drawing.Point(12, 345);
+            this.LStockMin.Name = "LStockMin";
+            this.LStockMin.Size = new System.Drawing.Size(93, 20);
+            this.LStockMin.TabIndex = 23;
+            this.LStockMin.Text = "Stock Mín.";
+            // 
+            // panel
+            // 
+            this.panel.Controls.Add(this.CBTamano);
+            this.panel.Controls.Add(this.LStockMin);
+            this.panel.Controls.Add(this.TBStockMin);
+            this.panel.Controls.Add(this.LCantidad);
+            this.panel.Controls.Add(this.TBDescripcion);
+            this.panel.Controls.Add(this.TBCantidad);
+            this.panel.Controls.Add(this.TBPrecioVenta);
+            this.panel.Controls.Add(this.LDescripcion);
+            this.panel.Controls.Add(this.CBEspecie);
+            this.panel.Controls.Add(this.CBCategoria);
+            this.panel.Controls.Add(this.lblTamano);
+            this.panel.Controls.Add(this.TBPrecioCompra);
+            this.panel.Controls.Add(this.LPrecioVenta);
+            this.panel.Controls.Add(this.LPrecioCompra);
+            this.panel.Controls.Add(this.LEspecie);
+            this.panel.Controls.Add(this.TBCodigo);
+            this.panel.Controls.Add(this.TBNombre);
+            this.panel.Controls.Add(this.LCategoria);
+            this.panel.Controls.Add(this.LNombre);
+            this.panel.Controls.Add(this.LCodigo);
+            this.panel.Location = new System.Drawing.Point(58, 83);
+            this.panel.Name = "panel";
+            this.panel.Size = new System.Drawing.Size(685, 381);
+            this.panel.TabIndex = 25;
+            // 
             // FormCargaProducto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 547);
+            this.ClientSize = new System.Drawing.Size(800, 567);
             this.Controls.Add(this.BEliminar);
             this.Controls.Add(this.BGuardar);
             this.Controls.Add(this.BVolver);
-            this.Controls.Add(this.TBCantidad);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.TBPrecioCompra);
-            this.Controls.Add(this.tbxTamano);
-            this.Controls.Add(this.CBCategoria);
-            this.Controls.Add(this.CBEspecie);
-            this.Controls.Add(this.TBDescripcion);
-            this.Controls.Add(this.TBNombre);
-            this.Controls.Add(this.TBCodigo);
-            this.Controls.Add(this.LCantidad);
-            this.Controls.Add(this.LPrecioVenta);
-            this.Controls.Add(this.LPrecioCompra);
-            this.Controls.Add(this.lblTamano);
-            this.Controls.Add(this.LCategoria);
-            this.Controls.Add(this.LEspecie);
-            this.Controls.Add(this.LDescripcion);
-            this.Controls.Add(this.LCodigo);
-            this.Controls.Add(this.LNombre);
             this.Controls.Add(this.LTitulo);
+            this.Controls.Add(this.panel);
             this.Name = "FormCargaProducto";
             this.Text = "FormCargaProducto";
             this.Load += new System.EventHandler(this.FormCargaProducto_Load);
+            this.panel.ResumeLayout(false);
+            this.panel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -313,12 +333,15 @@
         private System.Windows.Forms.TextBox TBDescripcion;
         private System.Windows.Forms.ComboBox CBEspecie;
         private System.Windows.Forms.ComboBox CBCategoria;
-        private System.Windows.Forms.TextBox tbxTamano;
         private System.Windows.Forms.TextBox TBPrecioCompra;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox TBPrecioVenta;
         private System.Windows.Forms.TextBox TBCantidad;
         private System.Windows.Forms.Button BVolver;
         private System.Windows.Forms.Button BGuardar;
         private System.Windows.Forms.Button BEliminar;
+        private System.Windows.Forms.ComboBox CBTamano;
+        private System.Windows.Forms.TextBox TBStockMin;
+        private System.Windows.Forms.Label LStockMin;
+        private System.Windows.Forms.Panel panel;
     }
 }

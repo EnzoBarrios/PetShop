@@ -109,5 +109,18 @@ namespace PetShop.Negocio
                 return false;
             }
         }
+
+        public List<Tamano> ObtenerTamanosPorEspecie(int idEspecie)
+        {
+            if (idEspecie <= 0)
+            {
+                return new List<Tamano>();
+            }
+
+            return _cdEspecieTamano.Listar()
+                .Where(r => r.IdEspecie == idEspecie && r.Estado && r.Tamano != null && r.Tamano.Estado)
+                .Select(r => r.Tamano)
+                .ToList();
+        }
     }
 }
