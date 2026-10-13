@@ -74,7 +74,7 @@ namespace PetShop.Negocio
                     return true;
                 }
 
-                mensaje = "No se pudo registrar la categoría.";
+                mensaje = "No se pudo registrar el producto.";
                 return false;
             }
             catch (Exception ex)

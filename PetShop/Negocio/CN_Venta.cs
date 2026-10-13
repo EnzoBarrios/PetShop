@@ -54,12 +54,14 @@ namespace PetShop.Negocio
                 });
 
             CN_Producto cnProducto = new CN_Producto();
+            List<string> advertenciasStockMinimo = new List<string>();
 
-            // 4. Validar ESTADO DEL PRODUCTO y STOCK disponible por total acumulado
+            // 4. Validar ESTADO DEL PRODUCTO, STOCK disponible por total acumulado y STOCK MÍNIMO
             foreach (var itemAgrupado in detallesAgrupados)
             {
                 Producto prodActual = cnProducto.ObtenerPorId(itemAgrupado.IdProducto);
 
+                // Validación de existencia del producto
                 if (prodActual == null)
                 {
                     mensaje = $"El producto con ID {itemAgrupado.IdProducto} no existe en la base de datos.";
@@ -73,6 +75,7 @@ namespace PetShop.Negocio
                     return false;
                 }
 
+                // Validación de Cantidad Total
                 if (itemAgrupado.CantidadTotal <= 0)
                 {
                     mensaje = $"La cantidad para el producto '{prodActual.Nombre}' debe ser mayor a 0.";
@@ -80,10 +83,17 @@ namespace PetShop.Negocio
                 }
 
                 // Validación de Stock Acumulado
-                if (prodActual.Stock < itemAgrupado.CantidadTotal)
+                if (prodActual.StockActual < itemAgrupado.CantidadTotal)
                 {
-                    mensaje = $"Stock insuficiente para '{prodActual.Nombre}'. Disponible: {prodActual.Stock}, Solicitado en total: {itemAgrupado.CantidadTotal}.";
+                    mensaje = $"Stock insuficiente para '{prodActual.Nombre}'. Disponible: {prodActual.StockActual}, Solicitado en total: {itemAgrupado.CantidadTotal}.";
                     return false;
+                }
+
+                // Advertencia de Stock Mínimo (Acumula aviso de reposición)
+                int stockRestante = prodActual.StockActual - itemAgrupado.CantidadTotal;
+                if (stockRestante <= prodActual.StockMinimo)
+                {
+                    advertenciasStockMinimo.Add($"'{prodActual.Nombre}' quedará con {stockRestante} unidades (Límite mínimo: {prodActual.StockMinimo}).");
                 }
             }
 

@@ -77,7 +77,7 @@ namespace PetShop.Datos
 
                         string queryStock = @"
                             UPDATE Producto 
-                            SET stock = stock - @cantidad 
+                            SET stock_actual = stock_actual - @cantidad 
                             WHERE id_producto = @id_producto";
 
                         SqlCommand cmdStock = new SqlCommand(queryStock, conexion, objTransaction);

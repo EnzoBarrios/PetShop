@@ -53,12 +53,25 @@ namespace PetShop.Datos
         public Producto ObtenerPorId(int idProducto)
         {
             string query = @"
-                SELECT id_producto
-                FROM Producto 
-                WHERE id_producto = @IdProducto";
+                SELECT p.id_producto, p.codigo_barra, p.nombre_producto, p.descripcion, 
+                       p.precio_compra, p.precio_venta, p.stock_actual, p.stock_minimo, 
+                       p.estado, p.fecha_creacion,
+                       c.id_categoria, c.nombre_categoria, 
+                       c.descripcion AS descrip_categoria, 
+                       c.estado AS estado_categoria,
+                       ISNULL(et.id_especie, 0) AS id_especie, 
+                       ISNULL(et.id_tamano, 0) AS id_tamano,
+                       ISNULL(et.estado, 0) AS estado_et,
+                       ISNULL(e.nombre_especie, '') AS nombre_especie,
+                       ISNULL(t.nombre_tamano, '') AS nombre_tamano
+                FROM Producto p
+                INNER JOIN Categoria c ON (p.id_categoria = c.id_categoria)
+                LEFT JOIN Especie_Tamano et ON (p.id_especie = et.id_especie AND p.id_tamano = et.id_tamano)
+                LEFT JOIN Especie e ON (et.id_especie = e.id_especie)
+                LEFT JOIN Tamano t ON (et.id_tamano = t.id_tamano)
+                WHERE p.id_producto = @IdProducto";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
-
             using (SqlCommand cmd = new SqlCommand(query, conexion))
             {
                 cmd.CommandType = CommandType.Text;
