@@ -44,6 +44,8 @@ namespace PetShop.Presentacion.Catalogos
         {
             if (!ValidarCampos())
             {
+                MessageBox.Show("Por favor, verifique los campos marcados con advertencias.",
+                    "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

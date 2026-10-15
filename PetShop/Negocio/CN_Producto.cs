@@ -14,18 +14,8 @@ namespace PetShop.Negocio
 
         public List<Producto> ListarProductos(string textoBusqueda = "")
         {
-            List<Producto> lista = _cdProducto.Listar();
-
-            if (!string.IsNullOrWhiteSpace(textoBusqueda))
-            {
-                string filtro = textoBusqueda.Trim().ToLower();
-                lista = lista.Where(c =>
-                    c.Nombre.ToLower().Contains(filtro) ||
-                    (!string.IsNullOrWhiteSpace(c.Descripcion) && c.Descripcion.ToLower().Contains(filtro))
-                    ).ToList();
-            }
-
-            return lista;
+            string filtro = textoBusqueda?.Trim().ToLower() ?? string.Empty;
+            return _cdProducto.Listar(filtro);
         }
 
         // Método para obtener un usuario por su ID, devolviendo null si el ID es inválido
@@ -36,14 +26,7 @@ namespace PetShop.Negocio
                 return null;
             }
 
-            try
-            {
-                return _cdProducto.ObtenerPorId(idProducto);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            return _cdProducto.ObtenerPorId(idProducto);
         }
 
         public bool RegistrarProducto(Producto producto, out string mensaje)
@@ -79,12 +62,12 @@ namespace PetShop.Negocio
             }
             catch (Exception ex)
             {
-                mensaje = $"Error al registrar el producto: " + ex.Message;
+                mensaje = $"Error de sistema al registrar el producto: {ex.Message}";
                 return false;
             }
         }
 
-        public bool Modificar(Producto producto, out string mensaje)
+        public bool ModificarProducto(Producto producto, out string mensaje)
         {
             mensaje = string.Empty;
 

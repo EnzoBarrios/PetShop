@@ -8,7 +8,7 @@ namespace PetShop.Datos
 {
     public class CD_Producto
     {
-        public List<Producto> Listar()
+        public List<Producto> Listar(string textoBusqueda = "")
         {
             List<Producto> lista = new List<Producto>();
 
@@ -29,6 +29,10 @@ namespace PetShop.Datos
                 LEFT JOIN Especie_Tamano et ON (p.id_especie = et.id_especie AND p.id_tamano = et.id_tamano)
                 LEFT JOIN Especie e ON (et.id_especie = e.id_especie)
                 LEFT JOIN Tamano t ON (et.id_tamano = t.id_tamano)
+                WHERE (@Texto = '' OR (
+                        p.nombre_producto  LIKE @TextoLike OR 
+                        p.descripcion      LIKE @TextoLike OR
+                        c.nombre_categoria LIKE @TextoLike))
                 ORDER BY p.nombre_producto ASC";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
@@ -36,6 +40,10 @@ namespace PetShop.Datos
             using (SqlCommand cmd = new SqlCommand(query, conexion))
             {
                 cmd.CommandType = CommandType.Text;
+
+                string filtroTexto = textoBusqueda?.Trim() ?? string.Empty;
+                cmd.Parameters.Add("@Texto", SqlDbType.VarChar, 50).Value = filtroTexto;
+                cmd.Parameters.Add("@TextoLike", SqlDbType.VarChar, 52).Value = "%" + filtroTexto + "%";
                 conexion.Open();
 
                 using (SqlDataReader dr = cmd.ExecuteReader())
@@ -185,7 +193,6 @@ namespace PetShop.Datos
             }
         }
 
-
         public static void CargarParametrosProducto(SqlCommand cmd, Producto producto)
         {
             cmd.Parameters.Add("@Codigo", SqlDbType.VarChar, 50).Value = producto.Codigo.Trim();
@@ -195,7 +202,6 @@ namespace PetShop.Datos
             cmd.Parameters.Add("@StockActual", SqlDbType.Int).Value = producto.StockActual;
             cmd.Parameters.Add("@StockMinimo", SqlDbType.Int).Value = producto.StockMinimo;
             cmd.Parameters.Add("@IdCategoria", SqlDbType.Int).Value = producto.Categoria.IdCategoria;
-            cmd.Parameters.Add("@Estado", SqlDbType.Bit).Value = producto.Estado;
 
             cmd.Parameters.Add("@Descripcion", SqlDbType.VarChar, 255).Value =
                 string.IsNullOrWhiteSpace(producto.Descripcion) ? (object)DBNull.Value : producto.Descripcion.Trim();
