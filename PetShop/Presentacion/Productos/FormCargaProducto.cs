@@ -7,8 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using PetShop.Entidades;
-using PetShop.Negocio;
+
 
 namespace PetShop.Presentacion.Productos
 {
