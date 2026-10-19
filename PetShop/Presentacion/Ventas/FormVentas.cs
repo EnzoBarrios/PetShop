@@ -36,17 +36,16 @@ namespace PetShop.Presentacion.Ventas
             txtFecha.ReadOnly = true;
             txtNroFactura.ReadOnly = true;
 
-            // Cargar Métodos de Pago y Tipos de Venta (ejemplo estático/dinámico)
-            cbxTipoVenta.Items.Clear();
-            cbxTipoVenta.Items.Add("Contado");
-            cbxTipoVenta.Items.Add("Crédito");
+            // Cargar Tipos de Venta desde la BD
+            cbxTipoVenta.DataSource = _cnVenta.ListarTiposVenta();
+            cbxTipoVenta.DisplayMember = nameof(TipoVenta.Descripcion);
+            cbxTipoVenta.ValueMember = nameof(TipoVenta.IdTipoVenta);
             cbxTipoVenta.SelectedIndex = 0;
 
-            cbxMetodoPago.Items.Clear();
-            cbxMetodoPago.Items.Add("Efectivo");
-            cbxMetodoPago.Items.Add("Tarjeta Débito");
-            cbxMetodoPago.Items.Add("Tarjeta Crédito");
-            cbxMetodoPago.Items.Add("Transferencia / MP");
+            // Cargar Métodos de Pago desde la BD
+            cbxMetodoPago.DataSource = _cnVenta.ListarMetodosPago();
+            cbxMetodoPago.DisplayMember = nameof(MetodoPago.NombreMetodo);
+            cbxMetodoPago.ValueMember = nameof(MetodoPago.IdMetodoPago);
             cbxMetodoPago.SelectedIndex = 0;
         }
 
@@ -74,25 +73,23 @@ namespace PetShop.Presentacion.Ventas
 
         // --- 1. BÚSQUEDA Y SELECCIÓN DE PRODUCTO ---
 
-        // Evento Click del botón de la Lupa (junto al TextBox de Producto)
         private void BtnBuscarProducto_Click(object sender, EventArgs e)
         {
             BuscarProductoPorNombre();
         }
 
-        // Permitir presionar ENTER en el TextBox de Producto para buscar
         private void TxtProducto_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 BuscarProductoPorNombre();
-                e.SuppressKeyPress = true; // Evita el pitido de Windows al presionar Enter
+                e.SuppressKeyPress = true;
             }
         }
 
         private void BuscarProductoPorNombre()
         {
-            string busquedaNombre = txtNombreProducto.Text.Trim(); // TextBox al lado de la lupa
+            string busquedaNombre = txtNombreProducto.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(busquedaNombre))
             {
@@ -100,17 +97,14 @@ namespace PetShop.Presentacion.Ventas
                 return;
             }
 
-            // 1. Consultar la capa de negocio pasando el texto ingresado
             List<Producto> productos = _cnProducto.ListarProductos(busquedaNombre);
 
-            // 2. Obtener la primera coincidencia por nombre
             _productoSeleccionado = productos.FirstOrDefault(p =>
                 p.Nombre.ToLower().Contains(busquedaNombre.ToLower())
             );
 
             if (_productoSeleccionado != null)
             {
-                // Validar si el producto está activo
                 if (!_productoSeleccionado.Estado)
                 {
                     MessageBox.Show("El producto seleccionado se encuentra inactivo.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -118,13 +112,11 @@ namespace PetShop.Presentacion.Ventas
                     return;
                 }
 
-                // 3. AUTOCOMPLETAR LOS CAMPOS DE LA INTERFAZ
                 txtNombreProducto.Text = _productoSeleccionado.Nombre;
-                txtCodProducto.Text = _productoSeleccionado.Codigo; // <-- Se rellena el código automáticamente
+                txtCodProducto.Text = _productoSeleccionado.Codigo;
                 txtPrecioUnitario.Text = _productoSeleccionado.PrecioVenta.ToString("F2");
                 txtStockDisponible.Text = _productoSeleccionado.StockActual.ToString();
 
-                // Ajustar el control de cantidad segun el stock
                 numCantidad.Value = 1;
                 numCantidad.Maximum = _productoSeleccionado.StockActual > 0 ? _productoSeleccionado.StockActual : 1;
             }
@@ -135,7 +127,8 @@ namespace PetShop.Presentacion.Ventas
             }
         }
 
-        // --- AGREGAR PRODUCTO AL CARRITO ---
+        // --- 2. AGREGAR PRODUCTO AL CARRITO ---
+
         private void BtnAgregarProducto_Click(object sender, EventArgs e)
         {
             if (_productoSeleccionado == null)
@@ -152,7 +145,6 @@ namespace PetShop.Presentacion.Ventas
                 return;
             }
 
-            // Buscar si el ítem ya está cargado en el carrito para sumar la cantidad
             DetalleVenta detalleExistente = _listaDetalle.FirstOrDefault(d => d.IdProducto == _productoSeleccionado.IdProducto);
 
             if (detalleExistente != null)
@@ -168,7 +160,6 @@ namespace PetShop.Presentacion.Ventas
             }
             else
             {
-                // Usamos el constructor sobrecargado de la entidad DetalleVenta
                 _listaDetalle.Add(new DetalleVenta(cantidadIngresada, _productoSeleccionado.PrecioVenta, _productoSeleccionado));
             }
 
@@ -176,12 +167,10 @@ namespace PetShop.Presentacion.Ventas
             LimpiarCamposProducto();
         }
 
-        // --- MOSTRAR LOS DATOS EN EL DATAGRIDVIEW ---
         private void RefrescarCarrito()
         {
             dgvCarrito.DataSource = null;
 
-            // Proyectamos a un tipo anónimo leyendo los datos a través del objeto Producto
             dgvCarrito.DataSource = _listaDetalle.Select(d => new
             {
                 Producto = d.Producto.Nombre,
@@ -273,20 +262,23 @@ namespace PetShop.Presentacion.Ventas
                 return;
             }
 
+            int idTipoVenta = Convert.ToInt32(cbxTipoVenta.SelectedValue);
+            int idMetodoPago = Convert.ToInt32(cbxMetodoPago.SelectedValue);
+
             Venta nuevaVenta = new Venta
             {
                 NroFactura = txtNroFactura.Text,
                 FechaHora = DateTime.Now,
                 Total = totalFinal,
                 Estado = "Completada",
-                IdTipoVenta = cbxTipoVenta.SelectedIndex + 1,
+                IdTipoVenta = idTipoVenta,
                 IdUsuario = _usuarioLogueado.IdUsuario,
                 Detalles = _listaDetalle,
                 Pagos = new List<Pago>
                 {
                     new Pago
                     {
-                        IdMetodoPago = cbxMetodoPago.SelectedIndex + 1,
+                        IdMetodoPago = idMetodoPago,
                         Monto = abonado
                     }
                 }
@@ -321,7 +313,7 @@ namespace PetShop.Presentacion.Ventas
             txtPrecioUnitario.Clear();
             txtStockDisponible.Clear();
             numCantidad.Value = 1;
-            txtCodProducto.Focus();
+            txtNombreProducto.Focus();
         }
 
         private void LimpiarFormularioVenta()

@@ -15,6 +15,16 @@ namespace PetShop.Negocio
             return _cdvVenta.ObtenerProximoNroFactura();
         }
 
+        public List<TipoVenta> ListarTiposVenta()
+        {
+            return _cdvVenta.ListarTiposVenta();
+        }
+
+        public List<MetodoPago> ListarMetodosPago()
+        {
+            return _cdvVenta.ListarMetodosPago();
+        }
+
         public bool RegistrarVenta(Venta venta, out string mensaje)
         {
             mensaje = string.Empty;

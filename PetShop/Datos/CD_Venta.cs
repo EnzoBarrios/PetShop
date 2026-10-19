@@ -30,6 +30,68 @@ namespace PetShop.Datos
             return proximoNro;
         }
 
+        // Listar los tipos de venta desde la base de datos
+        public List<TipoVenta> ListarTiposVenta()
+        {
+            List<TipoVenta> lista = new List<TipoVenta>();
+            using (SqlConnection conexion = ConexionBd.CrearConexion())
+            {
+                try
+                {
+                    string query = "SELECT id_tipo_venta, descripcion FROM Tipo_venta";
+                    SqlCommand cmd = new SqlCommand(query, conexion);
+                    conexion.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            lista.Add(new TipoVenta
+                            {
+                                IdTipoVenta = Convert.ToInt32(dr["id_tipo_venta"]),
+                                Descripcion = dr["descripcion"].ToString()
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al consultar los tipos de venta: " + ex.Message);
+                }
+            }
+            return lista;
+        }
+
+        // Listar los métodos de pago desde la base de datos
+        public List<MetodoPago> ListarMetodosPago()
+        {
+            List<MetodoPago> lista = new List<MetodoPago>();
+            using (SqlConnection conexion = ConexionBd.CrearConexion())
+            {
+                try
+                {
+                    string query = "SELECT id_metodo_pago, nombre_metodo FROM Metodo_pago";
+                    SqlCommand cmd = new SqlCommand(query, conexion);
+                    conexion.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            lista.Add(new MetodoPago
+                            {
+                                IdMetodoPago = Convert.ToInt32(dr["id_metodo_pago"]),
+                                NombreMetodo = dr["nombre_metodo"].ToString()
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al consultar los métodos de pago: " + ex.Message);
+                }
+            }
+            return lista;
+        }
+
         // Registro de venta con Transacción SQL
         public bool RegistrarVenta(Venta venta, out string mensaje)
         {
