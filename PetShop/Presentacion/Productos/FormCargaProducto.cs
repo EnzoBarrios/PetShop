@@ -101,6 +101,26 @@ namespace PetShop.Presentacion
             }
         }
 
+        private void TxtPrecio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '.')
+            {
+                e.KeyChar = ',';
+            }
+
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+                return;
+            }
+
+            TextBox textBox = sender as TextBox;
+            if ((e.KeyChar == ',') && (textBox != null) && (textBox.Text.IndexOf(',') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
             if (!ValidarCampos())
@@ -126,7 +146,8 @@ namespace PetShop.Presentacion
                 },
                 PrecioCompra = decimal.Parse(txtPrecioCompra.Text.Trim()),
                 PrecioVenta = decimal.Parse(txtPrecioVenta.Text.Trim()),
-                StockActual = int.Parse(txtCantidad.Text.Trim()),
+                StockActual = int.Parse(txtStock.Text.Trim()),
+                StockMinimo = int.Parse(txtStockMinimo.Text.Trim()),
                 Estado = true
             };
 
@@ -200,10 +221,26 @@ namespace PetShop.Presentacion
             }
 
             // Validar Stock / Cantidad
-            if (!int.TryParse(txtCantidad.Text.Trim(), out int cantidad) || cantidad < 0)
+            if (!int.TryParse(txtStock.Text.Trim(), out int cantidad) || cantidad < 0)
             {
-                _ep.SetError(txtCantidad, "La cantidad de productos no puede ser menor a 0");
-                txtCantidad.Focus();
+                _ep.SetError(txtStock, "La cantidad de productos no puede ser menor a 0");
+                txtStock.Focus();
+                return false;
+            }
+
+            // Validar Stock Minimo
+            if (!int.TryParse(txtStockMinimo.Text.Trim(), out int stockMinimo) || stockMinimo < 0)
+            {
+                _ep.SetError(txtStockMinimo, "El stock minimo de productos no puede ser menor a 0");
+                txtStockMinimo.Focus();
+                return false;
+            }
+
+            // Validar Relación Stock
+            if (stockMinimo < cantidad)
+            {
+                _ep.SetError(txtStock, "El stock minimo debe ser menor al stock del producto");
+                txtStockMinimo.Focus();
                 return false;
             }
 

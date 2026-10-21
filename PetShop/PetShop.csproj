@@ -36,6 +36,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +52,7 @@
     <Compile Include="Datos\CD_Especie.cs" />
     <Compile Include="Datos\CD_EspecieTamano.cs" />
     <Compile Include="Datos\CD_Producto.cs" />
+    <Compile Include="Datos\CD_Reporte.cs" />
     <Compile Include="Datos\CD_Tamano.cs" />
     <Compile Include="Datos\CD_Usuario.cs" />
     <Compile Include="Datos\Conexion.cs" />
@@ -62,6 +64,8 @@
     <Compile Include="Entidades\MetodoPago.cs" />
     <Compile Include="Entidades\Pago.cs" />
     <Compile Include="Entidades\Producto.cs" />
+    <Compile Include="Entidades\Reporte.cs" />
+    <Compile Include="Entidades\Resumen.cs" />
     <Compile Include="Entidades\Rol.cs" />
     <Compile Include="Entidades\Tamano.cs" />
     <Compile Include="Entidades\TipoVenta.cs" />

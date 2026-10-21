@@ -127,7 +127,7 @@ CREATE TABLE Venta (
 	nro_factura VARCHAR(50) NOT NULL,
 	fecha_hora DATETIME NOT NULL DEFAULT GETDATE(),
 	total DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-	estado VARCHAR(20) NOT NULL DEFAULT 'Completada', -- 'Completada', 'Anulada'
+	estado BIT NOT NULL DEFAULT 1, -- 1: 'Completada', 0: 'Anulada'
 	id_tipo_venta INT NOT NULL,
 	id_usuario INT NOT NULL,
 	CONSTRAINT PK_Venta PRIMARY KEY (id_venta),
@@ -135,7 +135,6 @@ CREATE TABLE Venta (
 	CONSTRAINT FK_Venta_Usuario FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario),
 	CONSTRAINT UQ_Venta_NroFactura UNIQUE (nro_factura),
 	CONSTRAINT CK_Venta_Total CHECK (total >= 0),
-	CONSTRAINT CK_Venta_Estado CHECK (estado IN ('Completada', 'Anulada'))
 );
 GO
 

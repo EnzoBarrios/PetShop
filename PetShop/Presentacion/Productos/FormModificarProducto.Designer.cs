@@ -34,7 +34,7 @@
             this.imgListBotones = new System.Windows.Forms.ImageList(this.components);
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
-            this.txtCantidad = new System.Windows.Forms.TextBox();
+            this.txtStock = new System.Windows.Forms.TextBox();
             this.txtPrecioVenta = new System.Windows.Forms.TextBox();
             this.txtPrecioCompra = new System.Windows.Forms.TextBox();
             this.cbxCategoria = new System.Windows.Forms.ComboBox();
@@ -42,7 +42,7 @@
             this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.txtCodigo = new System.Windows.Forms.TextBox();
-            this.lblCantidad = new System.Windows.Forms.Label();
+            this.lblStock = new System.Windows.Forms.Label();
             this.lblPrecioVenta = new System.Windows.Forms.Label();
             this.lblPrecioCompra = new System.Windows.Forms.Label();
             this.lblCategoria = new System.Windows.Forms.Label();
@@ -51,6 +51,8 @@
             this.lblCodigo = new System.Windows.Forms.Label();
             this.lblNombre = new System.Windows.Forms.Label();
             this.lblContador = new System.Windows.Forms.Label();
+            this.txtStockMinimo = new System.Windows.Forms.TextBox();
+            this.lblStockMinimo = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // LTitulo
@@ -99,14 +101,15 @@
             this.btnGuardar.UseVisualStyleBackColor = true;
             this.btnGuardar.Click += new System.EventHandler(this.BtnGuardar_Click);
             // 
-            // txtCantidad
+            // txtStock
             // 
-            this.txtCantidad.Location = new System.Drawing.Point(172, 379);
-            this.txtCantidad.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtCantidad.MaxLength = 6;
-            this.txtCantidad.Name = "txtCantidad";
-            this.txtCantidad.Size = new System.Drawing.Size(150, 22);
-            this.txtCantidad.TabIndex = 53;
+            this.txtStock.Location = new System.Drawing.Point(172, 379);
+            this.txtStock.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtStock.MaxLength = 6;
+            this.txtStock.Name = "txtStock";
+            this.txtStock.Size = new System.Drawing.Size(150, 22);
+            this.txtStock.TabIndex = 53;
+            this.txtStock.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumeros_KeyPress);
             // 
             // txtPrecioVenta
             // 
@@ -116,6 +119,7 @@
             this.txtPrecioVenta.Name = "txtPrecioVenta";
             this.txtPrecioVenta.Size = new System.Drawing.Size(150, 22);
             this.txtPrecioVenta.TabIndex = 52;
+            this.txtPrecioVenta.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtPrecio_KeyPress);
             // 
             // txtPrecioCompra
             // 
@@ -125,6 +129,7 @@
             this.txtPrecioCompra.Name = "txtPrecioCompra";
             this.txtPrecioCompra.Size = new System.Drawing.Size(150, 22);
             this.txtPrecioCompra.TabIndex = 51;
+            this.txtPrecioCompra.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtPrecio_KeyPress);
             // 
             // cbxCategoria
             // 
@@ -192,15 +197,15 @@
             this.txtCodigo.TabIndex = 46;
             this.txtCodigo.TabStop = false;
             // 
-            // lblCantidad
+            // lblStock
             // 
-            this.lblCantidad.AutoSize = true;
-            this.lblCantidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCantidad.Location = new System.Drawing.Point(20, 380);
-            this.lblCantidad.Name = "lblCantidad";
-            this.lblCantidad.Size = new System.Drawing.Size(68, 17);
-            this.lblCantidad.TabIndex = 45;
-            this.lblCantidad.Text = "Cantidad:";
+            this.lblStock.AutoSize = true;
+            this.lblStock.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStock.Location = new System.Drawing.Point(20, 380);
+            this.lblStock.Name = "lblStock";
+            this.lblStock.Size = new System.Drawing.Size(68, 17);
+            this.lblStock.TabIndex = 45;
+            this.lblStock.Text = "Cantidad:";
             // 
             // lblPrecioVenta
             // 
@@ -286,15 +291,37 @@
             this.lblContador.TabIndex = 56;
             this.lblContador.Text = "0 / 255";
             // 
+            // txtStockMinimo
+            // 
+            this.txtStockMinimo.Location = new System.Drawing.Point(580, 378);
+            this.txtStockMinimo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtStockMinimo.MaxLength = 6;
+            this.txtStockMinimo.Name = "txtStockMinimo";
+            this.txtStockMinimo.Size = new System.Drawing.Size(150, 22);
+            this.txtStockMinimo.TabIndex = 58;
+            this.txtStockMinimo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumeros_KeyPress);
+            // 
+            // lblStockMinimo
+            // 
+            this.lblStockMinimo.AutoSize = true;
+            this.lblStockMinimo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStockMinimo.Location = new System.Drawing.Point(460, 380);
+            this.lblStockMinimo.Name = "lblStockMinimo";
+            this.lblStockMinimo.Size = new System.Drawing.Size(116, 17);
+            this.lblStockMinimo.TabIndex = 57;
+            this.lblStockMinimo.Text = "Cantidad Minima:";
+            // 
             // FormModificarProducto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 500);
+            this.Controls.Add(this.txtStockMinimo);
+            this.Controls.Add(this.lblStockMinimo);
             this.Controls.Add(this.lblContador);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnGuardar);
-            this.Controls.Add(this.txtCantidad);
+            this.Controls.Add(this.txtStock);
             this.Controls.Add(this.txtPrecioVenta);
             this.Controls.Add(this.txtPrecioCompra);
             this.Controls.Add(this.cbxCategoria);
@@ -302,7 +329,7 @@
             this.Controls.Add(this.txtDescripcion);
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.txtCodigo);
-            this.Controls.Add(this.lblCantidad);
+            this.Controls.Add(this.lblStock);
             this.Controls.Add(this.lblPrecioVenta);
             this.Controls.Add(this.lblPrecioCompra);
             this.Controls.Add(this.lblCategoria);
@@ -330,7 +357,7 @@
         private System.Windows.Forms.ImageList imgListBotones;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnGuardar;
-        private System.Windows.Forms.TextBox txtCantidad;
+        private System.Windows.Forms.TextBox txtStock;
         private System.Windows.Forms.TextBox txtPrecioVenta;
         private System.Windows.Forms.TextBox txtPrecioCompra;
         private System.Windows.Forms.ComboBox cbxCategoria;
@@ -338,7 +365,7 @@
         private System.Windows.Forms.TextBox txtDescripcion;
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.TextBox txtCodigo;
-        private System.Windows.Forms.Label lblCantidad;
+        private System.Windows.Forms.Label lblStock;
         private System.Windows.Forms.Label lblPrecioVenta;
         private System.Windows.Forms.Label lblPrecioCompra;
         private System.Windows.Forms.Label lblCategoria;
@@ -347,5 +374,7 @@
         private System.Windows.Forms.Label lblCodigo;
         private System.Windows.Forms.Label lblNombre;
         private System.Windows.Forms.Label lblContador;
+        private System.Windows.Forms.TextBox txtStockMinimo;
+        private System.Windows.Forms.Label lblStockMinimo;
     }
 }

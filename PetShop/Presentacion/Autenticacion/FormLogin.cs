@@ -66,6 +66,8 @@ namespace PetShop.Presentacion.Autenticacion
         {
             if (!ValidarCamposLogin())
             {
+                MessageBox.Show("Por favor, verifique los campos marcados con advertencias.",
+                   "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -86,7 +88,7 @@ namespace PetShop.Presentacion.Autenticacion
             }
             else
             {
-                MessageBox.Show(mensajeError, "Atención", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(mensajeError, "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtClave.Clear();
                 txtClave.Focus();
             }
