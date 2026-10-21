@@ -21,5 +21,10 @@ namespace PetShop.Presentacion
         {
             this.Close();
         }
+
+        private void lblCantidadVentas_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

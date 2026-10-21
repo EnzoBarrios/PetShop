@@ -1,6 +1,7 @@
 ﻿using PetShop.Datos;
 using PetShop.Entidades;
 using PetShop.Negocio;
+using PetShop.Presentacion.Productos;
 using PetShop.Presentacion.Usuarios;
 using System;
 using System.Collections.Generic;
