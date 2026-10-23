@@ -47,6 +47,10 @@ namespace PetShop.Presentacion.Ventas
             cbxMetodoPago.DisplayMember = nameof(MetodoPago.NombreMetodo);
             cbxMetodoPago.ValueMember = nameof(MetodoPago.IdMetodoPago);
             cbxMetodoPago.SelectedIndex = 0;
+
+            // Inicializar campos de descuento y monto abonado
+            txtDescuento.Text = "0";
+            txtMontoAbonado.Text = "0,00";
         }
 
         private void ConfigurarGrillaCarrito()
@@ -54,20 +58,25 @@ namespace PetShop.Presentacion.Ventas
             dgvCarrito.AutoGenerateColumns = false;
             dgvCarrito.Columns.Clear();
 
-            dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "NombreProducto", HeaderText = "Producto", Width = 200 });
+            dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Producto", HeaderText = "Producto", Width = 200 });
             dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Codigo", HeaderText = "Código", Width = 100 });
             dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "PrecioUnitario", HeaderText = "Precio U.", Width = 100 });
             dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Cantidad", HeaderText = "Cantidad", Width = 80 });
             dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Subtotal", HeaderText = "Subtotal", Width = 110 });
 
-            // Botón Eliminar Fila
-            DataGridViewButtonColumn btnEliminar = new DataGridViewButtonColumn
+            // Columna de imagen para eliminar
+            DataGridViewImageColumn btnEliminar = new DataGridViewImageColumn
             {
                 HeaderText = "Acción",
-                Text = "Quitar",
-                UseColumnTextForButtonValue = true,
-                Width = 80
+                Name = "btnQuitar",
+                Image = Properties.Resources.eliminar_producto, // Asegúrate de que el nombre coincida exactamente en Resources
+                ImageLayout = DataGridViewImageCellLayout.Zoom,
+                Width = 60
             };
+
+            // Evita que aparezca el ícono por defecto de la 'X' cuando la fila se inicializa
+            btnEliminar.DefaultCellStyle.NullValue = null;
+
             dgvCarrito.Columns.Add(btnEliminar);
         }
 
@@ -78,7 +87,7 @@ namespace PetShop.Presentacion.Ventas
             BuscarProductoPorNombre();
         }
 
-        private void TxtProducto_KeyDown(object sender, KeyEventArgs e)
+        private void TxtNombreProducto_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -97,34 +106,50 @@ namespace PetShop.Presentacion.Ventas
                 return;
             }
 
-            List<Producto> productos = _cnProducto.ListarProductos(busquedaNombre);
+            // 1. Obtener todos los productos activos que contengan el texto ingresado
+            List<Producto> productosEncontrados = _cnProducto.ListarProductos(busquedaNombre)
+                .Where(p => p.Estado && p.Nombre.ToLower().Contains(busquedaNombre.ToLower()))
+                .ToList();
 
-            _productoSeleccionado = productos.FirstOrDefault(p =>
-                p.Nombre.ToLower().Contains(busquedaNombre.ToLower())
-            );
-
-            if (_productoSeleccionado != null)
+            if (productosEncontrados.Count == 0)
             {
-                if (!_productoSeleccionado.Estado)
-                {
-                    MessageBox.Show("El producto seleccionado se encuentra inactivo.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    LimpiarCamposProducto();
-                    return;
-                }
-
-                txtNombreProducto.Text = _productoSeleccionado.Nombre;
-                txtCodProducto.Text = _productoSeleccionado.Codigo;
-                txtPrecioUnitario.Text = _productoSeleccionado.PrecioVenta.ToString("F2");
-                txtStockDisponible.Text = _productoSeleccionado.StockActual.ToString();
-
-                numCantidad.Value = 1;
-                numCantidad.Maximum = _productoSeleccionado.StockActual > 0 ? _productoSeleccionado.StockActual : 1;
-            }
-            else
-            {
-                MessageBox.Show("No se encontró ningún producto con ese nombre.", "Búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("No se encontró ningún producto activo con ese nombre.", "Búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LimpiarCamposProducto();
+                return;
             }
+
+            // 2. MUESTRA SIEMPRE LA GRILLA EMERGENTE (incluso si hay 1 sola coincidencia)
+            using (var modal = new FormBuscarProducto(productosEncontrados))
+            {
+                var result = modal.ShowDialog();
+
+                // Si el usuario seleccionó un producto haciendo doble clic en la grilla y apretó OK
+                if (result == DialogResult.OK && modal.ProductoSeleccionado != null)
+                {
+                    CargarProductoEnInterfaz(modal.ProductoSeleccionado);
+                }
+            }
+        }
+
+        // Método auxiliar para autocompletar la UI
+        private void CargarProductoEnInterfaz(Producto producto)
+        {
+            if (!producto.Estado)
+            {
+                MessageBox.Show("El producto seleccionado se encuentra inactivo.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                LimpiarCamposProducto();
+                return;
+            }
+
+            _productoSeleccionado = producto;
+
+            txtNombreProducto.Text = _productoSeleccionado.Nombre;
+            txtCodProducto.Text = _productoSeleccionado.Codigo;
+            txtPrecioUnitario.Text = _productoSeleccionado.PrecioVenta.ToString("F2");
+            txtStockDisponible.Text = _productoSeleccionado.StockActual.ToString();
+
+            numCantidad.Value = 1;
+            numCantidad.Maximum = _productoSeleccionado.StockActual > 0 ? _productoSeleccionado.StockActual : 1;
         }
 
         // --- 2. AGREGAR PRODUCTO AL CARRITO ---
@@ -169,37 +194,76 @@ namespace PetShop.Presentacion.Ventas
 
         private void RefrescarCarrito()
         {
+            dgvCarrito.AutoGenerateColumns = false;
             dgvCarrito.DataSource = null;
 
             dgvCarrito.DataSource = _listaDetalle.Select(d => new
             {
                 Producto = d.Producto.Nombre,
-                Codigo = d.Producto.Codigo,
+                d.Producto.Codigo,
                 PrecioUnitario = d.PrecioUnitario.ToString("C2"),
-                Cantidad = d.Cantidad,
+                d.Cantidad,
                 Subtotal = d.Subtotal.ToString("C2")
             }).ToList();
 
             CalcularTotales();
         }
 
-        // --- 3. CÁLCULO DE TOTALES, DESCUENTOS Y VUELTO ---
+        // --- EVENTO PARA QUITAR FILAS DEL CARRITO ---
+        private void DgvCarrito_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // 1. Verifica que el clic sea en una fila válida (no en el encabezado)
+            // 2. Verifica que se haya hecho clic sobre la columna de la imagen "btnQuitar"
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgvCarrito.Columns[e.ColumnIndex].Name == "btnQuitar")
+            {
+                _listaDetalle.RemoveAt(e.RowIndex);
+                RefrescarCarrito();
+            }
+        }
 
+        // --- 3. CÁLCULO DE TOTALES, DESCUENTOS Y VUELTO ---
         private void CalcularTotales()
         {
             decimal subtotal = _listaDetalle.Sum(d => d.Subtotal);
-            decimal porcentajeDescuento = 0;
+            decimal montoDescuento = 0;
+            string textoDescuentoMostrado = "0%";
 
-            if (decimal.TryParse(txtDescuento.Text.Trim(), out decimal desc))
+            if (decimal.TryParse(txtDescuento.Text.Trim(), out decimal valorIngresado) && valorIngresado > 0)
             {
-                porcentajeDescuento = desc;
+                // CASO 1: Si es <= 100, se aplica como PORCENTAJE (%)
+                if (valorIngresado <= 100)
+                {
+                    montoDescuento = subtotal * (valorIngresado / 100);
+                    textoDescuentoMostrado = $"{valorIngresado}% (${montoDescuento:F2})";
+                }
+                // CASO 2: Si es > 100, se aplica como MONTO FIJO EN PESOS ($)
+                else
+                {
+                    // Validar que el descuento fijo no supere el subtotal de la venta
+                    if (valorIngresado > subtotal)
+                    {
+                        montoDescuento = subtotal;
+                    }
+                    else
+                    {
+                        montoDescuento = valorIngresado;
+                    }
+
+                    textoDescuentoMostrado = $"${montoDescuento:F2}";
+                }
             }
 
-            decimal montoDescuento = subtotal * (porcentajeDescuento / 100);
+            // Calcular el Total Final restando el descuento obtenido
             decimal totalFinal = subtotal - montoDescuento;
+            if (totalFinal < 0) totalFinal = 0;
 
+            // Convertir el monto abonado desde el TextBox (si está vacío toma 0)
+            decimal.TryParse(txtMontoAbonado.Text.Trim(), out decimal abonado);
+
+            // Actualizar las etiquetas en la interfaz
             lblSubtotal.Text = $"Subtotal: ${subtotal:F2}";
-            lblDescuento.Text = $"Descuento: {porcentajeDescuento}%";
+            lblDescuentoFinal.Text = $"Descuento: {textoDescuentoMostrado}";
+            lblMontoFinal.Text = $"Abonado: ${abonado:F2}";
             lblTotalFinal.Text = $"TOTAL FINAL: ${totalFinal:F2}";
 
             CalcularVuelto(totalFinal);
@@ -212,11 +276,7 @@ namespace PetShop.Presentacion.Ventas
 
         private void TxtMontoAbonado_TextChanged(object sender, EventArgs e)
         {
-            decimal subtotal = _listaDetalle.Sum(d => d.Subtotal);
-            decimal.TryParse(txtDescuento.Text.Trim(), out decimal desc);
-            decimal totalFinal = subtotal - (subtotal * (desc / 100));
-
-            CalcularVuelto(totalFinal);
+            CalcularTotales();
         }
 
         private void CalcularVuelto(decimal totalFinal)
@@ -224,11 +284,19 @@ namespace PetShop.Presentacion.Ventas
             if (decimal.TryParse(txtMontoAbonado.Text.Trim(), out decimal abonado))
             {
                 decimal vuelto = abonado - totalFinal;
-                if (vuelto >= 0)
+                // CASO 1: Le sobra dinero (Vuelto a favor)
+                if (vuelto > 0)
                 {
                     lblVuelto.Text = $"Vuelto/Cambio: ${vuelto:F2}";
                     lblVuelto.BackColor = Color.LightGreen;
                 }
+                // CASO 2: Pago exacto (No hay vuelto que dar)
+                else if (vuelto == 0)
+                {
+                    lblVuelto.Text = "Vuelto/Cambio: $0,00";
+                    lblVuelto.BackColor = Color.White;
+                }
+                // CASO 3: Falta dinero
                 else
                 {
                     lblVuelto.Text = $"Falta abonar: ${Math.Abs(vuelto):F2}";
@@ -252,10 +320,26 @@ namespace PetShop.Presentacion.Ventas
                 return;
             }
 
+            // Recalcular Total Final respetando la regla (Porcentaje o Monto Fijo)
             decimal subtotal = _listaDetalle.Sum(d => d.Subtotal);
-            decimal.TryParse(txtDescuento.Text.Trim(), out decimal desc);
-            decimal totalFinal = subtotal - (subtotal * (desc / 100));
+            decimal montoDescuento = 0;
 
+            if (decimal.TryParse(txtDescuento.Text.Trim(), out decimal valorIngresado) && valorIngresado > 0)
+            {
+                if (valorIngresado <= 100)
+                {
+                    montoDescuento = subtotal * (valorIngresado / 100);
+                }
+                else
+                {
+                    montoDescuento = valorIngresado > subtotal ? subtotal : valorIngresado;
+                }
+            }
+
+            decimal totalFinal = subtotal - montoDescuento;
+            if (totalFinal < 0) totalFinal = 0;
+
+            // Validar monto abonado
             if (!decimal.TryParse(txtMontoAbonado.Text.Trim(), out decimal abonado) || abonado < totalFinal)
             {
                 MessageBox.Show($"El monto abonado es insuficiente para cubrir el total (${totalFinal:F2}).", "Monto Insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -269,6 +353,7 @@ namespace PetShop.Presentacion.Ventas
             {
                 NroFactura = txtNroFactura.Text,
                 FechaHora = DateTime.Now,
+                Descuento = montoDescuento,
                 Total = totalFinal,
                 Estado = "Completada",
                 IdTipoVenta = idTipoVenta,
@@ -294,6 +379,24 @@ namespace PetShop.Presentacion.Ventas
             else
             {
                 MessageBox.Show(mensaje, "Error al Registrar Venta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            // Después de confirmar la venta con éxito
+            foreach (var detalle in _listaDetalle)
+            {
+                // Consultar el stock actualizado del producto
+                Producto prod = _cnProducto.ObtenerPorId(detalle.IdProducto);
+
+                if (prod.StockActual <= prod.StockMinimo)
+                {
+                    MessageBox.Show(
+                        $"¡Atención! El producto '{prod.Nombre}' ha alcanzado o superado su stock mínimo.\n" +
+                        $"Stock actual: {prod.StockActual} (Mínimo: {prod.StockMinimo})",
+                        "Alerta de Stock Mínimo",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                }
             }
         }
 
@@ -324,6 +427,10 @@ namespace PetShop.Presentacion.Ventas
             txtDescuento.Clear();
             txtMontoAbonado.Clear();
             CargarInformacionInicial();
+            txtNroFactura.Text = _cnVenta.ObtenerProximoNroFactura();
+            txtNombreProducto.Focus();
         }
+
+        
     }
 }

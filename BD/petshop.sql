@@ -138,6 +138,10 @@ CREATE TABLE Venta (
 );
 GO
 
+ALTER TABLE Venta 
+ADD descuento DECIMAL(18,2) NOT NULL DEFAULT 0;
+GO
+
 -- 11. Tabla Pago
 CREATE TABLE Pago (
 	id_venta INT NOT NULL,

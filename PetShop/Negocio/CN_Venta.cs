@@ -109,6 +109,7 @@ namespace PetShop.Negocio
 
             // 5. Recalcular e integrar el Total
             venta.CalcularTotal();
+
             if (venta.Total <= 0)
             {
                 mensaje = "El total de la venta debe ser mayor a $0.";

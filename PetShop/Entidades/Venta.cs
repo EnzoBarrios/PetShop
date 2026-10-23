@@ -10,6 +10,8 @@ namespace PetShop.Entidades
         public string NroFactura { get; set; }
         public DateTime FechaHora { get; set; }
         public decimal Total { get; set; }
+
+        public decimal Descuento { get; set; } = 0; // Nuevo atributo para el descuento aplicado a la venta
         public string Estado { get; set; } // 'Completada' o 'Anulada'
 
         // Relación con TipoVenta y Usuario
@@ -57,15 +59,17 @@ namespace PetShop.Entidades
         // Recalcular total
         public void CalcularTotal()
         {
-            decimal suma = 0;
+            decimal subtotal = 0;
             if (Detalles != null)
             {
                 foreach (var item in Detalles)
                 {
-                    suma += item.Subtotal;
+                    subtotal += item.Subtotal;
                 }
             }
-            Total = suma;
+
+            decimal totalCalculado = subtotal - Descuento;
+            Total = totalCalculado < 0 ? 0 : totalCalculado;
         }
     }
 }

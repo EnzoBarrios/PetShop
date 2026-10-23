@@ -107,14 +107,15 @@ namespace PetShop.Datos
                 {
                     // 1. Insertar Venta
                     string queryVenta = @"
-                        INSERT INTO Venta (nro_factura, fecha_hora, total, estado, id_tipo_venta, id_usuario)
-                        VALUES (@nro_factura, @fecha_hora, @total, @estado, @id_tipo_venta, @id_usuario);
+                        INSERT INTO Venta (nro_factura, fecha_hora, total, descuento, estado, id_tipo_venta, id_usuario)
+                        VALUES (@nro_factura, @fecha_hora, @total, @descuento, @estado, @id_tipo_venta, @id_usuario);
                         SELECT SCOPE_IDENTITY();";
 
                     SqlCommand cmdVenta = new SqlCommand(queryVenta, conexion, objTransaction);
                     cmdVenta.Parameters.AddWithValue("@nro_factura", venta.NroFactura);
                     cmdVenta.Parameters.AddWithValue("@fecha_hora", venta.FechaHora);
                     cmdVenta.Parameters.AddWithValue("@total", venta.Total);
+                    cmdVenta.Parameters.AddWithValue("@descuento", venta.Descuento);
                     cmdVenta.Parameters.AddWithValue("@estado", string.IsNullOrEmpty(venta.Estado) ? "Completada" : venta.Estado);
                     cmdVenta.Parameters.AddWithValue("@id_tipo_venta", venta.IdTipoVenta);
                     cmdVenta.Parameters.AddWithValue("@id_usuario", venta.IdUsuario);
@@ -154,14 +155,13 @@ namespace PetShop.Datos
                         foreach (Pago pago in venta.Pagos)
                         {
                             string queryPago = @"
-                                INSERT INTO Pago (id_venta, id_metodo_pago, monto, fecha_hora)
-                                VALUES (@id_venta, @id_metodo_pago, @monto, @fecha_hora)";
+                                INSERT INTO Pago (id_venta, id_metodo_pago, monto)
+                                VALUES (@id_venta, @id_metodo_pago, @monto)";
 
                             SqlCommand cmdPago = new SqlCommand(queryPago, conexion, objTransaction);
                             cmdPago.Parameters.AddWithValue("@id_venta", idVentaGenerado);
                             cmdPago.Parameters.AddWithValue("@id_metodo_pago", pago.IdMetodoPago);
                             cmdPago.Parameters.AddWithValue("@monto", pago.Monto);
-                            cmdPago.Parameters.AddWithValue("@fecha_hora", DateTime.Now);
                             cmdPago.ExecuteNonQuery();
                         }
                     }

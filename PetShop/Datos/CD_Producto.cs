@@ -21,7 +21,6 @@ namespace PetShop.Datos
                        c.estado AS estado_categoria,
                        ISNULL(et.id_especie, 0) AS id_especie, 
                        ISNULL(et.id_tamano, 0) AS id_tamano,
-                       ISNULL(et.estado, 0) AS estado_et,
                        ISNULL(e.nombre_especie, '') AS nombre_especie,
                        ISNULL(t.nombre_tamano, '') AS nombre_tamano
                 FROM Producto p
@@ -36,7 +35,6 @@ namespace PetShop.Datos
                 ORDER BY p.nombre_producto ASC";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
-
             using (SqlCommand cmd = new SqlCommand(query, conexion))
             {
                 cmd.CommandType = CommandType.Text;
@@ -69,7 +67,6 @@ namespace PetShop.Datos
                        c.estado AS estado_categoria,
                        ISNULL(et.id_especie, 0) AS id_especie, 
                        ISNULL(et.id_tamano, 0) AS id_tamano,
-                       ISNULL(et.estado, 0) AS estado_et,
                        ISNULL(e.nombre_especie, '') AS nombre_especie,
                        ISNULL(t.nombre_tamano, '') AS nombre_tamano
                 FROM Producto p
@@ -111,7 +108,6 @@ namespace PetShop.Datos
                 SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
-
             using (SqlCommand cmd = new SqlCommand(query, conexion))
             {
                 cmd.CommandType = CommandType.Text;
@@ -141,7 +137,6 @@ namespace PetShop.Datos
                 WHERE id_producto = @IdProducto";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
-
             using (SqlCommand cmd = new SqlCommand(query, conexion))
             {
                 cmd.CommandType = CommandType.Text;
@@ -161,9 +156,8 @@ namespace PetShop.Datos
                 WHERE id_producto = @IdProducto";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
-
             using (SqlCommand cmd = new SqlCommand(query, conexion))
-            { 
+            {
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.Add("@IdProducto", SqlDbType.Int).Value = idProducto;
                 cmd.Parameters.Add("@NuevoEstado", SqlDbType.Bit).Value = nuevoEstado;
@@ -182,7 +176,6 @@ namespace PetShop.Datos
                     AND (@IdProducto = 0 OR id_producto <> @IdProducto)";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
-
             using (SqlCommand cmd = new SqlCommand(query, conexion))
             {
                 cmd.Parameters.Add("@CodigoBarra", SqlDbType.VarChar, 50).Value = codigoBarra.Trim();
@@ -206,7 +199,7 @@ namespace PetShop.Datos
             cmd.Parameters.Add("@Descripcion", SqlDbType.VarChar, 255).Value =
                 string.IsNullOrWhiteSpace(producto.Descripcion) ? (object)DBNull.Value : producto.Descripcion.Trim();
 
-            // Manejo de nulos para IdEspecie y IdTamano respetando la consistencia (ambos o ninguno)
+            // Manejo de nulos para IdEspecie y IdTamano respetando la consistencia
             if (producto.EspecieTamano != null &&
                 producto.EspecieTamano.IdEspecie > 0 &&
                 producto.EspecieTamano.IdTamano > 0)
@@ -241,7 +234,6 @@ namespace PetShop.Datos
 
             int ordIdEspecie = dr.GetOrdinal("id_especie");
             int ordIdTamano = dr.GetOrdinal("id_tamano");
-            int ordEstadoEspecieTamano = dr.GetOrdinal("estado_et");
             int ordNombreEspecie = dr.GetOrdinal("nombre_especie");
             int ordNombreTamano = dr.GetOrdinal("nombre_tamano");
 
@@ -276,7 +268,6 @@ namespace PetShop.Datos
                 {
                     IdEspecie = idEspecie,
                     IdTamano = idTamano,
-                    Estado = dr.GetBoolean(ordEstadoEspecieTamano),
                     Especie = new Especie { IdEspecie = idEspecie, Nombre = dr.GetString(ordNombreEspecie) },
                     Tamano = new Tamano { IdTamano = idTamano, Nombre = dr.GetString(ordNombreTamano) }
                 };

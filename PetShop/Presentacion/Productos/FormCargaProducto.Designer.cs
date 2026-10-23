@@ -153,14 +153,15 @@
             // 
             this.txtCodigo.BackColor = System.Drawing.SystemColors.Window;
             this.txtCodigo.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.txtCodigo.Location = new System.Drawing.Point(652, 122);
+            this.txtCodigo.Location = new System.Drawing.Point(652, 119);
             this.txtCodigo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtCodigo.MaxLength = 12;
             this.txtCodigo.Name = "txtCodigo";
-            this.txtCodigo.ReadOnly = true;
+            this.txtCodigo.ReadOnly = false;
             this.txtCodigo.Size = new System.Drawing.Size(224, 26);
-            this.txtCodigo.TabIndex = 24;
-            this.txtCodigo.TabStop = false;
+            this.txtCodigo.TabIndex = 10;
+            this.txtCodigo.TabStop = true;
+            this.txtCodigo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumerosEnteros_KeyPress);
             // 
             // txtNombre
             // 
@@ -206,7 +207,8 @@
             this.txtPrecioCompra.Name = "txtPrecioCompra";
             this.txtPrecioCompra.Size = new System.Drawing.Size(168, 26);
             this.txtPrecioCompra.TabIndex = 16;
-            this.txtPrecioCompra.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumeros_KeyPress);
+            this.txtPrecioCompra.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumerosDecimales_KeyPress);
+            this.txtPrecioCompra.Leave += new System.EventHandler(this.TxtPrecio_Leave);
             // 
             // txtPrecioVenta
             // 
@@ -216,7 +218,8 @@
             this.txtPrecioVenta.Name = "txtPrecioVenta";
             this.txtPrecioVenta.Size = new System.Drawing.Size(168, 26);
             this.txtPrecioVenta.TabIndex = 17;
-            this.txtPrecioVenta.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumeros_KeyPress);
+            this.txtPrecioVenta.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumerosDecimales_KeyPress);
+            this.txtPrecioVenta.Leave += new System.EventHandler(this.TxtPrecio_Leave);
             // 
             // txtCantidad
             // 
@@ -226,7 +229,7 @@
             this.txtCantidad.Name = "txtCantidad";
             this.txtCantidad.Size = new System.Drawing.Size(168, 26);
             this.txtCantidad.TabIndex = 18;
-            this.txtCantidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumeros_KeyPress);
+            this.txtCantidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumerosEnteros_KeyPress);
             // 
             // btnGuardar
             // 
@@ -292,6 +295,7 @@
             this.txtStock.Name = "txtStock";
             this.txtStock.Size = new System.Drawing.Size(168, 26);
             this.txtStock.TabIndex = 59;
+            this.txtStock.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumerosEnteros_KeyPress);
             // 
             // lblStock
             // 

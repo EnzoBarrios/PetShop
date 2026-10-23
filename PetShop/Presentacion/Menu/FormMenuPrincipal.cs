@@ -1,13 +1,14 @@
-﻿using System;
+﻿using PetShop.Entidades;
+using PetShop.Negocio;
 using PetShop.Presentacion.Catalogos;
 using PetShop.Presentacion.Usuarios;
+using PetShop.Presentacion.Ventas;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using PetShop.Entidades;
-using PetShop.Negocio;
 
 namespace PetShop.Presentacion.Menu
 {
@@ -28,6 +29,8 @@ namespace PetShop.Presentacion.Menu
 
         private void FormMenuPrincipal_Load(object sender, EventArgs e)
         {
+            contenedor.AutoScroll = true;
+            contenedor.AutoScrollMargin = new Size(10, 20); // Agrega 20px de margen vertical inferior extra
             CargarDatosUsuario();
             ConfigurarPermisosPorRol();
         }
@@ -157,7 +160,6 @@ namespace PetShop.Presentacion.Menu
         // Método base que incrusta cualquier instancia de formulario
         private void AbrirFormularioEnMdi(Form nuevoFormulario)
         {
-            // Validación de entrada (Fail-Fast): evita procesar instancias nulas
             if (nuevoFormulario == null)
             {
                 MessageBox.Show("No se pudo inicializar la ventana solicitada.",
@@ -172,9 +174,8 @@ namespace PetShop.Presentacion.Menu
                 return;
             }
 
-            // Si ya está abierto el mismo formulario y sigue, se trae al frente
-            if (_formularioActivo != null && 
-               !_formularioActivo.IsDisposed && 
+            if (_formularioActivo != null &&
+               !_formularioActivo.IsDisposed &&
                 _formularioActivo.GetType() == nuevoFormulario.GetType())
             {
                 _formularioActivo.BringToFront();
@@ -186,7 +187,6 @@ namespace PetShop.Presentacion.Menu
 
             try
             {
-                // Si había otro formulario secundario abierto, se cierra
                 if (_formularioActivo != null && !_formularioActivo.IsDisposed)
                 {
                     Form formularioAnterior = _formularioActivo;
@@ -201,14 +201,26 @@ namespace PetShop.Presentacion.Menu
 
                 nuevoFormulario.TopLevel = false;
                 nuevoFormulario.FormBorderStyle = FormBorderStyle.None;
-                nuevoFormulario.Dock = DockStyle.Fill;
+                nuevoFormulario.Dock = DockStyle.None;
+                nuevoFormulario.Location = new Point(0, 0);
+
+                // Permite que el formulario reconozca el tamaño real de sus controles
+                nuevoFormulario.AutoSize = true;
+                nuevoFormulario.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 
                 nuevoFormulario.FormClosed += FormularioHijo_FormClosed;
 
-                _formularioActivo = nuevoFormulario;        // Asigna el formulario activo
-                contenedor.Controls.Add(_formularioActivo); // Agrega el formulario al contenedor
-                _formularioActivo.Show();                   // Muestra el formulario secundario
-                _formularioActivo.BringToFront();           // Asegura que el formulario esté al frente
+                _formularioActivo = nuevoFormulario;
+                contenedor.Controls.Add(_formularioActivo);
+
+                // Fuerza a calcular el diseño antes de medir el tamaño
+                _formularioActivo.PerformLayout();
+
+                // Le asigna al panel el tamaño exacto requerido por el formulario
+                contenedor.AutoScrollMinSize = _formularioActivo.PreferredSize;
+
+                _formularioActivo.Show();
+                _formularioActivo.BringToFront();
             }
             catch (Exception ex)
             {
@@ -220,7 +232,7 @@ namespace PetShop.Presentacion.Menu
                 contenedor.ResumeLayout(true);
             }
         }
-
+        
         private void FormularioHijo_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (sender is Form formCerrado)
@@ -268,7 +280,7 @@ namespace PetShop.Presentacion.Menu
 
         private void NuevaVentaToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            AbrirFormularioEnMdi<FormVentas>();
+            AbrirFormularioEnMdi(new FormRegistrarVenta(_usuarioActual));
         }
 
         private void HistorialDeVentasToolStripMenuItem_Click(object sender, EventArgs e)
@@ -283,7 +295,7 @@ namespace PetShop.Presentacion.Menu
 
         private void BtnRealizarVenta_Click(object sender, EventArgs e)
         {
-            AbrirFormularioEnMdi<FormVentas>();
+            AbrirFormularioEnMdi(new FormRegistrarVenta(_usuarioActual));
         }
 
         private void BtnHistorialVentas_Click(object sender, EventArgs e)
@@ -344,5 +356,7 @@ namespace PetShop.Presentacion.Menu
                 Application.Exit();
             }
         }
+
+        
     }
 }

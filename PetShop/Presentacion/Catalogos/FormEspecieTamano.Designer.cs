@@ -77,9 +77,10 @@
             this.btnModificar.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModificar.ImageIndex = 2;
             this.btnModificar.ImageList = this.imgListBotones;
-            this.btnModificar.Location = new System.Drawing.Point(40, 250);
+            this.btnModificar.Location = new System.Drawing.Point(45, 312);
+            this.btnModificar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(140, 75);
+            this.btnModificar.Size = new System.Drawing.Size(158, 94);
             this.btnModificar.TabIndex = 19;
             this.btnModificar.Text = "Asignar Combinación";
             this.btnModificar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -90,9 +91,10 @@
             // btnVolver
             // 
             this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnVolver.Location = new System.Drawing.Point(40, 30);
+            this.btnVolver.Location = new System.Drawing.Point(45, 38);
+            this.btnVolver.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(75, 32);
+            this.btnVolver.Size = new System.Drawing.Size(84, 40);
             this.btnVolver.TabIndex = 18;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
@@ -117,14 +119,15 @@
             this.colEspecie,
             this.colTamano,
             this.colEstado});
-            this.dgvEspecieTamano.Location = new System.Drawing.Point(380, 80);
+            this.dgvEspecieTamano.Location = new System.Drawing.Point(428, 100);
+            this.dgvEspecieTamano.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dgvEspecieTamano.MultiSelect = false;
             this.dgvEspecieTamano.Name = "dgvEspecieTamano";
             this.dgvEspecieTamano.ReadOnly = true;
             this.dgvEspecieTamano.RowHeadersWidth = 51;
             this.dgvEspecieTamano.RowTemplate.Height = 24;
             this.dgvEspecieTamano.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvEspecieTamano.Size = new System.Drawing.Size(860, 510);
+            this.dgvEspecieTamano.Size = new System.Drawing.Size(968, 638);
             this.dgvEspecieTamano.TabIndex = 17;
             this.dgvEspecieTamano.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DgvMascotas_CellFormatting);
             this.dgvEspecieTamano.SelectionChanged += new System.EventHandler(this.DgvMascotas_SelectionChanged);
@@ -169,9 +172,10 @@
             this.btnModificarEspecie.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModificarEspecie.ImageIndex = 1;
             this.btnModificarEspecie.ImageList = this.imgListBotones;
-            this.btnModificarEspecie.Location = new System.Drawing.Point(200, 80);
+            this.btnModificarEspecie.Location = new System.Drawing.Point(225, 100);
+            this.btnModificarEspecie.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnModificarEspecie.Name = "btnModificarEspecie";
-            this.btnModificarEspecie.Size = new System.Drawing.Size(140, 75);
+            this.btnModificarEspecie.Size = new System.Drawing.Size(158, 94);
             this.btnModificarEspecie.TabIndex = 16;
             this.btnModificarEspecie.Text = "Modificar Especie";
             this.btnModificarEspecie.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -185,9 +189,10 @@
             this.btnAgregarEspecie.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAgregarEspecie.ImageIndex = 0;
             this.btnAgregarEspecie.ImageList = this.imgListBotones;
-            this.btnAgregarEspecie.Location = new System.Drawing.Point(40, 80);
+            this.btnAgregarEspecie.Location = new System.Drawing.Point(45, 100);
+            this.btnAgregarEspecie.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnAgregarEspecie.Name = "btnAgregarEspecie";
-            this.btnAgregarEspecie.Size = new System.Drawing.Size(140, 75);
+            this.btnAgregarEspecie.Size = new System.Drawing.Size(158, 94);
             this.btnAgregarEspecie.TabIndex = 15;
             this.btnAgregarEspecie.Text = "Agregar Especie";
             this.btnAgregarEspecie.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -204,9 +209,11 @@
             this.gbFiltroMascota.Controls.Add(this.txtBuscar);
             this.gbFiltroMascota.Controls.Add(this.lblBuscar);
             this.gbFiltroMascota.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbFiltroMascota.Location = new System.Drawing.Point(40, 340);
+            this.gbFiltroMascota.Location = new System.Drawing.Point(45, 425);
+            this.gbFiltroMascota.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.gbFiltroMascota.Name = "gbFiltroMascota";
-            this.gbFiltroMascota.Size = new System.Drawing.Size(300, 250);
+            this.gbFiltroMascota.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.gbFiltroMascota.Size = new System.Drawing.Size(338, 312);
             this.gbFiltroMascota.TabIndex = 14;
             this.gbFiltroMascota.TabStop = false;
             this.gbFiltroMascota.Text = "Filtros y Busqueda";
@@ -215,9 +222,10 @@
             // 
             this.rbInactivos.AutoSize = true;
             this.rbInactivos.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.rbInactivos.Location = new System.Drawing.Point(24, 205);
+            this.rbInactivos.Location = new System.Drawing.Point(27, 256);
+            this.rbInactivos.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.rbInactivos.Name = "rbInactivos";
-            this.rbInactivos.Size = new System.Drawing.Size(88, 24);
+            this.rbInactivos.Size = new System.Drawing.Size(107, 29);
             this.rbInactivos.TabIndex = 19;
             this.rbInactivos.TabStop = true;
             this.rbInactivos.Text = "Inactivos";
@@ -228,9 +236,10 @@
             // 
             this.rbActivos.AutoSize = true;
             this.rbActivos.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.rbActivos.Location = new System.Drawing.Point(24, 160);
+            this.rbActivos.Location = new System.Drawing.Point(27, 200);
+            this.rbActivos.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.rbActivos.Name = "rbActivos";
-            this.rbActivos.Size = new System.Drawing.Size(78, 24);
+            this.rbActivos.Size = new System.Drawing.Size(95, 29);
             this.rbActivos.TabIndex = 18;
             this.rbActivos.TabStop = true;
             this.rbActivos.Text = "Activos";
@@ -240,9 +249,9 @@
             // lblEstado
             // 
             this.lblEstado.AutoSize = true;
-            this.lblEstado.Location = new System.Drawing.Point(20, 80);
+            this.lblEstado.Location = new System.Drawing.Point(22, 100);
             this.lblEstado.Name = "lblEstado";
-            this.lblEstado.Size = new System.Drawing.Size(56, 20);
+            this.lblEstado.Size = new System.Drawing.Size(69, 25);
             this.lblEstado.TabIndex = 16;
             this.lblEstado.Text = "Estado";
             // 
@@ -250,9 +259,10 @@
             // 
             this.rbTodosEstado.AutoSize = true;
             this.rbTodosEstado.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.rbTodosEstado.Location = new System.Drawing.Point(24, 115);
+            this.rbTodosEstado.Location = new System.Drawing.Point(27, 144);
+            this.rbTodosEstado.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.rbTodosEstado.Name = "rbTodosEstado";
-            this.rbTodosEstado.Size = new System.Drawing.Size(70, 24);
+            this.rbTodosEstado.Size = new System.Drawing.Size(85, 29);
             this.rbTodosEstado.TabIndex = 17;
             this.rbTodosEstado.TabStop = true;
             this.rbTodosEstado.Text = "Todos";
@@ -262,9 +272,10 @@
             // txtBuscar
             // 
             this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtBuscar.Location = new System.Drawing.Point(80, 38);
+            this.txtBuscar.Location = new System.Drawing.Point(90, 48);
+            this.txtBuscar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(200, 27);
+            this.txtBuscar.Size = new System.Drawing.Size(224, 31);
             this.txtBuscar.TabIndex = 13;
             this.txtBuscar.TextChanged += new System.EventHandler(this.TxtBuscar_TextChanged);
             // 
@@ -272,9 +283,9 @@
             // 
             this.lblBuscar.AutoSize = true;
             this.lblBuscar.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblBuscar.Location = new System.Drawing.Point(20, 40);
+            this.lblBuscar.Location = new System.Drawing.Point(22, 50);
             this.lblBuscar.Name = "lblBuscar";
-            this.lblBuscar.Size = new System.Drawing.Size(52, 20);
+            this.lblBuscar.Size = new System.Drawing.Size(63, 25);
             this.lblBuscar.TabIndex = 0;
             this.lblBuscar.Text = "Buscar";
             // 
@@ -283,9 +294,9 @@
             this.lblTituloGestionEspecie.AutoSize = true;
             this.lblTituloGestionEspecie.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblTituloGestionEspecie.ForeColor = System.Drawing.Color.Black;
-            this.lblTituloGestionEspecie.Location = new System.Drawing.Point(463, 30);
+            this.lblTituloGestionEspecie.Location = new System.Drawing.Point(521, 38);
             this.lblTituloGestionEspecie.Name = "lblTituloGestionEspecie";
-            this.lblTituloGestionEspecie.Size = new System.Drawing.Size(355, 32);
+            this.lblTituloGestionEspecie.Size = new System.Drawing.Size(407, 38);
             this.lblTituloGestionEspecie.TabIndex = 13;
             this.lblTituloGestionEspecie.Text = "Gestión de Especies y Tamaño";
             // 
@@ -296,9 +307,10 @@
             this.btnCambiarEstado.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCambiarEstado.ImageIndex = 0;
             this.btnCambiarEstado.ImageList = this.imgListEstado;
-            this.btnCambiarEstado.Location = new System.Drawing.Point(200, 250);
+            this.btnCambiarEstado.Location = new System.Drawing.Point(225, 312);
+            this.btnCambiarEstado.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCambiarEstado.Name = "btnCambiarEstado";
-            this.btnCambiarEstado.Size = new System.Drawing.Size(140, 75);
+            this.btnCambiarEstado.Size = new System.Drawing.Size(158, 94);
             this.btnCambiarEstado.TabIndex = 20;
             this.btnCambiarEstado.Text = "Cambiar Estado";
             this.btnCambiarEstado.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -352,9 +364,10 @@
             this.btnAgregarTamano.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAgregarTamano.ImageIndex = 0;
             this.btnAgregarTamano.ImageList = this.imgListBotones;
-            this.btnAgregarTamano.Location = new System.Drawing.Point(40, 165);
+            this.btnAgregarTamano.Location = new System.Drawing.Point(45, 206);
+            this.btnAgregarTamano.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnAgregarTamano.Name = "btnAgregarTamano";
-            this.btnAgregarTamano.Size = new System.Drawing.Size(140, 75);
+            this.btnAgregarTamano.Size = new System.Drawing.Size(158, 94);
             this.btnAgregarTamano.TabIndex = 23;
             this.btnAgregarTamano.Text = "Agregar Tamaño";
             this.btnAgregarTamano.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -368,9 +381,10 @@
             this.btnModificarTamano.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModificarTamano.ImageIndex = 1;
             this.btnModificarTamano.ImageList = this.imgListBotones;
-            this.btnModificarTamano.Location = new System.Drawing.Point(200, 165);
+            this.btnModificarTamano.Location = new System.Drawing.Point(225, 206);
+            this.btnModificarTamano.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnModificarTamano.Name = "btnModificarTamano";
-            this.btnModificarTamano.Size = new System.Drawing.Size(140, 75);
+            this.btnModificarTamano.Size = new System.Drawing.Size(158, 94);
             this.btnModificarTamano.TabIndex = 24;
             this.btnModificarTamano.Text = "Modificar Tamaño";
             this.btnModificarTamano.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -381,10 +395,10 @@
             // FormEspecieTamano
             // 
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.Grip;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1280, 620);
+            this.ClientSize = new System.Drawing.Size(1440, 775);
             this.Controls.Add(this.btnModificarTamano);
             this.Controls.Add(this.btnAgregarTamano);
             this.Controls.Add(this.btnCambiarEstado);
@@ -396,6 +410,7 @@
             this.Controls.Add(this.gbFiltroMascota);
             this.Controls.Add(this.lblTituloGestionEspecie);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormEspecieTamano";
             this.Text = "Gestión de Categorias";
             this.Load += new System.EventHandler(this.FormEspecieTamano_Load);

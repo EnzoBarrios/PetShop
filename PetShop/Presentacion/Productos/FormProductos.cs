@@ -2,6 +2,7 @@
 using PetShop.Entidades;
 using PetShop.Negocio;
 using PetShop.Presentacion.Usuarios;
+using PetShop.Presentacion.Productos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace PetShop.Presentacion
 {
@@ -113,11 +115,40 @@ namespace PetShop.Presentacion
 
             if (dgvProductos.Rows[e.RowIndex].DataBoundItem is Producto producto)
             {
+                // -------------------------------------------------------------
+                // 1. APLICAR COLOR A LA FILA SEGÚN EL STOCK
+                // -------------------------------------------------------------
+                DataGridViewRow fila = dgvProductos.Rows[e.RowIndex];
+
+                // Caso 1: Sin Stock (Rojo claro)
+                if (producto.StockActual <= 0)
+                {
+                    fila.DefaultCellStyle.BackColor = Color.MistyRose;
+                    fila.DefaultCellStyle.SelectionBackColor = Color.IndianRed;
+                    fila.DefaultCellStyle.SelectionForeColor = Color.White;
+                }
+                // Caso 2: Stock Mínimo alcanzado o superado (Amarillo claro)
+                else if (producto.StockActual <= producto.StockMinimo)
+                {
+                    fila.DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
+                    fila.DefaultCellStyle.SelectionBackColor = Color.DarkKhaki;
+                    fila.DefaultCellStyle.SelectionForeColor = Color.Black;
+                }
+                // Caso 3: Stock Normal (Color de fondo por defecto)
+                else
+                {
+                    fila.DefaultCellStyle.BackColor = Color.White;
+                    fila.DefaultCellStyle.SelectionBackColor = SystemColors.Highlight;
+                    fila.DefaultCellStyle.SelectionForeColor = Color.White;
+                }
+
+                // -------------------------------------------------------------
+                // 2. FORMATO DE TEXTO DE COLUMNAS
+                // -------------------------------------------------------------
                 if (columna == "colCategoria")
                 {
                     e.Value = producto.Categoria?.NombreCategoria ?? "Sin Categoria";
                     e.FormattingApplied = true;
-
                 }
                 else if (columna == "colEstado")
                 {

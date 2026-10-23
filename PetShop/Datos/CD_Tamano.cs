@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PetShop.Entidades;
 
 namespace PetShop.Datos
@@ -22,7 +19,6 @@ namespace PetShop.Datos
                 ORDER BY nombre_tamano ASC";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
-
             using (SqlCommand cmd = new SqlCommand(query, conexion))
             {
                 cmd.CommandType = CommandType.Text;
@@ -50,10 +46,9 @@ namespace PetShop.Datos
             string query = @"
                 SELECT id_tamano, nombre_tamano, estado
                 FROM Tamano 
-                WHERE id_especie = @IdTamano";
+                WHERE id_tamano = @IdTamano"; // Se corrigió la columna de filtro
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
-
             using (SqlCommand cmd = new SqlCommand(query, conexion))
             {
                 cmd.CommandType = CommandType.Text;
@@ -98,7 +93,6 @@ namespace PetShop.Datos
                 SELECT SCOPE_IDENTITY();";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
-
             using (SqlCommand cmd = new SqlCommand(query, conexion))
             {
                 cmd.CommandType = CommandType.Text;
@@ -139,7 +133,6 @@ namespace PetShop.Datos
                 WHERE id_tamano = @IdTamano";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
-
             using (SqlCommand cmd = new SqlCommand(query, conexion))
             {
                 cmd.CommandType = CommandType.Text;
