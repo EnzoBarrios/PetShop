@@ -116,25 +116,25 @@ namespace PetShop.Presentacion
             if (dgvProductos.Rows[e.RowIndex].DataBoundItem is Producto producto)
             {
                 // -------------------------------------------------------------
-                // 1. APLICAR COLOR A LA FILA SEGÚN EL STOCK
+                // 1. APLICAR COLORES PERSONALIZADOS SEGÚN EL STOCK
                 // -------------------------------------------------------------
                 DataGridViewRow fila = dgvProductos.Rows[e.RowIndex];
 
-                // Caso 1: Sin Stock (Rojo claro)
+                // Caso 1: Sin Stock
                 if (producto.StockActual <= 0)
                 {
-                    fila.DefaultCellStyle.BackColor = Color.MistyRose;
-                    fila.DefaultCellStyle.SelectionBackColor = Color.IndianRed;
-                    fila.DefaultCellStyle.SelectionForeColor = Color.White;
+                    fila.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 100, 115); 
+                    fila.DefaultCellStyle.SelectionBackColor = Color.FromArgb(210, 4, 45); // Cherry (Cereza intenso al seleccionar)
+                    fila.DefaultCellStyle.SelectionForeColor = Color.White; // Texto blanco al seleccionar 
                 }
-                // Caso 2: Stock Mínimo alcanzado o superado (Amarillo claro)
+                // Caso 2: Stock Mínimo alcanzado o superado 
                 else if (producto.StockActual <= producto.StockMinimo)
                 {
-                    fila.DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
-                    fila.DefaultCellStyle.SelectionBackColor = Color.DarkKhaki;
-                    fila.DefaultCellStyle.SelectionForeColor = Color.Black;
+                    fila.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 225, 75);
+                    fila.DefaultCellStyle.SelectionBackColor = Color.FromArgb(255, 216, 0); // Rubber Ducky (Amarillo patito al seleccionar)
+                    fila.DefaultCellStyle.SelectionForeColor = Color.Black; 
                 }
-                // Caso 3: Stock Normal (Color de fondo por defecto)
+                // Caso 3: Stock Normal
                 else
                 {
                     fila.DefaultCellStyle.BackColor = Color.White;
@@ -152,11 +152,9 @@ namespace PetShop.Presentacion
                 }
                 else if (columna == "colEstado")
                 {
-                    // Formato de texto para el booleano Estado
                     e.Value = producto.Estado ? "Activo" : "Inactivo";
                     e.FormattingApplied = true;
                 }
-                // Formato de fecha uniforme
                 else if (columna == "colFecha")
                 {
                     e.Value = producto.FechaCreacion.ToString("dd/MM/yyyy");

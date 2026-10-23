@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProductos));
             this.LTitulo = new System.Windows.Forms.Label();
             this.txtBuscar = new System.Windows.Forms.TextBox();
@@ -86,14 +86,16 @@
             // dgvProductos
             // 
             this.dgvProductos.AllowUserToAddRows = false;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvProductos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvProductos.BackgroundColor = System.Drawing.Color.LightSlateGray;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvProductos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
@@ -103,6 +105,7 @@
             this.colCategoria,
             this.colStock,
             this.colEstado});
+            this.dgvProductos.GridColor = System.Drawing.SystemColors.ActiveBorder;
             this.dgvProductos.Location = new System.Drawing.Point(45, 125);
             this.dgvProductos.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgvProductos.MultiSelect = false;
@@ -123,7 +126,6 @@
             this.colId.Name = "colId";
             this.colId.ReadOnly = true;
             this.colId.Visible = false;
-            this.colId.Width = 125;
             // 
             // colCodigo
             // 
@@ -131,7 +133,6 @@
             this.colCodigo.MinimumWidth = 6;
             this.colCodigo.Name = "colCodigo";
             this.colCodigo.ReadOnly = true;
-            this.colCodigo.Width = 125;
             // 
             // colNombre
             // 
@@ -139,7 +140,6 @@
             this.colNombre.MinimumWidth = 6;
             this.colNombre.Name = "colNombre";
             this.colNombre.ReadOnly = true;
-            this.colNombre.Width = 125;
             // 
             // colDescripcion
             // 
@@ -147,7 +147,6 @@
             this.colDescripcion.MinimumWidth = 6;
             this.colDescripcion.Name = "colDescripcion";
             this.colDescripcion.ReadOnly = true;
-            this.colDescripcion.Width = 125;
             // 
             // colCategoria
             // 
@@ -155,7 +154,6 @@
             this.colCategoria.MinimumWidth = 6;
             this.colCategoria.Name = "colCategoria";
             this.colCategoria.ReadOnly = true;
-            this.colCategoria.Width = 125;
             // 
             // colStock
             // 
@@ -163,7 +161,6 @@
             this.colStock.MinimumWidth = 6;
             this.colStock.Name = "colStock";
             this.colStock.ReadOnly = true;
-            this.colStock.Width = 125;
             // 
             // colEstado
             // 
@@ -171,13 +168,12 @@
             this.colEstado.MinimumWidth = 6;
             this.colEstado.Name = "colEstado";
             this.colEstado.ReadOnly = true;
-            this.colEstado.Width = 125;
             // 
             // btnAgregar
             // 
             this.btnAgregar.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btnAgregar.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAgregar.ImageIndex = 0;
+            this.btnAgregar.ImageIndex = 6;
             this.btnAgregar.ImageList = this.imgListBotones;
             this.btnAgregar.Location = new System.Drawing.Point(45, 625);
             this.btnAgregar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -185,6 +181,7 @@
             this.btnAgregar.Size = new System.Drawing.Size(169, 62);
             this.btnAgregar.TabIndex = 21;
             this.btnAgregar.Text = "Nuevo Producto";
+            this.btnAgregar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAgregar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAgregar.UseVisualStyleBackColor = false;
             this.btnAgregar.Click += new System.EventHandler(this.BtnAgregarProducto_Click);
@@ -197,12 +194,16 @@
             this.imgListBotones.Images.SetKeyName(1, "Modificar.png");
             this.imgListBotones.Images.SetKeyName(2, "Actualizar_Estado.png");
             this.imgListBotones.Images.SetKeyName(3, "firmar.png");
+            this.imgListBotones.Images.SetKeyName(4, "editar.png");
+            this.imgListBotones.Images.SetKeyName(5, "agregar (2).png");
+            this.imgListBotones.Images.SetKeyName(6, "agregar (3).png");
+            this.imgListBotones.Images.SetKeyName(7, "control-s.png");
             // 
             // btnModificar
             // 
             this.btnModificar.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btnModificar.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnModificar.ImageIndex = 1;
+            this.btnModificar.ImageIndex = 4;
             this.btnModificar.ImageList = this.imgListBotones;
             this.btnModificar.Location = new System.Drawing.Point(636, 625);
             this.btnModificar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -210,6 +211,7 @@
             this.btnModificar.Size = new System.Drawing.Size(169, 62);
             this.btnModificar.TabIndex = 22;
             this.btnModificar.Text = "Modificar";
+            this.btnModificar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnModificar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnModificar.UseVisualStyleBackColor = false;
             this.btnModificar.Click += new System.EventHandler(this.BtnModificarProducto_Click);
@@ -218,7 +220,7 @@
             // 
             this.btnEstado.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btnEstado.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEstado.ImageIndex = 2;
+            this.btnEstado.ImageIndex = 7;
             this.btnEstado.ImageList = this.imgListBotones;
             this.btnEstado.Location = new System.Drawing.Point(1226, 625);
             this.btnEstado.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -226,6 +228,7 @@
             this.btnEstado.Size = new System.Drawing.Size(169, 62);
             this.btnEstado.TabIndex = 23;
             this.btnEstado.Text = "Desactivar";
+            this.btnEstado.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnEstado.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnEstado.UseVisualStyleBackColor = false;
             this.btnEstado.Click += new System.EventHandler(this.BtnEstado_Click);
