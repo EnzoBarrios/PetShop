@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq; // Necesario para GroupBy y Sum
-using PetShop.Datos;
+﻿using PetShop.Datos;
 using PetShop.Entidades;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq; // Necesario para GroupBy y Sum
 
 namespace PetShop.Negocio
 {
     public class CN_Venta
     {
-        private CD_Venta _cdvVenta = new CD_Venta();
+        private readonly CD_Venta _cdvVenta = new CD_Venta();
 
         public string ObtenerProximoNroFactura()
         {
@@ -142,6 +143,11 @@ namespace PetShop.Negocio
 
             // Guardar en la base de datos
             return _cdvVenta.RegistrarVenta(venta, out mensaje);
+        }
+
+        public DataTable ObtenerHistorialVentas(DateTime desde, DateTime hasta)
+        {
+            return _cdvVenta.ObtenerHistorialVentas(desde, hasta);
         }
     }
 }

@@ -179,5 +179,52 @@ namespace PetShop.Datos
 
             return respuesta;
         }
+
+        // Obtener el historial completo de ventas con el desglose de métodos de pago
+        public DataTable ObtenerHistorialVentas(DateTime desde, DateTime hasta)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection conexion = ConexionBd.CrearConexion())
+            {
+                try
+                {
+                    string query = @"
+                SELECT 
+                    v.nro_factura AS [NroTicket],
+                    CONVERT(VARCHAR(10), v.fecha_hora, 103) AS [Fecha],
+                    CONVERT(VARCHAR(8), v.fecha_hora, 108) AS [Hora],
+                    v.total AS [MontoTotal],
+                    ISNULL(p.Efectivo, 0) AS [Efectivo],
+                    ISNULL(p.Transferencia, 0) AS [Transferencia],
+                    ISNULL(p.QR, 0) AS [QR]
+                FROM Venta v
+                LEFT JOIN (
+                    SELECT 
+                        p.id_venta,
+                        SUM(CASE WHEN mp.nombre_metodo LIKE '%Efectivo%' THEN p.monto ELSE 0 END) AS Efectivo,
+                        SUM(CASE WHEN mp.nombre_metodo LIKE '%Transferencia%' THEN p.monto ELSE 0 END) AS Transferencia,
+                        SUM(CASE WHEN mp.nombre_metodo LIKE '%QR%' OR mp.nombre_metodo LIKE '%Mercado%' THEN p.monto ELSE 0 END) AS QR
+                    FROM Pago p
+                    INNER JOIN Metodo_pago mp ON p.id_metodo_pago = mp.id_metodo_pago
+                    GROUP BY p.id_venta
+                ) p ON v.id_venta = p.id_venta
+                WHERE CAST(v.fecha_hora AS DATE) BETWEEN @desde AND @hasta
+                ORDER BY v.id_venta DESC;";
+
+                    SqlCommand cmd = new SqlCommand(query, conexion);
+                    cmd.Parameters.AddWithValue("@desde", desde.Date);
+                    cmd.Parameters.AddWithValue("@hasta", hasta.Date);
+
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    conexion.Open();
+                    da.Fill(dt);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al consultar el historial de ventas: " + ex.Message);
+                }
+            }
+            return dt;
+        }
     }
 }
