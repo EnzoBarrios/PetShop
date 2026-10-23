@@ -13,17 +13,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-
 namespace PetShop.Presentacion
 {
     public partial class FormProductos : Form
     {
         private readonly CN_Producto _cnProducto;
+        private bool _filtrarSoloStockMinimo = false; // Bandera para controlar el filtro de stock mínimo
 
         public FormProductos()
         {
             InitializeComponent();
             _cnProducto = new CN_Producto();
+            btnStock.Text = "Stock Crítico";
         }
 
         private void FormProductos_Load(object sender, EventArgs e)
@@ -53,6 +54,14 @@ namespace PetShop.Presentacion
 
                 // Lista tipada desde la capa de negocio
                 List<Producto> listaProductos = _cnProducto.ListarProductos(filtro);
+
+                // Si el filtro de stock mínimo está activo, filtramos la lista en memoria
+                if (_filtrarSoloStockMinimo)
+                {
+                    listaProductos = listaProductos
+                        .Where(p => p.StockActual <= p.StockMinimo)
+                        .ToList();
+                }
 
                 dgvProductos.DataSource = null;
                 dgvProductos.DataSource = listaProductos;
@@ -123,7 +132,7 @@ namespace PetShop.Presentacion
                 // Caso 1: Sin Stock
                 if (producto.StockActual <= 0)
                 {
-                    fila.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 100, 115); 
+                    fila.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 100, 115);
                     fila.DefaultCellStyle.SelectionBackColor = Color.FromArgb(210, 4, 45); // Cherry (Cereza intenso al seleccionar)
                     fila.DefaultCellStyle.SelectionForeColor = Color.White; // Texto blanco al seleccionar 
                 }
@@ -132,7 +141,7 @@ namespace PetShop.Presentacion
                 {
                     fila.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 225, 75);
                     fila.DefaultCellStyle.SelectionBackColor = Color.FromArgb(255, 216, 0); // Rubber Ducky (Amarillo patito al seleccionar)
-                    fila.DefaultCellStyle.SelectionForeColor = Color.Black; 
+                    fila.DefaultCellStyle.SelectionForeColor = Color.Black;
                 }
                 // Caso 3: Stock Normal
                 else
@@ -163,9 +172,28 @@ namespace PetShop.Presentacion
             }
         }
 
-        //Filtro en la caja de texto de Buscar
+        // Filtro en la caja de texto de Buscar
         private void TxtBuscar_TextChanged(object sender, EventArgs e)
         {
+            CargarProductos();
+        }
+
+        // BOTÓN FILTRAR POR STOCK MÍNIMO / VER TODOS
+        private void BtnStock_Click(object sender, EventArgs e)
+        {
+            _filtrarSoloStockMinimo = !_filtrarSoloStockMinimo;
+
+            if (_filtrarSoloStockMinimo)
+            {
+                btnStock.Text = "Ver Todos";
+                btnStock.BackColor = Color.LightBlue; // Resalta el botón indicando que el filtro está activo
+            }
+            else
+            {
+                btnStock.Text = "Stock Crítico";
+                btnStock.BackColor = SystemColors.Control; // Vuelve al color original
+            }
+
             CargarProductos();
         }
 
@@ -218,7 +246,6 @@ namespace PetShop.Presentacion
             string accionTexto = producto.Estado ? "desactivar" : "activar";
             string tituloConfirmacion = producto.Estado ? "Confirmar Desactivación" : "Confirmar Activación";
 
-
             DialogResult respuesta = MessageBox.Show(
                 $"¿Está seguro de que desea {accionTexto} al producto '{producto.Nombre}'?",
                 tituloConfirmacion,
@@ -241,13 +268,9 @@ namespace PetShop.Presentacion
                     MessageBox.Show(mensaje, "Acción denegada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-            else
-            {
-                MessageBox.Show("Por favor, seleccione un producto de la lista.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
         }
 
-        //Botón Volver
+        // Botón Volver
         private void BtnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
