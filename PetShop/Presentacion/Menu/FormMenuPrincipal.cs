@@ -155,18 +155,6 @@ namespace PetShop.Presentacion.Menu
 
             string fechaFormateada = ahora.ToString("dddd, d 'de' MMMM 'de' yyyy");
             lblFecha.Text = char.ToUpper(fechaFormateada[0]) + fechaFormateada.Substring(1);
-
-            /*
-            // Obtiene y capitaliza el día de la semana 
-            string diaSemana = ahora.ToString("dddd");
-            diaSemana = char.ToUpper(diaSemana[0]) + diaSemana.Substring(1);
-
-            // Obtiene y capitaliza el mes 
-            string mes = ahora.ToString("MMMM");
-            mes = char.ToUpper(mes[0]) + mes.Substring(1);
-
-            lblFecha.Text = $"{diaSemana}, {ahora.Day} de {mes} de {ahora.Year}";
-            */
         }
 
 
@@ -368,7 +356,5 @@ namespace PetShop.Presentacion.Menu
                 Application.Exit();
             }
         }
-
-        
     }
 }

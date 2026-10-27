@@ -34,11 +34,6 @@ namespace PetShop.Presentacion
                 System.Reflection.BindingFlags.NonPublic)
                 ?.SetValue(dgvProductos, true, null);
 
-            // Doble Búfer por reflexión en la Grilla de Productos
-            typeof(DataGridView).GetProperty("DoubleBuffered",
-                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
-                ?.SetValue(dgvProductos, true, null);
-
             this.ResumeLayout(true);
         }
 
@@ -81,7 +76,6 @@ namespace PetShop.Presentacion
                 dgvProductos.DataSource = null;
                 dgvProductos.DataSource = listaProductos;
 
-                ColorearFilasPorStock();
                 ActualizarTextoBotonEstado();
             }
             catch (Exception ex)
@@ -98,41 +92,6 @@ namespace PetShop.Presentacion
             {
                 dgvProductos.ResumeLayout(true);
                 this.Cursor = Cursors.Default;
-            }
-        }
-
-        // Método para pintar filas una sola vez al terminar la carga de datos
-        private void ColorearFilasPorStock()
-        {
-            // -------------------------------------------------------------
-            // 1. APLICAR COLORES PERSONALIZADOS SEGÚN EL STOCK
-            // -------------------------------------------------------------
-            foreach (DataGridViewRow fila in dgvProductos.Rows)
-            {
-                if (fila.DataBoundItem is Producto producto)
-                {
-                    // Caso 1: Sin Stock
-                    if (producto.StockActual <= 0)
-                    {
-                        fila.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 100, 115);
-                        fila.DefaultCellStyle.SelectionBackColor = Color.FromArgb(210, 4, 45); // Cherry (Cereza intenso al seleccionar)
-                        fila.DefaultCellStyle.SelectionForeColor = Color.White; // Texto blanco al seleccionar 
-                    }
-                    // Caso 2: Stock Mínimo alcanzado o superado 
-                    else if (producto.StockActual <= producto.StockMinimo)
-                    {
-                        fila.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 225, 75);
-                        fila.DefaultCellStyle.SelectionBackColor = Color.FromArgb(255, 216, 0); // Rubber Ducky (Amarillo patito al seleccionar)
-                        fila.DefaultCellStyle.SelectionForeColor = Color.Black;
-                    }
-                    // Caso 3: Stock Normal
-                    else
-                    {
-                        fila.DefaultCellStyle.BackColor = Color.White;
-                        fila.DefaultCellStyle.SelectionBackColor = SystemColors.Highlight;
-                        fila.DefaultCellStyle.SelectionForeColor = Color.White;
-                    }
-                }
             }
         }
 
@@ -177,6 +136,27 @@ namespace PetShop.Presentacion
 
             if (dgvProductos.Rows[e.RowIndex].DataBoundItem is Producto producto)
             {
+                // -------------------------------------------------------------
+                // 1. APLICAR COLORES SEGÚN EL STOCK (Uso de e.CellStyle)
+                // -------------------------------------------------------------
+
+                // Caso 1: Sin Stock (Rojo)
+                if (producto.StockActual <= 0)
+                {
+                    e.CellStyle.BackColor = Color.FromArgb(255, 100, 115);
+                    e.CellStyle.ForeColor = Color.White;
+                    e.CellStyle.SelectionBackColor = Color.FromArgb(210, 4, 45);
+                    e.CellStyle.SelectionForeColor = Color.White;
+                }
+                // Caso 2: Stock Mínimo alcanzado o crítico (Amarillo)
+                else if (producto.StockActual <= producto.StockMinimo)
+                {
+                    e.CellStyle.BackColor = Color.FromArgb(255, 225, 75);
+                    e.CellStyle.ForeColor = Color.Black;
+                    e.CellStyle.SelectionBackColor = Color.FromArgb(255, 216, 0);
+                    e.CellStyle.SelectionForeColor = Color.Black;
+                }
+
                 // -------------------------------------------------------------
                 // 2. FORMATO DE TEXTO DE COLUMNAS
                 // -------------------------------------------------------------
@@ -289,7 +269,8 @@ namespace PetShop.Presentacion
             if (respuesta == DialogResult.Yes)
             {
                 // La capa de negocio valida el ID y actualiza en BD
-                bool exito = _cnProducto.CambiarEstado(producto.IdProducto, nuevoEstado, out string mensaje);
+                string mensaje = string.Empty;
+                bool exito = await Task.Run(() => _cnProducto.CambiarEstado(producto.IdProducto, nuevoEstado, out mensaje));
 
                 if (exito)
                 {

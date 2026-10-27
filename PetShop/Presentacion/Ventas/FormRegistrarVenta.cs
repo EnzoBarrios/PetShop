@@ -42,6 +42,14 @@ namespace PetShop.Presentacion.Ventas
 
         private async Task CargarInformacionInicialAsync()
         {
+            txtCodProducto.ReadOnly = true;
+            txtPrecioUnitario.ReadOnly = true;
+            txtStockDisponible.ReadOnly = true;
+            txtNroFactura.Text = _cnVenta.ObtenerProximoNroFactura();
+            txtFecha.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+            txtFecha.ReadOnly = true;
+            txtNroFactura.ReadOnly = true;
+
             try
             {
                 this.Cursor = Cursors.WaitCursor;
@@ -90,8 +98,6 @@ namespace PetShop.Presentacion.Ventas
             {
                 this.Cursor = Cursors.Default;
             }
-
-            
         }
 
         private void ConfigurarGrillaCarrito()
@@ -236,6 +242,17 @@ namespace PetShop.Presentacion.Ventas
             else
             {
                 _listaDetalle.Add(new DetalleVenta(cantidadIngresada, _productoSeleccionado.PrecioVenta, _productoSeleccionado));
+            }
+
+            if (_productoSeleccionado.StockActual <= _productoSeleccionado.StockMinimo)
+            {
+                MessageBox.Show(
+                    $"¡Atención! El producto '{_productoSeleccionado.Nombre}' ha alcanzado o superado su stock mínimo.\n" +
+                    $"Stock actual: {_productoSeleccionado.StockActual} (Mínimo: {_productoSeleccionado.StockMinimo})",
+                    "Alerta de Stock Mínimo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
             }
 
             RefrescarCarrito();
@@ -455,7 +472,6 @@ namespace PetShop.Presentacion.Ventas
             {
                 MessageBox.Show(mensaje, "Error al Registrar Venta", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
         private async void BtnEliminarVenta_Click(object sender, EventArgs e)
