@@ -42,7 +42,6 @@
             this.lblFechaDesde = new System.Windows.Forms.Label();
             this.lblTituloHistorialVentas = new System.Windows.Forms.Label();
             this.dgvVentas = new System.Windows.Forms.DataGridView();
-            this.btnVolver = new System.Windows.Forms.Button();
             this.colIdDetalleVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNroTicket = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,8 +50,15 @@
             this.AbonadoEfectivo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AbonadoTransferencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AbonadoQR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnVolver = new System.Windows.Forms.Button();
+            this.pnlTitulo = new System.Windows.Forms.Panel();
+            this.pnlGrilla = new System.Windows.Forms.Panel();
+            this.pnlFiltro = new System.Windows.Forms.Panel();
             this.gbInformacionVenta.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVentas)).BeginInit();
+            this.pnlTitulo.SuspendLayout();
+            this.pnlGrilla.SuspendLayout();
+            this.pnlFiltro.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbInformacionVenta
@@ -64,48 +70,45 @@
             this.gbInformacionVenta.Controls.Add(this.lblBuscador);
             this.gbInformacionVenta.Controls.Add(this.lblFechaHasta);
             this.gbInformacionVenta.Controls.Add(this.lblFechaDesde);
+            this.gbInformacionVenta.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbInformacionVenta.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbInformacionVenta.Location = new System.Drawing.Point(270, 75);
-            this.gbInformacionVenta.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.gbInformacionVenta.Location = new System.Drawing.Point(40, 5);
             this.gbInformacionVenta.Name = "gbInformacionVenta";
-            this.gbInformacionVenta.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.gbInformacionVenta.Size = new System.Drawing.Size(900, 125);
+            this.gbInformacionVenta.Padding = new System.Windows.Forms.Padding(40, 5, 40, 5);
+            this.gbInformacionVenta.Size = new System.Drawing.Size(1200, 90);
             this.gbInformacionVenta.TabIndex = 5;
             this.gbInformacionVenta.TabStop = false;
             this.gbInformacionVenta.Text = "Filtros de Busqueda";
             // 
             // dtpHasta
             // 
+            this.dtpHasta.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.dtpHasta.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpHasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpHasta.Location = new System.Drawing.Point(334, 60);
-            this.dtpHasta.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtpHasta.Location = new System.Drawing.Point(1037, 28);
             this.dtpHasta.Name = "dtpHasta";
-            this.dtpHasta.Size = new System.Drawing.Size(134, 29);
+            this.dtpHasta.Size = new System.Drawing.Size(120, 25);
             this.dtpHasta.TabIndex = 16;
             // 
             // dtpDesde
             // 
+            this.dtpDesde.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.dtpDesde.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpDesde.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDesde.Location = new System.Drawing.Point(107, 60);
-            this.dtpDesde.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtpDesde.Location = new System.Drawing.Point(809, 28);
             this.dtpDesde.Name = "dtpDesde";
-            this.dtpDesde.Size = new System.Drawing.Size(134, 29);
+            this.dtpDesde.Size = new System.Drawing.Size(120, 25);
             this.dtpDesde.TabIndex = 7;
             // 
             // btnBuscar
             // 
             this.btnBuscar.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnBuscar.ImageIndex = 0;
             this.btnBuscar.ImageList = this.imageList1;
-            this.btnBuscar.Location = new System.Drawing.Point(765, 58);
-            this.btnBuscar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnBuscar.Location = new System.Drawing.Point(203, 54);
             this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(90, 38);
+            this.btnBuscar.Size = new System.Drawing.Size(35, 35);
             this.btnBuscar.TabIndex = 15;
-            this.btnBuscar.Text = "Buscar";
             this.btnBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.BtnBuscar_Click);
@@ -119,39 +122,40 @@
             // txtStock
             // 
             this.txtStock.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtStock.Location = new System.Drawing.Point(591, 60);
-            this.txtStock.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtStock.Location = new System.Drawing.Point(77, 59);
             this.txtStock.Name = "txtStock";
-            this.txtStock.Size = new System.Drawing.Size(134, 29);
+            this.txtStock.Size = new System.Drawing.Size(120, 25);
             this.txtStock.TabIndex = 14;
             // 
             // lblBuscador
             // 
             this.lblBuscador.AutoSize = true;
             this.lblBuscador.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBuscador.Location = new System.Drawing.Point(506, 62);
+            this.lblBuscador.Location = new System.Drawing.Point(3, 62);
             this.lblBuscador.Name = "lblBuscador";
-            this.lblBuscador.Size = new System.Drawing.Size(77, 21);
+            this.lblBuscador.Size = new System.Drawing.Size(68, 19);
             this.lblBuscador.TabIndex = 9;
             this.lblBuscador.Text = "Buscador:";
             // 
             // lblFechaHasta
             // 
+            this.lblFechaHasta.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblFechaHasta.AutoSize = true;
             this.lblFechaHasta.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFechaHasta.Location = new System.Drawing.Point(276, 62);
+            this.lblFechaHasta.Location = new System.Drawing.Point(984, 31);
             this.lblFechaHasta.Name = "lblFechaHasta";
-            this.lblFechaHasta.Size = new System.Drawing.Size(52, 21);
+            this.lblFechaHasta.Size = new System.Drawing.Size(47, 19);
             this.lblFechaHasta.TabIndex = 7;
             this.lblFechaHasta.Text = "Hasta:";
             // 
             // lblFechaDesde
             // 
+            this.lblFechaDesde.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblFechaDesde.AutoSize = true;
             this.lblFechaDesde.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFechaDesde.Location = new System.Drawing.Point(45, 62);
+            this.lblFechaDesde.Location = new System.Drawing.Point(753, 31);
             this.lblFechaDesde.Name = "lblFechaDesde";
-            this.lblFechaDesde.Size = new System.Drawing.Size(56, 21);
+            this.lblFechaDesde.Size = new System.Drawing.Size(50, 19);
             this.lblFechaDesde.TabIndex = 5;
             this.lblFechaDesde.Text = "Desde:";
             // 
@@ -160,9 +164,9 @@
             this.lblTituloHistorialVentas.AutoSize = true;
             this.lblTituloHistorialVentas.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblTituloHistorialVentas.ForeColor = System.Drawing.Color.Black;
-            this.lblTituloHistorialVentas.Location = new System.Drawing.Point(613, 24);
+            this.lblTituloHistorialVentas.Location = new System.Drawing.Point(526, 15);
             this.lblTituloHistorialVentas.Name = "lblTituloHistorialVentas";
-            this.lblTituloHistorialVentas.Size = new System.Drawing.Size(263, 38);
+            this.lblTituloHistorialVentas.Size = new System.Drawing.Size(228, 32);
             this.lblTituloHistorialVentas.TabIndex = 4;
             this.lblTituloHistorialVentas.Text = "Historial de Ventas";
             // 
@@ -188,24 +192,13 @@
             this.AbonadoEfectivo,
             this.AbonadoTransferencia,
             this.AbonadoQR});
-            this.dgvVentas.Location = new System.Drawing.Point(45, 238);
-            this.dgvVentas.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dgvVentas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvVentas.Location = new System.Drawing.Point(40, 5);
             this.dgvVentas.Name = "dgvVentas";
             this.dgvVentas.RowHeadersWidth = 51;
             this.dgvVentas.RowTemplate.Height = 24;
-            this.dgvVentas.Size = new System.Drawing.Size(1350, 500);
+            this.dgvVentas.Size = new System.Drawing.Size(1200, 415);
             this.dgvVentas.TabIndex = 6;
-            // 
-            // btnVolver
-            // 
-            this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnVolver.Location = new System.Drawing.Point(45, 25);
-            this.btnVolver.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(84, 40);
-            this.btnVolver.TabIndex = 10;
-            this.btnVolver.Text = "Volver";
-            this.btnVolver.UseVisualStyleBackColor = true;
             // 
             // colIdDetalleVenta
             // 
@@ -264,26 +257,71 @@
             this.AbonadoQR.MinimumWidth = 6;
             this.AbonadoQR.Name = "AbonadoQR";
             // 
+            // btnVolver
+            // 
+            this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnVolver.Location = new System.Drawing.Point(40, 10);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(75, 40);
+            this.btnVolver.TabIndex = 10;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.BtnVolver_Click);
+            // 
+            // pnlTitulo
+            // 
+            this.pnlTitulo.Controls.Add(this.lblTituloHistorialVentas);
+            this.pnlTitulo.Controls.Add(this.btnVolver);
+            this.pnlTitulo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlTitulo.Location = new System.Drawing.Point(0, 0);
+            this.pnlTitulo.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlTitulo.Name = "pnlTitulo";
+            this.pnlTitulo.Padding = new System.Windows.Forms.Padding(40, 5, 40, 5);
+            this.pnlTitulo.Size = new System.Drawing.Size(1280, 60);
+            this.pnlTitulo.TabIndex = 11;
+            // 
+            // pnlGrilla
+            // 
+            this.pnlGrilla.Controls.Add(this.dgvVentas);
+            this.pnlGrilla.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlGrilla.Location = new System.Drawing.Point(0, 160);
+            this.pnlGrilla.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlGrilla.Name = "pnlGrilla";
+            this.pnlGrilla.Padding = new System.Windows.Forms.Padding(40, 5, 40, 40);
+            this.pnlGrilla.Size = new System.Drawing.Size(1280, 460);
+            this.pnlGrilla.TabIndex = 12;
+            // 
+            // pnlFiltro
+            // 
+            this.pnlFiltro.Controls.Add(this.gbInformacionVenta);
+            this.pnlFiltro.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlFiltro.Location = new System.Drawing.Point(0, 60);
+            this.pnlFiltro.Name = "pnlFiltro";
+            this.pnlFiltro.Padding = new System.Windows.Forms.Padding(40, 5, 40, 5);
+            this.pnlFiltro.Size = new System.Drawing.Size(1280, 100);
+            this.pnlFiltro.TabIndex = 12;
+            // 
             // FormHistorialVentas
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1440, 775);
-            this.Controls.Add(this.btnVolver);
-            this.Controls.Add(this.dgvVentas);
-            this.Controls.Add(this.gbInformacionVenta);
-            this.Controls.Add(this.lblTituloHistorialVentas);
+            this.ClientSize = new System.Drawing.Size(1280, 620);
+            this.Controls.Add(this.pnlGrilla);
+            this.Controls.Add(this.pnlFiltro);
+            this.Controls.Add(this.pnlTitulo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormHistorialVentas";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.FormHistorialVentas_Load);
             this.gbInformacionVenta.ResumeLayout(false);
             this.gbInformacionVenta.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVentas)).EndInit();
+            this.pnlTitulo.ResumeLayout(false);
+            this.pnlTitulo.PerformLayout();
+            this.pnlGrilla.ResumeLayout(false);
+            this.pnlFiltro.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -309,5 +347,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn AbonadoEfectivo;
         private System.Windows.Forms.DataGridViewTextBoxColumn AbonadoTransferencia;
         private System.Windows.Forms.DataGridViewTextBoxColumn AbonadoQR;
+        private System.Windows.Forms.Panel pnlTitulo;
+        private System.Windows.Forms.Panel pnlGrilla;
+        private System.Windows.Forms.Panel pnlFiltro;
     }
 }

@@ -1,17 +1,13 @@
-﻿using PetShop.Datos;
-using PetShop.Entidades;
-using PetShop.Negocio;
-using PetShop.Presentacion.Usuarios;
-using PetShop.Presentacion.Productos;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PetShop.Entidades;
+using PetShop.Negocio;
+using PetShop.Presentacion.Productos;
 
 namespace PetShop.Presentacion
 {
@@ -19,18 +15,37 @@ namespace PetShop.Presentacion
     {
         private readonly CN_Producto _cnProducto;
         private bool _filtrarSoloStockMinimo = false; // Bandera para controlar el filtro de stock mínimo
+        private readonly Timer _timerBusqueda; // Timer para aplicar Debounce en el buscador
 
         public FormProductos()
         {
+            this.SuspendLayout();
+
             InitializeComponent();
             _cnProducto = new CN_Producto();
             btnStock.Text = "Stock Crítico";
+
+            _timerBusqueda = new Timer { Interval = 300 };
+            _timerBusqueda.Tick += TimerBusqueda_Tick;
+
+            // Doble búfer en el DataGridView para eliminar el parpadeo al redimensionar
+            typeof(DataGridView).GetProperty("DoubleBuffered", 
+                System.Reflection.BindingFlags.Instance | 
+                System.Reflection.BindingFlags.NonPublic)
+                ?.SetValue(dgvProductos, true, null);
+
+            // Doble Búfer por reflexión en la Grilla de Productos
+            typeof(DataGridView).GetProperty("DoubleBuffered",
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                ?.SetValue(dgvProductos, true, null);
+
+            this.ResumeLayout(true);
         }
 
-        private void FormProductos_Load(object sender, EventArgs e)
+        private async void FormProductos_Shown(object sender, EventArgs e)
         {
             ConfigurarGrilla();
-            CargarProductos();
+            await CargarProductosAsync();
         }
 
         private void ConfigurarGrilla()
@@ -46,16 +61,15 @@ namespace PetShop.Presentacion
             colEstado.DataPropertyName = nameof(Producto.Estado);
         }
 
-        public void CargarProductos()
+        public async Task CargarProductosAsync()
         {
             try
             {
+                this.Cursor = Cursors.WaitCursor;
                 string filtro = txtBuscar.Text.Trim();
 
-                // Lista tipada desde la capa de negocio
-                List<Producto> listaProductos = _cnProducto.ListarProductos(filtro);
+                List<Producto> listaProductos = await Task.Run(() => _cnProducto.ListarProductos(filtro));
 
-                // Si el filtro de stock mínimo está activo, filtramos la lista en memoria
                 if (_filtrarSoloStockMinimo)
                 {
                     listaProductos = listaProductos
@@ -63,23 +77,62 @@ namespace PetShop.Presentacion
                         .ToList();
                 }
 
+                dgvProductos.SuspendLayout();
                 dgvProductos.DataSource = null;
                 dgvProductos.DataSource = listaProductos;
 
+                ColorearFilasPorStock();
                 ActualizarTextoBotonEstado();
             }
             catch (Exception ex)
             {
-                // Registro del error en log de servidor/consola (Seguridad por diseño)
                 System.Diagnostics.Debug.WriteLine($"[Error CargarProductos]: {ex}");
-
-                // Mensaje claro y seguro para el usuario
                 MessageBox.Show(
                     "Ocurrió un inconveniente al cargar el listado de productos. Por favor, intente nuevamente.",
                     "Atención",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
                 );
+            }
+            finally
+            {
+                dgvProductos.ResumeLayout(true);
+                this.Cursor = Cursors.Default;
+            }
+        }
+
+        // Método para pintar filas una sola vez al terminar la carga de datos
+        private void ColorearFilasPorStock()
+        {
+            // -------------------------------------------------------------
+            // 1. APLICAR COLORES PERSONALIZADOS SEGÚN EL STOCK
+            // -------------------------------------------------------------
+            foreach (DataGridViewRow fila in dgvProductos.Rows)
+            {
+                if (fila.DataBoundItem is Producto producto)
+                {
+                    // Caso 1: Sin Stock
+                    if (producto.StockActual <= 0)
+                    {
+                        fila.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 100, 115);
+                        fila.DefaultCellStyle.SelectionBackColor = Color.FromArgb(210, 4, 45); // Cherry (Cereza intenso al seleccionar)
+                        fila.DefaultCellStyle.SelectionForeColor = Color.White; // Texto blanco al seleccionar 
+                    }
+                    // Caso 2: Stock Mínimo alcanzado o superado 
+                    else if (producto.StockActual <= producto.StockMinimo)
+                    {
+                        fila.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 225, 75);
+                        fila.DefaultCellStyle.SelectionBackColor = Color.FromArgb(255, 216, 0); // Rubber Ducky (Amarillo patito al seleccionar)
+                        fila.DefaultCellStyle.SelectionForeColor = Color.Black;
+                    }
+                    // Caso 3: Stock Normal
+                    else
+                    {
+                        fila.DefaultCellStyle.BackColor = Color.White;
+                        fila.DefaultCellStyle.SelectionBackColor = SystemColors.Highlight;
+                        fila.DefaultCellStyle.SelectionForeColor = Color.White;
+                    }
+                }
             }
         }
 
@@ -125,33 +178,6 @@ namespace PetShop.Presentacion
             if (dgvProductos.Rows[e.RowIndex].DataBoundItem is Producto producto)
             {
                 // -------------------------------------------------------------
-                // 1. APLICAR COLORES PERSONALIZADOS SEGÚN EL STOCK
-                // -------------------------------------------------------------
-                DataGridViewRow fila = dgvProductos.Rows[e.RowIndex];
-
-                // Caso 1: Sin Stock
-                if (producto.StockActual <= 0)
-                {
-                    fila.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 100, 115);
-                    fila.DefaultCellStyle.SelectionBackColor = Color.FromArgb(210, 4, 45); // Cherry (Cereza intenso al seleccionar)
-                    fila.DefaultCellStyle.SelectionForeColor = Color.White; // Texto blanco al seleccionar 
-                }
-                // Caso 2: Stock Mínimo alcanzado o superado 
-                else if (producto.StockActual <= producto.StockMinimo)
-                {
-                    fila.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 225, 75);
-                    fila.DefaultCellStyle.SelectionBackColor = Color.FromArgb(255, 216, 0); // Rubber Ducky (Amarillo patito al seleccionar)
-                    fila.DefaultCellStyle.SelectionForeColor = Color.Black;
-                }
-                // Caso 3: Stock Normal
-                else
-                {
-                    fila.DefaultCellStyle.BackColor = Color.White;
-                    fila.DefaultCellStyle.SelectionBackColor = SystemColors.Highlight;
-                    fila.DefaultCellStyle.SelectionForeColor = Color.White;
-                }
-
-                // -------------------------------------------------------------
                 // 2. FORMATO DE TEXTO DE COLUMNAS
                 // -------------------------------------------------------------
                 if (columna == "colCategoria")
@@ -175,11 +201,18 @@ namespace PetShop.Presentacion
         // Filtro en la caja de texto de Buscar
         private void TxtBuscar_TextChanged(object sender, EventArgs e)
         {
-            CargarProductos();
+            _timerBusqueda.Stop();
+            _timerBusqueda.Start();
+        }
+
+        private async void TimerBusqueda_Tick(object sender, EventArgs e)
+        {
+            _timerBusqueda.Stop();
+            await CargarProductosAsync();
         }
 
         // BOTÓN FILTRAR POR STOCK MÍNIMO / VER TODOS
-        private void BtnStock_Click(object sender, EventArgs e)
+        private async void BtnStock_Click(object sender, EventArgs e)
         {
             _filtrarSoloStockMinimo = !_filtrarSoloStockMinimo;
 
@@ -194,23 +227,23 @@ namespace PetShop.Presentacion
                 btnStock.BackColor = SystemColors.Control; // Vuelve al color original
             }
 
-            CargarProductos();
+            await CargarProductosAsync();
         }
 
         // BOTON AGREGAR PRODUCTO
-        private void BtnAgregarProducto_Click(object sender, EventArgs e)
+        private async void BtnAgregarProducto_Click(object sender, EventArgs e)
         {
             using (FormCargaProducto formAlta = new FormCargaProducto())
             {
                 if (formAlta.ShowDialog() == DialogResult.OK)
                 {
-                    CargarProductos();
+                   await CargarProductosAsync();
                 }
             }
         }
 
         // BOTON MODIFICAR PRODUCTO 
-        private void BtnModificarProducto_Click(object sender, EventArgs e)
+        private async void BtnModificarProducto_Click(object sender, EventArgs e)
         {
             Producto producto = ObtenerProductoSeleccionado();
 
@@ -225,13 +258,13 @@ namespace PetShop.Presentacion
             {
                 if (formModif.ShowDialog() == DialogResult.OK)
                 {
-                    CargarProductos();
+                    await CargarProductosAsync();
                 }
             }
         }
 
         // BOTON CAMBIAR ESTADO
-        private void BtnEstado_Click(object sender, EventArgs e)
+        private async void BtnEstado_Click(object sender, EventArgs e)
         {
             Producto producto = ObtenerProductoSeleccionado();
 
@@ -261,7 +294,7 @@ namespace PetShop.Presentacion
                 if (exito)
                 {
                     MessageBox.Show(mensaje, "Operación Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    CargarProductos();
+                    await CargarProductosAsync();
                 }
                 else
                 {

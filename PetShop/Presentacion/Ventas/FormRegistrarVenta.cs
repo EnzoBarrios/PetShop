@@ -1,10 +1,11 @@
-﻿using PetShop.Entidades;
-using PetShop.Negocio;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using PetShop.Entidades;
+using PetShop.Negocio;
 
 namespace PetShop.Presentacion.Ventas
 {
@@ -21,42 +22,87 @@ namespace PetShop.Presentacion.Ventas
         {
             InitializeComponent();
             _usuarioLogueado = usuario;
+
+            // Doble Búfer en el DataGridView del Carrito para eliminar parpadeos y lag
+            typeof(DataGridView).GetProperty("DoubleBuffered",
+                System.Reflection.BindingFlags.Instance |
+                System.Reflection.BindingFlags.NonPublic)
+                ?.SetValue(dgvCarrito, true, null);
         }
 
-        private void FormRegistrarVenta_Load(object sender, EventArgs e)
+        private async void FormRegistrarVenta_Load(object sender, EventArgs e)
         {
-            CargarInformacionInicial();
             ConfigurarGrillaCarrito();
         }
 
-        private void CargarInformacionInicial()
+        private async void FormResitrarVenta_Shown(object sender, EventArgs e)
         {
-            txtNroFactura.Text = _cnVenta.ObtenerProximoNroFactura();
-            txtFecha.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
-            txtFecha.ReadOnly = true;
-            txtNroFactura.ReadOnly = true;
+            await CargarInformacionInicialAsync();
+        }
 
-            // Cargar Tipos de Venta desde la BD
-            cbxTipoVenta.DataSource = _cnVenta.ListarTiposVenta();
-            cbxTipoVenta.DisplayMember = nameof(TipoVenta.Descripcion);
-            cbxTipoVenta.ValueMember = nameof(TipoVenta.IdTipoVenta);
-            cbxTipoVenta.SelectedIndex = 0;
+        private async Task CargarInformacionInicialAsync()
+        {
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
 
-            // Cargar Métodos de Pago desde la BD
-            cbxMetodoPago.DataSource = _cnVenta.ListarMetodosPago();
-            cbxMetodoPago.DisplayMember = nameof(MetodoPago.NombreMetodo);
-            cbxMetodoPago.ValueMember = nameof(MetodoPago.IdMetodoPago);
-            cbxMetodoPago.SelectedIndex = 0;
+                txtFecha.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+                txtFecha.ReadOnly = true;
+                txtNroFactura.ReadOnly = true;
 
-            // Inicializar campos de descuento y monto abonado
-            txtDescuento.Text = "0";
-            txtMontoAbonado.Text = "0,00";
+                // Carga en segundo plano de todos los datos de inicio sin congelar la ventana
+                var nroFacturaTask = Task.Run(() => _cnVenta.ObtenerProximoNroFactura());
+                var tiposVentaTask = Task.Run(() => _cnVenta.ListarTiposVenta());
+                var metodosPagoTask = Task.Run(() => _cnVenta.ListarMetodosPago());
+
+                await Task.WhenAll(nroFacturaTask, tiposVentaTask, metodosPagoTask);
+
+                txtNroFactura.Text = await nroFacturaTask;
+
+                // Cargar Tipos de Venta desde la BD
+                cbxTipoVenta.DataSource = await tiposVentaTask;
+                cbxTipoVenta.DisplayMember = nameof(TipoVenta.Descripcion);
+                cbxTipoVenta.ValueMember = nameof(TipoVenta.IdTipoVenta);
+                if (cbxTipoVenta.Items.Count > 0) 
+                {
+                    cbxTipoVenta.SelectedIndex = 0;
+                } 
+
+                // Cargar Métodos de Pago desde la BD
+                cbxMetodoPago.DataSource = await metodosPagoTask;
+                cbxMetodoPago.DisplayMember = nameof(MetodoPago.NombreMetodo);
+                cbxMetodoPago.ValueMember = nameof(MetodoPago.IdMetodoPago);
+                if (cbxMetodoPago.Items.Count > 0)
+                {
+                    cbxMetodoPago.SelectedIndex = 0;
+                }
+
+                // Inicializar campos de descuento y monto abonado
+                txtDescuento.Text = "0";
+                txtMontoAbonado.Text = "0,00";
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Error al cargar configuración inicial: {ex.Message}",
+                    "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+
+            
         }
 
         private void ConfigurarGrillaCarrito()
         {
+            // Solo configuramos la grilla si no tiene columnas creadas previamente
+            if (dgvCarrito.Columns.Count > 0)
+            {
+                return;
+            }
+
             dgvCarrito.AutoGenerateColumns = false;
-            dgvCarrito.Columns.Clear();
 
             dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Producto", HeaderText = "Producto", Width = 200 });
             dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Codigo", HeaderText = "Código", Width = 100 });
@@ -81,22 +127,21 @@ namespace PetShop.Presentacion.Ventas
         }
 
         // --- 1. BÚSQUEDA Y SELECCIÓN DE PRODUCTO ---
-
-        private void BtnBuscarProducto_Click(object sender, EventArgs e)
+        private async void BtnBuscarProducto_Click(object sender, EventArgs e)
         {
-            BuscarProductoPorNombre();
+           await BuscarProductoPorNombreAsync();
         }
 
-        private void TxtNombreProducto_KeyDown(object sender, KeyEventArgs e)
+        private async void TxtNombreProducto_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                BuscarProductoPorNombre();
                 e.SuppressKeyPress = true;
+                await BuscarProductoPorNombreAsync();
             }
         }
 
-        private void BuscarProductoPorNombre()
+        private async Task BuscarProductoPorNombreAsync()
         {
             string busquedaNombre = txtNombreProducto.Text.Trim();
 
@@ -106,10 +151,16 @@ namespace PetShop.Presentacion.Ventas
                 return;
             }
 
+            this.Cursor = Cursors.WaitCursor;
+
             // 1. Obtener todos los productos activos que contengan el texto ingresado
-            List<Producto> productosEncontrados = _cnProducto.ListarProductos(busquedaNombre)
-                .Where(p => p.Estado && p.Nombre.ToLower().Contains(busquedaNombre.ToLower()))
-                .ToList();
+            List<Producto> productosEncontrados = await Task.Run(() => 
+                _cnProducto.ListarProductos(busquedaNombre)
+                           .Where(p => p.Estado && p.Nombre.ToLower().Contains(busquedaNombre.ToLower()))
+                           .ToList()
+            );
+
+            this.Cursor = Cursors.Default;
 
             if (productosEncontrados.Count == 0)
             {
@@ -153,7 +204,6 @@ namespace PetShop.Presentacion.Ventas
         }
 
         // --- 2. AGREGAR PRODUCTO AL CARRITO ---
-
         private void BtnAgregarProducto_Click(object sender, EventArgs e)
         {
             if (_productoSeleccionado == null)
@@ -312,7 +362,7 @@ namespace PetShop.Presentacion.Ventas
 
         // --- 4. CONFIRMAR REGISTRO ---
 
-        private void BtnConfirmarVenta_Click(object sender, EventArgs e)
+        private async void BtnConfirmarVenta_Click(object sender, EventArgs e)
         {
             if (_listaDetalle.Count == 0)
             {
@@ -369,42 +419,50 @@ namespace PetShop.Presentacion.Ventas
                 }
             };
 
-            bool exito = _cnVenta.RegistrarVenta(nuevaVenta, out string mensaje);
+            this.Cursor = Cursors.WaitCursor;
+
+            // Transacción de registro procesada en segundo plano
+            string mensaje = string.Empty;
+            bool exito = await Task.Run(() => _cnVenta.RegistrarVenta(nuevaVenta, out mensaje));
+
+            this.Cursor = Cursors.Default;
 
             if (exito)
             {
                 MessageBox.Show("Venta registrada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LimpiarFormularioVenta();
+
+                // Después de confirmar la venta con éxito
+                foreach (var detalle in _listaDetalle)
+                {
+                    // Consultar el stock actualizado del producto
+                    Producto prod = await Task.Run(() => _cnProducto.ObtenerPorId(detalle.IdProducto));
+
+                    if (prod.StockActual <= prod.StockMinimo)
+                    {
+                        MessageBox.Show(
+                            $"¡Atención! El producto '{prod.Nombre}' ha alcanzado o superado su stock mínimo.\n" +
+                            $"Stock actual: {prod.StockActual} (Mínimo: {prod.StockMinimo})",
+                            "Alerta de Stock Mínimo",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                }
+
+                await LimpiarFormularioVentaAsync();
             }
             else
             {
                 MessageBox.Show(mensaje, "Error al Registrar Venta", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            // Después de confirmar la venta con éxito
-            foreach (var detalle in _listaDetalle)
-            {
-                // Consultar el stock actualizado del producto
-                Producto prod = _cnProducto.ObtenerPorId(detalle.IdProducto);
-
-                if (prod.StockActual <= prod.StockMinimo)
-                {
-                    MessageBox.Show(
-                        $"¡Atención! El producto '{prod.Nombre}' ha alcanzado o superado su stock mínimo.\n" +
-                        $"Stock actual: {prod.StockActual} (Mínimo: {prod.StockMinimo})",
-                        "Alerta de Stock Mínimo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
-                }
-            }
         }
 
-        private void BtnEliminarVenta_Click(object sender, EventArgs e)
+        private async void BtnEliminarVenta_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("¿Desea cancelar y limpiar la venta actual?", "Cancelar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                LimpiarFormularioVenta();
+                await LimpiarFormularioVentaAsync();
             }
         }
 
@@ -419,18 +477,20 @@ namespace PetShop.Presentacion.Ventas
             txtNombreProducto.Focus();
         }
 
-        private void LimpiarFormularioVenta()
+        private async Task LimpiarFormularioVentaAsync()
         {
             LimpiarCamposProducto();
             _listaDetalle.Clear();
             RefrescarCarrito();
             txtDescuento.Clear();
             txtMontoAbonado.Clear();
-            CargarInformacionInicial();
-            txtNroFactura.Text = _cnVenta.ObtenerProximoNroFactura();
+            await CargarInformacionInicialAsync();
             txtNombreProducto.Focus();
         }
 
-        
+        private void BtnVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

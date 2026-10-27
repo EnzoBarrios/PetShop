@@ -1,14 +1,11 @@
-﻿using PetShop.Entidades;
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+using PetShop.Entidades;
 using PetShop.Negocio;
 using PetShop.Presentacion.Catalogos;
 using PetShop.Presentacion.Usuarios;
 using PetShop.Presentacion.Ventas;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
 
 namespace PetShop.Presentacion.Menu
 {
@@ -25,6 +22,17 @@ namespace PetShop.Presentacion.Menu
             InitializeComponent();
             _usuarioActual = usuario ?? throw new ArgumentNullException(nameof(usuario));
             _cnUsuario = new CN_Usuario();
+
+            // Activa doble búfer para evitar parpadeos/lags en las transiciones
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer |
+                          ControlStyles.AllPaintingInWmPaint |
+                          ControlStyles.UserPaint, true);
+            this.UpdateStyles();
+
+            // Activa doble búfer por reflexión en el Panel Contenedor
+            typeof(Panel).GetProperty("DoubleBuffered",
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                ?.SetValue(contenedor, true, null);
         }
 
         private void FormMenuPrincipal_Load(object sender, EventArgs e)
@@ -145,6 +153,10 @@ namespace PetShop.Presentacion.Menu
             // Muestra la fecha completa: día de la semana, día de mes de año
             DateTime ahora = DateTime.Now;
 
+            string fechaFormateada = ahora.ToString("dddd, d 'de' MMMM 'de' yyyy");
+            lblFecha.Text = char.ToUpper(fechaFormateada[0]) + fechaFormateada.Substring(1);
+
+            /*
             // Obtiene y capitaliza el día de la semana 
             string diaSemana = ahora.ToString("dddd");
             diaSemana = char.ToUpper(diaSemana[0]) + diaSemana.Substring(1);
@@ -154,6 +166,7 @@ namespace PetShop.Presentacion.Menu
             mes = char.ToUpper(mes[0]) + mes.Substring(1);
 
             lblFecha.Text = $"{diaSemana}, {ahora.Day} de {mes} de {ahora.Year}";
+            */
         }
 
 
@@ -174,6 +187,7 @@ namespace PetShop.Presentacion.Menu
                 return;
             }
 
+            // Si el formulario ya está activo, se trae al frente sin re-crear
             if (_formularioActivo != null &&
                !_formularioActivo.IsDisposed &&
                 _formularioActivo.GetType() == nuevoFormulario.GetType())
@@ -184,9 +198,11 @@ namespace PetShop.Presentacion.Menu
             }
 
             contenedor.SuspendLayout();
+            nuevoFormulario.SuspendLayout();
 
             try
             {
+                // Limpieza del formulario previo
                 if (_formularioActivo != null && !_formularioActivo.IsDisposed)
                 {
                     Form formularioAnterior = _formularioActivo;
@@ -201,23 +217,12 @@ namespace PetShop.Presentacion.Menu
 
                 nuevoFormulario.TopLevel = false;
                 nuevoFormulario.FormBorderStyle = FormBorderStyle.None;
-                nuevoFormulario.Dock = DockStyle.None;
-                nuevoFormulario.Location = new Point(0, 0);
-
-                // Permite que el formulario reconozca el tamaño real de sus controles
-                nuevoFormulario.AutoSize = true;
-                nuevoFormulario.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+                nuevoFormulario.Dock = DockStyle.Fill;
 
                 nuevoFormulario.FormClosed += FormularioHijo_FormClosed;
 
                 _formularioActivo = nuevoFormulario;
                 contenedor.Controls.Add(_formularioActivo);
-
-                // Fuerza a calcular el diseño antes de medir el tamaño
-                _formularioActivo.PerformLayout();
-
-                // Le asigna al panel el tamaño exacto requerido por el formulario
-                contenedor.AutoScrollMinSize = _formularioActivo.PreferredSize;
 
                 _formularioActivo.Show();
                 _formularioActivo.BringToFront();
@@ -229,6 +234,8 @@ namespace PetShop.Presentacion.Menu
             }
             finally
             {
+                // Reanudamos la renderización de un solo golpe
+                nuevoFormulario.ResumeLayout(true);
                 contenedor.ResumeLayout(true);
             }
         }
@@ -315,17 +322,22 @@ namespace PetShop.Presentacion.Menu
             if (idUsuarioActual > 0)
             {
                 FormMiPerfil formMiPerfil = new FormMiPerfil(idUsuarioActual);
-                formMiPerfil.FormClosed += (s, args) =>
-                {
-                    RefrescarDatosUsuario();
-                };
-
+                formMiPerfil.FormClosed += FormMiPerfil_FormClosed;
                 AbrirFormularioEnMdi(formMiPerfil);
             }
             else
             {
                 MessageBox.Show("No se pudo obtener el ID del usuario actual.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void FormMiPerfil_FormClosed(object sender, EventArgs e)
+        {
+            if (sender is Form form)
+            {
+                form.FormClosed -= FormMiPerfil_FormClosed;
+            }
+            RefrescarDatosUsuario();
         }
 
         private void CerrarSesiónToolStripMenuItem_Click(object sender, EventArgs e)
