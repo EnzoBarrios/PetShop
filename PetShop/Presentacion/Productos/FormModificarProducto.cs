@@ -30,7 +30,7 @@ namespace PetShop
         {
             if (_idProducto <= 0)
             {
-                MessageBox.Show("No se selecciono un producto valido para modificar.", 
+                MessageBox.Show("No se seleccionó un producto válido para modificar.",
                     "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.Close();
                 return;
@@ -66,7 +66,7 @@ namespace PetShop
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar las categorías: {ex.Message}", 
+                MessageBox.Show($"Error al cargar las categorías: {ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -105,7 +105,7 @@ namespace PetShop
 
                 if (producto == null)
                 {
-                    MessageBox.Show($"No se encontro el producto en la base de datos", 
+                    MessageBox.Show("No se encontró el producto en la base de datos",
                         "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     this.Close();
                     return;
@@ -119,7 +119,7 @@ namespace PetShop
                 {
                     cbxCategoria.SelectedValue = producto.Categoria.IdCategoria;
                 }
-                
+
                 if (producto.EspecieTamano != null && cbxEspecieTamano.Items.Count > 0)
                 {
                     foreach (EspecieTamano item in cbxEspecieTamano.Items)
@@ -127,7 +127,7 @@ namespace PetShop
                         if (item.IdEspecie == producto.EspecieTamano.IdEspecie &&
                             item.IdTamano == producto.EspecieTamano.IdTamano)
                         {
-                            cbxEspecieTamano.SelectedItem = producto.EspecieTamano;
+                            cbxEspecieTamano.SelectedItem = item; // Selecciona el ítem de la lista
                             break;
                         }
                     }
@@ -138,7 +138,7 @@ namespace PetShop
                 txtStock.Text = producto.StockActual.ToString();
                 txtStockMinimo.Text = producto.StockMinimo.ToString();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Error al cargar los datos del producto: {ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -166,7 +166,8 @@ namespace PetShop
                 return;
             }
 
-            TextBox textBox = sender as TextBox;
+            TextBox textBox;
+            textBox = sender as TextBox;
             if ((e.KeyChar == ',') && (textBox != null) && (textBox.Text.IndexOf(',') > -1))
             {
                 e.Handled = true;
@@ -202,12 +203,12 @@ namespace PetShop
                 Codigo = txtCodigo.Text.Trim(),
                 Nombre = txtNombre.Text.Trim(),
                 Descripcion = txtDescripcion.Text.Trim(),
-                Categoria = new Categoria 
-                { 
-                    IdCategoria =  categoriaSeleccionada.IdCategoria
+                Categoria = new Categoria
+                {
+                    IdCategoria = categoriaSeleccionada.IdCategoria
                 },
-                EspecieTamano = new EspecieTamano 
-                { 
+                EspecieTamano = new EspecieTamano
+                {
                     IdEspecie = especieTamanoSeleccionado.IdEspecie,
                     IdTamano = especieTamanoSeleccionado.IdTamano
                 },
@@ -221,7 +222,7 @@ namespace PetShop
 
             if (exito)
             {
-                MessageBox.Show(mensaje, 
+                MessageBox.Show(mensaje,
                     "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
@@ -255,45 +256,45 @@ namespace PetShop
             // Validar Precio Compra
             if (!decimal.TryParse(txtPrecioCompra.Text.Trim(), out decimal precioCompra) || precioCompra < 0)
             {
-                _ep.SetError(txtPrecioCompra, "El precio de compra no puede ser menor a 0");
+                _ep.SetError(txtPrecioCompra, "El precio de compra no puede ser menor a 0.");
                 esValido = false;
             }
 
             // Validar Precio Venta
             if (!decimal.TryParse(txtPrecioVenta.Text.Trim(), out decimal precioVenta) || precioVenta < 0)
             {
-                _ep.SetError(txtPrecioVenta, "El precio de la venta no puede ser menor a 0");
+                _ep.SetError(txtPrecioVenta, "El precio de venta no puede ser menor a 0.");
                 esValido = false;
             }
 
             // Validar Relación Precios
             if (precioVenta < precioCompra)
             {
-                _ep.SetError(txtPrecioVenta, "El precio de venta debe ser mayor al precio de la compra");
+                _ep.SetError(txtPrecioVenta, "El precio de venta debe ser mayor o igual al precio de compra.");
                 esValido = false;
             }
 
-            // Validar Stock / Cantidad
-            if (!int.TryParse(txtStock.Text.Trim(), out int cantidad) || cantidad < 0)
+            // Validar Stock Actual
+            bool stockActualValido = int.TryParse(txtStock.Text.Trim(), out int stockActual) && stockActual >= 0;
+            if (!stockActualValido)
             {
-                _ep.SetError(txtStock, "La cantidad de productos no puede ser menor a 0");
+                _ep.SetError(txtStock, "La cantidad de stock actual debe ser un número entero mayor o igual a 0.");
                 esValido = false;
             }
 
-            // Validar Stock Minimo
-            if (!int.TryParse(txtStockMinimo.Text.Trim(), out int stockMinimo) || stockMinimo < 0)
+            // Validar Stock Mínimo
+            bool stockMinimoValido = int.TryParse(txtStockMinimo.Text.Trim(), out int stockMinimo) && stockMinimo >= 0;
+            if (!stockMinimoValido)
             {
-                _ep.SetError(txtStockMinimo, "El stock minimo de productos no puede ser menor a 0");
-                txtStockMinimo.Focus();
-                return false;
+                _ep.SetError(txtStockMinimo, "El stock mínimo debe ser un número entero mayor o igual a 0.");
+                esValido = false;
             }
 
-            // Validar Relación Stock
-            if (cantidad < stockMinimo)
+            // Validar Relación Stock (Stock Actual >= Stock Mínimo)
+            if (stockActualValido && stockMinimoValido && stockActual < stockMinimo)
             {
-                _ep.SetError(txtStockMinimo, "El stock minimo debe ser menor al stock del producto");
-                txtStockMinimo.Focus();
-                return false;
+                _ep.SetError(txtStock, "El stock actual no puede ser menor que el stock mínimo.");
+                esValido = false;
             }
 
             return esValido;
@@ -304,7 +305,5 @@ namespace PetShop
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
-
-        
     }
 }

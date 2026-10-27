@@ -60,7 +60,7 @@
             this.LTitulo.AutoSize = true;
             this.LTitulo.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.LTitulo.ForeColor = System.Drawing.Color.Black;
-            this.LTitulo.Location = new System.Drawing.Point(253, 20);
+            this.LTitulo.Location = new System.Drawing.Point(255, 20);
             this.LTitulo.Name = "LTitulo";
             this.LTitulo.Size = new System.Drawing.Size(293, 41);
             this.LTitulo.TabIndex = 37;
@@ -103,17 +103,17 @@
             // 
             // txtStock
             // 
-            this.txtStock.Location = new System.Drawing.Point(172, 379);
+            this.txtStock.Location = new System.Drawing.Point(172, 318);
             this.txtStock.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtStock.MaxLength = 6;
             this.txtStock.Name = "txtStock";
-            this.txtStock.Size = new System.Drawing.Size(150, 22);
+            this.txtStock.Size = new System.Drawing.Size(134, 22);
             this.txtStock.TabIndex = 53;
             this.txtStock.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumeros_KeyPress);
             // 
             // txtPrecioVenta
             // 
-            this.txtPrecioVenta.Location = new System.Drawing.Point(580, 318);
+            this.txtPrecioVenta.Location = new System.Drawing.Point(580, 378);
             this.txtPrecioVenta.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPrecioVenta.MaxLength = 15;
             this.txtPrecioVenta.Name = "txtPrecioVenta";
@@ -123,7 +123,7 @@
             // 
             // txtPrecioCompra
             // 
-            this.txtPrecioCompra.Location = new System.Drawing.Point(172, 318);
+            this.txtPrecioCompra.Location = new System.Drawing.Point(172, 378);
             this.txtPrecioCompra.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPrecioCompra.MaxLength = 15;
             this.txtPrecioCompra.Name = "txtPrecioCompra";
@@ -201,7 +201,7 @@
             // 
             this.lblStock.AutoSize = true;
             this.lblStock.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStock.Location = new System.Drawing.Point(20, 380);
+            this.lblStock.Location = new System.Drawing.Point(20, 320);
             this.lblStock.Name = "lblStock";
             this.lblStock.Size = new System.Drawing.Size(68, 17);
             this.lblStock.TabIndex = 45;
@@ -211,7 +211,7 @@
             // 
             this.lblPrecioVenta.AutoSize = true;
             this.lblPrecioVenta.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPrecioVenta.Location = new System.Drawing.Point(460, 320);
+            this.lblPrecioVenta.Location = new System.Drawing.Point(460, 380);
             this.lblPrecioVenta.Name = "lblPrecioVenta";
             this.lblPrecioVenta.Size = new System.Drawing.Size(115, 17);
             this.lblPrecioVenta.TabIndex = 44;
@@ -222,7 +222,7 @@
             // 
             this.lblPrecioCompra.AutoSize = true;
             this.lblPrecioCompra.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPrecioCompra.Location = new System.Drawing.Point(20, 320);
+            this.lblPrecioCompra.Location = new System.Drawing.Point(20, 380);
             this.lblPrecioCompra.Name = "lblPrecioCompra";
             this.lblPrecioCompra.Size = new System.Drawing.Size(127, 17);
             this.lblPrecioCompra.TabIndex = 43;
@@ -293,11 +293,11 @@
             // 
             // txtStockMinimo
             // 
-            this.txtStockMinimo.Location = new System.Drawing.Point(580, 378);
+            this.txtStockMinimo.Location = new System.Drawing.Point(580, 318);
             this.txtStockMinimo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtStockMinimo.MaxLength = 6;
             this.txtStockMinimo.Name = "txtStockMinimo";
-            this.txtStockMinimo.Size = new System.Drawing.Size(150, 22);
+            this.txtStockMinimo.Size = new System.Drawing.Size(134, 22);
             this.txtStockMinimo.TabIndex = 58;
             this.txtStockMinimo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumeros_KeyPress);
             // 
@@ -305,7 +305,7 @@
             // 
             this.lblStockMinimo.AutoSize = true;
             this.lblStockMinimo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStockMinimo.Location = new System.Drawing.Point(460, 380);
+            this.lblStockMinimo.Location = new System.Drawing.Point(460, 320);
             this.lblStockMinimo.Name = "lblStockMinimo";
             this.lblStockMinimo.Size = new System.Drawing.Size(116, 17);
             this.lblStockMinimo.TabIndex = 57;
@@ -315,7 +315,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 500);
+            this.ClientSize = new System.Drawing.Size(802, 473);
             this.Controls.Add(this.txtStockMinimo);
             this.Controls.Add(this.lblStockMinimo);
             this.Controls.Add(this.lblContador);

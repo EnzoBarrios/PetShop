@@ -137,6 +137,11 @@ CREATE TABLE Venta (
 );
 GO
 
+ALTER TABLE Venta 
+ADD descuento DECIMAL(18,2) NOT NULL DEFAULT 0;
+GO
+
+
 -- 11. Tabla Pago
 CREATE TABLE Pago (
 	id_venta INT NOT NULL,
@@ -164,52 +169,3 @@ CREATE TABLE Detalle_Venta (
 	CONSTRAINT CK_DetalleVenta_Subtotal CHECK (subtotal = cantidad * precio_unitario)
 );
 GO
-
-INSERT INTO Rol (nombre_rol) 
-VALUES ('Administrador'), ('Gerente'), ('Vendedor');
-GO
-
-INSERT INTO Usuario (nombre, apellido, nombre_usuario, dni, clave, correo, telefono, id_rol)
-VALUES 
-('Franco', 'Díaz',    'admin',           '12345678', 'admin123', 'francodiaz@gmail.com',  '3794101010', 1),
-('Enzo',   'Barrios', 'EnzoBarrios',     '87654321', 'asdf1234', 'enzobarrios@gmail.com', '3794123450', 2),
-('Carlos', 'Gómez',   'carlos.empleado', '12341234', 'user123',  'carlosgomez@gmail.com', '3794010101', 3);
-GO
-
-INSERT INTO Especie (nombre_especie)
-VALUES ('Ave'), ('Conejo'), ('Gato'), ('Perro'), ('Pez');
-GO
-
-INSERT INTO Categoria (nombre_categoria)
-VALUES ('Accesorio'), ('Alimento'), ('Higiene'), ('Juguete'), ('Salud');
-GO
-
-INSERT INTO Tamano (nombre_tamano)
-VALUES ('Pequeño'), ('Mediano'), ('Grande');
-GO
-
-
-INSERT INTO Especie_Tamano (id_especie, id_tamano)
-VALUES
-(4, 1), -- Perro - Pequeño
-(4, 2), -- Perro - Mediano
-(4, 3), -- Perro - Grande
-(3, 1), -- Gato - Pequeño
-(3, 2); -- Gato - Mediano
-GO
-
-INSERT INTO Tipo_venta (descripcion)
-VALUES ('Mostrador'), ('Envío'), ('Virtual');
-GO
-
-INSERT INTO Metodo_pago (nombre_metodo)
-VALUES ('Efectivo'), ('Transferencia'), ('Qr');
-GO
-
-SELECT * FROM Rol;
-SELECT * FROM Usuario;
-SELECT * FROM Categoria;
-SELECT * FROM Especie;
-SELECT * FROM Tamano;
-SELECT * FROM Especie_Tamano;
-SELECT * FROM Producto;

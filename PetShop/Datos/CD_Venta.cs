@@ -30,6 +30,68 @@ namespace PetShop.Datos
             return proximoNro;
         }
 
+        // Listar los tipos de venta desde la base de datos
+        public List<TipoVenta> ListarTiposVenta()
+        {
+            List<TipoVenta> lista = new List<TipoVenta>();
+            using (SqlConnection conexion = ConexionBd.CrearConexion())
+            {
+                try
+                {
+                    string query = "SELECT id_tipo_venta, descripcion FROM Tipo_venta";
+                    SqlCommand cmd = new SqlCommand(query, conexion);
+                    conexion.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            lista.Add(new TipoVenta
+                            {
+                                IdTipoVenta = Convert.ToInt32(dr["id_tipo_venta"]),
+                                Descripcion = dr["descripcion"].ToString()
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al consultar los tipos de venta: " + ex.Message);
+                }
+            }
+            return lista;
+        }
+
+        // Listar los métodos de pago desde la base de datos
+        public List<MetodoPago> ListarMetodosPago()
+        {
+            List<MetodoPago> lista = new List<MetodoPago>();
+            using (SqlConnection conexion = ConexionBd.CrearConexion())
+            {
+                try
+                {
+                    string query = "SELECT id_metodo_pago, nombre_metodo FROM Metodo_pago";
+                    SqlCommand cmd = new SqlCommand(query, conexion);
+                    conexion.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            lista.Add(new MetodoPago
+                            {
+                                IdMetodoPago = Convert.ToInt32(dr["id_metodo_pago"]),
+                                NombreMetodo = dr["nombre_metodo"].ToString()
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al consultar los métodos de pago: " + ex.Message);
+                }
+            }
+            return lista;
+        }
+
         // Registro de venta con Transacción SQL
         public bool RegistrarVenta(Venta venta, out string mensaje)
         {
@@ -45,14 +107,15 @@ namespace PetShop.Datos
                 {
                     // 1. Insertar Venta
                     string queryVenta = @"
-                        INSERT INTO Venta (nro_factura, fecha_hora, total, estado, id_tipo_venta, id_usuario)
-                        VALUES (@nro_factura, @fecha_hora, @total, @estado, @id_tipo_venta, @id_usuario);
+                        INSERT INTO Venta (nro_factura, fecha_hora, total, descuento, estado, id_tipo_venta, id_usuario)
+                        VALUES (@nro_factura, @fecha_hora, @total, @descuento, @estado, @id_tipo_venta, @id_usuario);
                         SELECT SCOPE_IDENTITY();";
 
                     SqlCommand cmdVenta = new SqlCommand(queryVenta, conexion, objTransaction);
                     cmdVenta.Parameters.AddWithValue("@nro_factura", venta.NroFactura);
                     cmdVenta.Parameters.AddWithValue("@fecha_hora", venta.FechaHora);
                     cmdVenta.Parameters.AddWithValue("@total", venta.Total);
+                    cmdVenta.Parameters.AddWithValue("@descuento", venta.Descuento);
                     cmdVenta.Parameters.AddWithValue("@estado", string.IsNullOrEmpty(venta.Estado) ? "Completada" : venta.Estado);
                     cmdVenta.Parameters.AddWithValue("@id_tipo_venta", venta.IdTipoVenta);
                     cmdVenta.Parameters.AddWithValue("@id_usuario", venta.IdUsuario);
@@ -72,7 +135,8 @@ namespace PetShop.Datos
                         cmdDetalle.Parameters.AddWithValue("@id_producto", dv.IdProducto);
                         cmdDetalle.Parameters.AddWithValue("@cantidad", dv.Cantidad);
                         cmdDetalle.Parameters.AddWithValue("@precio_unitario", dv.PrecioUnitario);
-                        cmdDetalle.Parameters.AddWithValue("@subtotal", dv.Subtotal);
+                        // cmdDetalle.Parameters.AddWithValue("@subtotal", dv.Subtotal);
+
                         cmdDetalle.ExecuteNonQuery();
 
                         string queryStock = @"
@@ -92,14 +156,13 @@ namespace PetShop.Datos
                         foreach (Pago pago in venta.Pagos)
                         {
                             string queryPago = @"
-                                INSERT INTO Pago (id_venta, id_metodo_pago, monto, fecha_hora)
-                                VALUES (@id_venta, @id_metodo_pago, @monto, @fecha_hora)";
+                                INSERT INTO Pago (id_venta, id_metodo_pago, monto)
+                                VALUES (@id_venta, @id_metodo_pago, @monto)";
 
                             SqlCommand cmdPago = new SqlCommand(queryPago, conexion, objTransaction);
                             cmdPago.Parameters.AddWithValue("@id_venta", idVentaGenerado);
                             cmdPago.Parameters.AddWithValue("@id_metodo_pago", pago.IdMetodoPago);
                             cmdPago.Parameters.AddWithValue("@monto", pago.Monto);
-                            cmdPago.Parameters.AddWithValue("@fecha_hora", DateTime.Now);
                             cmdPago.ExecuteNonQuery();
                         }
                     }
@@ -116,6 +179,53 @@ namespace PetShop.Datos
             }
 
             return respuesta;
+        }
+
+        // Obtener el historial completo de ventas con el desglose de métodos de pago
+        public DataTable ObtenerHistorialVentas(DateTime desde, DateTime hasta)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection conexion = ConexionBd.CrearConexion())
+            {
+                try
+                {
+                    string query = @"
+                SELECT 
+                    v.nro_factura AS [NroTicket],
+                    CONVERT(VARCHAR(10), v.fecha_hora, 103) AS [Fecha],
+                    CONVERT(VARCHAR(8), v.fecha_hora, 108) AS [Hora],
+                    v.total AS [MontoTotal],
+                    ISNULL(p.Efectivo, 0) AS [Efectivo],
+                    ISNULL(p.Transferencia, 0) AS [Transferencia],
+                    ISNULL(p.QR, 0) AS [QR]
+                FROM Venta v
+                LEFT JOIN (
+                    SELECT 
+                        p.id_venta,
+                        SUM(CASE WHEN mp.nombre_metodo LIKE '%Efectivo%' THEN p.monto ELSE 0 END) AS Efectivo,
+                        SUM(CASE WHEN mp.nombre_metodo LIKE '%Transferencia%' THEN p.monto ELSE 0 END) AS Transferencia,
+                        SUM(CASE WHEN mp.nombre_metodo LIKE '%QR%' OR mp.nombre_metodo LIKE '%Mercado%' THEN p.monto ELSE 0 END) AS QR
+                    FROM Pago p
+                    INNER JOIN Metodo_pago mp ON p.id_metodo_pago = mp.id_metodo_pago
+                    GROUP BY p.id_venta
+                ) p ON v.id_venta = p.id_venta
+                WHERE CAST(v.fecha_hora AS DATE) BETWEEN @desde AND @hasta
+                ORDER BY v.id_venta DESC;";
+
+                    SqlCommand cmd = new SqlCommand(query, conexion);
+                    cmd.Parameters.AddWithValue("@desde", desde.Date);
+                    cmd.Parameters.AddWithValue("@hasta", hasta.Date);
+
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    conexion.Open();
+                    da.Fill(dt);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al consultar el historial de ventas: " + ex.Message);
+                }
+            }
+            return dt;
         }
     }
 }

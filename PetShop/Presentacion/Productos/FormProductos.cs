@@ -1,34 +1,48 @@
-﻿using PetShop.Datos;
-using PetShop.Entidades;
-using PetShop.Negocio;
-using PetShop.Presentacion.Productos;
-using PetShop.Presentacion.Usuarios;
-using System;
+
+
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PetShop.Entidades;
+using PetShop.Negocio;
+using PetShop.Presentacion.Productos;
 
 namespace PetShop.Presentacion
 {
     public partial class FormProductos : Form
     {
         private readonly CN_Producto _cnProducto;
+        private bool _filtrarSoloStockMinimo = false; // Bandera para controlar el filtro de stock mínimo
+        private readonly Timer _timerBusqueda; // Timer para aplicar Debounce en el buscador
 
         public FormProductos()
         {
+            this.SuspendLayout();
+
             InitializeComponent();
             _cnProducto = new CN_Producto();
+            btnStock.Text = "Stock Crítico";
+
+            _timerBusqueda = new Timer { Interval = 300 };
+            _timerBusqueda.Tick += TimerBusqueda_Tick;
+
+            // Doble búfer en el DataGridView para eliminar el parpadeo al redimensionar
+            typeof(DataGridView).GetProperty("DoubleBuffered", 
+                System.Reflection.BindingFlags.Instance | 
+                System.Reflection.BindingFlags.NonPublic)
+                ?.SetValue(dgvProductos, true, null);
+
+            this.ResumeLayout(true);
         }
 
-        private void FormProductos_Load(object sender, EventArgs e)
+        private async void FormProductos_Shown(object sender, EventArgs e)
         {
             ConfigurarGrilla();
-            CargarProductos();
+            await CargarProductosAsync();
         }
 
         private void ConfigurarGrilla()
@@ -44,15 +58,23 @@ namespace PetShop.Presentacion
             colEstado.DataPropertyName = nameof(Producto.Estado);
         }
 
-        public void CargarProductos()
+        public async Task CargarProductosAsync()
         {
             try
             {
+                this.Cursor = Cursors.WaitCursor;
                 string filtro = txtBuscar.Text.Trim();
 
-                // Lista tipada desde la capa de negocio
-                List<Producto> listaProductos = _cnProducto.ListarProductos(filtro);
+                List<Producto> listaProductos = await Task.Run(() => _cnProducto.ListarProductos(filtro));
 
+                if (_filtrarSoloStockMinimo)
+                {
+                    listaProductos = listaProductos
+                        .Where(p => p.StockActual <= p.StockMinimo)
+                        .ToList();
+                }
+
+                dgvProductos.SuspendLayout();
                 dgvProductos.DataSource = null;
                 dgvProductos.DataSource = listaProductos;
 
@@ -60,16 +82,18 @@ namespace PetShop.Presentacion
             }
             catch (Exception ex)
             {
-                // Registro del error en log de servidor/consola (Seguridad por diseño)
                 System.Diagnostics.Debug.WriteLine($"[Error CargarProductos]: {ex}");
-
-                // Mensaje claro y seguro para el usuario
                 MessageBox.Show(
                     "Ocurrió un inconveniente al cargar el listado de productos. Por favor, intente nuevamente.",
                     "Atención",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
                 );
+            }
+            finally
+            {
+                dgvProductos.ResumeLayout(true);
+                this.Cursor = Cursors.Default;
             }
         }
 
@@ -114,19 +138,40 @@ namespace PetShop.Presentacion
 
             if (dgvProductos.Rows[e.RowIndex].DataBoundItem is Producto producto)
             {
+                // -------------------------------------------------------------
+                // 1. APLICAR COLORES SEGÚN EL STOCK (Uso de e.CellStyle)
+                // -------------------------------------------------------------
+
+                // Caso 1: Sin Stock (Rojo)
+                if (producto.StockActual <= 0)
+                {
+                    e.CellStyle.BackColor = Color.FromArgb(255, 100, 115);
+                    e.CellStyle.ForeColor = Color.White;
+                    e.CellStyle.SelectionBackColor = Color.FromArgb(210, 4, 45);
+                    e.CellStyle.SelectionForeColor = Color.White;
+                }
+                // Caso 2: Stock Mínimo alcanzado o crítico (Amarillo)
+                else if (producto.StockActual <= producto.StockMinimo)
+                {
+                    e.CellStyle.BackColor = Color.FromArgb(255, 225, 75);
+                    e.CellStyle.ForeColor = Color.Black;
+                    e.CellStyle.SelectionBackColor = Color.FromArgb(255, 216, 0);
+                    e.CellStyle.SelectionForeColor = Color.Black;
+                }
+
+                // -------------------------------------------------------------
+                // 2. FORMATO DE TEXTO DE COLUMNAS
+                // -------------------------------------------------------------
                 if (columna == "colCategoria")
                 {
                     e.Value = producto.Categoria?.NombreCategoria ?? "Sin Categoria";
                     e.FormattingApplied = true;
-
                 }
                 else if (columna == "colEstado")
                 {
-                    // Formato de texto para el booleano Estado
                     e.Value = producto.Estado ? "Activo" : "Inactivo";
                     e.FormattingApplied = true;
                 }
-                // Formato de fecha uniforme
                 else if (columna == "colFecha")
                 {
                     e.Value = producto.FechaCreacion.ToString("dd/MM/yyyy");
@@ -135,26 +180,52 @@ namespace PetShop.Presentacion
             }
         }
 
-        //Filtro en la caja de texto de Buscar
+        // Filtro en la caja de texto de Buscar
         private void TxtBuscar_TextChanged(object sender, EventArgs e)
         {
-            CargarProductos();
+            _timerBusqueda.Stop();
+            _timerBusqueda.Start();
+        }
+
+        private async void TimerBusqueda_Tick(object sender, EventArgs e)
+        {
+            _timerBusqueda.Stop();
+            await CargarProductosAsync();
+        }
+
+        // BOTÓN FILTRAR POR STOCK MÍNIMO / VER TODOS
+        private async void BtnStock_Click(object sender, EventArgs e)
+        {
+            _filtrarSoloStockMinimo = !_filtrarSoloStockMinimo;
+
+            if (_filtrarSoloStockMinimo)
+            {
+                btnStock.Text = "Ver Todos";
+                btnStock.BackColor = Color.LightBlue; // Resalta el botón indicando que el filtro está activo
+            }
+            else
+            {
+                btnStock.Text = "Stock Crítico";
+                btnStock.BackColor = SystemColors.Control; // Vuelve al color original
+            }
+
+            await CargarProductosAsync();
         }
 
         // BOTON AGREGAR PRODUCTO
-        private void BtnAgregarProducto_Click(object sender, EventArgs e)
+        private async void BtnAgregarProducto_Click(object sender, EventArgs e)
         {
             using (FormCargaProducto formAlta = new FormCargaProducto())
             {
                 if (formAlta.ShowDialog() == DialogResult.OK)
                 {
-                    CargarProductos();
+                   await CargarProductosAsync();
                 }
             }
         }
 
         // BOTON MODIFICAR PRODUCTO 
-        private void BtnModificarProducto_Click(object sender, EventArgs e)
+        private async void BtnModificarProducto_Click(object sender, EventArgs e)
         {
             Producto producto = ObtenerProductoSeleccionado();
 
@@ -169,13 +240,13 @@ namespace PetShop.Presentacion
             {
                 if (formModif.ShowDialog() == DialogResult.OK)
                 {
-                    CargarProductos();
+                    await CargarProductosAsync();
                 }
             }
         }
 
         // BOTON CAMBIAR ESTADO
-        private void BtnEstado_Click(object sender, EventArgs e)
+        private async void BtnEstado_Click(object sender, EventArgs e)
         {
             Producto producto = ObtenerProductoSeleccionado();
 
@@ -190,7 +261,6 @@ namespace PetShop.Presentacion
             string accionTexto = producto.Estado ? "desactivar" : "activar";
             string tituloConfirmacion = producto.Estado ? "Confirmar Desactivación" : "Confirmar Activación";
 
-
             DialogResult respuesta = MessageBox.Show(
                 $"¿Está seguro de que desea {accionTexto} al producto '{producto.Nombre}'?",
                 tituloConfirmacion,
@@ -201,25 +271,22 @@ namespace PetShop.Presentacion
             if (respuesta == DialogResult.Yes)
             {
                 // La capa de negocio valida el ID y actualiza en BD
-                bool exito = _cnProducto.CambiarEstado(producto.IdProducto, nuevoEstado, out string mensaje);
+                string mensaje = string.Empty;
+                bool exito = await Task.Run(() => _cnProducto.CambiarEstado(producto.IdProducto, nuevoEstado, out mensaje));
 
                 if (exito)
                 {
                     MessageBox.Show(mensaje, "Operación Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    CargarProductos();
+                    await CargarProductosAsync();
                 }
                 else
                 {
                     MessageBox.Show(mensaje, "Acción denegada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-            else
-            {
-                MessageBox.Show("Por favor, seleccione un producto de la lista.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
         }
 
-        //Botón Volver
+        // Botón Volver
         private void BtnVolver_Click(object sender, EventArgs e)
         {
             this.Close();

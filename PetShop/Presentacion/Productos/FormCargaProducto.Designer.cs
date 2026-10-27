@@ -121,7 +121,7 @@
             // 
             this.lblPrecioCompra.AutoSize = true;
             this.lblPrecioCompra.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPrecioCompra.Location = new System.Drawing.Point(20, 320);
+            this.lblPrecioCompra.Location = new System.Drawing.Point(20, 380);
             this.lblPrecioCompra.Name = "lblPrecioCompra";
             this.lblPrecioCompra.Size = new System.Drawing.Size(131, 17);
             this.lblPrecioCompra.TabIndex = 7;
@@ -132,7 +132,7 @@
             // 
             this.lblPrecioVenta.AutoSize = true;
             this.lblPrecioVenta.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPrecioVenta.Location = new System.Drawing.Point(460, 320);
+            this.lblPrecioVenta.Location = new System.Drawing.Point(460, 380);
             this.lblPrecioVenta.Name = "lblPrecioVenta";
             this.lblPrecioVenta.Size = new System.Drawing.Size(115, 17);
             this.lblPrecioVenta.TabIndex = 8;
@@ -143,7 +143,7 @@
             // 
             this.lblStock.AutoSize = true;
             this.lblStock.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStock.Location = new System.Drawing.Point(20, 380);
+            this.lblStock.Location = new System.Drawing.Point(20, 320);
             this.lblStock.Name = "lblStock";
             this.lblStock.Size = new System.Drawing.Size(68, 17);
             this.lblStock.TabIndex = 9;
@@ -153,13 +153,12 @@
             // 
             this.txtCodigo.BackColor = System.Drawing.SystemColors.Window;
             this.txtCodigo.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.txtCodigo.Location = new System.Drawing.Point(580, 98);
+            this.txtCodigo.Location = new System.Drawing.Point(580, 95);
             this.txtCodigo.MaxLength = 12;
             this.txtCodigo.Name = "txtCodigo";
-            this.txtCodigo.ReadOnly = true;
             this.txtCodigo.Size = new System.Drawing.Size(200, 22);
-            this.txtCodigo.TabIndex = 24;
-            this.txtCodigo.TabStop = false;
+            this.txtCodigo.TabIndex = 10;
+            this.txtCodigo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumerosEnteros_KeyPress);
             // 
             // txtNombre
             // 
@@ -199,33 +198,35 @@
             // 
             // txtPrecioCompra
             // 
-            this.txtPrecioCompra.Location = new System.Drawing.Point(172, 318);
+            this.txtPrecioCompra.Location = new System.Drawing.Point(172, 378);
             this.txtPrecioCompra.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPrecioCompra.MaxLength = 15;
             this.txtPrecioCompra.Name = "txtPrecioCompra";
             this.txtPrecioCompra.Size = new System.Drawing.Size(150, 22);
             this.txtPrecioCompra.TabIndex = 16;
-            this.txtPrecioCompra.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtPrecio_KeyPress);
+            this.txtPrecioCompra.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumerosDecimales_KeyPress);
+            this.txtPrecioCompra.Leave += new System.EventHandler(this.TxtPrecio_Leave);
             // 
             // txtPrecioVenta
             // 
-            this.txtPrecioVenta.Location = new System.Drawing.Point(580, 318);
+            this.txtPrecioVenta.Location = new System.Drawing.Point(580, 378);
             this.txtPrecioVenta.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPrecioVenta.MaxLength = 15;
             this.txtPrecioVenta.Name = "txtPrecioVenta";
             this.txtPrecioVenta.Size = new System.Drawing.Size(150, 22);
             this.txtPrecioVenta.TabIndex = 17;
-            this.txtPrecioVenta.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtPrecio_KeyPress);
+            this.txtPrecioVenta.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumerosDecimales_KeyPress);
+            this.txtPrecioVenta.Leave += new System.EventHandler(this.TxtPrecio_Leave);
             // 
             // txtStock
             // 
-            this.txtStock.Location = new System.Drawing.Point(172, 379);
+            this.txtStock.Location = new System.Drawing.Point(172, 318);
             this.txtStock.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtStock.MaxLength = 6;
             this.txtStock.Name = "txtStock";
-            this.txtStock.Size = new System.Drawing.Size(150, 22);
+            this.txtStock.Size = new System.Drawing.Size(134, 22);
             this.txtStock.TabIndex = 18;
-            this.txtStock.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumeros_KeyPress);
+            this.txtStock.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumerosEnteros_KeyPress);
             // 
             // btnGuardar
             // 
@@ -284,19 +285,19 @@
             // 
             // txtStockMinimo
             // 
-            this.txtStockMinimo.Location = new System.Drawing.Point(580, 378);
+            this.txtStockMinimo.Location = new System.Drawing.Point(580, 318);
             this.txtStockMinimo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtStockMinimo.MaxLength = 6;
             this.txtStockMinimo.Name = "txtStockMinimo";
-            this.txtStockMinimo.Size = new System.Drawing.Size(150, 22);
+            this.txtStockMinimo.Size = new System.Drawing.Size(134, 22);
             this.txtStockMinimo.TabIndex = 59;
-            this.txtStockMinimo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumeros_KeyPress);
+            this.txtStockMinimo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumerosEnteros_KeyPress);
             // 
             // lblStockMinimo
             // 
             this.lblStockMinimo.AutoSize = true;
             this.lblStockMinimo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStockMinimo.Location = new System.Drawing.Point(460, 380);
+            this.lblStockMinimo.Location = new System.Drawing.Point(460, 320);
             this.lblStockMinimo.Name = "lblStockMinimo";
             this.lblStockMinimo.Size = new System.Drawing.Size(116, 17);
             this.lblStockMinimo.TabIndex = 58;
@@ -306,7 +307,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 500);
+            this.ClientSize = new System.Drawing.Size(802, 473);
             this.Controls.Add(this.txtStockMinimo);
             this.Controls.Add(this.lblStockMinimo);
             this.Controls.Add(this.lblContador);

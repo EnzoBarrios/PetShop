@@ -1,18 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq; // Necesario para GroupBy y Sum
-using PetShop.Datos;
+﻿using PetShop.Datos;
 using PetShop.Entidades;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq; // Necesario para GroupBy y Sum
 
 namespace PetShop.Negocio
 {
     public class CN_Venta
     {
-        private CD_Venta _cdvVenta = new CD_Venta();
+        private readonly CD_Venta _cdvVenta = new CD_Venta();
 
         public string ObtenerProximoNroFactura()
         {
             return _cdvVenta.ObtenerProximoNroFactura();
+        }
+
+        public List<TipoVenta> ListarTiposVenta()
+        {
+            return _cdvVenta.ListarTiposVenta();
+        }
+
+        public List<MetodoPago> ListarMetodosPago()
+        {
+            return _cdvVenta.ListarMetodosPago();
         }
 
         public bool RegistrarVenta(Venta venta, out string mensaje)
@@ -99,6 +110,7 @@ namespace PetShop.Negocio
 
             // 5. Recalcular e integrar el Total
             venta.CalcularTotal();
+
             if (venta.Total <= 0)
             {
                 mensaje = "El total de la venta debe ser mayor a $0.";
@@ -131,6 +143,11 @@ namespace PetShop.Negocio
 
             // Guardar en la base de datos
             return _cdvVenta.RegistrarVenta(venta, out mensaje);
+        }
+
+        public DataTable ObtenerHistorialVentas(DateTime desde, DateTime hasta)
+        {
+            return _cdvVenta.ObtenerHistorialVentas(desde, hasta);
         }
     }
 }

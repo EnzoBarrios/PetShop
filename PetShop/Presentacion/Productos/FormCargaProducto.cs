@@ -46,13 +46,15 @@ namespace PetShop.Presentacion.Productos
         {
             try
             {
+                // Carga únicamente las categorías que están activas
                 List<Categoria> categoriasActivas = _cnCategoria.ListarCategorias()
-                    .Where(e => e.Estado).ToList();
+                    .Where(c => c.Estado)
+                    .ToList();
 
-                categoriasActivas.Insert(0, new Categoria 
-                { 
-                    IdCategoria = 0, 
-                    NombreCategoria = "-- Seleccione Categoría --" 
+                categoriasActivas.Insert(0, new Categoria
+                {
+                    IdCategoria = 0,
+                    NombreCategoria = "-- Seleccione Categoría --"
                 });
 
                 cbxCategoria.DataSource = categoriasActivas;
@@ -71,7 +73,10 @@ namespace PetShop.Presentacion.Productos
         {
             try
             {
-                List<EspecieTamano> relacionesActivas = _cnEspecieTamano.ListarRelaciones();
+                // Carga únicamente las combinaciones activas
+                List<EspecieTamano> relacionesActivas = _cnEspecieTamano.ListarRelaciones()
+                    .Where(r => r.Estado)
+                    .ToList();
 
                 relacionesActivas.Insert(0, new EspecieTamano
                 {
@@ -92,7 +97,8 @@ namespace PetShop.Presentacion.Productos
             }
         }
 
-        private void SoloNumeros_KeyPress(object sender, KeyPressEventArgs e)
+        // Permitir solo números enteros (para Código, Cantidad y Stock Mínimo)
+        private void SoloNumerosEnteros_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
             {
@@ -100,24 +106,32 @@ namespace PetShop.Presentacion.Productos
             }
         }
 
-        private void TxtPrecio_KeyPress(object sender, KeyPressEventArgs e)
+        // Permitir números y el separador decimal (para Precios)
+        private void SoloNumerosDecimales_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == '.')
-            {
-                e.KeyChar = ',';
-            }
+            char separadorDecimal = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
 
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && (e.KeyChar != ','))
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != separadorDecimal)
             {
                 e.Handled = true;
-                return;
             }
 
-            TextBox textBox;
-            textBox = sender as TextBox;
-            if ((e.KeyChar == ',') && (textBox != null) && (textBox.Text.IndexOf(',') > -1))
+            // Evitar ingresar más de un separador decimal
+            if (e.KeyChar == separadorDecimal && (sender as TextBox).Text.Contains(separadorDecimal))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void TxtPrecio_Leave(object sender, EventArgs e)
+        {
+            if (sender is TextBox txt && !string.IsNullOrWhiteSpace(txt.Text))
+            {
+                if (decimal.TryParse(txt.Text.Trim(), out decimal precio))
+                {
+                    // El formato "N2" formatea el número con separador de miles y 2 decimales
+                    txt.Text = precio.ToString("N2");
+                }
             }
         }
 
@@ -125,7 +139,7 @@ namespace PetShop.Presentacion.Productos
         {
             if (!ValidarCampos())
             {
-                MessageBox.Show("Por favor, verifique los campos marcados advertencias.",
+                MessageBox.Show("Por favor, verifique los campos marcados con advertencias.",
                     "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -139,11 +153,13 @@ namespace PetShop.Presentacion.Productos
                 Nombre = txtNombre.Text.Trim(),
                 Descripcion = string.IsNullOrWhiteSpace(txtDescripcion.Text) ? string.Empty : txtDescripcion.Text.Trim(),
                 Categoria = new Categoria { IdCategoria = categoriaSeleccionada },
-                EspecieTamano = new EspecieTamano 
-                { 
-                    IdEspecie = especieTamanoSeleccionado.IdEspecie, 
-                    IdTamano = especieTamanoSeleccionado.IdTamano 
-                },
+                EspecieTamano = (especieTamanoSeleccionado != null && especieTamanoSeleccionado.IdEspecie > 0)
+                    ? new EspecieTamano
+                    {
+                        IdEspecie = especieTamanoSeleccionado.IdEspecie,
+                        IdTamano = especieTamanoSeleccionado.IdTamano
+                    }
+                    : null,
                 PrecioCompra = decimal.Parse(txtPrecioCompra.Text.Trim()),
                 PrecioVenta = decimal.Parse(txtPrecioVenta.Text.Trim()),
                 StockActual = int.Parse(txtStock.Text.Trim()),
@@ -161,26 +177,24 @@ namespace PetShop.Presentacion.Productos
             }
             else
             {
-                MessageBox.Show(mensaje, 
+                MessageBox.Show(mensaje,
                     "Validación de Negocio", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
-            return;
         }
 
         private bool ValidarCampos()
         {
             _ep.Clear();
 
-            // Validar Código
+            // 1. Validar Código
             if (string.IsNullOrWhiteSpace(txtCodigo.Text))
             {
-                _ep.SetError(txtCodigo, "El codigo del producto es obligatorio");
+                _ep.SetError(txtCodigo, "El código del producto es obligatorio.");
                 txtCodigo.Focus();
                 return false;
             }
 
-            // Validar Nombre
+            // 2. Validar Nombre
             if (string.IsNullOrWhiteSpace(txtNombre.Text))
             {
                 _ep.SetError(txtNombre, "El nombre del producto es obligatorio.");
@@ -188,7 +202,7 @@ namespace PetShop.Presentacion.Productos
                 return false;
             }
 
-            // Validar Categoría
+            // 3. Validar Categoría
             if (cbxCategoria.SelectedValue == null || (int)cbxCategoria.SelectedValue == 0)
             {
                 _ep.SetError(cbxCategoria, "Debes seleccionar una categoría.");
@@ -196,51 +210,51 @@ namespace PetShop.Presentacion.Productos
                 return false;
             }
 
-            // Validar Precio Compra
+            // 4. Validar Precio Compra
             if (!decimal.TryParse(txtPrecioCompra.Text.Trim(), out decimal precioCompra) || precioCompra < 0)
             {
-                _ep.SetError(txtPrecioCompra, "El precio de compra no puede ser menor a 0");
+                _ep.SetError(txtPrecioCompra, "El precio de compra debe ser un valor numérico válido mayor o igual a 0.");
                 txtPrecioCompra.Focus();
                 return false;
             }
 
-            // Validar Precio Venta
-            if (!decimal.TryParse(txtPrecioVenta.Text.Trim(), out decimal precioVenta) ||  precioVenta < 0)
+            // 5. Validar Precio Venta
+            if (!decimal.TryParse(txtPrecioVenta.Text.Trim(), out decimal precioVenta) || precioVenta < 0)
             {
-                _ep.SetError(txtPrecioVenta, "El precio de la venta no puede ser menor a 0");
+                _ep.SetError(txtPrecioVenta, "El precio de venta debe ser un valor numérico válido mayor o igual a 0.");
                 txtPrecioVenta.Focus();
                 return false;
             }
 
-            // Validar Relación Precios
+            // 6. Validar Relación Precios (Venta >= Compra)
             if (precioVenta < precioCompra)
             {
-                _ep.SetError(txtPrecioVenta, "El precio de venta debe ser mayor al precio de la compra");
+                _ep.SetError(txtPrecioVenta, "El precio de venta no puede ser inferior al precio de compra.");
                 txtPrecioVenta.Focus();
                 return false;
             }
 
-            // Validar Stock / Cantidad
+            // 7. Validar Cantidad / Stock Actual
             if (!int.TryParse(txtStock.Text.Trim(), out int cantidad) || cantidad < 0)
             {
-                _ep.SetError(txtStock, "La cantidad de productos no puede ser menor a 0");
+                _ep.SetError(txtStock, "La cantidad de stock no puede ser un valor negativo.");
                 txtStock.Focus();
                 return false;
             }
 
-            // Validar Stock Minimo
+            // 8. Validar Stock Mínimo
             if (!int.TryParse(txtStockMinimo.Text.Trim(), out int stockMinimo) || stockMinimo < 0)
             {
-                _ep.SetError(txtStockMinimo, "El stock minimo de productos no puede ser menor a 0");
+                _ep.SetError(txtStockMinimo, "El stock mínimo no puede ser un valor negativo.");
                 txtStockMinimo.Focus();
                 return false;
             }
 
-            // Validar Relación Stock
-            if (stockMinimo < cantidad)
+            // 9. Validar Relación Stock (Stock Actual >= Stock Mínimo)
+            if (cantidad < stockMinimo)
             {
-                _ep.SetError(txtStock, "El stock minimo debe ser menor al stock del producto");
-                txtStockMinimo.Focus();
+                _ep.SetError(txtStock, "La cantidad de stock no puede ser menor que el stock mínimo.");
+                txtStock.Focus();
                 return false;
             }
 

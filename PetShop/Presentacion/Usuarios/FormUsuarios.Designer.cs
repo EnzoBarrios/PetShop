@@ -33,13 +33,6 @@
             this.btnModificarUsuario = new System.Windows.Forms.Button();
             this.btnNuevoUsuario = new System.Windows.Forms.Button();
             this.dgvUsuarios = new System.Windows.Forms.DataGridView();
-            this.txtBuscar = new System.Windows.Forms.TextBox();
-            this.LBuscar = new System.Windows.Forms.Label();
-            this.LTitulo = new System.Windows.Forms.Label();
-            this.PanelBotones = new System.Windows.Forms.Panel();
-            this.PanelSuperior = new System.Windows.Forms.Panel();
-            this.btnVolver = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colApellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,6 +40,13 @@
             this.colRol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
+            this.LBuscar = new System.Windows.Forms.Label();
+            this.LTitulo = new System.Windows.Forms.Label();
+            this.PanelBotones = new System.Windows.Forms.Panel();
+            this.PanelSuperior = new System.Windows.Forms.Panel();
+            this.btnVolver = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.PanelSuperior.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -57,7 +57,7 @@
             this.btnEstado.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnEstado.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btnEstado.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnEstado.Location = new System.Drawing.Point(1065, 13);
+            this.btnEstado.Location = new System.Drawing.Point(1065, 10);
             this.btnEstado.Name = "btnEstado";
             this.btnEstado.Size = new System.Drawing.Size(132, 56);
             this.btnEstado.TabIndex = 32;
@@ -70,7 +70,7 @@
             this.btnModificarUsuario.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnModificarUsuario.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btnModificarUsuario.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnModificarUsuario.Location = new System.Drawing.Point(537, 9);
+            this.btnModificarUsuario.Location = new System.Drawing.Point(534, 10);
             this.btnModificarUsuario.Name = "btnModificarUsuario";
             this.btnModificarUsuario.Size = new System.Drawing.Size(132, 60);
             this.btnModificarUsuario.TabIndex = 31;
@@ -83,7 +83,7 @@
             this.btnNuevoUsuario.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnNuevoUsuario.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btnNuevoUsuario.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnNuevoUsuario.Location = new System.Drawing.Point(3, 13);
+            this.btnNuevoUsuario.Location = new System.Drawing.Point(3, 12);
             this.btnNuevoUsuario.Name = "btnNuevoUsuario";
             this.btnNuevoUsuario.Size = new System.Drawing.Size(132, 56);
             this.btnNuevoUsuario.TabIndex = 30;
@@ -122,88 +122,10 @@
             this.dgvUsuarios.RowHeadersWidth = 62;
             this.dgvUsuarios.RowTemplate.Height = 28;
             this.dgvUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsuarios.Size = new System.Drawing.Size(1200, 400);
+            this.dgvUsuarios.Size = new System.Drawing.Size(1200, 387);
             this.dgvUsuarios.TabIndex = 29;
             this.dgvUsuarios.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DgvUsuarios_CellFormatting);
             this.dgvUsuarios.SelectionChanged += new System.EventHandler(this.DgvUsuarios_SelectionChanged);
-            // 
-            // txtBuscar
-            // 
-            this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.txtBuscar.Location = new System.Drawing.Point(109, 64);
-            this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(217, 25);
-            this.txtBuscar.TabIndex = 28;
-            this.txtBuscar.TextChanged += new System.EventHandler(this.TxtBuscar_TextChanged);
-            // 
-            // LBuscar
-            // 
-            this.LBuscar.AutoSize = true;
-            this.LBuscar.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.LBuscar.ForeColor = System.Drawing.Color.Black;
-            this.LBuscar.Location = new System.Drawing.Point(29, 64);
-            this.LBuscar.Name = "LBuscar";
-            this.LBuscar.Size = new System.Drawing.Size(56, 21);
-            this.LBuscar.TabIndex = 27;
-            this.LBuscar.Text = "Buscar";
-            // 
-            // LTitulo
-            // 
-            this.LTitulo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.LTitulo.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.LTitulo.ForeColor = System.Drawing.Color.Black;
-            this.LTitulo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.LTitulo.Location = new System.Drawing.Point(263, 0);
-            this.LTitulo.Name = "LTitulo";
-            this.LTitulo.Size = new System.Drawing.Size(875, 48);
-            this.LTitulo.TabIndex = 26;
-            this.LTitulo.Text = "Gestión de Usuarios";
-            this.LTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // PanelBotones
-            // 
-            this.PanelBotones.BackColor = System.Drawing.Color.Transparent;
-            this.PanelBotones.ForeColor = System.Drawing.Color.Transparent;
-            this.PanelBotones.Location = new System.Drawing.Point(32, 441);
-            this.PanelBotones.Name = "PanelBotones";
-            this.PanelBotones.Size = new System.Drawing.Size(0, 0);
-            this.PanelBotones.TabIndex = 33;
-            // 
-            // PanelSuperior
-            // 
-            this.PanelSuperior.Controls.Add(this.btnVolver);
-            this.PanelSuperior.Controls.Add(this.LBuscar);
-            this.PanelSuperior.Controls.Add(this.LTitulo);
-            this.PanelSuperior.Controls.Add(this.txtBuscar);
-            this.PanelSuperior.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PanelSuperior.Location = new System.Drawing.Point(0, 0);
-            this.PanelSuperior.Name = "PanelSuperior";
-            this.PanelSuperior.Size = new System.Drawing.Size(1400, 93);
-            this.PanelSuperior.TabIndex = 35;
-            // 
-            // btnVolver
-            // 
-            this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnVolver.Location = new System.Drawing.Point(30, 20);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(75, 32);
-            this.btnVolver.TabIndex = 29;
-            this.btnVolver.Text = "Volver";
-            this.btnVolver.UseVisualStyleBackColor = true;
-            this.btnVolver.Click += new System.EventHandler(this.BtnVolver_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.btnModificarUsuario);
-            this.panel1.Controls.Add(this.btnNuevoUsuario);
-            this.panel1.Controls.Add(this.btnEstado);
-            this.panel1.Location = new System.Drawing.Point(40, 496);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1200, 80);
-            this.panel1.TabIndex = 36;
             // 
             // colId
             // 
@@ -269,12 +191,90 @@
             this.colFecha.ReadOnly = true;
             this.colFecha.Width = 125;
             // 
+            // txtBuscar
+            // 
+            this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.txtBuscar.Location = new System.Drawing.Point(109, 64);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(217, 25);
+            this.txtBuscar.TabIndex = 28;
+            this.txtBuscar.TextChanged += new System.EventHandler(this.TxtBuscar_TextChanged);
+            // 
+            // LBuscar
+            // 
+            this.LBuscar.AutoSize = true;
+            this.LBuscar.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.LBuscar.ForeColor = System.Drawing.Color.Black;
+            this.LBuscar.Location = new System.Drawing.Point(29, 64);
+            this.LBuscar.Name = "LBuscar";
+            this.LBuscar.Size = new System.Drawing.Size(49, 19);
+            this.LBuscar.TabIndex = 27;
+            this.LBuscar.Text = "Buscar";
+            // 
+            // LTitulo
+            // 
+            this.LTitulo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LTitulo.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.LTitulo.ForeColor = System.Drawing.Color.Black;
+            this.LTitulo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.LTitulo.Location = new System.Drawing.Point(263, 0);
+            this.LTitulo.Name = "LTitulo";
+            this.LTitulo.Size = new System.Drawing.Size(875, 48);
+            this.LTitulo.TabIndex = 26;
+            this.LTitulo.Text = "Gestión de Usuarios";
+            this.LTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // PanelBotones
+            // 
+            this.PanelBotones.BackColor = System.Drawing.Color.Transparent;
+            this.PanelBotones.ForeColor = System.Drawing.Color.Transparent;
+            this.PanelBotones.Location = new System.Drawing.Point(32, 441);
+            this.PanelBotones.Name = "PanelBotones";
+            this.PanelBotones.Size = new System.Drawing.Size(0, 0);
+            this.PanelBotones.TabIndex = 33;
+            // 
+            // PanelSuperior
+            // 
+            this.PanelSuperior.Controls.Add(this.btnVolver);
+            this.PanelSuperior.Controls.Add(this.LBuscar);
+            this.PanelSuperior.Controls.Add(this.LTitulo);
+            this.PanelSuperior.Controls.Add(this.txtBuscar);
+            this.PanelSuperior.Dock = System.Windows.Forms.DockStyle.Top;
+            this.PanelSuperior.Location = new System.Drawing.Point(0, 0);
+            this.PanelSuperior.Name = "PanelSuperior";
+            this.PanelSuperior.Size = new System.Drawing.Size(1400, 93);
+            this.PanelSuperior.TabIndex = 35;
+            // 
+            // btnVolver
+            // 
+            this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnVolver.Location = new System.Drawing.Point(30, 20);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(75, 32);
+            this.btnVolver.TabIndex = 29;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.BtnVolver_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.btnModificarUsuario);
+            this.panel1.Controls.Add(this.btnNuevoUsuario);
+            this.panel1.Controls.Add(this.btnEstado);
+            this.panel1.Location = new System.Drawing.Point(40, 486);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1200, 80);
+            this.panel1.TabIndex = 36;
+            // 
             // FormUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(1400, 500);
+            this.ClientSize = new System.Drawing.Size(1400, 578);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.PanelBotones);
             this.Controls.Add(this.PanelSuperior);

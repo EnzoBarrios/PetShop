@@ -3,9 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PetShop.Datos
 {
@@ -17,15 +14,14 @@ namespace PetShop.Datos
 
             string query = @"
                 SELECT et.id_especie, e.nombre_especie AS nombre_especie, e.estado AS estado_especie,
-                       et.id_tamano, t.nombre_tamano AS nombre_tamano, t.estado AS estado_tamano,
-                       et.estado
+                       et.id_tamano, t.nombre_tamano AS nombre_tamano, t.estado AS estado_tamano
                 FROM Especie_Tamano et
                 INNER JOIN Especie e ON (et.id_especie = e.id_especie)
                 INNER JOIN Tamano t ON (et.id_tamano = t.id_tamano)
                 ORDER BY e.nombre_especie ASC, t.nombre_tamano ASC;";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
-            using (SqlCommand cmd = new SqlCommand(query, conexion)) 
+            using (SqlCommand cmd = new SqlCommand(query, conexion))
             {
                 cmd.CommandType = CommandType.Text;
                 conexion.Open();
@@ -44,9 +40,9 @@ namespace PetShop.Datos
 
         public bool ExisteRelacion(int idEspecie, int idTamano, out bool estadoActual)
         {
-            estadoActual = false;
+            estadoActual = true; // Si existe el registro en la tabla intermedia, la combinación está activa
             string query = @"
-                SELECT estado
+                SELECT COUNT(1)
                 FROM Especie_Tamano 
                 WHERE id_especie = @IdEspecie AND id_tamano = @IdTamano;";
 
@@ -58,23 +54,16 @@ namespace PetShop.Datos
                 cmd.Parameters.Add("@IdTamano", SqlDbType.Int).Value = idTamano;
 
                 conexion.Open();
-                object resultado = cmd.ExecuteScalar();
-
-                if (resultado != null && resultado != DBNull.Value)
-                {
-                    estadoActual = Convert.ToBoolean(resultado);
-                    return true;
-                }
-
-                return false;
+                int cantidad = Convert.ToInt32(cmd.ExecuteScalar());
+                return cantidad > 0;
             }
         }
 
         public bool Registrar(EspecieTamano relacion)
         {
             string query = @"
-                INSERT INTO Especie_Tamano (id_especie, id_tamano, estado)
-                VALUES (@IdEspecie, @IdTamano, @Estado);";
+                INSERT INTO Especie_Tamano (id_especie, id_tamano)
+                VALUES (@IdEspecie, @IdTamano);";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
             using (SqlCommand cmd = new SqlCommand(query, conexion))
@@ -82,7 +71,6 @@ namespace PetShop.Datos
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.Add("@IdEspecie", SqlDbType.Int).Value = relacion.IdEspecie;
                 cmd.Parameters.Add("@IdTamano", SqlDbType.Int).Value = relacion.IdTamano;
-                cmd.Parameters.Add("@Estado", SqlDbType.Bit).Value = relacion.Estado;
 
                 conexion.Open();
                 return cmd.ExecuteNonQuery() > 0;
@@ -91,22 +79,8 @@ namespace PetShop.Datos
 
         public bool CambiarEstado(int idEspecie, int idTamano, bool nuevoEstado)
         {
-            string query = @"
-                UPDATE Especie_Tamano 
-                SET estado = @Estado 
-                WHERE id_especie = @IdEspecie AND id_tamano = @IdTamano;";
-
-            using (SqlConnection conexion = ConexionBd.CrearConexion())
-            using (SqlCommand cmd = new SqlCommand(query, conexion))
-            {
-                cmd.CommandType = CommandType.Text;
-                cmd.Parameters.Add("@Estado", SqlDbType.Bit).Value = nuevoEstado;
-                cmd.Parameters.Add("@IdEspecie", SqlDbType.Int).Value = idEspecie;
-                cmd.Parameters.Add("@IdTamano", SqlDbType.Int).Value = idTamano;
-
-                conexion.Open();
-                return cmd.ExecuteNonQuery() > 0;
-            }
+            // Al no existir una columna estado en la tabla intermedia, esta función retorna true si existe la tupla
+            return ExisteRelacion(idEspecie, idTamano, out _);
         }
 
         private static EspecieTamano MapearEspecieTamano(SqlDataReader dr)
@@ -119,24 +93,26 @@ namespace PetShop.Datos
             int ordNomTam = dr.GetOrdinal("nombre_tamano");
             int ordEstTam = dr.GetOrdinal("estado_tamano");
 
-            int ordEstado = dr.GetOrdinal("estado");
+            bool estadoEspecie = dr.GetBoolean(ordEstEsp);
+            bool estadoTamano = dr.GetBoolean(ordEstTam);
 
             return new EspecieTamano()
             {
                 IdEspecie = dr.GetInt32(ordIdEsp),
                 IdTamano = dr.GetInt32(ordIdTam),
-                Estado = dr.GetBoolean(ordEstado),
+                // La combinación está activa solo si AMBOS componentes están activos
+                Estado = estadoEspecie && estadoTamano,
                 Especie = new Especie
                 {
                     IdEspecie = dr.GetInt32(ordIdEsp),
                     Nombre = dr.GetString(ordNomEsp),
-                    Estado = dr.GetBoolean(ordEstEsp)
+                    Estado = estadoEspecie
                 },
                 Tamano = new Tamano
                 {
                     IdTamano = dr.GetInt32(ordIdTam),
                     Nombre = dr.GetString(ordNomTam),
-                    Estado = dr.GetBoolean(ordEstTam)
+                    Estado = estadoTamano
                 }
             };
         }
