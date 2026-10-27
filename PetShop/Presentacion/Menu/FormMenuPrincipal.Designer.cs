@@ -127,7 +127,7 @@ namespace PetShop.Presentacion.Menu
             // 
             this.ProductosToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ProductosToolStripMenuItem.Image")));
             this.ProductosToolStripMenuItem.Name = "ProductosToolStripMenuItem";
-            this.ProductosToolStripMenuItem.Size = new System.Drawing.Size(278, 42);
+            this.ProductosToolStripMenuItem.Size = new System.Drawing.Size(222, 42);
             this.ProductosToolStripMenuItem.Text = "Productos";
             this.ProductosToolStripMenuItem.Click += new System.EventHandler(this.ProductosToolStripMenuItem_Click);
             // 
@@ -135,7 +135,7 @@ namespace PetShop.Presentacion.Menu
             // 
             this.CategoriasToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("CategoriasToolStripMenuItem.Image")));
             this.CategoriasToolStripMenuItem.Name = "CategoriasToolStripMenuItem";
-            this.CategoriasToolStripMenuItem.Size = new System.Drawing.Size(278, 42);
+            this.CategoriasToolStripMenuItem.Size = new System.Drawing.Size(222, 42);
             this.CategoriasToolStripMenuItem.Text = "Categorias";
             this.CategoriasToolStripMenuItem.Click += new System.EventHandler(this.CategoriasToolStripMenuItem_Click);
             // 
@@ -143,7 +143,7 @@ namespace PetShop.Presentacion.Menu
             // 
             this.EspeciesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("EspeciesToolStripMenuItem.Image")));
             this.EspeciesToolStripMenuItem.Name = "EspeciesToolStripMenuItem";
-            this.EspeciesToolStripMenuItem.Size = new System.Drawing.Size(278, 42);
+            this.EspeciesToolStripMenuItem.Size = new System.Drawing.Size(222, 42);
             this.EspeciesToolStripMenuItem.Text = "Especies";
             this.EspeciesToolStripMenuItem.Click += new System.EventHandler(this.EspeciesToolStripMenuItem_Click);
             // 
@@ -205,7 +205,7 @@ namespace PetShop.Presentacion.Menu
             // 
             this.MiPerfilToolStripMenuItem.Image = global::PetShop.Properties.Resources.hombre;
             this.MiPerfilToolStripMenuItem.Name = "MiPerfilToolStripMenuItem";
-            this.MiPerfilToolStripMenuItem.Size = new System.Drawing.Size(278, 42);
+            this.MiPerfilToolStripMenuItem.Size = new System.Drawing.Size(246, 42);
             this.MiPerfilToolStripMenuItem.Text = "Mi Perfil";
             this.MiPerfilToolStripMenuItem.Click += new System.EventHandler(this.MiPerfilToolStripMenuItem_Click);
             // 
@@ -213,7 +213,7 @@ namespace PetShop.Presentacion.Menu
             // 
             this.CerrarSesiónToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("CerrarSesiónToolStripMenuItem.Image")));
             this.CerrarSesiónToolStripMenuItem.Name = "CerrarSesiónToolStripMenuItem";
-            this.CerrarSesiónToolStripMenuItem.Size = new System.Drawing.Size(278, 42);
+            this.CerrarSesiónToolStripMenuItem.Size = new System.Drawing.Size(246, 42);
             this.CerrarSesiónToolStripMenuItem.Text = "Cerrar Sesión";
             this.CerrarSesiónToolStripMenuItem.Click += new System.EventHandler(this.CerrarSesiónToolStripMenuItem_Click);
             // 
@@ -221,7 +221,7 @@ namespace PetShop.Presentacion.Menu
             // 
             this.SalirToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("SalirToolStripMenuItem.Image")));
             this.SalirToolStripMenuItem.Name = "SalirToolStripMenuItem";
-            this.SalirToolStripMenuItem.Size = new System.Drawing.Size(278, 42);
+            this.SalirToolStripMenuItem.Size = new System.Drawing.Size(246, 42);
             this.SalirToolStripMenuItem.Text = "Salir";
             this.SalirToolStripMenuItem.Click += new System.EventHandler(this.SalirToolStripMenuItem_Click);
             // 

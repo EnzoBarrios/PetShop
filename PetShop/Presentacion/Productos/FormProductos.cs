@@ -125,30 +125,24 @@ namespace PetShop.Presentacion
             if (dgvProductos.Rows[e.RowIndex].DataBoundItem is Producto producto)
             {
                 // -------------------------------------------------------------
-                // 1. APLICAR COLORES PERSONALIZADOS SEGÚN EL STOCK
+                // 1. APLICAR COLORES SEGÚN EL STOCK (Uso de e.CellStyle)
                 // -------------------------------------------------------------
-                DataGridViewRow fila = dgvProductos.Rows[e.RowIndex];
 
-                // Caso 1: Sin Stock
+                // Caso 1: Sin Stock (Rojo)
                 if (producto.StockActual <= 0)
                 {
-                    fila.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 100, 115);
-                    fila.DefaultCellStyle.SelectionBackColor = Color.FromArgb(210, 4, 45); // Cherry (Cereza intenso al seleccionar)
-                    fila.DefaultCellStyle.SelectionForeColor = Color.White; // Texto blanco al seleccionar 
+                    e.CellStyle.BackColor = Color.FromArgb(255, 100, 115);
+                    e.CellStyle.ForeColor = Color.White;
+                    e.CellStyle.SelectionBackColor = Color.FromArgb(210, 4, 45);
+                    e.CellStyle.SelectionForeColor = Color.White;
                 }
-                // Caso 2: Stock Mínimo alcanzado o superado 
+                // Caso 2: Stock Mínimo alcanzado o crítico (Amarillo)
                 else if (producto.StockActual <= producto.StockMinimo)
                 {
-                    fila.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 225, 75);
-                    fila.DefaultCellStyle.SelectionBackColor = Color.FromArgb(255, 216, 0); // Rubber Ducky (Amarillo patito al seleccionar)
-                    fila.DefaultCellStyle.SelectionForeColor = Color.Black;
-                }
-                // Caso 3: Stock Normal
-                else
-                {
-                    fila.DefaultCellStyle.BackColor = Color.White;
-                    fila.DefaultCellStyle.SelectionBackColor = SystemColors.Highlight;
-                    fila.DefaultCellStyle.SelectionForeColor = Color.White;
+                    e.CellStyle.BackColor = Color.FromArgb(255, 225, 75);
+                    e.CellStyle.ForeColor = Color.Black;
+                    e.CellStyle.SelectionBackColor = Color.FromArgb(255, 216, 0);
+                    e.CellStyle.SelectionForeColor = Color.Black;
                 }
 
                 // -------------------------------------------------------------

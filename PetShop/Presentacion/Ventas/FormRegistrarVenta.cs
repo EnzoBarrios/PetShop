@@ -31,6 +31,9 @@ namespace PetShop.Presentacion.Ventas
 
         private void CargarInformacionInicial()
         {
+            txtCodProducto.ReadOnly = true;
+            txtPrecioUnitario.ReadOnly = true;
+            txtStockDisponible.ReadOnly = true;
             txtNroFactura.Text = _cnVenta.ObtenerProximoNroFactura();
             txtFecha.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
             txtFecha.ReadOnly = true;
@@ -186,6 +189,17 @@ namespace PetShop.Presentacion.Ventas
             else
             {
                 _listaDetalle.Add(new DetalleVenta(cantidadIngresada, _productoSeleccionado.PrecioVenta, _productoSeleccionado));
+            }
+
+            if (_productoSeleccionado.StockActual <= _productoSeleccionado.StockMinimo)
+            {
+                MessageBox.Show(
+                    $"¡Atención! El producto '{_productoSeleccionado.Nombre}' ha alcanzado o superado su stock mínimo.\n" +
+                    $"Stock actual: {_productoSeleccionado.StockActual} (Mínimo: {_productoSeleccionado.StockMinimo})",
+                    "Alerta de Stock Mínimo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
             }
 
             RefrescarCarrito();
@@ -374,6 +388,23 @@ namespace PetShop.Presentacion.Ventas
             if (exito)
             {
                 MessageBox.Show("Venta registrada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Después de confirmar la venta con éxito
+                foreach (var detalle in _listaDetalle)
+                {
+                    // Consultar el stock actualizado del producto
+                    Producto prod = _cnProducto.ObtenerPorId(detalle.IdProducto);
+
+                    if (prod.StockActual <= prod.StockMinimo)
+                    {
+                        MessageBox.Show(
+                            $"¡Atención! El producto '{prod.Nombre}' ha alcanzado o superado su stock mínimo.\n" +
+                            $"Stock actual: {prod.StockActual} (Mínimo: {prod.StockMinimo})",
+                            "Alerta de Stock Mínimo",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                }
                 LimpiarFormularioVenta();
             }
             else
@@ -381,23 +412,7 @@ namespace PetShop.Presentacion.Ventas
                 MessageBox.Show(mensaje, "Error al Registrar Venta", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            // Después de confirmar la venta con éxito
-            foreach (var detalle in _listaDetalle)
-            {
-                // Consultar el stock actualizado del producto
-                Producto prod = _cnProducto.ObtenerPorId(detalle.IdProducto);
-
-                if (prod.StockActual <= prod.StockMinimo)
-                {
-                    MessageBox.Show(
-                        $"¡Atención! El producto '{prod.Nombre}' ha alcanzado o superado su stock mínimo.\n" +
-                        $"Stock actual: {prod.StockActual} (Mínimo: {prod.StockMinimo})",
-                        "Alerta de Stock Mínimo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
-                }
-            }
+           
         }
 
         private void BtnEliminarVenta_Click(object sender, EventArgs e)

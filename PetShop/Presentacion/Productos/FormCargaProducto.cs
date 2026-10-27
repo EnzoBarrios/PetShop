@@ -250,6 +250,14 @@ namespace PetShop.Presentacion.Productos
                 return false;
             }
 
+            // 9. Validar Relación Stock (Stock Actual >= Stock Mínimo)
+            if (cantidad < stockMinimo)
+            {
+                _ep.SetError(txtCantidad, "La cantidad de stock no puede ser menor que el stock mínimo.");
+                txtCantidad.Focus();
+                return false;
+            }
+
             return true;
         }
 
