@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -71,10 +72,10 @@ namespace PetShop.Presentacion.Ventas
                 cbxTipoVenta.DataSource = await tiposVentaTask;
                 cbxTipoVenta.DisplayMember = nameof(TipoVenta.Descripcion);
                 cbxTipoVenta.ValueMember = nameof(TipoVenta.IdTipoVenta);
-                if (cbxTipoVenta.Items.Count > 0) 
+                if (cbxTipoVenta.Items.Count > 0)
                 {
                     cbxTipoVenta.SelectedIndex = 0;
-                } 
+                }
 
                 // Cargar Métodos de Pago desde la BD
                 cbxMetodoPago.DataSource = await metodosPagoTask;
@@ -89,7 +90,7 @@ namespace PetShop.Presentacion.Ventas
                 txtDescuento.Text = "0";
                 txtMontoAbonado.Text = "0,00";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Error al cargar configuración inicial: {ex.Message}",
                     "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -110,32 +111,58 @@ namespace PetShop.Presentacion.Ventas
 
             dgvCarrito.AutoGenerateColumns = false;
 
-            dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Producto", HeaderText = "Producto", Width = 200 });
-            dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Codigo", HeaderText = "Código", Width = 100 });
-            dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "PrecioUnitario", HeaderText = "Precio U.", Width = 100 });
-            dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Cantidad", HeaderText = "Cantidad", Width = 80 });
-            dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Subtotal", HeaderText = "Subtotal", Width = 110 });
+            dgvCarrito.Columns["colProducto"].DataPropertyName = "Producto";
+            dgvCarrito.Columns["colCodigo"].DataPropertyName = "Codigo";
+            dgvCarrito.Columns["colPrecio"].DataPropertyName = "PrecioUnitario";
+            dgvCarrito.Columns["colCantidad"].DataPropertyName = "Cantidad";
+            dgvCarrito.Columns["colSubtotal"].DataPropertyName = "Subtotal";
 
-            // Columna de imagen para eliminar
-            DataGridViewImageColumn btnEliminar = new DataGridViewImageColumn
+            // Estilo personalizado para el botón Quitar (colAccion)
+            if (dgvCarrito.Columns["colAccion"] is DataGridViewButtonColumn colBtn)
             {
-                HeaderText = "Acción",
-                Name = "btnQuitar",
-                Image = Properties.Resources.eliminar_producto, // Asegúrate de que el nombre coincida exactamente en Resources
-                ImageLayout = DataGridViewImageCellLayout.Zoom,
-                Width = 60
-            };
-
-            // Evita que aparezca el ícono por defecto de la 'X' cuando la fila se inicializa
-            btnEliminar.DefaultCellStyle.NullValue = null;
-
-            dgvCarrito.Columns.Add(btnEliminar);
+                colBtn.Text = "Quitar";
+                colBtn.UseColumnTextForButtonValue = true;
+                colBtn.FlatStyle = FlatStyle.Flat;
+                colBtn.DefaultCellStyle.ForeColor = Color.Red;
+                colBtn.DefaultCellStyle.SelectionForeColor = Color.Red;
+                colBtn.DefaultCellStyle.BackColor = Color.FromArgb(253, 237, 236); // Fondo rojo clarito opcional
+            }
         }
+
+        private void DgvCarrito_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            // Si el puntero entra a una celda válida de la columna de acción
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgvCarrito.Columns[e.ColumnIndex].Name == "colAccion")
+            {
+                dgvCarrito.Cursor = Cursors.Hand;
+            }
+        }
+
+        private void DgvCarrito_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            // Vuelve al cursor normal cuando el puntero sale de la celda
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgvCarrito.Columns[e.ColumnIndex].Name == "colAccion")
+            {
+                dgvCarrito.Cursor = Cursors.Default;
+            }
+        }
+        
+        private void DgvCarrito_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // 1. Verifica que el clic sea en una fila válida (no en el encabezado)
+            // 2. Verifica que se haya hecho clic sobre la columna de acción (colAccion)
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgvCarrito.Columns[e.ColumnIndex].Name == "colAccion")
+            {
+                _listaDetalle.RemoveAt(e.RowIndex);
+                RefrescarCarrito();
+            }
+        }
+
 
         // --- 1. BÚSQUEDA Y SELECCIÓN DE PRODUCTO ---
         private async void BtnBuscarProducto_Click(object sender, EventArgs e)
         {
-           await BuscarProductoPorNombreAsync();
+            await BuscarProductoPorNombreAsync();
         }
 
         private async void TxtNombreProducto_KeyDown(object sender, KeyEventArgs e)
@@ -160,7 +187,7 @@ namespace PetShop.Presentacion.Ventas
             this.Cursor = Cursors.WaitCursor;
 
             // 1. Obtener todos los productos activos que contengan el texto ingresado
-            List<Producto> productosEncontrados = await Task.Run(() => 
+            List<Producto> productosEncontrados = await Task.Run(() =>
                 _cnProducto.ListarProductos(busquedaNombre)
                            .Where(p => p.Estado && p.Nombre.ToLower().Contains(busquedaNombre.ToLower()))
                            .ToList()
@@ -215,6 +242,12 @@ namespace PetShop.Presentacion.Ventas
             if (_productoSeleccionado == null)
             {
                 MessageBox.Show("Debe seleccionar un producto primero.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (_productoSeleccionado.StockActual <= 0)
+            {
+                MessageBox.Show($"El producto '{_productoSeleccionado.Nombre}' no cuenta con stock disponible.", "Sin Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -276,18 +309,7 @@ namespace PetShop.Presentacion.Ventas
             CalcularTotales();
         }
 
-        // --- EVENTO PARA QUITAR FILAS DEL CARRITO ---
-        private void DgvCarrito_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // 1. Verifica que el clic sea en una fila válida (no en el encabezado)
-            // 2. Verifica que se haya hecho clic sobre la columna de la imagen "btnQuitar"
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgvCarrito.Columns[e.ColumnIndex].Name == "btnQuitar")
-            {
-                _listaDetalle.RemoveAt(e.RowIndex);
-                RefrescarCarrito();
-            }
-        }
-
+       
         // --- 3. CÁLCULO DE TOTALES, DESCUENTOS Y VUELTO ---
         private void CalcularTotales()
         {
@@ -377,7 +399,7 @@ namespace PetShop.Presentacion.Ventas
             }
         }
 
-        // --- 4. CONFIRMAR REGISTRO ---
+        // --- 4. CONFIRMAR REGISTRO Y GESTIÓN DE IMPRESIÓN ---
 
         private async void BtnConfirmarVenta_Click(object sender, EventArgs e)
         {
@@ -446,9 +468,20 @@ namespace PetShop.Presentacion.Ventas
 
             if (exito)
             {
-                MessageBox.Show("Venta registrada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Preguntar si se desea imprimir el comprobante antes de limpiar la pantalla
+                DialogResult respuestaImpresion = MessageBox.Show(
+                    "Venta registrada con éxito.\n\n¿Desea generar e imprimir el comprobante de pago?",
+                    "Comprobante de Venta",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
 
-                // Después de confirmar la venta con éxito
+                if (respuestaImpresion == DialogResult.Yes)
+                {
+                    ImprimirComprobante();
+                }
+
+                // Verificar stock mínimo
                 foreach (var detalle in _listaDetalle)
                 {
                     // Consultar el stock actualizado del producto
@@ -457,7 +490,7 @@ namespace PetShop.Presentacion.Ventas
                     if (prod.StockActual <= prod.StockMinimo)
                     {
                         MessageBox.Show(
-                            $"¡Atención! El producto '{prod.Nombre}' ha alcanzado o superado su stock mínimo.\n" +
+                            $"RECORDATORIO: El producto '{prod.Nombre}' alcanzó/superó su stock mínimo.\n" +
                             $"Stock actual: {prod.StockActual} (Mínimo: {prod.StockMinimo})",
                             "Alerta de Stock Mínimo",
                             MessageBoxButtons.OK,
@@ -472,6 +505,75 @@ namespace PetShop.Presentacion.Ventas
             {
                 MessageBox.Show(mensaje, "Error al Registrar Venta", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        // --- MÉTODOS DE IMPRESIÓN ---
+
+        public void ImprimirComprobante()
+        {
+            try
+            {
+                PrintDocument pd = new PrintDocument();
+                // pd.PrinterSettings.PrinterName = "NombreDeTuImpresoraTermica"; // Configurar si tenés una específica
+                pd.PrintPage += new PrintPageEventHandler(ImprimirPage);
+                pd.Print();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ocurrió un error al intentar imprimir: {ex.Message}", "Error de Impresión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ImprimirPage(object sender, PrintPageEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            Font fontNormal = new Font("Courier New", 9, FontStyle.Regular);
+            Font fontBold = new Font("Courier New", 9, FontStyle.Bold);
+            Font fontTitulo = new Font("Courier New", 12, FontStyle.Bold);
+
+            float y = 10;
+            float posX = 10;
+
+            // Encabezado
+            g.DrawString("      PETCONTROL      ", fontTitulo, Brushes.Black, posX, y); y += 20;
+            g.DrawString("------------------------------", fontNormal, Brushes.Black, posX, y); y += 15;
+            g.DrawString($"N° Factura: {txtNroFactura.Text}", fontNormal, Brushes.Black, posX, y); y += 15;
+            g.DrawString($"Fecha: {DateTime.Now:dd/MM/yyyy HH:mm}", fontNormal, Brushes.Black, posX, y); y += 15;
+            g.DrawString($"Pago: {cbxMetodoPago.Text}", fontNormal, Brushes.Black, posX, y); y += 15;
+            g.DrawString("------------------------------", fontNormal, Brushes.Black, posX, y); y += 15;
+
+            // Detalle de Ítems
+            g.DrawString("Cant. Producto          Subtotal", fontBold, Brushes.Black, posX, y); y += 15;
+
+            foreach (DataGridViewRow row in dgvCarrito.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                if (row.Cells["Producto"].Value != null)
+                {
+                    string cant = row.Cells["Cantidad"].Value.ToString();
+                    string prod = row.Cells["Producto"].Value.ToString();
+                    string subtotal = row.Cells["Subtotal"].Value.ToString();
+
+                    // Acortar nombre si es muy largo
+                    if (prod.Length > 15) prod = prod.Substring(0, 15);
+
+                    string linea = $"{cant.PadRight(4)} {prod.PadRight(15)} {subtotal.PadLeft(8)}";
+                    g.DrawString(linea, fontNormal, Brushes.Black, posX, y);
+                    y += 15;
+                }
+            }
+
+            // Totales
+            g.DrawString("------------------------------", fontNormal, Brushes.Black, posX, y); y += 15;
+            g.DrawString($"{lblSubtotal.Text}", fontNormal, Brushes.Black, posX, y); y += 15;
+            g.DrawString($"{lblDescuentoFinal.Text}", fontNormal, Brushes.Black, posX, y); y += 15;
+            g.DrawString($"{lblTotalFinal.Text}", fontBold, Brushes.Black, posX, y); y += 18;
+            g.DrawString($"{lblMontoFinal.Text}", fontNormal, Brushes.Black, posX, y); y += 15;
+            g.DrawString($"{lblVuelto.Text}", fontNormal, Brushes.Black, posX, y); y += 25;
+
+            // Pie de página
+            g.DrawString("  ¡Gracias por su compra!  ", fontBold, Brushes.Black, posX, y);
         }
 
         private async void BtnEliminarVenta_Click(object sender, EventArgs e)

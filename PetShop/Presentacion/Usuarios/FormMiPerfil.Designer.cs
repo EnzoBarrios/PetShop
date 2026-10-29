@@ -73,11 +73,11 @@
             this.LTitulo.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LTitulo.ForeColor = System.Drawing.Color.Black;
             this.LTitulo.ImageList = this.Titulo;
-            this.LTitulo.Location = new System.Drawing.Point(362, 20);
+            this.LTitulo.Location = new System.Drawing.Point(407, 25);
             this.LTitulo.Name = "LTitulo";
-            this.LTitulo.Size = new System.Drawing.Size(557, 41);
+            this.LTitulo.Size = new System.Drawing.Size(627, 51);
             this.LTitulo.TabIndex = 110;
-            this.LTitulo.Text = "Mi Perfil";
+            this.LTitulo.Text = "MI PERFIL";
             this.LTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Titulo
@@ -90,15 +90,16 @@
             // 
             this.PanelContenedor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.PanelContenedor.BackColor = System.Drawing.Color.SlateGray;
             this.PanelContenedor.Controls.Add(this.btnGuardar);
             this.PanelContenedor.Controls.Add(this.btnVolver);
             this.PanelContenedor.Controls.Add(this.GBClave);
             this.PanelContenedor.Controls.Add(this.GBDatosSistema);
             this.PanelContenedor.Controls.Add(this.GBDatos);
-            this.PanelContenedor.Location = new System.Drawing.Point(111, 80);
+            this.PanelContenedor.Location = new System.Drawing.Point(125, 100);
             this.PanelContenedor.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PanelContenedor.Name = "PanelContenedor";
-            this.PanelContenedor.Size = new System.Drawing.Size(1059, 538);
+            this.PanelContenedor.Size = new System.Drawing.Size(1191, 672);
             this.PanelContenedor.TabIndex = 111;
             // 
             // btnGuardar
@@ -112,10 +113,10 @@
             this.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnGuardar.ImageIndex = 1;
             this.btnGuardar.ImageList = this.Botones;
-            this.btnGuardar.Location = new System.Drawing.Point(916, 467);
+            this.btnGuardar.Location = new System.Drawing.Point(1030, 584);
             this.btnGuardar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnGuardar.Name = "btnGuardar";
-            this.btnGuardar.Size = new System.Drawing.Size(120, 60);
+            this.btnGuardar.Size = new System.Drawing.Size(135, 75);
             this.btnGuardar.TabIndex = 112;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -137,10 +138,10 @@
             this.btnVolver.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnVolver.ImageIndex = 0;
             this.btnVolver.ImageList = this.Botones;
-            this.btnVolver.Location = new System.Drawing.Point(23, 467);
+            this.btnVolver.Location = new System.Drawing.Point(26, 584);
             this.btnVolver.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(120, 60);
+            this.btnVolver.Size = new System.Drawing.Size(135, 75);
             this.btnVolver.TabIndex = 111;
             this.btnVolver.Text = "Volver";
             this.btnVolver.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -158,12 +159,12 @@
             this.GBClave.Controls.Add(this.txtConfirmar);
             this.GBClave.Controls.Add(this.label4);
             this.GBClave.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.GBClave.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.GBClave.Location = new System.Drawing.Point(23, 353);
+            this.GBClave.ForeColor = System.Drawing.Color.White;
+            this.GBClave.Location = new System.Drawing.Point(26, 441);
             this.GBClave.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.GBClave.Name = "GBClave";
             this.GBClave.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.GBClave.Size = new System.Drawing.Size(1013, 98);
+            this.GBClave.Size = new System.Drawing.Size(1140, 122);
             this.GBClave.TabIndex = 109;
             this.GBClave.TabStop = false;
             this.GBClave.Text = "Cambiar Contraseña";
@@ -172,11 +173,11 @@
             // 
             this.BVerConfirmar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BVerConfirmar.BackColor = System.Drawing.Color.Transparent;
-            this.BVerConfirmar.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.BVerConfirmar.Location = new System.Drawing.Point(935, 47);
+            this.BVerConfirmar.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.BVerConfirmar.Location = new System.Drawing.Point(1052, 59);
             this.BVerConfirmar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BVerConfirmar.Name = "BVerConfirmar";
-            this.BVerConfirmar.Size = new System.Drawing.Size(34, 30);
+            this.BVerConfirmar.Size = new System.Drawing.Size(38, 38);
             this.BVerConfirmar.TabIndex = 107;
             this.BVerConfirmar.Text = "👁";
             this.BVerConfirmar.UseVisualStyleBackColor = false;
@@ -185,11 +186,11 @@
             // BVerClave
             // 
             this.BVerClave.BackColor = System.Drawing.Color.Transparent;
-            this.BVerClave.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.BVerClave.Location = new System.Drawing.Point(291, 47);
+            this.BVerClave.ForeColor = System.Drawing.Color.Black;
+            this.BVerClave.Location = new System.Drawing.Point(327, 59);
             this.BVerClave.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BVerClave.Name = "BVerClave";
-            this.BVerClave.Size = new System.Drawing.Size(34, 30);
+            this.BVerClave.Size = new System.Drawing.Size(38, 38);
             this.BVerClave.TabIndex = 106;
             this.BVerClave.Text = "👁";
             this.BVerClave.UseVisualStyleBackColor = false;
@@ -198,10 +199,10 @@
             // txtClave
             // 
             this.txtClave.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtClave.Location = new System.Drawing.Point(47, 48);
+            this.txtClave.Location = new System.Drawing.Point(53, 60);
             this.txtClave.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtClave.Name = "txtClave";
-            this.txtClave.Size = new System.Drawing.Size(238, 27);
+            this.txtClave.Size = new System.Drawing.Size(267, 31);
             this.txtClave.TabIndex = 95;
             this.txtClave.UseSystemPasswordChar = true;
             // 
@@ -209,9 +210,9 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(44, 30);
+            this.label3.Location = new System.Drawing.Point(50, 38);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(91, 17);
+            this.label3.Size = new System.Drawing.Size(102, 20);
             this.label3.TabIndex = 94;
             this.label3.Text = "Contraseña";
             // 
@@ -219,10 +220,10 @@
             // 
             this.txtConfirmar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtConfirmar.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtConfirmar.Location = new System.Drawing.Point(689, 48);
+            this.txtConfirmar.Location = new System.Drawing.Point(775, 60);
             this.txtConfirmar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtConfirmar.Name = "txtConfirmar";
-            this.txtConfirmar.Size = new System.Drawing.Size(238, 27);
+            this.txtConfirmar.Size = new System.Drawing.Size(267, 31);
             this.txtConfirmar.TabIndex = 98;
             this.txtConfirmar.UseSystemPasswordChar = true;
             // 
@@ -231,9 +232,9 @@
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(686, 30);
+            this.label4.Location = new System.Drawing.Point(772, 38);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(164, 17);
+            this.label4.Size = new System.Drawing.Size(182, 20);
             this.label4.TabIndex = 97;
             this.label4.Text = "Confirmar contraseña";
             // 
@@ -246,12 +247,12 @@
             this.GBDatosSistema.Controls.Add(this.txtNombreUsuario);
             this.GBDatosSistema.Controls.Add(this.LNombreUsuario);
             this.GBDatosSistema.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.GBDatosSistema.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.GBDatosSistema.Location = new System.Drawing.Point(23, 224);
+            this.GBDatosSistema.ForeColor = System.Drawing.Color.White;
+            this.GBDatosSistema.Location = new System.Drawing.Point(26, 280);
             this.GBDatosSistema.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.GBDatosSistema.Name = "GBDatosSistema";
             this.GBDatosSistema.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.GBDatosSistema.Size = new System.Drawing.Size(1013, 125);
+            this.GBDatosSistema.Size = new System.Drawing.Size(1140, 156);
             this.GBDatosSistema.TabIndex = 108;
             this.GBDatosSistema.TabStop = false;
             this.GBDatosSistema.Text = "Datos del Sistema";
@@ -260,11 +261,11 @@
             // 
             this.txtRol.Enabled = false;
             this.txtRol.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtRol.Location = new System.Drawing.Point(685, 64);
+            this.txtRol.Location = new System.Drawing.Point(771, 80);
             this.txtRol.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtRol.Name = "txtRol";
             this.txtRol.ReadOnly = true;
-            this.txtRol.Size = new System.Drawing.Size(280, 27);
+            this.txtRol.Size = new System.Drawing.Size(314, 31);
             this.txtRol.TabIndex = 105;
             this.txtRol.TabStop = false;
             // 
@@ -272,28 +273,28 @@
             // 
             this.LRol.AutoSize = true;
             this.LRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LRol.Location = new System.Drawing.Point(682, 46);
+            this.LRol.Location = new System.Drawing.Point(767, 58);
             this.LRol.Name = "LRol";
-            this.LRol.Size = new System.Drawing.Size(32, 17);
+            this.LRol.Size = new System.Drawing.Size(36, 20);
             this.LRol.TabIndex = 89;
             this.LRol.Text = "Rol";
             // 
             // txtNombreUsuario
             // 
             this.txtNombreUsuario.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtNombreUsuario.Location = new System.Drawing.Point(47, 64);
+            this.txtNombreUsuario.Location = new System.Drawing.Point(53, 80);
             this.txtNombreUsuario.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtNombreUsuario.Name = "txtNombreUsuario";
-            this.txtNombreUsuario.Size = new System.Drawing.Size(280, 27);
+            this.txtNombreUsuario.Size = new System.Drawing.Size(314, 31);
             this.txtNombreUsuario.TabIndex = 103;
             // 
             // LNombreUsuario
             // 
             this.LNombreUsuario.AutoSize = true;
             this.LNombreUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LNombreUsuario.Location = new System.Drawing.Point(44, 45);
+            this.LNombreUsuario.Location = new System.Drawing.Point(50, 56);
             this.LNombreUsuario.Name = "LNombreUsuario";
-            this.LNombreUsuario.Size = new System.Drawing.Size(146, 17);
+            this.LNombreUsuario.Size = new System.Drawing.Size(160, 20);
             this.LNombreUsuario.TabIndex = 102;
             this.LNombreUsuario.Text = "Nombre de usuario";
             // 
@@ -313,12 +314,12 @@
             this.GBDatos.Controls.Add(this.LApellido);
             this.GBDatos.Controls.Add(this.txtApellido);
             this.GBDatos.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.GBDatos.ForeColor = System.Drawing.Color.Black;
-            this.GBDatos.Location = new System.Drawing.Point(23, 2);
+            this.GBDatos.ForeColor = System.Drawing.Color.White;
+            this.GBDatos.Location = new System.Drawing.Point(26, 2);
             this.GBDatos.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.GBDatos.Name = "GBDatos";
             this.GBDatos.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.GBDatos.Size = new System.Drawing.Size(1013, 218);
+            this.GBDatos.Size = new System.Drawing.Size(1140, 272);
             this.GBDatos.TabIndex = 107;
             this.GBDatos.TabStop = false;
             this.GBDatos.Text = "Datos Personales y Contacto";
@@ -326,39 +327,39 @@
             // txtTelefono
             // 
             this.txtTelefono.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtTelefono.Location = new System.Drawing.Point(47, 161);
+            this.txtTelefono.Location = new System.Drawing.Point(53, 201);
             this.txtTelefono.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtTelefono.Name = "txtTelefono";
-            this.txtTelefono.Size = new System.Drawing.Size(280, 27);
+            this.txtTelefono.Size = new System.Drawing.Size(314, 31);
             this.txtTelefono.TabIndex = 109;
             // 
             // LTelefono
             // 
             this.LTelefono.AutoSize = true;
             this.LTelefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LTelefono.Location = new System.Drawing.Point(44, 142);
+            this.LTelefono.Location = new System.Drawing.Point(50, 178);
             this.LTelefono.Name = "LTelefono";
-            this.LTelefono.Size = new System.Drawing.Size(72, 17);
+            this.LTelefono.Size = new System.Drawing.Size(79, 20);
             this.LTelefono.TabIndex = 108;
             this.LTelefono.Text = "Teléfono";
             // 
             // txtDni
             // 
             this.txtDni.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtDni.Location = new System.Drawing.Point(47, 106);
+            this.txtDni.Location = new System.Drawing.Point(53, 132);
             this.txtDni.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtDni.Name = "txtDni";
-            this.txtDni.Size = new System.Drawing.Size(280, 27);
+            this.txtDni.Size = new System.Drawing.Size(314, 31);
             this.txtDni.TabIndex = 105;
             // 
             // txtCorreo
             // 
             this.txtCorreo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtCorreo.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtCorreo.Location = new System.Drawing.Point(689, 161);
+            this.txtCorreo.Location = new System.Drawing.Point(775, 201);
             this.txtCorreo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtCorreo.Name = "txtCorreo";
-            this.txtCorreo.Size = new System.Drawing.Size(280, 27);
+            this.txtCorreo.Size = new System.Drawing.Size(314, 31);
             this.txtCorreo.TabIndex = 107;
             // 
             // LCorreo
@@ -366,9 +367,9 @@
             this.LCorreo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LCorreo.AutoSize = true;
             this.LCorreo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LCorreo.Location = new System.Drawing.Point(686, 142);
+            this.LCorreo.Location = new System.Drawing.Point(772, 178);
             this.LCorreo.Name = "LCorreo";
-            this.LCorreo.Size = new System.Drawing.Size(57, 17);
+            this.LCorreo.Size = new System.Drawing.Size(63, 20);
             this.LCorreo.TabIndex = 106;
             this.LCorreo.Text = "Correo";
             // 
@@ -377,9 +378,9 @@
             this.LDni.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LDni.AutoSize = true;
             this.LDni.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LDni.Location = new System.Drawing.Point(44, 87);
+            this.LDni.Location = new System.Drawing.Point(50, 109);
             this.LDni.Name = "LDni";
-            this.LDni.Size = new System.Drawing.Size(34, 17);
+            this.LDni.Size = new System.Drawing.Size(40, 20);
             this.LDni.TabIndex = 104;
             this.LDni.Text = "DNI";
             // 
@@ -387,19 +388,19 @@
             // 
             this.txtNombre.BackColor = System.Drawing.SystemColors.HighlightText;
             this.txtNombre.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtNombre.Location = new System.Drawing.Point(47, 47);
+            this.txtNombre.Location = new System.Drawing.Point(53, 59);
             this.txtNombre.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(280, 27);
+            this.txtNombre.Size = new System.Drawing.Size(314, 31);
             this.txtNombre.TabIndex = 90;
             // 
             // LNombre
             // 
             this.LNombre.AutoSize = true;
             this.LNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LNombre.Location = new System.Drawing.Point(44, 28);
+            this.LNombre.Location = new System.Drawing.Point(50, 35);
             this.LNombre.Name = "LNombre";
-            this.LNombre.Size = new System.Drawing.Size(64, 17);
+            this.LNombre.Size = new System.Drawing.Size(71, 20);
             this.LNombre.TabIndex = 88;
             this.LNombre.Text = "Nombre";
             // 
@@ -408,9 +409,9 @@
             this.LApellido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LApellido.AutoSize = true;
             this.LApellido.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LApellido.Location = new System.Drawing.Point(686, 25);
+            this.LApellido.Location = new System.Drawing.Point(772, 31);
             this.LApellido.Name = "LApellido";
-            this.LApellido.Size = new System.Drawing.Size(66, 17);
+            this.LApellido.Size = new System.Drawing.Size(73, 20);
             this.LApellido.TabIndex = 100;
             this.LApellido.Text = "Apellido";
             // 
@@ -418,32 +419,32 @@
             // 
             this.txtApellido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtApellido.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtApellido.Location = new System.Drawing.Point(689, 47);
+            this.txtApellido.Location = new System.Drawing.Point(775, 59);
             this.txtApellido.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtApellido.Name = "txtApellido";
-            this.txtApellido.Size = new System.Drawing.Size(280, 27);
+            this.txtApellido.Size = new System.Drawing.Size(314, 31);
             this.txtApellido.TabIndex = 101;
             // 
             // lblPetShop
             // 
-            this.lblPetShop.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lblPetShop.BackColor = System.Drawing.Color.White;
             this.lblPetShop.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPetShop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblPetShop.ImageKey = "Huella_Perro.png";
             this.lblPetShop.ImageList = this.Titulo;
-            this.lblPetShop.Location = new System.Drawing.Point(10, 5);
+            this.lblPetShop.Location = new System.Drawing.Point(11, 6);
             this.lblPetShop.Name = "lblPetShop";
-            this.lblPetShop.Size = new System.Drawing.Size(186, 72);
+            this.lblPetShop.Size = new System.Drawing.Size(209, 90);
             this.lblPetShop.TabIndex = 113;
             this.lblPetShop.Text = "PetShop";
             this.lblPetShop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // FormMiPerfil
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(1280, 620);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(1440, 775);
             this.Controls.Add(this.lblPetShop);
             this.Controls.Add(this.PanelContenedor);
             this.Controls.Add(this.LTitulo);

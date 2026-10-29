@@ -160,7 +160,7 @@ CREATE TABLE Detalle_Venta (
 	id_producto INT NOT NULL,
 	cantidad INT NOT NULL,
 	precio_unitario DECIMAL(10,2) NOT NULL,
-	subtotal AS (cantidad * precio_unitario),
+	subtotal AS (cantidad * precio_unitario) PERSISTED,
 	CONSTRAINT PK_DetalleVenta PRIMARY KEY (id_venta, id_producto),
 	CONSTRAINT FK_DetalleVenta_Venta FOREIGN KEY (id_venta) REFERENCES Venta(id_venta),
 	CONSTRAINT FK_DetalleVenta_Producto FOREIGN KEY (id_producto) REFERENCES Producto(id_producto),

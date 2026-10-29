@@ -116,7 +116,7 @@ namespace PetShop.Datos
                     cmdVenta.Parameters.AddWithValue("@fecha_hora", venta.FechaHora);
                     cmdVenta.Parameters.AddWithValue("@total", venta.Total);
                     cmdVenta.Parameters.AddWithValue("@descuento", venta.Descuento);
-                    cmdVenta.Parameters.AddWithValue("@estado", string.IsNullOrEmpty(venta.Estado) ? "Completada" : venta.Estado);
+                    cmdVenta.Parameters.AddWithValue("@estado", true);
                     cmdVenta.Parameters.AddWithValue("@id_tipo_venta", venta.IdTipoVenta);
                     cmdVenta.Parameters.AddWithValue("@id_usuario", venta.IdUsuario);
 
@@ -127,15 +127,15 @@ namespace PetShop.Datos
                     foreach (DetalleVenta dv in venta.Detalles)
                     {
                         string queryDetalle = @"
-                            INSERT INTO Detalle_Venta (id_venta, id_producto, cantidad, precio_unitario, subtotal)
-                            VALUES (@id_venta, @id_producto, @cantidad, @precio_unitario, @subtotal)";
+                            INSERT INTO Detalle_Venta (id_venta, id_producto, cantidad, precio_unitario)
+                            VALUES (@id_venta, @id_producto, @cantidad, @precio_unitario)";
 
                         SqlCommand cmdDetalle = new SqlCommand(queryDetalle, conexion, objTransaction);
                         cmdDetalle.Parameters.AddWithValue("@id_venta", idVentaGenerado);
                         cmdDetalle.Parameters.AddWithValue("@id_producto", dv.IdProducto);
                         cmdDetalle.Parameters.AddWithValue("@cantidad", dv.Cantidad);
                         cmdDetalle.Parameters.AddWithValue("@precio_unitario", dv.PrecioUnitario);
-                        // cmdDetalle.Parameters.AddWithValue("@subtotal", dv.Subtotal);
+                        
 
                         cmdDetalle.ExecuteNonQuery();
 

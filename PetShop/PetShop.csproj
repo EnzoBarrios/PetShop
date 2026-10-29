@@ -56,7 +56,7 @@
     <Compile Include="Datos\CD_Tamano.cs" />
     <Compile Include="Datos\CD_Usuario.cs" />
     <Compile Include="Datos\CD_Venta.cs" />
-    <Compile Include="Datos\Conexion.cs" />
+    <Compile Include="Datos\ConexionBd.cs" />
     <Compile Include="Datos\CD_Rol.cs" />
     <Compile Include="Entidades\Categoria.cs" />
     <Compile Include="Entidades\DetalleVenta.cs" />
