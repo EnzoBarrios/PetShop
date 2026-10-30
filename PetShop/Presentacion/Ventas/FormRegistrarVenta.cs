@@ -491,7 +491,8 @@ namespace PetShop.Presentacion.Ventas
                     {
                         MessageBox.Show(
                             $"RECORDATORIO: El producto '{prod.Nombre}' alcanzó/superó su stock mínimo.\n" +
-                            $"Stock actual: {prod.StockActual} (Mínimo: {prod.StockMinimo})",
+                            $"Stock actual: {prod.StockActual}\n" +
+                            $"Mínimo: {prod.StockMinimo}",
                             "Alerta de Stock Mínimo",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning
@@ -549,11 +550,11 @@ namespace PetShop.Presentacion.Ventas
             {
                 if (row.IsNewRow) continue;
 
-                if (row.Cells["Producto"].Value != null)
+                if (row.Cells["colProducto"].Value != null)
                 {
-                    string cant = row.Cells["Cantidad"].Value.ToString();
-                    string prod = row.Cells["Producto"].Value.ToString();
-                    string subtotal = row.Cells["Subtotal"].Value.ToString();
+                    string cant = row.Cells["colCantidad"].Value.ToString();
+                    string prod = row.Cells["colProducto"].Value.ToString();
+                    string subtotal = row.Cells["colSubtotal"].Value.ToString();
 
                     // Acortar nombre si es muy largo
                     if (prod.Length > 15) prod = prod.Substring(0, 15);

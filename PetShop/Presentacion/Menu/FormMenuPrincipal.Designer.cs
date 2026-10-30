@@ -97,7 +97,7 @@ namespace PetShop.Presentacion.Menu
             this.msPrincipal.Location = new System.Drawing.Point(0, 75);
             this.msPrincipal.Name = "msPrincipal";
             this.msPrincipal.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.msPrincipal.Size = new System.Drawing.Size(1442, 100);
+            this.msPrincipal.Size = new System.Drawing.Size(1924, 100);
             this.msPrincipal.TabIndex = 1;
             this.msPrincipal.Text = "PetShop";
             // 
@@ -263,7 +263,7 @@ namespace PetShop.Presentacion.Menu
             this.gbSesionIniciada.Controls.Add(this.lblRolLogeado);
             this.gbSesionIniciada.Controls.Add(this.lblUsuarioLogueado);
             this.gbSesionIniciada.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbSesionIniciada.Location = new System.Drawing.Point(1012, 75);
+            this.gbSesionIniciada.Location = new System.Drawing.Point(1617, 75);
             this.gbSesionIniciada.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.gbSesionIniciada.Name = "gbSesionIniciada";
             this.gbSesionIniciada.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -324,7 +324,7 @@ namespace PetShop.Presentacion.Menu
             this.gbFechaHora.Controls.Add(this.lblHora);
             this.gbFechaHora.Controls.Add(this.lblFecha);
             this.gbFechaHora.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbFechaHora.Location = new System.Drawing.Point(584, 75);
+            this.gbFechaHora.Location = new System.Drawing.Point(1215, 75);
             this.gbFechaHora.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.gbFechaHora.Name = "gbFechaHora";
             this.gbFechaHora.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -360,7 +360,7 @@ namespace PetShop.Presentacion.Menu
             this.msTitulo.Location = new System.Drawing.Point(0, 0);
             this.msTitulo.Name = "msTitulo";
             this.msTitulo.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.msTitulo.Size = new System.Drawing.Size(1442, 75);
+            this.msTitulo.Size = new System.Drawing.Size(1924, 75);
             this.msTitulo.TabIndex = 4;
             this.msTitulo.Text = "titulo";
             // 
@@ -394,7 +394,7 @@ namespace PetShop.Presentacion.Menu
             this.lblUsuarioBienvenida.Location = new System.Drawing.Point(0, 125);
             this.lblUsuarioBienvenida.Margin = new System.Windows.Forms.Padding(0);
             this.lblUsuarioBienvenida.Name = "lblUsuarioBienvenida";
-            this.lblUsuarioBienvenida.Size = new System.Drawing.Size(1442, 50);
+            this.lblUsuarioBienvenida.Size = new System.Drawing.Size(1924, 50);
             this.lblUsuarioBienvenida.TabIndex = 1;
             this.lblUsuarioBienvenida.Text = "¡Bienvenido, Usuario!";
             this.lblUsuarioBienvenida.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -409,7 +409,7 @@ namespace PetShop.Presentacion.Menu
             this.contenedor.Location = new System.Drawing.Point(0, 175);
             this.contenedor.Margin = new System.Windows.Forms.Padding(0);
             this.contenedor.Name = "contenedor";
-            this.contenedor.Size = new System.Drawing.Size(1442, 875);
+            this.contenedor.Size = new System.Drawing.Size(1924, 875);
             this.contenedor.TabIndex = 3;
             // 
             // grpAccesoRapido
@@ -419,7 +419,7 @@ namespace PetShop.Presentacion.Menu
             this.grpAccesoRapido.Controls.Add(this.btnHistorialVentas);
             this.grpAccesoRapido.Controls.Add(this.btnReportes);
             this.grpAccesoRapido.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpAccesoRapido.Location = new System.Drawing.Point(226, 252);
+            this.grpAccesoRapido.Location = new System.Drawing.Point(467, 252);
             this.grpAccesoRapido.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.grpAccesoRapido.Name = "grpAccesoRapido";
             this.grpAccesoRapido.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -496,7 +496,7 @@ namespace PetShop.Presentacion.Menu
             this.tlbEstructuraPrincipal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlbEstructuraPrincipal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tlbEstructuraPrincipal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tlbEstructuraPrincipal.Size = new System.Drawing.Size(1442, 1050);
+            this.tlbEstructuraPrincipal.Size = new System.Drawing.Size(1924, 1050);
             this.tlbEstructuraPrincipal.TabIndex = 20;
             // 
             // pnlHeader
@@ -510,7 +510,7 @@ namespace PetShop.Presentacion.Menu
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Margin = new System.Windows.Forms.Padding(0);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(1442, 175);
+            this.pnlHeader.Size = new System.Drawing.Size(1924, 175);
             this.pnlHeader.TabIndex = 0;
             // 
             // FormMenuPrincipal
@@ -518,12 +518,12 @@ namespace PetShop.Presentacion.Menu
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1442, 1050);
+            this.ClientSize = new System.Drawing.Size(1924, 1050);
             this.Controls.Add(this.tlbEstructuraPrincipal);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.msTitulo;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.MinimumSize = new System.Drawing.Size(1437, 986);
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.MinimumSize = new System.Drawing.Size(1650, 986);
             this.Name = "FormMenuPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PetShop - Sistema de Gestión Veterinaria";
