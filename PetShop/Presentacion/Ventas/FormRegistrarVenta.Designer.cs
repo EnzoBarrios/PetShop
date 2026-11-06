@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRegistrarVenta));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblTituloVenta = new System.Windows.Forms.Label();
             this.gbInformacionVenta = new System.Windows.Forms.GroupBox();
             this.cbxTipoVenta = new System.Windows.Forms.ComboBox();
@@ -81,6 +81,11 @@
             this.panelInfo = new System.Windows.Forms.Panel();
             this.pnlCobro = new System.Windows.Forms.Panel();
             this.pnlGrilla = new System.Windows.Forms.Panel();
+            this.chbxMetodoPago = new System.Windows.Forms.CheckBox();
+            this.lblMontoAbonado2 = new System.Windows.Forms.Label();
+            this.txtMontoAbonado2 = new System.Windows.Forms.TextBox();
+            this.lblMetodoPago2 = new System.Windows.Forms.Label();
+            this.cbxMetodoPago2 = new System.Windows.Forms.ComboBox();
             this.gbInformacionVenta.SuspendLayout();
             this.gbInformacionProducto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numCantidad)).BeginInit();
@@ -125,6 +130,7 @@
             // 
             // cbxTipoVenta
             // 
+            this.cbxTipoVenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxTipoVenta.FormattingEnabled = true;
             this.cbxTipoVenta.Location = new System.Drawing.Point(28, 130);
             this.cbxTipoVenta.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -180,7 +186,6 @@
             // 
             // gbInformacionProducto
             // 
-            this.gbInformacionProducto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
             this.gbInformacionProducto.Controls.Add(this.numCantidad);
             this.gbInformacionProducto.Controls.Add(this.btnBuscarProducto);
             this.gbInformacionProducto.Controls.Add(this.txtStockDisponible);
@@ -374,14 +379,15 @@
             // dgvCarrito
             // 
             this.dgvCarrito.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCarrito.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvCarrito.BackgroundColor = System.Drawing.Color.SlateGray;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCarrito.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dgvCarrito.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCarrito.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colProducto,
@@ -390,14 +396,14 @@
             this.colCantidad,
             this.colSubtotal,
             this.colAccion});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCarrito.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCarrito.DefaultCellStyle = dataGridViewCellStyle10;
             this.dgvCarrito.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCarrito.Location = new System.Drawing.Point(45, 6);
             this.dgvCarrito.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -405,7 +411,7 @@
             this.dgvCarrito.RowHeadersVisible = false;
             this.dgvCarrito.RowHeadersWidth = 62;
             this.dgvCarrito.RowTemplate.Height = 40;
-            this.dgvCarrito.Size = new System.Drawing.Size(1350, 318);
+            this.dgvCarrito.Size = new System.Drawing.Size(1350, 236);
             this.dgvCarrito.TabIndex = 11;
             this.dgvCarrito.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvCarrito_CellClick);
             this.dgvCarrito.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvCarrito_CellMouseEnter);
@@ -459,12 +465,13 @@
             // 
             // cbxMetodoPago
             // 
+            this.cbxMetodoPago.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxMetodoPago.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxMetodoPago.FormattingEnabled = true;
             this.cbxMetodoPago.Location = new System.Drawing.Point(32, 70);
             this.cbxMetodoPago.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbxMetodoPago.Name = "cbxMetodoPago";
-            this.cbxMetodoPago.Size = new System.Drawing.Size(224, 29);
+            this.cbxMetodoPago.Size = new System.Drawing.Size(200, 29);
             this.cbxMetodoPago.TabIndex = 0;
             // 
             // lblMetodoPago
@@ -483,7 +490,7 @@
             this.lblTotalFinal.AutoSize = true;
             this.lblTotalFinal.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalFinal.ForeColor = System.Drawing.Color.DarkSeaGreen;
-            this.lblTotalFinal.Location = new System.Drawing.Point(681, 90);
+            this.lblTotalFinal.Location = new System.Drawing.Point(694, 98);
             this.lblTotalFinal.Name = "lblTotalFinal";
             this.lblTotalFinal.Size = new System.Drawing.Size(92, 54);
             this.lblTotalFinal.TabIndex = 15;
@@ -494,7 +501,7 @@
             this.lblSubtotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSubtotal.AutoSize = true;
             this.lblSubtotal.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSubtotal.Location = new System.Drawing.Point(687, 28);
+            this.lblSubtotal.Location = new System.Drawing.Point(701, 31);
             this.lblSubtotal.Name = "lblSubtotal";
             this.lblSubtotal.Size = new System.Drawing.Size(32, 25);
             this.lblSubtotal.TabIndex = 16;
@@ -503,18 +510,21 @@
             // txtMontoAbonado
             // 
             this.txtMontoAbonado.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMontoAbonado.Location = new System.Drawing.Point(303, 140);
+            this.txtMontoAbonado.Location = new System.Drawing.Point(264, 70);
             this.txtMontoAbonado.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtMontoAbonado.Name = "txtMontoAbonado";
-            this.txtMontoAbonado.Size = new System.Drawing.Size(224, 29);
+            this.txtMontoAbonado.Size = new System.Drawing.Size(200, 29);
             this.txtMontoAbonado.TabIndex = 14;
             this.txtMontoAbonado.TextChanged += new System.EventHandler(this.TxtMontoAbonado_TextChanged);
+            this.txtMontoAbonado.Enter += new System.EventHandler(this.TxtMontoAbonado_Enter);
+            this.txtMontoAbonado.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtSoloNumeros_KeyPress);
+            this.txtMontoAbonado.Leave += new System.EventHandler(this.TxtMontoAbonado_Leave);
             // 
             // lblMontoAbonado
             // 
             this.lblMontoAbonado.AutoSize = true;
             this.lblMontoAbonado.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMontoAbonado.Location = new System.Drawing.Point(298, 112);
+            this.lblMontoAbonado.Location = new System.Drawing.Point(261, 42);
             this.lblMontoAbonado.Name = "lblMontoAbonado";
             this.lblMontoAbonado.Size = new System.Drawing.Size(157, 25);
             this.lblMontoAbonado.TabIndex = 13;
@@ -533,10 +543,10 @@
             this.btnConfirmarVenta.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnConfirmarVenta.ImageIndex = 2;
             this.btnConfirmarVenta.ImageList = this.imageList2;
-            this.btnConfirmarVenta.Location = new System.Drawing.Point(693, 140);
+            this.btnConfirmarVenta.Location = new System.Drawing.Point(706, 221);
             this.btnConfirmarVenta.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnConfirmarVenta.Name = "btnConfirmarVenta";
-            this.btnConfirmarVenta.Size = new System.Drawing.Size(418, 65);
+            this.btnConfirmarVenta.Size = new System.Drawing.Size(405, 65);
             this.btnConfirmarVenta.TabIndex = 20;
             this.btnConfirmarVenta.Text = "CONFIRMAR Y REGISTRAR VENTA";
             this.btnConfirmarVenta.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -556,10 +566,10 @@
             this.btnEliminarVenta.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnEliminarVenta.ImageIndex = 1;
             this.btnEliminarVenta.ImageList = this.imageList2;
-            this.btnEliminarVenta.Location = new System.Drawing.Point(1142, 140);
+            this.btnEliminarVenta.Location = new System.Drawing.Point(1148, 221);
             this.btnEliminarVenta.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEliminarVenta.Name = "btnEliminarVenta";
-            this.btnEliminarVenta.Size = new System.Drawing.Size(192, 65);
+            this.btnEliminarVenta.Size = new System.Drawing.Size(181, 65);
             this.btnEliminarVenta.TabIndex = 21;
             this.btnEliminarVenta.Text = "ELIMINAR";
             this.btnEliminarVenta.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -570,24 +580,32 @@
             // 
             this.lblDescuento.AutoSize = true;
             this.lblDescuento.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescuento.Location = new System.Drawing.Point(298, 42);
+            this.lblDescuento.Location = new System.Drawing.Point(31, 261);
             this.lblDescuento.Name = "lblDescuento";
-            this.lblDescuento.Size = new System.Drawing.Size(170, 25);
+            this.lblDescuento.Size = new System.Drawing.Size(175, 25);
             this.lblDescuento.TabIndex = 22;
-            this.lblDescuento.Text = "Descuento (% / $):";
+            this.lblDescuento.Text = "Descuento (% / $) :";
             // 
             // txtDescuento
             // 
             this.txtDescuento.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDescuento.Location = new System.Drawing.Point(303, 70);
+            this.txtDescuento.Location = new System.Drawing.Point(212, 257);
             this.txtDescuento.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtDescuento.Name = "txtDescuento";
-            this.txtDescuento.Size = new System.Drawing.Size(224, 29);
+            this.txtDescuento.Size = new System.Drawing.Size(96, 29);
             this.txtDescuento.TabIndex = 23;
             this.txtDescuento.TextChanged += new System.EventHandler(this.TxtDescuento_TextChanged);
+            this.txtDescuento.Enter += new System.EventHandler(this.TxtDescuento_Enter);
+            this.txtDescuento.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtSoloNumeros_KeyPress);
+            this.txtDescuento.Leave += new System.EventHandler(this.TxtDescuento_Leave);
             // 
             // gbCobro
             // 
+            this.gbCobro.Controls.Add(this.lblMontoAbonado2);
+            this.gbCobro.Controls.Add(this.txtMontoAbonado2);
+            this.gbCobro.Controls.Add(this.lblMetodoPago2);
+            this.gbCobro.Controls.Add(this.cbxMetodoPago2);
+            this.gbCobro.Controls.Add(this.chbxMetodoPago);
             this.gbCobro.Controls.Add(this.lblMontoFinal);
             this.gbCobro.Controls.Add(this.lblDescuentoFinal);
             this.gbCobro.Controls.Add(this.txtDescuento);
@@ -608,7 +626,7 @@
             this.gbCobro.Margin = new System.Windows.Forms.Padding(3, 2, 3, 6);
             this.gbCobro.Name = "gbCobro";
             this.gbCobro.Padding = new System.Windows.Forms.Padding(3, 2, 3, 6);
-            this.gbCobro.Size = new System.Drawing.Size(1350, 218);
+            this.gbCobro.Size = new System.Drawing.Size(1350, 304);
             this.gbCobro.TabIndex = 12;
             this.gbCobro.TabStop = false;
             this.gbCobro.Text = "RESUMEN Y COBRO";
@@ -618,7 +636,7 @@
             this.lblMontoFinal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblMontoFinal.AutoSize = true;
             this.lblMontoFinal.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMontoFinal.Location = new System.Drawing.Point(687, 70);
+            this.lblMontoFinal.Location = new System.Drawing.Point(701, 152);
             this.lblMontoFinal.Name = "lblMontoFinal";
             this.lblMontoFinal.Size = new System.Drawing.Size(32, 25);
             this.lblMontoFinal.TabIndex = 25;
@@ -629,7 +647,7 @@
             this.lblDescuentoFinal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDescuentoFinal.AutoSize = true;
             this.lblDescuentoFinal.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescuentoFinal.Location = new System.Drawing.Point(974, 28);
+            this.lblDescuentoFinal.Location = new System.Drawing.Point(701, 73);
             this.lblDescuentoFinal.Name = "lblDescuentoFinal";
             this.lblDescuentoFinal.Size = new System.Drawing.Size(32, 25);
             this.lblDescuentoFinal.TabIndex = 24;
@@ -640,7 +658,7 @@
             this.lblVuelto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblVuelto.AutoSize = true;
             this.lblVuelto.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVuelto.Location = new System.Drawing.Point(974, 70);
+            this.lblVuelto.Location = new System.Drawing.Point(701, 193);
             this.lblVuelto.Name = "lblVuelto";
             this.lblVuelto.Size = new System.Drawing.Size(32, 25);
             this.lblVuelto.TabIndex = 4;
@@ -674,11 +692,11 @@
             // 
             this.pnlCobro.Controls.Add(this.gbCobro);
             this.pnlCobro.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlCobro.Location = new System.Drawing.Point(0, 590);
+            this.pnlCobro.Location = new System.Drawing.Point(0, 504);
             this.pnlCobro.Margin = new System.Windows.Forms.Padding(0);
             this.pnlCobro.Name = "pnlCobro";
             this.pnlCobro.Padding = new System.Windows.Forms.Padding(45, 6, 45, 6);
-            this.pnlCobro.Size = new System.Drawing.Size(1440, 230);
+            this.pnlCobro.Size = new System.Drawing.Size(1440, 316);
             this.pnlCobro.TabIndex = 11;
             // 
             // pnlGrilla
@@ -689,8 +707,65 @@
             this.pnlGrilla.Margin = new System.Windows.Forms.Padding(0);
             this.pnlGrilla.Name = "pnlGrilla";
             this.pnlGrilla.Padding = new System.Windows.Forms.Padding(45, 6, 45, 6);
-            this.pnlGrilla.Size = new System.Drawing.Size(1440, 334);
+            this.pnlGrilla.Size = new System.Drawing.Size(1440, 248);
             this.pnlGrilla.TabIndex = 11;
+            // 
+            // chbxMetodoPago
+            // 
+            this.chbxMetodoPago.AutoSize = true;
+            this.chbxMetodoPago.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chbxMetodoPago.Location = new System.Drawing.Point(32, 123);
+            this.chbxMetodoPago.Name = "chbxMetodoPago";
+            this.chbxMetodoPago.Size = new System.Drawing.Size(263, 25);
+            this.chbxMetodoPago.TabIndex = 26;
+            this.chbxMetodoPago.Text = "Agregar otro método de pago";
+            this.chbxMetodoPago.UseVisualStyleBackColor = true;
+            this.chbxMetodoPago.CheckedChanged += new System.EventHandler(this.ChbxMetodoPago_CheckedChanged);
+            // 
+            // lblMontoAbonado2
+            // 
+            this.lblMontoAbonado2.AutoSize = true;
+            this.lblMontoAbonado2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMontoAbonado2.Location = new System.Drawing.Point(263, 169);
+            this.lblMontoAbonado2.Name = "lblMontoAbonado2";
+            this.lblMontoAbonado2.Size = new System.Drawing.Size(157, 25);
+            this.lblMontoAbonado2.TabIndex = 29;
+            this.lblMontoAbonado2.Text = "Monto Abonado:";
+            // 
+            // txtMontoAbonado2
+            // 
+            this.txtMontoAbonado2.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMontoAbonado2.Location = new System.Drawing.Point(266, 197);
+            this.txtMontoAbonado2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtMontoAbonado2.Name = "txtMontoAbonado2";
+            this.txtMontoAbonado2.Size = new System.Drawing.Size(200, 29);
+            this.txtMontoAbonado2.TabIndex = 30;
+            this.txtMontoAbonado2.TextChanged += new System.EventHandler(this.TxtMontoAbonado2_TextChanged);
+            this.txtMontoAbonado2.Enter += new System.EventHandler(this.TxtMontoAbonado2_Enter);
+            this.txtMontoAbonado2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtSoloNumeros_KeyPress);
+            this.txtMontoAbonado2.Leave += new System.EventHandler(this.TxtMontoAbonado2_TextChanged);
+            // 
+            // lblMetodoPago2
+            // 
+            this.lblMetodoPago2.AutoSize = true;
+            this.lblMetodoPago2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetodoPago2.Location = new System.Drawing.Point(27, 169);
+            this.lblMetodoPago2.Name = "lblMetodoPago2";
+            this.lblMetodoPago2.Size = new System.Drawing.Size(153, 25);
+            this.lblMetodoPago2.TabIndex = 28;
+            this.lblMetodoPago2.Text = "Método de Pago";
+            // 
+            // cbxMetodoPago2
+            // 
+            this.cbxMetodoPago2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxMetodoPago2.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbxMetodoPago2.FormattingEnabled = true;
+            this.cbxMetodoPago2.Location = new System.Drawing.Point(32, 197);
+            this.cbxMetodoPago2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cbxMetodoPago2.Name = "cbxMetodoPago2";
+            this.cbxMetodoPago2.Size = new System.Drawing.Size(200, 29);
+            this.cbxMetodoPago2.TabIndex = 27;
+            this.cbxMetodoPago2.SelectedIndexChanged += new System.EventHandler(this.CbxMetodoPago_SelectedIndexChanged);
             // 
             // FormRegistrarVenta
             // 
@@ -777,5 +852,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colCantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSubtotal;
         private System.Windows.Forms.DataGridViewButtonColumn colAccion;
+        private System.Windows.Forms.Label lblMontoAbonado2;
+        private System.Windows.Forms.TextBox txtMontoAbonado2;
+        private System.Windows.Forms.Label lblMetodoPago2;
+        private System.Windows.Forms.ComboBox cbxMetodoPago2;
+        private System.Windows.Forms.CheckBox chbxMetodoPago;
     }
 }

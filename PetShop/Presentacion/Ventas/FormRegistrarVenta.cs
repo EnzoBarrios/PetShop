@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using PetShop.Entidades;
 using PetShop.Negocio;
@@ -12,6 +11,7 @@ namespace PetShop.Presentacion.Ventas
 {
     public partial class FormRegistrarVenta : Form
     {
+        // --- ATRIBUTOS PRIVADOS ---
         private readonly CN_Venta _cnVenta = new CN_Venta();
         private readonly CN_Producto _cnProducto = new CN_Producto();
         private readonly List<DetalleVenta> _listaDetalle = new List<DetalleVenta>();
@@ -19,34 +19,33 @@ namespace PetShop.Presentacion.Ventas
         private Producto _productoSeleccionado = null;
         private readonly Usuario _usuarioLogueado;
 
+        // --- CONSTRUCTOR Y CARGA INICIAL ---
         public FormRegistrarVenta(Usuario usuario)
         {
             InitializeComponent();
             _usuarioLogueado = usuario;
 
-            // Doble Búfer en el DataGridView del Carrito para eliminar parpadeos y lag
             typeof(DataGridView).GetProperty("DoubleBuffered",
                 System.Reflection.BindingFlags.Instance |
                 System.Reflection.BindingFlags.NonPublic)
                 ?.SetValue(dgvCarrito, true, null);
         }
 
-        private async void FormRegistrarVenta_Load(object sender, EventArgs e)
+        private void FormRegistrarVenta_Load(object sender, EventArgs e)
         {
             ConfigurarGrillaCarrito();
         }
 
-        private async void FormResitrarVenta_Shown(object sender, EventArgs e)
+        private void FormResitrarVenta_Shown(object sender, EventArgs e)
         {
-            await CargarInformacionInicialAsync();
+            CargarInformacionInicial();
         }
 
-        private async Task CargarInformacionInicialAsync()
+        private void CargarInformacionInicial()
         {
             txtCodProducto.ReadOnly = true;
             txtPrecioUnitario.ReadOnly = true;
             txtStockDisponible.ReadOnly = true;
-            txtNroFactura.Text = _cnVenta.ObtenerProximoNroFactura();
             txtFecha.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
             txtFecha.ReadOnly = true;
             txtNroFactura.ReadOnly = true;
@@ -55,40 +54,30 @@ namespace PetShop.Presentacion.Ventas
             {
                 this.Cursor = Cursors.WaitCursor;
 
-                txtFecha.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
-                txtFecha.ReadOnly = true;
-                txtNroFactura.ReadOnly = true;
+                txtNroFactura.Text = _cnVenta.ObtenerProximoNroFactura();
 
-                // Carga en segundo plano de todos los datos de inicio sin congelar la ventana
-                var nroFacturaTask = Task.Run(() => _cnVenta.ObtenerProximoNroFactura());
-                var tiposVentaTask = Task.Run(() => _cnVenta.ListarTiposVenta());
-                var metodosPagoTask = Task.Run(() => _cnVenta.ListarMetodosPago());
-
-                await Task.WhenAll(nroFacturaTask, tiposVentaTask, metodosPagoTask);
-
-                txtNroFactura.Text = await nroFacturaTask;
-
-                // Cargar Tipos de Venta desde la BD
-                cbxTipoVenta.DataSource = await tiposVentaTask;
+                // Cargar Tipos de Venta
+                cbxTipoVenta.DataSource = _cnVenta.ListarTiposVenta();
                 cbxTipoVenta.DisplayMember = nameof(TipoVenta.Descripcion);
                 cbxTipoVenta.ValueMember = nameof(TipoVenta.IdTipoVenta);
-                if (cbxTipoVenta.Items.Count > 0)
-                {
-                    cbxTipoVenta.SelectedIndex = 0;
-                }
+                if (cbxTipoVenta.Items.Count > 0) cbxTipoVenta.SelectedIndex = 0;
 
-                // Cargar Métodos de Pago desde la BD
-                cbxMetodoPago.DataSource = await metodosPagoTask;
+                // Cargar Primer Método de Pago
+                cbxMetodoPago.DataSource = _cnVenta.ListarMetodosPago();
                 cbxMetodoPago.DisplayMember = nameof(MetodoPago.NombreMetodo);
                 cbxMetodoPago.ValueMember = nameof(MetodoPago.IdMetodoPago);
-                if (cbxMetodoPago.Items.Count > 0)
-                {
-                    cbxMetodoPago.SelectedIndex = 0;
-                }
+                if (cbxMetodoPago.Items.Count > 0) cbxMetodoPago.SelectedIndex = 0;
 
-                // Inicializar campos de descuento y monto abonado
-                txtDescuento.Text = "0";
+                // Actualizar las opciones del segundo combo según la selección del primero
+                ActualizarOpcionesSegundoMetodoPago();
+
+                // Estado inicial del segundo método de pago (deshabilitado por defecto)
+                chbxMetodoPago.Checked = false;
+                HabilitarSegundoMetodoPago(false);
+
+                txtDescuento.Text = "0%";
                 txtMontoAbonado.Text = "0,00";
+                txtMontoAbonado2.Text = "0,00";
             }
             catch (Exception ex)
             {
@@ -103,11 +92,7 @@ namespace PetShop.Presentacion.Ventas
 
         private void ConfigurarGrillaCarrito()
         {
-            // Solo configuramos la grilla si no tiene columnas creadas previamente
-            if (dgvCarrito.Columns.Count > 0)
-            {
-                return;
-            }
+            if (dgvCarrito.Columns.Count > 0) return;
 
             dgvCarrito.AutoGenerateColumns = false;
 
@@ -117,7 +102,6 @@ namespace PetShop.Presentacion.Ventas
             dgvCarrito.Columns["colCantidad"].DataPropertyName = "Cantidad";
             dgvCarrito.Columns["colSubtotal"].DataPropertyName = "Subtotal";
 
-            // Estilo personalizado para el botón Quitar (colAccion)
             if (dgvCarrito.Columns["colAccion"] is DataGridViewButtonColumn colBtn)
             {
                 colBtn.Text = "Quitar";
@@ -125,56 +109,26 @@ namespace PetShop.Presentacion.Ventas
                 colBtn.FlatStyle = FlatStyle.Flat;
                 colBtn.DefaultCellStyle.ForeColor = Color.Red;
                 colBtn.DefaultCellStyle.SelectionForeColor = Color.Red;
-                colBtn.DefaultCellStyle.BackColor = Color.FromArgb(253, 237, 236); // Fondo rojo clarito opcional
+                colBtn.DefaultCellStyle.BackColor = Color.FromArgb(253, 237, 236);
             }
         }
 
-        private void DgvCarrito_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        // --- BÚSQUEDA Y SELECCIÓN DE PRODUCTOS ---
+        private void BtnBuscarProducto_Click(object sender, EventArgs e)
         {
-            // Si el puntero entra a una celda válida de la columna de acción
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgvCarrito.Columns[e.ColumnIndex].Name == "colAccion")
-            {
-                dgvCarrito.Cursor = Cursors.Hand;
-            }
+            BuscarProductoPorNombre();
         }
 
-        private void DgvCarrito_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
-        {
-            // Vuelve al cursor normal cuando el puntero sale de la celda
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgvCarrito.Columns[e.ColumnIndex].Name == "colAccion")
-            {
-                dgvCarrito.Cursor = Cursors.Default;
-            }
-        }
-        
-        private void DgvCarrito_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // 1. Verifica que el clic sea en una fila válida (no en el encabezado)
-            // 2. Verifica que se haya hecho clic sobre la columna de acción (colAccion)
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgvCarrito.Columns[e.ColumnIndex].Name == "colAccion")
-            {
-                _listaDetalle.RemoveAt(e.RowIndex);
-                RefrescarCarrito();
-            }
-        }
-
-
-        // --- 1. BÚSQUEDA Y SELECCIÓN DE PRODUCTO ---
-        private async void BtnBuscarProducto_Click(object sender, EventArgs e)
-        {
-            await BuscarProductoPorNombreAsync();
-        }
-
-        private async void TxtNombreProducto_KeyDown(object sender, KeyEventArgs e)
+        private void TxtNombreProducto_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 e.SuppressKeyPress = true;
-                await BuscarProductoPorNombreAsync();
+                BuscarProductoPorNombre();
             }
         }
 
-        private async Task BuscarProductoPorNombreAsync()
+        private void BuscarProductoPorNombre()
         {
             string busquedaNombre = txtNombreProducto.Text.Trim();
 
@@ -186,12 +140,9 @@ namespace PetShop.Presentacion.Ventas
 
             this.Cursor = Cursors.WaitCursor;
 
-            // 1. Obtener todos los productos activos que contengan el texto ingresado
-            List<Producto> productosEncontrados = await Task.Run(() =>
-                _cnProducto.ListarProductos(busquedaNombre)
-                           .Where(p => p.Estado && p.Nombre.ToLower().Contains(busquedaNombre.ToLower()))
-                           .ToList()
-            );
+            List<Producto> productosEncontrados = _cnProducto.ListarProductos(busquedaNombre)
+                .Where(p => p.Estado && p.Nombre.ToLower().Contains(busquedaNombre.ToLower()))
+                .ToList();
 
             this.Cursor = Cursors.Default;
 
@@ -202,12 +153,10 @@ namespace PetShop.Presentacion.Ventas
                 return;
             }
 
-            // 2. MUESTRA SIEMPRE LA GRILLA EMERGENTE (incluso si hay 1 sola coincidencia)
             using (var modal = new FormBuscarProducto(productosEncontrados))
             {
                 var result = modal.ShowDialog();
 
-                // Si el usuario seleccionó un producto haciendo doble clic en la grilla y apretó OK
                 if (result == DialogResult.OK && modal.ProductoSeleccionado != null)
                 {
                     CargarProductoEnInterfaz(modal.ProductoSeleccionado);
@@ -215,7 +164,6 @@ namespace PetShop.Presentacion.Ventas
             }
         }
 
-        // Método auxiliar para autocompletar la UI
         private void CargarProductoEnInterfaz(Producto producto)
         {
             if (!producto.Estado)
@@ -236,7 +184,7 @@ namespace PetShop.Presentacion.Ventas
             numCantidad.Maximum = _productoSeleccionado.StockActual > 0 ? _productoSeleccionado.StockActual : 1;
         }
 
-        // --- 2. AGREGAR PRODUCTO AL CARRITO ---
+        // --- GESTIÓN DEL CARRITO DE COMPRAS ---
         private void BtnAgregarProducto_Click(object sender, EventArgs e)
         {
             if (_productoSeleccionado == null)
@@ -309,53 +257,132 @@ namespace PetShop.Presentacion.Ventas
             CalcularTotales();
         }
 
-       
-        // --- 3. CÁLCULO DE TOTALES, DESCUENTOS Y VUELTO ---
+        private void DgvCarrito_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgvCarrito.Columns[e.ColumnIndex].Name == "colAccion")
+            {
+                dgvCarrito.Cursor = Cursors.Hand;
+            }
+        }
+
+        private void DgvCarrito_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgvCarrito.Columns[e.ColumnIndex].Name == "colAccion")
+            {
+                dgvCarrito.Cursor = Cursors.Default;
+            }
+        }
+
+        private void DgvCarrito_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgvCarrito.Columns[e.ColumnIndex].Name == "colAccion")
+            {
+                _listaDetalle.RemoveAt(e.RowIndex);
+                RefrescarCarrito();
+            }
+        }
+
+        // --- CÁLCULOS Y EVENTOS DE DESCUENTO / ABONADO ---
+
+        private void ActualizarOpcionesSegundoMetodoPago()
+        {
+            if (cbxMetodoPago.SelectedValue == null) return;
+
+            int idMetodo1 = Convert.ToInt32(cbxMetodoPago.SelectedValue);
+            List<MetodoPago> todosLosMetodos = _cnVenta.ListarMetodosPago();
+
+            // Excluir el método seleccionado en el primer combo
+            List<MetodoPago> metodosFiltrados = todosLosMetodos
+                .Where(m => m.IdMetodoPago != idMetodo1)
+                .ToList();
+
+            cbxMetodoPago2.DataSource = metodosFiltrados;
+            cbxMetodoPago2.DisplayMember = nameof(MetodoPago.NombreMetodo);
+            cbxMetodoPago2.ValueMember = nameof(MetodoPago.IdMetodoPago);
+
+            if (cbxMetodoPago2.Items.Count > 0)
+            {
+                cbxMetodoPago2.SelectedIndex = 0;
+            }
+        }
+
+        private void HabilitarSegundoMetodoPago(bool habilitar)
+        {
+            lblMetodoPago2.Enabled = habilitar;
+            cbxMetodoPago2.Enabled = habilitar;
+            lblMontoAbonado2.Enabled = habilitar;
+            txtMontoAbonado2.Enabled = habilitar;
+
+            if (!habilitar)
+            {
+                txtMontoAbonado2.Text = "0,00";
+            }
+        }
+
+        private void ChbxMetodoPago_CheckedChanged(object sender, EventArgs e)
+        {
+            HabilitarSegundoMetodoPago(chbxMetodoPago.Checked);
+            CalcularTotales();
+        }
+
+        private void CbxMetodoPago_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ActualizarOpcionesSegundoMetodoPago();
+        }
+
         private void CalcularTotales()
         {
             decimal subtotal = _listaDetalle.Sum(d => d.Subtotal);
-            decimal montoDescuento = 0;
-            string textoDescuentoMostrado = "0%";
 
-            if (decimal.TryParse(txtDescuento.Text.Trim(), out decimal valorIngresado) && valorIngresado > 0)
+            string textoDescuentoLimpio = txtDescuento.Text.Replace("%", "").Replace("$", "").Trim();
+            decimal.TryParse(textoDescuentoLimpio, out decimal valorDescuento);
+
+            var (montoDescuento, totalFinal, textoDescuento) = _cnVenta.CalcularTotalesVenta(subtotal, valorDescuento);
+
+            // Sumar Monto Abonado 1
+            string textoAbonado1 = txtMontoAbonado.Text.Replace("$", "").Trim();
+            decimal.TryParse(textoAbonado1, out decimal abonado1);
+
+            // Sumar Monto Abonado 2 (solo si está activo el checkbox)
+            decimal abonado2 = 0;
+            if (chbxMetodoPago.Checked)
             {
-                // CASO 1: Si es <= 100, se aplica como PORCENTAJE (%)
-                if (valorIngresado <= 100)
-                {
-                    montoDescuento = subtotal * (valorIngresado / 100);
-                    textoDescuentoMostrado = $"{valorIngresado}% (${montoDescuento:F2})";
-                }
-                // CASO 2: Si es > 100, se aplica como MONTO FIJO EN PESOS ($)
-                else
-                {
-                    // Validar que el descuento fijo no supere el subtotal de la venta
-                    if (valorIngresado > subtotal)
-                    {
-                        montoDescuento = subtotal;
-                    }
-                    else
-                    {
-                        montoDescuento = valorIngresado;
-                    }
-
-                    textoDescuentoMostrado = $"${montoDescuento:F2}";
-                }
+                string textoAbonado2 = txtMontoAbonado2.Text.Replace("$", "").Trim();
+                decimal.TryParse(textoAbonado2, out abonado2);
             }
 
-            // Calcular el Total Final restando el descuento obtenido
-            decimal totalFinal = subtotal - montoDescuento;
-            if (totalFinal < 0) totalFinal = 0;
+            decimal totalAbonado = abonado1 + abonado2;
 
-            // Convertir el monto abonado desde el TextBox (si está vacío toma 0)
-            decimal.TryParse(txtMontoAbonado.Text.Trim(), out decimal abonado);
-
-            // Actualizar las etiquetas en la interfaz
             lblSubtotal.Text = $"Subtotal: ${subtotal:F2}";
-            lblDescuentoFinal.Text = $"Descuento: {textoDescuentoMostrado}";
-            lblMontoFinal.Text = $"Abonado: ${abonado:F2}";
+            lblDescuentoFinal.Text = $"Descuento: {textoDescuento}";
+            lblMontoFinal.Text = $"Abonado: ${totalAbonado:F2}";
             lblTotalFinal.Text = $"TOTAL FINAL: ${totalFinal:F2}";
 
-            CalcularVuelto(totalFinal);
+            ActualizarInterfazVuelto(totalAbonado, totalFinal);
+        }
+
+        private void ActualizarInterfazVuelto(decimal abonado, decimal totalFinal)
+        {
+            var (vuelto, esSuficiente) = _cnVenta.CalcularVuelto(abonado, totalFinal);
+
+            if (esSuficiente)
+            {
+                if (vuelto > 0)
+                {
+                    lblVuelto.Text = $"Vuelto/Cambio: ${vuelto:F2}";
+                    lblVuelto.BackColor = Color.LightGreen;
+                }
+                else
+                {
+                    lblVuelto.Text = "Vuelto/Cambio: $0,00";
+                    lblVuelto.BackColor = Color.White;
+                }
+            }
+            else
+            {
+                lblVuelto.Text = $"Falta abonar: ${Math.Abs(vuelto):F2}";
+                lblVuelto.BackColor = Color.LightPink;
+            }
         }
 
         private void TxtDescuento_TextChanged(object sender, EventArgs e)
@@ -368,40 +395,110 @@ namespace PetShop.Presentacion.Ventas
             CalcularTotales();
         }
 
-        private void CalcularVuelto(decimal totalFinal)
+        private void TxtMontoAbonado2_TextChanged(object sender, EventArgs e)
         {
-            if (decimal.TryParse(txtMontoAbonado.Text.Trim(), out decimal abonado))
+            CalcularTotales();
+        }
+
+        private void TxtDescuento_Enter(object sender, EventArgs e)
+        {
+            string textoLimpio = txtDescuento.Text.Replace("%", "").Replace("$", "").Trim();
+            if (textoLimpio == "0" || textoLimpio == "0,00")
             {
-                decimal vuelto = abonado - totalFinal;
-                // CASO 1: Le sobra dinero (Vuelto a favor)
-                if (vuelto > 0)
-                {
-                    lblVuelto.Text = $"Vuelto/Cambio: ${vuelto:F2}";
-                    lblVuelto.BackColor = Color.LightGreen;
-                }
-                // CASO 2: Pago exacto (No hay vuelto que dar)
-                else if (vuelto == 0)
-                {
-                    lblVuelto.Text = "Vuelto/Cambio: $0,00";
-                    lblVuelto.BackColor = Color.White;
-                }
-                // CASO 3: Falta dinero
-                else
-                {
-                    lblVuelto.Text = $"Falta abonar: ${Math.Abs(vuelto):F2}";
-                    lblVuelto.BackColor = Color.LightPink;
-                }
+                txtDescuento.Text = "";
             }
             else
             {
-                lblVuelto.Text = "Vuelto/Cambio: $0,00";
-                lblVuelto.BackColor = Color.WhiteSmoke;
+                txtDescuento.Text = textoLimpio;
             }
         }
 
-        // --- 4. CONFIRMAR REGISTRO Y GESTIÓN DE IMPRESIÓN ---
+        private void TxtDescuento_Leave(object sender, EventArgs e)
+        {
+            string textoLimpio = txtDescuento.Text.Replace("%", "").Replace("$", "").Trim();
 
-        private async void BtnConfirmarVenta_Click(object sender, EventArgs e)
+            if (string.IsNullOrWhiteSpace(textoLimpio))
+            {
+                txtDescuento.Text = "0%";
+            }
+            else if (decimal.TryParse(textoLimpio, out decimal valor))
+            {
+                if (valor <= 100)
+                {
+                    txtDescuento.Text = $"{valor:0}%";
+                }
+                else
+                {
+                    txtDescuento.Text = $"${valor:F2}";
+                }
+            }
+
+            CalcularTotales();
+        }
+
+        private void TxtMontoAbonado_Enter(object sender, EventArgs e)
+        {
+            string textoActual = txtMontoAbonado.Text.Trim();
+            if (textoActual == "0,00" || textoActual == "0")
+            {
+                txtMontoAbonado.Text = "";
+            }
+        }
+
+        private void TxtMontoAbonado_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtMontoAbonado.Text))
+            {
+                txtMontoAbonado.Text = "0,00";
+            }
+            else if (decimal.TryParse(txtMontoAbonado.Text.Trim(), out decimal valor))
+            {
+                txtMontoAbonado.Text = valor.ToString("F2");
+            }
+        }
+
+        private void TxtMontoAbonado2_Enter(object sender, EventArgs e)
+        {
+            string textoActual = txtMontoAbonado2.Text.Trim();
+            if (textoActual == "0,00" || textoActual == "0")
+            {
+                txtMontoAbonado2.Text = "";
+            }
+        }
+
+        private void TxtMontoAbonado2_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtMontoAbonado2.Text))
+            {
+                txtMontoAbonado2.Text = "0,00";
+            }
+            else if (decimal.TryParse(txtMontoAbonado2.Text.Trim(), out decimal valor))
+            {
+                txtMontoAbonado2.Text = valor.ToString("F2");
+            }
+        }
+
+        private void TxtSoloNumeros_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != '.')
+            {
+                e.Handled = true;
+            }
+
+            if (e.KeyChar == '.')
+            {
+                e.KeyChar = ',';
+            }
+
+            TextBox txt = sender as TextBox;
+            if (e.KeyChar == ',' && txt != null && txt.Text.Contains(","))
+            {
+                e.Handled = true;
+            }
+        }
+
+        // --- REGISTRO DE VENTA Y PROCESAMIENTO ---
+        private void BtnConfirmarVenta_Click(object sender, EventArgs e)
         {
             if (_listaDetalle.Count == 0)
             {
@@ -409,34 +506,44 @@ namespace PetShop.Presentacion.Ventas
                 return;
             }
 
-            // Recalcular Total Final respetando la regla (Porcentaje o Monto Fijo)
             decimal subtotal = _listaDetalle.Sum(d => d.Subtotal);
-            decimal montoDescuento = 0;
+            string textoDescuentoLimpio = txtDescuento.Text.Replace("%", "").Replace("$", "").Trim();
+            decimal.TryParse(textoDescuentoLimpio, out decimal valorDescuento);
+            var (montoDescuento, totalFinal, _) = _cnVenta.CalcularTotalesVenta(subtotal, valorDescuento);
 
-            if (decimal.TryParse(txtDescuento.Text.Trim(), out decimal valorIngresado) && valorIngresado > 0)
+            // Validar Pago 1
+            if (!decimal.TryParse(txtMontoAbonado.Text.Replace("$", "").Trim(), out decimal abonado1) || abonado1 <= 0)
             {
-                if (valorIngresado <= 100)
-                {
-                    montoDescuento = subtotal * (valorIngresado / 100);
-                }
-                else
-                {
-                    montoDescuento = valorIngresado > subtotal ? subtotal : valorIngresado;
-                }
-            }
-
-            decimal totalFinal = subtotal - montoDescuento;
-            if (totalFinal < 0) totalFinal = 0;
-
-            // Validar monto abonado
-            if (!decimal.TryParse(txtMontoAbonado.Text.Trim(), out decimal abonado) || abonado < totalFinal)
-            {
-                MessageBox.Show($"El monto abonado es insuficiente para cubrir el total (${totalFinal:F2}).", "Monto Insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Ingrese un monto abonado válido mayor a $0 para el primer método de pago.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            List<Pago> listaPagos = new List<Pago>
+            {
+                new Pago
+                {
+                    IdMetodoPago = Convert.ToInt32(cbxMetodoPago.SelectedValue),
+                    Monto = abonado1
+                }
+            };
+
+            // Validar Pago 2 si el checkbox está activo
+            if (chbxMetodoPago.Checked)
+            {
+                if (!decimal.TryParse(txtMontoAbonado2.Text.Replace("$", "").Trim(), out decimal abonado2) || abonado2 <= 0)
+                {
+                    MessageBox.Show("Ingrese un monto abonado válido mayor a $0 para el segundo método de pago.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                listaPagos.Add(new Pago
+                {
+                    IdMetodoPago = Convert.ToInt32(cbxMetodoPago2.SelectedValue),
+                    Monto = abonado2
+                });
+            }
+
             int idTipoVenta = Convert.ToInt32(cbxTipoVenta.SelectedValue);
-            int idMetodoPago = Convert.ToInt32(cbxMetodoPago.SelectedValue);
 
             Venta nuevaVenta = new Venta
             {
@@ -448,29 +555,20 @@ namespace PetShop.Presentacion.Ventas
                 IdTipoVenta = idTipoVenta,
                 IdUsuario = _usuarioLogueado.IdUsuario,
                 Detalles = _listaDetalle,
-                Pagos = new List<Pago>
-                {
-                    new Pago
-                    {
-                        IdMetodoPago = idMetodoPago,
-                        Monto = abonado
-                    }
-                }
+                Pagos = listaPagos // Pasa la lista con 1 o 2 pagos
             };
 
             this.Cursor = Cursors.WaitCursor;
 
-            // Transacción de registro procesada en segundo plano
             string mensaje = string.Empty;
-            bool exito = await Task.Run(() => _cnVenta.RegistrarVenta(nuevaVenta, out mensaje));
+            bool exito = _cnVenta.RegistrarVenta(nuevaVenta, out mensaje);
 
             this.Cursor = Cursors.Default;
 
             if (exito)
             {
-                // Preguntar si se desea imprimir el comprobante antes de limpiar la pantalla
                 DialogResult respuestaImpresion = MessageBox.Show(
-                    "Venta registrada con éxito.\n\n¿Desea generar e imprimir el comprobante de pago?",
+                    "Venta registrada con éxito.\n\n¿Desea imprimir el comprobante de pago?",
                     "Comprobante de Venta",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question
@@ -481,13 +579,11 @@ namespace PetShop.Presentacion.Ventas
                     ImprimirComprobante();
                 }
 
-                // Verificar stock mínimo
                 foreach (var detalle in _listaDetalle)
                 {
-                    // Consultar el stock actualizado del producto
-                    Producto prod = await Task.Run(() => _cnProducto.ObtenerPorId(detalle.IdProducto));
+                    Producto prod = _cnProducto.ObtenerPorId(detalle.IdProducto);
 
-                    if (prod.StockActual <= prod.StockMinimo)
+                    if (prod != null && prod.StockActual <= prod.StockMinimo)
                     {
                         MessageBox.Show(
                             $"RECORDATORIO: El producto '{prod.Nombre}' alcanzó/superó su stock mínimo.\n" +
@@ -500,7 +596,7 @@ namespace PetShop.Presentacion.Ventas
                     }
                 }
 
-                await LimpiarFormularioVentaAsync();
+                LimpiarFormularioVenta();
             }
             else
             {
@@ -509,13 +605,12 @@ namespace PetShop.Presentacion.Ventas
         }
 
         // --- MÉTODOS DE IMPRESIÓN ---
-
         public void ImprimirComprobante()
         {
             try
             {
                 PrintDocument pd = new PrintDocument();
-                // pd.PrinterSettings.PrinterName = "NombreDeTuImpresoraTermica"; // Configurar si tenés una específica
+                pd.PrintController = new StandardPrintController();
                 pd.PrintPage += new PrintPageEventHandler(ImprimirPage);
                 pd.Print();
             }
@@ -535,37 +630,38 @@ namespace PetShop.Presentacion.Ventas
             float y = 10;
             float posX = 10;
 
-            // Encabezado
             g.DrawString("      PETCONTROL      ", fontTitulo, Brushes.Black, posX, y); y += 20;
             g.DrawString("------------------------------", fontNormal, Brushes.Black, posX, y); y += 15;
             g.DrawString($"N° Factura: {txtNroFactura.Text}", fontNormal, Brushes.Black, posX, y); y += 15;
             g.DrawString($"Fecha: {DateTime.Now:dd/MM/yyyy HH:mm}", fontNormal, Brushes.Black, posX, y); y += 15;
-            g.DrawString($"Pago: {cbxMetodoPago.Text}", fontNormal, Brushes.Black, posX, y); y += 15;
-            g.DrawString("------------------------------", fontNormal, Brushes.Black, posX, y); y += 15;
 
-            // Detalle de Ítems
-            g.DrawString("Cant. Producto          Subtotal", fontBold, Brushes.Black, posX, y); y += 15;
-
-            foreach (DataGridViewRow row in dgvCarrito.Rows)
+            // Imprimir el/los métodos de pago en el ticket
+            if (chbxMetodoPago.Checked)
             {
-                if (row.IsNewRow) continue;
-
-                if (row.Cells["colProducto"].Value != null)
-                {
-                    string cant = row.Cells["colCantidad"].Value.ToString();
-                    string prod = row.Cells["colProducto"].Value.ToString();
-                    string subtotal = row.Cells["colSubtotal"].Value.ToString();
-
-                    // Acortar nombre si es muy largo
-                    if (prod.Length > 15) prod = prod.Substring(0, 15);
-
-                    string linea = $"{cant.PadRight(4)} {prod.PadRight(15)} {subtotal.PadLeft(8)}";
-                    g.DrawString(linea, fontNormal, Brushes.Black, posX, y);
-                    y += 15;
-                }
+                g.DrawString($"Pago 1: {cbxMetodoPago.Text}", fontNormal, Brushes.Black, posX, y); y += 15;
+                g.DrawString($"Pago 2: {cbxMetodoPago2.Text}", fontNormal, Brushes.Black, posX, y); y += 15;
+            }
+            else
+            {
+                g.DrawString($"Pago: {cbxMetodoPago.Text}", fontNormal, Brushes.Black, posX, y); y += 15;
             }
 
-            // Totales
+            g.DrawString("------------------------------", fontNormal, Brushes.Black, posX, y); y += 15;
+            g.DrawString("Cant. Producto          Subtotal", fontBold, Brushes.Black, posX, y); y += 15;
+
+            foreach (var detalle in _listaDetalle)
+            {
+                string cant = detalle.Cantidad.ToString();
+                string prod = detalle.Producto?.Nombre ?? "Producto";
+                string subtotal = detalle.Subtotal.ToString("C2");
+
+                if (prod.Length > 15) prod = prod.Substring(0, 15);
+
+                string linea = $"{cant.PadRight(4)} {prod.PadRight(15)} {subtotal.PadLeft(8)}";
+                g.DrawString(linea, fontNormal, Brushes.Black, posX, y);
+                y += 15;
+            }
+
             g.DrawString("------------------------------", fontNormal, Brushes.Black, posX, y); y += 15;
             g.DrawString($"{lblSubtotal.Text}", fontNormal, Brushes.Black, posX, y); y += 15;
             g.DrawString($"{lblDescuentoFinal.Text}", fontNormal, Brushes.Black, posX, y); y += 15;
@@ -573,15 +669,15 @@ namespace PetShop.Presentacion.Ventas
             g.DrawString($"{lblMontoFinal.Text}", fontNormal, Brushes.Black, posX, y); y += 15;
             g.DrawString($"{lblVuelto.Text}", fontNormal, Brushes.Black, posX, y); y += 25;
 
-            // Pie de página
             g.DrawString("  ¡Gracias por su compra!  ", fontBold, Brushes.Black, posX, y);
         }
 
-        private async void BtnEliminarVenta_Click(object sender, EventArgs e)
+        // --- LIMPIEZA Y NAVEGACIÓN ---
+        private void BtnEliminarVenta_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("¿Desea cancelar y limpiar la venta actual?", "Cancelar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                await LimpiarFormularioVentaAsync();
+                LimpiarFormularioVenta();
             }
         }
 
@@ -596,14 +692,16 @@ namespace PetShop.Presentacion.Ventas
             txtNombreProducto.Focus();
         }
 
-        private async Task LimpiarFormularioVentaAsync()
+        private void LimpiarFormularioVenta()
         {
             LimpiarCamposProducto();
             _listaDetalle.Clear();
             RefrescarCarrito();
             txtDescuento.Clear();
             txtMontoAbonado.Clear();
-            await CargarInformacionInicialAsync();
+            txtMontoAbonado2.Clear();
+            chbxMetodoPago.Checked = false;
+            CargarInformacionInicial();
             txtNombreProducto.Focus();
         }
 

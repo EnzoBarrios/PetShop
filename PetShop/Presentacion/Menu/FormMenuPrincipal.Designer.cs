@@ -84,7 +84,7 @@ namespace PetShop.Presentacion.Menu
             // msPrincipal
             // 
             this.msPrincipal.AutoSize = false;
-            this.msPrincipal.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.msPrincipal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(230)))), ((int)(((byte)(255)))));
             this.msPrincipal.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.msPrincipal.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.msPrincipal.ImageScalingSize = new System.Drawing.Size(32, 32);
@@ -257,7 +257,7 @@ namespace PetShop.Presentacion.Menu
             // gbSesionIniciada
             // 
             this.gbSesionIniciada.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbSesionIniciada.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.gbSesionIniciada.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(230)))), ((int)(((byte)(255)))));
             this.gbSesionIniciada.Controls.Add(this.pictureBox2);
             this.gbSesionIniciada.Controls.Add(this.pictureBox1);
             this.gbSesionIniciada.Controls.Add(this.lblRolLogeado);
@@ -320,15 +320,15 @@ namespace PetShop.Presentacion.Menu
             // gbFechaHora
             // 
             this.gbFechaHora.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbFechaHora.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.gbFechaHora.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(230)))), ((int)(((byte)(255)))));
             this.gbFechaHora.Controls.Add(this.lblHora);
             this.gbFechaHora.Controls.Add(this.lblFecha);
             this.gbFechaHora.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbFechaHora.Location = new System.Drawing.Point(1215, 75);
+            this.gbFechaHora.Location = new System.Drawing.Point(1150, 75);
             this.gbFechaHora.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.gbFechaHora.Name = "gbFechaHora";
             this.gbFechaHora.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.gbFechaHora.Size = new System.Drawing.Size(386, 100);
+            this.gbFechaHora.Size = new System.Drawing.Size(451, 100);
             this.gbFechaHora.TabIndex = 12;
             this.gbFechaHora.TabStop = false;
             this.gbFechaHora.Text = "Fecha y Hora";
@@ -354,7 +354,7 @@ namespace PetShop.Presentacion.Menu
             // msTitulo
             // 
             this.msTitulo.AutoSize = false;
-            this.msTitulo.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.msTitulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(150)))), ((int)(((byte)(195)))));
             this.msTitulo.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.msTitulo.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.msTitulo.Location = new System.Drawing.Point(0, 0);
@@ -366,7 +366,7 @@ namespace PetShop.Presentacion.Menu
             // 
             // lblPetShop
             // 
-            this.lblPetShop.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lblPetShop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(150)))), ((int)(((byte)(195)))));
             this.lblPetShop.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPetShop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblPetShop.ImageIndex = 0;

@@ -3,7 +3,7 @@ using PetShop.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq; // Necesario para GroupBy y Sum
+using System.Linq;
 
 namespace PetShop.Negocio
 {
@@ -26,17 +26,49 @@ namespace PetShop.Negocio
             return _cdvVenta.ListarMetodosPago();
         }
 
+        // --- CÁLCULOS DE NEGOCIO (DESCUENTO Y TOTALES) ---
+        public (decimal montoDescuento, decimal totalFinal, string textoDescuento) CalcularTotalesVenta(decimal subtotal, decimal valorDescuentoIngresado)
+        {
+            decimal montoDescuento = 0;
+            string textoDescuento = "0%";
+
+            if (valorDescuentoIngresado > 0)
+            {
+                // CASO 1: Si es <= 100 se toma como porcentaje (%)
+                if (valorDescuentoIngresado <= 100)
+                {
+                    montoDescuento = subtotal * (valorDescuentoIngresado / 100);
+                    textoDescuento = $"{valorDescuentoIngresado:0}% (${montoDescuento:F2})";
+                }
+                // CASO 2: Si es > 100 se toma como monto fijo en pesos ($)
+                else
+                {
+                    montoDescuento = valorDescuentoIngresado > subtotal ? subtotal : valorDescuentoIngresado;
+                    textoDescuento = $"${montoDescuento:F2}";
+                }
+            }
+
+            decimal totalFinal = subtotal - montoDescuento;
+            if (totalFinal < 0) totalFinal = 0;
+
+            return (montoDescuento, totalFinal, textoDescuento);
+        }
+
+        public (decimal vuelto, bool esSuficiente) CalcularVuelto(decimal abonado, decimal totalFinal)
+        {
+            decimal vuelto = abonado - totalFinal;
+            return (vuelto, vuelto >= 0);
+        }
+
         public bool RegistrarVenta(Venta venta, out string mensaje)
         {
             mensaje = string.Empty;
 
-            // 1. Asignar Número de Factura automáticamente si no viene asignado
             if (string.IsNullOrWhiteSpace(venta.NroFactura))
             {
                 venta.NroFactura = _cdvVenta.ObtenerProximoNroFactura();
             }
 
-            // 2. Validaciones básicas de encabezado
             if (venta.IdUsuario <= 0)
             {
                 mensaje = "Debe haber un usuario válido asociado a la venta.";
@@ -55,7 +87,6 @@ namespace PetShop.Negocio
                 return false;
             }
 
-            // 3. Agrupar ÍTEMS DUPLICADOS para sumar cantidades del mismo producto
             var detallesAgrupados = venta.Detalles
                 .GroupBy(d => d.IdProducto)
                 .Select(g => new
@@ -65,50 +96,36 @@ namespace PetShop.Negocio
                 });
 
             CN_Producto cnProducto = new CN_Producto();
-            List<string> advertenciasStockMinimo = new List<string>();
 
-            // 4. Validar ESTADO DEL PRODUCTO, STOCK disponible por total acumulado y STOCK MÍNIMO
             foreach (var itemAgrupado in detallesAgrupados)
             {
                 Producto prodActual = cnProducto.ObtenerPorId(itemAgrupado.IdProducto);
 
-                // Validación de existencia del producto
                 if (prodActual == null)
                 {
                     mensaje = $"El producto con ID {itemAgrupado.IdProducto} no existe en la base de datos.";
                     return false;
                 }
 
-                // Validación de Estado Activo
                 if (!prodActual.Estado)
                 {
                     mensaje = $"El producto '{prodActual.Nombre}' se encuentra inactivo y no se puede vender.";
                     return false;
                 }
 
-                // Validación de Cantidad Total
                 if (itemAgrupado.CantidadTotal <= 0)
                 {
                     mensaje = $"La cantidad para el producto '{prodActual.Nombre}' debe ser mayor a 0.";
                     return false;
                 }
 
-                // Validación de Stock Acumulado
                 if (prodActual.StockActual < itemAgrupado.CantidadTotal)
                 {
                     mensaje = $"Stock insuficiente para '{prodActual.Nombre}'. Disponible: {prodActual.StockActual}, Solicitado en total: {itemAgrupado.CantidadTotal}.";
                     return false;
                 }
-
-                // Advertencia de Stock Mínimo (Acumula aviso de reposición)
-                int stockRestante = prodActual.StockActual - itemAgrupado.CantidadTotal;
-                if (stockRestante <= prodActual.StockMinimo)
-                {
-                    advertenciasStockMinimo.Add($"'{prodActual.Nombre}' quedará con {stockRestante} unidades (Límite mínimo: {prodActual.StockMinimo}).");
-                }
             }
 
-            // 5. Recalcular e integrar el Total
             venta.CalcularTotal();
 
             if (venta.Total <= 0)
@@ -117,7 +134,6 @@ namespace PetShop.Negocio
                 return false;
             }
 
-            // 6. Validar MÉTODOS DE PAGO
             if (venta.Pagos == null || venta.Pagos.Count == 0)
             {
                 mensaje = "Debe registrar al menos un método de pago.";
@@ -137,11 +153,10 @@ namespace PetShop.Negocio
 
             if (totalPagado < venta.Total)
             {
-                mensaje = $"El monto total abonado (${totalPagado}) es menor al total de la venta (${venta.Total}).";
+                mensaje = $"El monto total abonado (${totalPagado:F2}) es menor al total de la venta (${venta.Total:F2}).";
                 return false;
             }
 
-            // Guardar en la base de datos
             return _cdvVenta.RegistrarVenta(venta, out mensaje);
         }
 

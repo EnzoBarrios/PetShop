@@ -16,11 +16,26 @@ namespace PetShop.Presentacion
 
         private void FormHistorialVentas_Load(object sender, EventArgs e)
         {
-            // Opcional: Ajustar fechas iniciales (ejemplo: inicio de mes actual hasta hoy)
-            dtpDesde.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            dtpHasta.Value = DateTime.Now;
+            // Ajustar el rango de fechas por defecto (desde las 00:00:00 del primer día del mes hasta las 23:59:59 de hoy)
+            dtpDesde.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
+            dtpHasta.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
 
+            ConfigurarGrilla();
             CargarHistorial();
+        }
+
+        private void ConfigurarGrilla()
+        {
+            // Evitar duplicación automática de columnas
+            dgvVentas.AutoGenerateColumns = false;
+
+            dgvVentas.Columns["colNroTicket"].DataPropertyName = "NroTicket";
+            dgvVentas.Columns["colFecha"].DataPropertyName = "Fecha";
+            dgvVentas.Columns["colHora"].DataPropertyName = "Hora";
+            dgvVentas.Columns["colMontoTotal"].DataPropertyName = "MontoTotal";
+            dgvVentas.Columns["colEfectivo"].DataPropertyName = "Efectivo";
+            dgvVentas.Columns["colTransferencia"].DataPropertyName = "Transferencia";
+            dgvVentas.Columns["colQR"].DataPropertyName = "QR";
         }
 
         private void BtnBuscar_Click(object sender, EventArgs e)
@@ -30,25 +45,40 @@ namespace PetShop.Presentacion
 
         private void CargarHistorial()
         {
+            // Validar que la fecha 'Desde' no sea mayor a la fecha 'Hasta'
+            if (dtpDesde.Value > dtpHasta.Value)
+            {
+                MessageBox.Show("La fecha de inicio ('Desde') no puede ser posterior a la fecha final ('Hasta').",
+                    "Rango de Fechas Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             try
             {
-                dgvVentas.AutoGenerateColumns = false;
+                this.Cursor = Cursors.WaitCursor;
 
-                // Mapear los DataPropertyName según los alias creados en el SQL
-                dgvVentas.Columns[0].DataPropertyName = "NroTicket"; // o por el índice dgvVentas.Columns[0].DataPropertyName = "NroTicket";
-                dgvVentas.Columns[1].DataPropertyName = "Fecha";
-                dgvVentas.Columns[2].DataPropertyName = "Hora";
-                dgvVentas.Columns[3].DataPropertyName = "MontoTotal";
-                dgvVentas.Columns[4].DataPropertyName = "Efectivo";
-                dgvVentas.Columns[5].DataPropertyName = "Transferencia";
-                dgvVentas.Columns[6].DataPropertyName = "QR";
+                // Ajustar 'dtpHasta' al final del día seleccionado (23:59:59)
+                DateTime fechaDesde = dtpDesde.Value.Date;
+                DateTime fechaHasta = dtpHasta.Value.Date.AddDays(1).AddSeconds(-1);
 
-                DataTable dt = _cnVenta.ObtenerHistorialVentas(dtpDesde.Value, dtpHasta.Value);
+                DataTable dt = _cnVenta.ObtenerHistorialVentas(fechaDesde, fechaHasta);
                 dgvVentas.DataSource = dt;
+
+                // Mensaje informativo si no hay registros en la fecha elegida
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    // Limpia la grilla si no hay resultados
+                    dgvVentas.DataSource = null;
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al consultar el historial de ventas: {ex.Message}",
+                    "Error de Carga", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
             }
         }
 

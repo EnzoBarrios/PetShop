@@ -47,9 +47,10 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(410, 30);
+            this.pictureBox1.Location = new System.Drawing.Point(461, 38);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(40, 40);
+            this.pictureBox1.Size = new System.Drawing.Size(45, 50);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -59,8 +60,9 @@
             this.picTienda.BackColor = System.Drawing.SystemColors.HighlightText;
             this.picTienda.Image = global::PetShop.Properties.Resources.Tienda;
             this.picTienda.Location = new System.Drawing.Point(0, 0);
+            this.picTienda.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.picTienda.Name = "picTienda";
-            this.picTienda.Size = new System.Drawing.Size(200, 300);
+            this.picTienda.Size = new System.Drawing.Size(225, 375);
             this.picTienda.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picTienda.TabIndex = 1;
             this.picTienda.TabStop = false;
@@ -69,43 +71,45 @@
             // 
             this.lblInisiarSesion.AutoSize = true;
             this.lblInisiarSesion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInisiarSesion.Location = new System.Drawing.Point(250, 40);
+            this.lblInisiarSesion.Location = new System.Drawing.Point(281, 50);
             this.lblInisiarSesion.Name = "lblInisiarSesion";
-            this.lblInisiarSesion.Size = new System.Drawing.Size(133, 18);
+            this.lblInisiarSesion.Size = new System.Drawing.Size(159, 22);
             this.lblInisiarSesion.TabIndex = 2;
             this.lblInisiarSesion.Text = "INICIAR SESIÓN";
             // 
             // lblUsuario
             // 
             this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Location = new System.Drawing.Point(250, 100);
+            this.lblUsuario.Location = new System.Drawing.Point(281, 125);
             this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(54, 16);
+            this.lblUsuario.Size = new System.Drawing.Size(64, 20);
             this.lblUsuario.TabIndex = 3;
             this.lblUsuario.Text = "Usuario";
             // 
             // lblClave
             // 
             this.lblClave.AutoSize = true;
-            this.lblClave.Location = new System.Drawing.Point(250, 157);
+            this.lblClave.Location = new System.Drawing.Point(281, 196);
             this.lblClave.Name = "lblClave";
-            this.lblClave.Size = new System.Drawing.Size(42, 16);
+            this.lblClave.Size = new System.Drawing.Size(48, 20);
             this.lblClave.TabIndex = 4;
             this.lblClave.Text = "Clave";
             // 
             // txtClave
             // 
-            this.txtClave.Location = new System.Drawing.Point(250, 178);
+            this.txtClave.Location = new System.Drawing.Point(281, 222);
+            this.txtClave.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtClave.Name = "txtClave";
             this.txtClave.PasswordChar = '•';
-            this.txtClave.Size = new System.Drawing.Size(200, 22);
+            this.txtClave.Size = new System.Drawing.Size(224, 26);
             this.txtClave.TabIndex = 6;
             // 
             // txtUsuario
             // 
-            this.txtUsuario.Location = new System.Drawing.Point(250, 121);
+            this.txtUsuario.Location = new System.Drawing.Point(281, 151);
+            this.txtUsuario.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(200, 22);
+            this.txtUsuario.Size = new System.Drawing.Size(224, 26);
             this.txtUsuario.TabIndex = 5;
             // 
             // btnIngresar
@@ -114,9 +118,10 @@
             this.btnIngresar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnIngresar.ImageIndex = 0;
             this.btnIngresar.ImageList = this.imageList1;
-            this.btnIngresar.Location = new System.Drawing.Point(250, 230);
+            this.btnIngresar.Location = new System.Drawing.Point(281, 288);
+            this.btnIngresar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnIngresar.Name = "btnIngresar";
-            this.btnIngresar.Size = new System.Drawing.Size(100, 40);
+            this.btnIngresar.Size = new System.Drawing.Size(112, 50);
             this.btnIngresar.TabIndex = 7;
             this.btnIngresar.Text = "Ingresar";
             this.btnIngresar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -136,9 +141,10 @@
             this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCancelar.ImageIndex = 1;
             this.btnCancelar.ImageList = this.imageList1;
-            this.btnCancelar.Location = new System.Drawing.Point(355, 230);
+            this.btnCancelar.Location = new System.Drawing.Point(399, 288);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(100, 40);
+            this.btnCancelar.Size = new System.Drawing.Size(112, 50);
             this.btnCancelar.TabIndex = 8;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -148,10 +154,10 @@
             // FormLogin
             // 
             this.AcceptButton = this.btnIngresar;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.ClientSize = new System.Drawing.Size(500, 300);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(150)))), ((int)(((byte)(195)))));
+            this.ClientSize = new System.Drawing.Size(562, 375);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnIngresar);
             this.Controls.Add(this.txtUsuario);
@@ -162,6 +168,7 @@
             this.Controls.Add(this.picTienda);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormLogin";
