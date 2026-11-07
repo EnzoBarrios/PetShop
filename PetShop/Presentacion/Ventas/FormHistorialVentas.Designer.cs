@@ -161,6 +161,7 @@
             // 
             // lblTituloHistorialVentas
             // 
+            this.lblTituloHistorialVentas.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblTituloHistorialVentas.AutoSize = true;
             this.lblTituloHistorialVentas.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblTituloHistorialVentas.ForeColor = System.Drawing.Color.Black;

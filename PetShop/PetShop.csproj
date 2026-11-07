@@ -76,6 +76,7 @@
     <Compile Include="Negocio\CN_Especie.cs" />
     <Compile Include="Negocio\CN_EspecieTamano.cs" />
     <Compile Include="Negocio\CN_Producto.cs" />
+    <Compile Include="Negocio\CN_Reporte.cs" />
     <Compile Include="Negocio\CN_Rol.cs" />
     <Compile Include="Negocio\CN_Tamano.cs" />
     <Compile Include="Negocio\CN_Usuario.cs" />

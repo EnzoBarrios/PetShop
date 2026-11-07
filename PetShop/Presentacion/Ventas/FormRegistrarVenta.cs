@@ -422,7 +422,6 @@ namespace PetShop.Presentacion.Ventas
                 FechaHora = DateTime.Now,
                 Descuento = montoDescuento,
                 Total = totalFinal,
-                Estado = "Completada",
                 IdTipoVenta = idTipoVenta,
                 IdUsuario = _usuarioLogueado.IdUsuario,
                 Detalles = _listaDetalle,
@@ -431,7 +430,7 @@ namespace PetShop.Presentacion.Ventas
                     new Pago
                     {
                         IdMetodoPago = idMetodoPago,
-                        Monto = abonado
+                        Monto = totalFinal
                     }
                 }
             };

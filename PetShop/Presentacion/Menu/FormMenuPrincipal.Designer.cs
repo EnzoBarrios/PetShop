@@ -254,16 +254,16 @@ namespace PetShop.Presentacion.Menu
             // 
             // gbSesionIniciada
             // 
-            this.gbSesionIniciada.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbSesionIniciada.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.gbSesionIniciada.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.gbSesionIniciada.Controls.Add(this.pictureBox2);
             this.gbSesionIniciada.Controls.Add(this.pictureBox1);
             this.gbSesionIniciada.Controls.Add(this.lblRolLogeado);
             this.gbSesionIniciada.Controls.Add(this.lblUsuarioLogueado);
             this.gbSesionIniciada.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbSesionIniciada.Location = new System.Drawing.Point(900, 60);
+            this.gbSesionIniciada.Location = new System.Drawing.Point(1000, 60);
             this.gbSesionIniciada.Name = "gbSesionIniciada";
-            this.gbSesionIniciada.Size = new System.Drawing.Size(232, 78);
+            this.gbSesionIniciada.Size = new System.Drawing.Size(240, 78);
             this.gbSesionIniciada.TabIndex = 11;
             this.gbSesionIniciada.TabStop = false;
             this.gbSesionIniciada.Text = "Sesión Iniciada";
@@ -313,14 +313,14 @@ namespace PetShop.Presentacion.Menu
             // 
             // gbFechaHora
             // 
-            this.gbFechaHora.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbFechaHora.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.gbFechaHora.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.gbFechaHora.Controls.Add(this.lblHora);
             this.gbFechaHora.Controls.Add(this.lblFecha);
             this.gbFechaHora.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbFechaHora.Location = new System.Drawing.Point(519, 60);
+            this.gbFechaHora.Location = new System.Drawing.Point(560, 60);
             this.gbFechaHora.Name = "gbFechaHora";
-            this.gbFechaHora.Size = new System.Drawing.Size(343, 80);
+            this.gbFechaHora.Size = new System.Drawing.Size(380, 80);
             this.gbFechaHora.TabIndex = 12;
             this.gbFechaHora.TabStop = false;
             this.gbFechaHora.Text = "Fecha y Hora";
@@ -331,8 +331,10 @@ namespace PetShop.Presentacion.Menu
             this.lblHora.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHora.Location = new System.Drawing.Point(15, 25);
             this.lblHora.Name = "lblHora";
-            this.lblHora.Size = new System.Drawing.Size(0, 20);
+            this.lblHora.Size = new System.Drawing.Size(99, 20);
             this.lblHora.TabIndex = 14;
+            this.lblHora.Text = "          ";
+            this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblFecha
             // 
@@ -340,8 +342,10 @@ namespace PetShop.Presentacion.Menu
             this.lblFecha.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFecha.Location = new System.Drawing.Point(15, 55);
             this.lblFecha.Name = "lblFecha";
-            this.lblFecha.Size = new System.Drawing.Size(0, 20);
+            this.lblFecha.Size = new System.Drawing.Size(99, 20);
             this.lblFecha.TabIndex = 13;
+            this.lblFecha.Text = "          ";
+            this.lblFecha.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // msTitulo
             // 
@@ -511,6 +515,7 @@ namespace PetShop.Presentacion.Menu
             this.Name = "FormMenuPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PetShop - Sistema de Gestión Veterinaria";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FormMenuPrincipal_Load);
             this.Shown += new System.EventHandler(this.FormMenuPrincipal_Shown);
             this.msPrincipal.ResumeLayout(false);
