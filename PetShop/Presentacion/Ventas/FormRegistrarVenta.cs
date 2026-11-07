@@ -490,8 +490,7 @@ namespace PetShop.Presentacion.Ventas
                 e.KeyChar = ',';
             }
 
-            TextBox txt = sender as TextBox;
-            if (e.KeyChar == ',' && txt != null && txt.Text.Contains(","))
+            if (e.KeyChar == ',' && sender is TextBox txt && txt.Text.Contains(","))
             {
                 e.Handled = true;
             }
@@ -551,7 +550,6 @@ namespace PetShop.Presentacion.Ventas
                 FechaHora = DateTime.Now,
                 Descuento = montoDescuento,
                 Total = totalFinal,
-                Estado = "Completada",
                 IdTipoVenta = idTipoVenta,
                 IdUsuario = _usuarioLogueado.IdUsuario,
                 Detalles = _listaDetalle,
