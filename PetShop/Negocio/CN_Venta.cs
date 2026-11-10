@@ -160,9 +160,9 @@ namespace PetShop.Negocio
             return _cdvVenta.RegistrarVenta(venta, out mensaje);
         }
 
-        public DataTable ObtenerHistorialVentas(DateTime desde, DateTime hasta)
+        public DataTable ObtenerHistorialVentas(DateTime desde, DateTime hasta, int idMetodoPago = 0)
         {
-            return _cdvVenta.ObtenerHistorialVentas(desde, hasta);
+            return _cdvVenta.ObtenerHistorialVentas(desde, hasta, idMetodoPago);
         }
     }
 }
