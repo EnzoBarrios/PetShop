@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCategoria));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.imgListBotones = new System.Windows.Forms.ImageList(this.components);
             this.gbFiltroCategoria = new System.Windows.Forms.GroupBox();
             this.rbInactivos = new System.Windows.Forms.RadioButton();
@@ -41,17 +41,23 @@
             this.lblBuscar = new System.Windows.Forms.Label();
             this.lblTituloGestionCategoria = new System.Windows.Forms.Label();
             this.dgvCategorias = new System.Windows.Forms.DataGridView();
-            this.btnVolver = new System.Windows.Forms.Button();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnEstado = new System.Windows.Forms.Button();
             this.imgListEstado = new System.Windows.Forms.ImageList(this.components);
             this.btnModificarCategoria = new System.Windows.Forms.Button();
             this.btnAgregarCategoria = new System.Windows.Forms.Button();
-            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pnlTitulo = new System.Windows.Forms.Panel();
+            this.btnVolver = new System.Windows.Forms.Button();
+            this.pnlAcciones = new System.Windows.Forms.Panel();
+            this.pnlGrilla = new System.Windows.Forms.Panel();
             this.gbFiltroCategoria.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCategorias)).BeginInit();
+            this.pnlTitulo.SuspendLayout();
+            this.pnlAcciones.SuspendLayout();
+            this.pnlGrilla.SuspendLayout();
             this.SuspendLayout();
             // 
             // imgListBotones
@@ -63,6 +69,7 @@
             // 
             // gbFiltroCategoria
             // 
+            this.gbFiltroCategoria.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.gbFiltroCategoria.Controls.Add(this.rbInactivos);
             this.gbFiltroCategoria.Controls.Add(this.rbActivos);
             this.gbFiltroCategoria.Controls.Add(this.label2);
@@ -70,7 +77,7 @@
             this.gbFiltroCategoria.Controls.Add(this.txtBuscar);
             this.gbFiltroCategoria.Controls.Add(this.lblBuscar);
             this.gbFiltroCategoria.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbFiltroCategoria.Location = new System.Drawing.Point(40, 290);
+            this.gbFiltroCategoria.Location = new System.Drawing.Point(40, 240);
             this.gbFiltroCategoria.Name = "gbFiltroCategoria";
             this.gbFiltroCategoria.Size = new System.Drawing.Size(300, 290);
             this.gbFiltroCategoria.TabIndex = 6;
@@ -146,10 +153,11 @@
             // 
             // lblTituloGestionCategoria
             // 
+            this.lblTituloGestionCategoria.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblTituloGestionCategoria.AutoSize = true;
             this.lblTituloGestionCategoria.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblTituloGestionCategoria.ForeColor = System.Drawing.Color.Black;
-            this.lblTituloGestionCategoria.Location = new System.Drawing.Point(508, 20);
+            this.lblTituloGestionCategoria.Location = new System.Drawing.Point(508, 15);
             this.lblTituloGestionCategoria.Name = "lblTituloGestionCategoria";
             this.lblTituloGestionCategoria.Size = new System.Drawing.Size(264, 32);
             this.lblTituloGestionCategoria.TabIndex = 5;
@@ -160,42 +168,68 @@
             this.dgvCategorias.AllowUserToAddRows = false;
             this.dgvCategorias.AllowUserToDeleteRows = false;
             this.dgvCategorias.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCategorias.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCategorias.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvCategorias.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCategorias.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
             this.colCategoria,
             this.colDescripcion,
             this.colEstado});
-            this.dgvCategorias.Location = new System.Drawing.Point(380, 70);
+            this.dgvCategorias.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvCategorias.Location = new System.Drawing.Point(20, 10);
             this.dgvCategorias.MultiSelect = false;
             this.dgvCategorias.Name = "dgvCategorias";
             this.dgvCategorias.ReadOnly = true;
             this.dgvCategorias.RowHeadersWidth = 51;
             this.dgvCategorias.RowTemplate.Height = 24;
             this.dgvCategorias.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCategorias.Size = new System.Drawing.Size(860, 510);
+            this.dgvCategorias.Size = new System.Drawing.Size(860, 530);
             this.dgvCategorias.TabIndex = 10;
             this.dgvCategorias.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DgvCategorias_CellFormatting);
             this.dgvCategorias.SelectionChanged += new System.EventHandler(this.DgvCategorias_SelectionChanged);
             // 
-            // btnVolver
+            // colId
             // 
-            this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnVolver.Location = new System.Drawing.Point(40, 20);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(75, 32);
-            this.btnVolver.TabIndex = 11;
-            this.btnVolver.Text = "Volver";
-            this.btnVolver.UseVisualStyleBackColor = true;
-            this.btnVolver.Click += new System.EventHandler(this.BtnVolver_Click);
+            this.colId.DataPropertyName = "Id";
+            this.colId.HeaderText = "Id";
+            this.colId.MinimumWidth = 100;
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            this.colId.Visible = false;
+            // 
+            // colCategoria
+            // 
+            this.colCategoria.DataPropertyName = "Categoria";
+            this.colCategoria.FillWeight = 9.625671F;
+            this.colCategoria.HeaderText = "Categoria";
+            this.colCategoria.MinimumWidth = 180;
+            this.colCategoria.Name = "colCategoria";
+            this.colCategoria.ReadOnly = true;
+            // 
+            // colDescripcion
+            // 
+            this.colDescripcion.DataPropertyName = "Descrip";
+            this.colDescripcion.FillWeight = 280.7487F;
+            this.colDescripcion.HeaderText = "Descripcion";
+            this.colDescripcion.MinimumWidth = 200;
+            this.colDescripcion.Name = "colDescripcion";
+            this.colDescripcion.ReadOnly = true;
+            // 
+            // colEstado
+            // 
+            this.colEstado.DataPropertyName = "Estado";
+            this.colEstado.FillWeight = 9.625671F;
+            this.colEstado.HeaderText = "Estado";
+            this.colEstado.MinimumWidth = 120;
+            this.colEstado.Name = "colEstado";
+            this.colEstado.ReadOnly = true;
             // 
             // btnEstado
             // 
@@ -204,7 +238,7 @@
             this.btnEstado.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnEstado.ImageIndex = 0;
             this.btnEstado.ImageList = this.imgListEstado;
-            this.btnEstado.Location = new System.Drawing.Point(40, 180);
+            this.btnEstado.Location = new System.Drawing.Point(40, 120);
             this.btnEstado.Name = "btnEstado";
             this.btnEstado.Size = new System.Drawing.Size(300, 90);
             this.btnEstado.TabIndex = 12;
@@ -227,7 +261,7 @@
             this.btnModificarCategoria.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnModificarCategoria.ImageIndex = 1;
             this.btnModificarCategoria.ImageList = this.imgListBotones;
-            this.btnModificarCategoria.Location = new System.Drawing.Point(200, 70);
+            this.btnModificarCategoria.Location = new System.Drawing.Point(200, 10);
             this.btnModificarCategoria.Name = "btnModificarCategoria";
             this.btnModificarCategoria.Size = new System.Drawing.Size(140, 90);
             this.btnModificarCategoria.TabIndex = 9;
@@ -242,7 +276,7 @@
             this.btnAgregarCategoria.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnAgregarCategoria.ImageIndex = 0;
             this.btnAgregarCategoria.ImageList = this.imgListBotones;
-            this.btnAgregarCategoria.Location = new System.Drawing.Point(40, 70);
+            this.btnAgregarCategoria.Location = new System.Drawing.Point(40, 10);
             this.btnAgregarCategoria.Name = "btnAgregarCategoria";
             this.btnAgregarCategoria.Size = new System.Drawing.Size(140, 90);
             this.btnAgregarCategoria.TabIndex = 8;
@@ -251,41 +285,50 @@
             this.btnAgregarCategoria.UseVisualStyleBackColor = false;
             this.btnAgregarCategoria.Click += new System.EventHandler(this.BtnAgregar_Click);
             // 
-            // colEstado
+            // pnlTitulo
             // 
-            this.colEstado.DataPropertyName = "Estado";
-            this.colEstado.FillWeight = 9.625671F;
-            this.colEstado.HeaderText = "Estado";
-            this.colEstado.MinimumWidth = 120;
-            this.colEstado.Name = "colEstado";
-            this.colEstado.ReadOnly = true;
+            this.pnlTitulo.Controls.Add(this.btnVolver);
+            this.pnlTitulo.Controls.Add(this.lblTituloGestionCategoria);
+            this.pnlTitulo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlTitulo.Location = new System.Drawing.Point(0, 0);
+            this.pnlTitulo.Name = "pnlTitulo";
+            this.pnlTitulo.Padding = new System.Windows.Forms.Padding(40, 5, 40, 5);
+            this.pnlTitulo.Size = new System.Drawing.Size(1280, 60);
+            this.pnlTitulo.TabIndex = 13;
             // 
-            // colDescripcion
+            // btnVolver
             // 
-            this.colDescripcion.DataPropertyName = "Descrip";
-            this.colDescripcion.FillWeight = 280.7487F;
-            this.colDescripcion.HeaderText = "Descripcion";
-            this.colDescripcion.MinimumWidth = 200;
-            this.colDescripcion.Name = "colDescripcion";
-            this.colDescripcion.ReadOnly = true;
+            this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnVolver.Location = new System.Drawing.Point(40, 10);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(75, 40);
+            this.btnVolver.TabIndex = 15;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.BtnVolver_Click);
             // 
-            // colCategoria
+            // pnlAcciones
             // 
-            this.colCategoria.DataPropertyName = "Categoria";
-            this.colCategoria.FillWeight = 9.625671F;
-            this.colCategoria.HeaderText = "Categoria";
-            this.colCategoria.MinimumWidth = 180;
-            this.colCategoria.Name = "colCategoria";
-            this.colCategoria.ReadOnly = true;
+            this.pnlAcciones.Controls.Add(this.gbFiltroCategoria);
+            this.pnlAcciones.Controls.Add(this.btnAgregarCategoria);
+            this.pnlAcciones.Controls.Add(this.btnModificarCategoria);
+            this.pnlAcciones.Controls.Add(this.btnEstado);
+            this.pnlAcciones.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlAcciones.Location = new System.Drawing.Point(0, 60);
+            this.pnlAcciones.Name = "pnlAcciones";
+            this.pnlAcciones.Padding = new System.Windows.Forms.Padding(40, 10, 20, 20);
+            this.pnlAcciones.Size = new System.Drawing.Size(360, 560);
+            this.pnlAcciones.TabIndex = 14;
             // 
-            // colId
+            // pnlGrilla
             // 
-            this.colId.DataPropertyName = "Id";
-            this.colId.HeaderText = "Id";
-            this.colId.MinimumWidth = 100;
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            this.colId.Visible = false;
+            this.pnlGrilla.Controls.Add(this.dgvCategorias);
+            this.pnlGrilla.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlGrilla.Location = new System.Drawing.Point(360, 60);
+            this.pnlGrilla.Name = "pnlGrilla";
+            this.pnlGrilla.Padding = new System.Windows.Forms.Padding(20, 10, 40, 20);
+            this.pnlGrilla.Size = new System.Drawing.Size(920, 560);
+            this.pnlGrilla.TabIndex = 14;
             // 
             // FormCategoria
             // 
@@ -293,13 +336,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1280, 620);
-            this.Controls.Add(this.btnEstado);
-            this.Controls.Add(this.btnVolver);
-            this.Controls.Add(this.dgvCategorias);
-            this.Controls.Add(this.btnModificarCategoria);
-            this.Controls.Add(this.btnAgregarCategoria);
-            this.Controls.Add(this.gbFiltroCategoria);
-            this.Controls.Add(this.lblTituloGestionCategoria);
+            this.Controls.Add(this.pnlGrilla);
+            this.Controls.Add(this.pnlAcciones);
+            this.Controls.Add(this.pnlTitulo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FormCategoria";
             this.Text = "FormCategorias";
@@ -307,8 +346,11 @@
             this.gbFiltroCategoria.ResumeLayout(false);
             this.gbFiltroCategoria.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCategorias)).EndInit();
+            this.pnlTitulo.ResumeLayout(false);
+            this.pnlTitulo.PerformLayout();
+            this.pnlAcciones.ResumeLayout(false);
+            this.pnlGrilla.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -320,7 +362,6 @@
         private System.Windows.Forms.Label lblTituloGestionCategoria;
         private System.Windows.Forms.ImageList imgListBotones;
         private System.Windows.Forms.DataGridView dgvCategorias;
-        private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.Button btnEstado;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RadioButton rbTodos;
@@ -333,5 +374,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colCategoria;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDescripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEstado;
+        private System.Windows.Forms.Panel pnlTitulo;
+        private System.Windows.Forms.Panel pnlAcciones;
+        private System.Windows.Forms.Panel pnlGrilla;
+        private System.Windows.Forms.Button btnVolver;
     }
 }

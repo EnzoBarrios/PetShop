@@ -80,6 +80,7 @@
     <Compile Include="Negocio\CN_Especie.cs" />
     <Compile Include="Negocio\CN_EspecieTamano.cs" />
     <Compile Include="Negocio\CN_Producto.cs" />
+    <Compile Include="Negocio\CN_Reporte.cs" />
     <Compile Include="Negocio\CN_Rol.cs" />
     <Compile Include="Negocio\CN_Tamano.cs" />
     <Compile Include="Negocio\CN_Usuario.cs" />
@@ -285,6 +286,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Ventas\FormHistorialVentas.resx">
       <DependentUpon>FormHistorialVentas.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentacion\Ventas\FormRegistrarVenta.resx">
       <DependentUpon>FormRegistrarVenta.cs</DependentUpon>

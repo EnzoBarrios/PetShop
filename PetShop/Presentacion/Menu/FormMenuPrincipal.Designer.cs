@@ -129,7 +129,7 @@ namespace PetShop.Presentacion.Menu
             this.Timer.Tick += new System.EventHandler(this.Timer_Tick);
             // 
             // gbSesionIniciada
-            // 
+            //
             this.gbSesionIniciada.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.gbSesionIniciada.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(230)))), ((int)(((byte)(255)))));
             this.gbSesionIniciada.Controls.Add(this.pictureBox2);
@@ -193,6 +193,8 @@ namespace PetShop.Presentacion.Menu
             this.lblHora.Name = "lblHora";
             this.lblHora.Size = new System.Drawing.Size(0, 24);
             this.lblHora.TabIndex = 14;
+            this.lblHora.Text = "          ";
+            this.lblHora.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblFecha
             // 
@@ -202,6 +204,8 @@ namespace PetShop.Presentacion.Menu
             this.lblFecha.Name = "lblFecha";
             this.lblFecha.Size = new System.Drawing.Size(0, 24);
             this.lblFecha.TabIndex = 13;
+            this.lblFecha.Text = "          ";
+            this.lblFecha.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // msTitulo
             // 
@@ -538,6 +542,7 @@ namespace PetShop.Presentacion.Menu
             this.Name = "FormMenuPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PetShop - Sistema de Gestión Veterinaria";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FormMenuPrincipal_Load);
             this.Shown += new System.EventHandler(this.FormMenuPrincipal_Shown);
             this.msPrincipal.ResumeLayout(false);

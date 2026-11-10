@@ -135,7 +135,6 @@ namespace PetShop.Datos
                         cmdDetalle.Parameters.AddWithValue("@id_producto", dv.IdProducto);
                         cmdDetalle.Parameters.AddWithValue("@cantidad", dv.Cantidad);
                         cmdDetalle.Parameters.AddWithValue("@precio_unitario", dv.PrecioUnitario);
-                        
 
                         cmdDetalle.ExecuteNonQuery();
 
