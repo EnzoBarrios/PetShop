@@ -16,16 +16,19 @@ namespace PetShop.Datos
                 {
                     conexion.Open();
 
-                    // Sentencia T-SQL para respaldar la base de datos PetShopDB
+                    // 1. Obtiene el nombre real de la base de datos directamente de la conexión
+                    string nombreBD = conexion.Database;
+
+                    // 2. Inyectamos las variables directamente en el string. 
+                    // Para comandos de administración (BACKUP), esto evita errores de parámetros.
                     string query = $@"
-                        BACKUP DATABASE [PetShopDB] 
-                        TO DISK = @rutaDestino 
-                        WITH FORMAT, MEDIANAME = 'PetShopBackups', NAME = 'Full Backup de PetShopDB';";
+                BACKUP DATABASE [{nombreBD}] 
+                TO DISK = '{rutaDestino}' 
+                WITH FORMAT, MEDIANAME = 'PetShopBackups', NAME = 'Full Backup de {nombreBD}';";
 
                     SqlCommand cmd = new SqlCommand(query, conexion);
-                    // Aumentamos el Timeout porque un backup puede demorar unos segundos
+                    // Aumentamos el Timeout a 2 minutos para bases de datos pesadas
                     cmd.CommandTimeout = 120;
-                    cmd.Parameters.AddWithValue("@rutaDestino", rutaDestino);
 
                     cmd.ExecuteNonQuery();
 

@@ -18,8 +18,7 @@ namespace PetShop.Presentacion.Menu
 
         private readonly CN_Usuario _cnUsuario;
         private readonly CN_Backup _cnBackup = new CN_Backup();
-        private readonly CN_Configuracion _cnConfiguracion = new CN_Configuracion(); // <-- MODIFICADO: Capa para leer la tabla Configuracion
-
+        private readonly CN_Configuracion _cnConfiguracion = new CN_Configuracion(); 
         public FormMenuPrincipal(Usuario usuario)
         {
             InitializeComponent();
@@ -101,7 +100,7 @@ namespace PetShop.Presentacion.Menu
             VentaToolStripMenuItem.Enabled = false;
             ReportesToolStripMenuItem.Enabled = false;
 
-            // Apagado preventivo del Backup (oculto por defecto) <-- MODIFICADO
+            // Apagado preventivo del Backup (oculto por defecto) 
             BackupToolStripMenuItem.Visible = false;
             BackupToolStripMenuItem.Enabled = false;
 
@@ -110,7 +109,7 @@ namespace PetShop.Presentacion.Menu
             btnHistorialVentas.Enabled = false;
             btnReportes.Enabled = false;
 
-            // 3. Consultamos el permiso guardado en la tabla Configuracion de SQL Server <-- MODIFICADO
+            // 3. Consultamos el permiso guardado en la tabla Configuracion de SQL Server 
             bool permisoGerenteBackup = _cnConfiguracion.ObtenerPermisoBackupGerente();
 
             // 4. Activación según perfil
@@ -127,7 +126,7 @@ namespace PetShop.Presentacion.Menu
 
                     NuevaVentaToolStripMenuItem.Enabled = false;
 
-                    // Administrador: Siempre lo ve y siempre puede ejecutarlo <-- MODIFICADO
+                    // Administrador: Siempre lo ve y siempre puede ejecutarlo 
                     BackupToolStripMenuItem.Visible = true;
                     BackupToolStripMenuItem.Enabled = true;
                     break;
@@ -379,10 +378,23 @@ namespace PetShop.Presentacion.Menu
 
         private async void BackupToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // 1. Definimos una ruta segura y universal en la raíz del disco C
+            string rutaSegura = @"C:\PetShop_Backups";
+
+            // 2. Si la carpeta no existe, la creamos automáticamente
+            if (!System.IO.Directory.Exists(rutaSegura))
+            {
+                System.IO.Directory.CreateDirectory(rutaSegura);
+            }
+
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
                 saveFileDialog.Filter = "Backup SQL Server (*.bak)|*.bak";
                 saveFileDialog.Title = "Guardar Copia de Seguridad de PetShop";
+
+                // 3. Obligamos a la ventana a abrirse en nuestra carpeta dedicada
+                saveFileDialog.InitialDirectory = rutaSegura;
+
                 saveFileDialog.FileName = $"PetShop_Backup_{DateTime.Now:yyyyMMdd_HHmmss}.bak";
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -396,7 +408,7 @@ namespace PetShop.Presentacion.Menu
                         bool resultado = false;
                         string mensaje = string.Empty;
 
-                        // Tarea asíncrona en segundo plano
+                        // Tarea asíncrona para no congelar la pantalla
                         await Task.Run(() =>
                         {
                             resultado = _cnBackup.GenerarCopiaSeguridad(rutaSeleccionada, out mensaje);
@@ -404,7 +416,7 @@ namespace PetShop.Presentacion.Menu
 
                         this.Cursor = Cursors.Default;
 
-                        // Revalida los permisos por si el gerente fue quien lo ejecutó
+                        // Revalida los permisos tras terminar
                         ConfigurarPermisosPorRol();
 
                         if (resultado)

@@ -13,7 +13,7 @@ namespace PetShop.Presentacion.Usuarios
         private readonly int _idUsuarioLogueado;
         private readonly string _rolUsuarioLogueado;
         private readonly CN_Usuario _cnUsuario; // Instancia de la capa de negocio para interactuar con la lógica de usuarios
-
+        private CN_Configuracion _cnConfiguracion = new CN_Configuracion();
         // Constructor principal que recibe el ID y el Rol del usuario logueado
         public FormUsuarios(int idUsuarioLogueado, string rolUsuarioLogueado)
         {
@@ -26,6 +26,24 @@ namespace PetShop.Presentacion.Usuarios
         // Evento que se dispara al cargar el formulario, invoca la carga inicial de usuarios
         private void FormUsuarios_Load(object sender, EventArgs e)
         {
+            // 1. Seguridad: Ocultar el CheckBox si NO es Administrador
+            if (_rolUsuarioLogueado != CN_Rol.ROL_ADMINISTRADOR)
+            {
+                chkPermisoBackup.Visible = false;
+            }
+            else
+            {
+                // 2. Si es Admin, mostramos el CheckBox y cargamos cómo está en la BD
+                chkPermisoBackup.Visible = true;
+
+                // Desuscribimos temporalmente el evento para que no se dispare al cargar
+                chkPermisoBackup.CheckedChanged -= chkPermisoBackup_CheckedChanged;
+
+                chkPermisoBackup.Checked = _cnConfiguracion.ObtenerPermisoBackupGerente();
+
+                // Volvemos a suscribir el evento
+                chkPermisoBackup.CheckedChanged += chkPermisoBackup_CheckedChanged;
+            }
             ConfigurarDatosGrilla();
             CargarUsuarios();
         }
@@ -131,6 +149,31 @@ namespace PetShop.Presentacion.Usuarios
         private void TxtBuscar_TextChanged(object sender, EventArgs e)
         {
             CargarUsuarios();
+        }
+
+        private void chkPermisoBackup_CheckedChanged(object sender, EventArgs e)
+        {
+            bool nuevoPermiso = chkPermisoBackup.Checked;
+            string mensaje;
+
+            // Llamamos a la capa de negocio pasando el parámetro 'out' para capturar el mensaje
+            bool resultado = _cnConfiguracion.ActualizarPermisoBackupGerente(nuevoPermiso, out mensaje);
+
+            if (resultado)
+            {
+                // Muestra el mensaje de éxito generado en CD_Configuracion
+                MessageBox.Show(mensaje, "Configuración Actualizada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                // Muestra el mensaje de error generado en CD_Configuracion
+                MessageBox.Show(mensaje, "Error de Configuración", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                // Opcional: Revertir visualmente el CheckBox si falló la actualización en la BD
+                chkPermisoBackup.CheckedChanged -= chkPermisoBackup_CheckedChanged;
+                chkPermisoBackup.Checked = !nuevoPermiso;
+                chkPermisoBackup.CheckedChanged += chkPermisoBackup_CheckedChanged;
+            }
         }
 
         // BOTÓN NUEVO USUARIO
