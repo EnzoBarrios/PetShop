@@ -17,6 +17,6 @@ BEGIN -- Manera de evitar que se muestren mensajes de conteo de filas afectadas
 	INNER JOIN Categoria c ON (p.id_categoria = c.id_categoria)
 	LEFT JOIN Especie e ON (p.id_especie = e.id_especie)
 	LEFT JOIN Tamano t ON (p.id_tamano = t.id_tamano)
-	WHERE p.stock_actual <= p.stock_minimo
+	WHERE p.estado = 1 AND p.stock_actual <= p.stock_minimo
 	ORDER BY p.stock_actual ASC;
 END;

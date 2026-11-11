@@ -1,19 +1,21 @@
 CREATE PROCEDURE sp_ObtenerVentasPorVendedor
-	@fecha_inicio DATE,
-	@fecha_fin DATE
+    @fecha_inicio DATETIME,
+    @fecha_fin DATETIME
 AS
 BEGIN
-	SET NOCOUNT ON;
+    SET NOCOUNT ON;
 
-	SELECT 
-		v.id_venta AS [ID Venta],
-		v.nro_factura AS [Nro. Factura],
-		v.fecha_hora AS [Fecha y Hora], 
-		CONCAT(u.nombre, ' ', u.apellido) AS [Vendedor], 
-		v.descuento AS [Descuento],
-		v.total AS [Total]
-	FROM Venta v
-	INNER JOIN Usuario u ON (v.id_usuario = u.id_usuario)
-	WHERE CAST(v.fecha_hora AS DATE) BETWEEN @fecha_inicio AND @fecha_fin
-	ORDER BY v.fecha_hora DESC;
+    SELECT 
+        u.id_usuario AS [ID Vendedor],
+        CONCAT(u.nombre, ' ', u.apellido) AS [Vendedor],
+        COUNT(v.id_venta) AS [Cantidad Ventas],
+        SUM(v.descuento) AS [Total Descuentos],
+        SUM(v.total) AS [Total],
+        AVG(v.total) AS [Promedio Ticket]
+    FROM Venta v
+    INNER JOIN Usuario u ON v.id_usuario = u.id_usuario
+    WHERE v.fecha_hora >= @fecha_inicio 
+      AND v.fecha_hora <= @fecha_fin
+    GROUP BY u.id_usuario, u.nombre, u.apellido
+    ORDER BY Total DESC;
 END;

@@ -19,7 +19,7 @@ namespace PetShop.Presentacion
         private readonly CN_Reporte _cnReporte = new CN_Reporte();
         private const string REPORTE_STOCK = "Stock Crítico y Reposición";
         private const string REPORTE_VENTAS = "Ventas por Vendedor";
-        private const string REPORTE_TOP_PRODUCTOS = "Top 10 Productos Más Vendidos";
+        private const string REPORTE_TOP_PRODUCTOS = "Productos Más Vendidos";
         private string _ultimoTipoReporteGenerado = string.Empty;
         private DateTime _ultimaFechaDesde;
         private DateTime _ultimaFechaHasta;
@@ -64,6 +64,18 @@ namespace PetShop.Presentacion
 
             // Limpiamos la grilla previa
             dgvReportes.DataSource = null;
+
+            // Limpiamos las series y puntos del gráfico anterior
+            chartReportes.Series.Clear();
+
+            // Limpiamos las etiquetas personalizadas del eje X y reiniciamos los intervalos de los ejes
+            if (chartReportes.ChartAreas.Count > 0)
+            {
+                chartReportes.ChartAreas[0].AxisX.CustomLabels.Clear();
+                chartReportes.ChartAreas[0].AxisX.Interval = double.NaN;
+                chartReportes.ChartAreas[0].AxisY.Interval = double.NaN;
+                chartReportes.ChartAreas[0].RecalculateAxesScale();
+            }
 
             switch (opcion)
             {
@@ -136,6 +148,10 @@ namespace PetShop.Presentacion
 
             if (dt == null || dt.Rows.Count == 0) return;
 
+            var area = chartReportes.ChartAreas[0];
+            area.AxisX.Interval = 1;
+            area.AxisX.IsReversed = true;
+
             // 1. Crear nueva serie
             Series serie = new Series("Stock Actual")
             {
@@ -160,6 +176,8 @@ namespace PetShop.Presentacion
             // 3. Personalización del gráfico
             lblTituloReportesStock.Text = "Top 10 Productos con Menor Stock";
             chartReportes.Series.Add(serie);
+
+            area.RecalculateAxesScale();
         }
 
         private void CargarGraficoVentas(DataTable dt)
@@ -167,6 +185,12 @@ namespace PetShop.Presentacion
             chartReportes.Series.Clear();
 
             if (dt == null || dt.Rows.Count == 0) return;
+
+            var area = chartReportes.ChartAreas[0];
+            area.AxisX.Minimum = double.NaN;
+            area.AxisX.Maximum = double.NaN;
+            area.AxisX.Interval = double.NaN;
+            area.AxisX.LabelStyle.Format = "$#,##0";
 
             Series serie = new Series("Ventas")
             {
@@ -188,6 +212,7 @@ namespace PetShop.Presentacion
 
             lblTituloReportesStock.Text = "Distribución de Ventas por Vendedor";
             chartReportes.Series.Add(serie);
+            area.RecalculateAxesScale();
         }
 
         private void CargarGraficoTopProductos(DataTable dt)
@@ -195,6 +220,10 @@ namespace PetShop.Presentacion
             chartReportes.Series.Clear();
 
             if (dt == null || dt.Rows.Count == 0) return;
+
+            var area = chartReportes.ChartAreas[0];
+            area.AxisX.Interval = 1;
+            area.AxisX.IsReversed = true;
 
             // Gráfico de Barras Horizontales para leer cómodamente los nombres largos de productos
             Series serie = new Series("Unidades")
@@ -209,8 +238,10 @@ namespace PetShop.Presentacion
                 serie.Points.AddXY(producto, unidades);
             }
 
-            lblTituloReportesStock.Text = "Top 10 Productos Más Vendidos (Unidades)";
+            lblTituloReportesStock.Text = "Top Productos Más Vendidos (Unidades)";
             chartReportes.Series.Add(serie);
+
+            area.RecalculateAxesScale();
         }
 
         private void ConfigurarGrilla(DataTable dt)
@@ -253,13 +284,10 @@ namespace PetShop.Presentacion
                 case REPORTE_STOCK:
                     break; // No requiere validación de fechas
                 case REPORTE_VENTAS:
+                    if (!ValidarFechas(desdeActual, hastaActual)) return;
+                    break;
                 case REPORTE_TOP_PRODUCTOS:
-                    if (desdeActual > hastaActual)
-                    {
-                        MessageBox.Show("La fecha de inicio no puede ser mayor que la fecha de fin.",
-                                        "Error de Fechas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                    if (!ValidarFechas(desdeActual, hastaActual)) return;
                     break;
             }
 
@@ -350,14 +378,8 @@ namespace PetShop.Presentacion
                 return;
             }
 
-            decimal totalRecaudado = 0;
-            int totalVentas = dt.Rows.Count;
-
-            foreach (DataRow row in dt.Rows)
-            {
-                totalRecaudado += Convert.ToDecimal(row["Total"]);
-            }
-
+            decimal totalRecaudado = dt.AsEnumerable().Sum(r => Convert.ToDecimal(r["Total"]));
+            int totalVentas = dt.AsEnumerable().Sum(r => Convert.ToInt32(r["Cantidad Ventas"]));
             decimal promedioTicket = totalVentas > 0 ? (totalRecaudado / totalVentas) : 0;
 
             lblValor1.Text = totalRecaudado.ToString("C2");
@@ -389,6 +411,30 @@ namespace PetShop.Presentacion
             lblValor1.Text = nombreLider;
             lblValor2.Text = unidadesLider.ToString();
             lblValor3.Text = totalTop10.ToString("C2");
+        }
+
+        private bool ValidarFechas(DateTime desde, DateTime hasta)
+        {
+            if (desde.Year < 2026)
+            {
+                MessageBox.Show("La fecha de inicio no puede ser menor que el año 2026.",
+                                "Error de Fechas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (desde > hasta)
+            {
+                MessageBox.Show("La fecha de inicio no puede ser mayor que la fecha de fin.",
+                                "Error de Fechas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            if (hasta > DateTime.Now)
+            {
+                MessageBox.Show("La fecha de fin no puede ser mayor que la fecha actual.",
+                                "Error de Fechas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            return true;
         }
 
         private void BtnVolver_Click(object sender, EventArgs e)
