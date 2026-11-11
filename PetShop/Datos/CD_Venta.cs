@@ -11,20 +11,31 @@ namespace PetShop.Datos
         // Genera el próximo número correlativo como string ("00000001")
         public string ObtenerProximoNroFactura()
         {
-            string proximoNro = "00000001";
+            const string PUNTO_VENTA = "0001";
+            string proximoNro = $"{PUNTO_VENTA}-00000001";
+
             using (SqlConnection conexion = ConexionBd.CrearConexion())
             {
                 try
                 {
                     conexion.Open();
-                    string query = "SELECT ISNULL(MAX(CAST(nro_factura AS INT)), 0) + 1 FROM Venta WHERE ISNUMERIC(nro_factura) = 1";
-                    SqlCommand cmd = new SqlCommand(query, conexion);
-                    int ultimoId = Convert.ToInt32(cmd.ExecuteScalar());
-                    proximoNro = ultimoId.ToString("D8");
+                    // Extrae solo los dígitos posteriores al guión '-' para calcular el siguiente número
+                    string query = @"
+                        SELECT ISNULL(MAX(CAST(RIGHT(nro_factura, 8) AS INT)), 0) + 1 
+                        FROM Venta 
+                        WHERE nro_factura LIKE @PuntoVentaPrefix";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conexion))
+                    {
+                        cmd.Parameters.Add("@PuntoVentaPrefix", SqlDbType.VarChar, 20).Value = $"{PUNTO_VENTA}-%";
+
+                        int siguienteCorrelativo = Convert.ToInt32(cmd.ExecuteScalar());
+                        proximoNro = $"{PUNTO_VENTA}-{siguienteCorrelativo:D8}";
+                    }
                 }
                 catch (Exception)
                 {
-                    proximoNro = "00000001";
+                    proximoNro = $"{PUNTO_VENTA}-00000001";
                 }
             }
             return proximoNro;
@@ -181,7 +192,7 @@ namespace PetShop.Datos
         }
 
         // Obtener el historial completo de ventas con el desglose de métodos de pago
-        public DataTable ObtenerHistorialVentas(DateTime desde, DateTime hasta)
+        public DataTable ObtenerHistorialVentas(DateTime desde, DateTime hasta, int idMetodoPago = 0)
         {
             DataTable dt = new DataTable();
             using (SqlConnection conexion = ConexionBd.CrearConexion())
@@ -198,22 +209,28 @@ namespace PetShop.Datos
                     ISNULL(p.Transferencia, 0) AS [Transferencia],
                     ISNULL(p.QR, 0) AS [QR]
                 FROM Venta v
-                LEFT JOIN (
+                INNER JOIN (
                     SELECT 
                         p.id_venta,
                         SUM(CASE WHEN mp.nombre_metodo LIKE '%Efectivo%' THEN p.monto ELSE 0 END) AS Efectivo,
-                        SUM(CASE WHEN mp.nombre_metodo LIKE '%Transferencia%' THEN p.monto ELSE 0 END) AS Transferencia,
+                        SUM(CASE WHEN mp.nombre_metodo LIKE '%Transferencia%' OR mp.nombre_metodo LIKE '%Tarjeta%' THEN p.monto ELSE 0 END) AS Transferencia,
                         SUM(CASE WHEN mp.nombre_metodo LIKE '%QR%' OR mp.nombre_metodo LIKE '%Mercado%' THEN p.monto ELSE 0 END) AS QR
                     FROM Pago p
                     INNER JOIN Metodo_pago mp ON p.id_metodo_pago = mp.id_metodo_pago
                     GROUP BY p.id_venta
                 ) p ON v.id_venta = p.id_venta
                 WHERE CAST(v.fecha_hora AS DATE) BETWEEN @desde AND @hasta
+                  AND (@idMetodoPago = 0 OR EXISTS (
+                      SELECT 1 FROM Pago p2 
+                      WHERE p2.id_venta = v.id_venta 
+                        AND p2.id_metodo_pago = @idMetodoPago
+                  ))
                 ORDER BY v.id_venta DESC;";
 
                     SqlCommand cmd = new SqlCommand(query, conexion);
                     cmd.Parameters.AddWithValue("@desde", desde.Date);
                     cmd.Parameters.AddWithValue("@hasta", hasta.Date);
+                    cmd.Parameters.AddWithValue("@idMetodoPago", idMetodoPago);
 
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     conexion.Open();
@@ -225,6 +242,7 @@ namespace PetShop.Datos
                 }
             }
             return dt;
+        
         }
     }
 }

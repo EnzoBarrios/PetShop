@@ -33,14 +33,6 @@
             this.btnModificarUsuario = new System.Windows.Forms.Button();
             this.btnNuevoUsuario = new System.Windows.Forms.Button();
             this.dgvUsuarios = new System.Windows.Forms.DataGridView();
-            this.txtBuscar = new System.Windows.Forms.TextBox();
-            this.lblBuscar = new System.Windows.Forms.Label();
-            this.lblTitulo = new System.Windows.Forms.Label();
-            this.PanelBotones = new System.Windows.Forms.Panel();
-            this.pnlTitulo = new System.Windows.Forms.Panel();
-            this.btnVolver = new System.Windows.Forms.Button();
-            this.pnlBotones = new System.Windows.Forms.Panel();
-            this.pnlGrilla = new System.Windows.Forms.Panel();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colApellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,6 +40,15 @@
             this.colRol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
+            this.lblBuscar = new System.Windows.Forms.Label();
+            this.lblTitulo = new System.Windows.Forms.Label();
+            this.PanelBotones = new System.Windows.Forms.Panel();
+            this.pnlTitulo = new System.Windows.Forms.Panel();
+            this.chkPermisoBackup = new System.Windows.Forms.CheckBox();
+            this.btnVolver = new System.Windows.Forms.Button();
+            this.pnlBotones = new System.Windows.Forms.Panel();
+            this.pnlGrilla = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.pnlTitulo.SuspendLayout();
             this.pnlBotones.SuspendLayout();
@@ -59,10 +60,10 @@
             this.btnEstado.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnEstado.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btnEstado.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnEstado.Location = new System.Drawing.Point(1090, 10);
+            this.btnEstado.Location = new System.Drawing.Point(960, 10);
             this.btnEstado.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEstado.Name = "btnEstado";
-            this.btnEstado.Size = new System.Drawing.Size(150, 50);
+            this.btnEstado.Size = new System.Drawing.Size(140, 40);
             this.btnEstado.TabIndex = 32;
             this.btnEstado.Text = "Desactivar";
             this.btnEstado.UseVisualStyleBackColor = false;
@@ -73,10 +74,10 @@
             this.btnModificarUsuario.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnModificarUsuario.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btnModificarUsuario.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnModificarUsuario.Location = new System.Drawing.Point(565, 10);
+            this.btnModificarUsuario.Location = new System.Drawing.Point(500, 8);
             this.btnModificarUsuario.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnModificarUsuario.Name = "btnModificarUsuario";
-            this.btnModificarUsuario.Size = new System.Drawing.Size(150, 50);
+            this.btnModificarUsuario.Size = new System.Drawing.Size(140, 40);
             this.btnModificarUsuario.TabIndex = 31;
             this.btnModificarUsuario.Text = "Modificar";
             this.btnModificarUsuario.UseVisualStyleBackColor = false;
@@ -90,7 +91,7 @@
             this.btnNuevoUsuario.Location = new System.Drawing.Point(40, 10);
             this.btnNuevoUsuario.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnNuevoUsuario.Name = "btnNuevoUsuario";
-            this.btnNuevoUsuario.Size = new System.Drawing.Size(150, 50);
+            this.btnNuevoUsuario.Size = new System.Drawing.Size(140, 40);
             this.btnNuevoUsuario.TabIndex = 30;
             this.btnNuevoUsuario.Text = "Nuevo Usuario";
             this.btnNuevoUsuario.UseVisualStyleBackColor = false;
@@ -127,105 +128,10 @@
             this.dgvUsuarios.RowHeadersWidth = 62;
             this.dgvUsuarios.RowTemplate.Height = 28;
             this.dgvUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsuarios.Size = new System.Drawing.Size(1200, 430);
+            this.dgvUsuarios.Size = new System.Drawing.Size(1060, 306);
             this.dgvUsuarios.TabIndex = 29;
             this.dgvUsuarios.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DgvUsuarios_CellFormatting);
             this.dgvUsuarios.SelectionChanged += new System.EventHandler(this.DgvUsuarios_SelectionChanged);
-            // 
-            // txtBuscar
-            // 
-            this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.txtBuscar.Location = new System.Drawing.Point(89, 54);
-            this.txtBuscar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(217, 25);
-            this.txtBuscar.TabIndex = 28;
-            this.txtBuscar.TextChanged += new System.EventHandler(this.TxtBuscar_TextChanged);
-            // 
-            // lblBuscar
-            // 
-            this.lblBuscar.AutoSize = true;
-            this.lblBuscar.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.lblBuscar.ForeColor = System.Drawing.Color.Black;
-            this.lblBuscar.Location = new System.Drawing.Point(36, 56);
-            this.lblBuscar.Name = "lblBuscar";
-            this.lblBuscar.Size = new System.Drawing.Size(49, 19);
-            this.lblBuscar.TabIndex = 27;
-            this.lblBuscar.Text = "Buscar";
-            // 
-            // lblTitulo
-            // 
-            this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblTitulo.AutoSize = true;
-            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblTitulo.ForeColor = System.Drawing.Color.Black;
-            this.lblTitulo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblTitulo.Location = new System.Drawing.Point(533, 15);
-            this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(242, 32);
-            this.lblTitulo.TabIndex = 26;
-            this.lblTitulo.Text = "Gestión de Usuarios";
-            this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // PanelBotones
-            // 
-            this.PanelBotones.BackColor = System.Drawing.Color.Transparent;
-            this.PanelBotones.ForeColor = System.Drawing.Color.Transparent;
-            this.PanelBotones.Location = new System.Drawing.Point(32, 441);
-            this.PanelBotones.Name = "PanelBotones";
-            this.PanelBotones.Size = new System.Drawing.Size(0, 0);
-            this.PanelBotones.TabIndex = 33;
-            // 
-            // pnlTitulo
-            // 
-            this.pnlTitulo.Controls.Add(this.btnVolver);
-            this.pnlTitulo.Controls.Add(this.lblBuscar);
-            this.pnlTitulo.Controls.Add(this.lblTitulo);
-            this.pnlTitulo.Controls.Add(this.txtBuscar);
-            this.pnlTitulo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlTitulo.Location = new System.Drawing.Point(0, 0);
-            this.pnlTitulo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pnlTitulo.Name = "pnlTitulo";
-            this.pnlTitulo.Padding = new System.Windows.Forms.Padding(36, 4, 36, 4);
-            this.pnlTitulo.Size = new System.Drawing.Size(1280, 80);
-            this.pnlTitulo.TabIndex = 35;
-            // 
-            // btnVolver
-            // 
-            this.btnVolver.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnVolver.Location = new System.Drawing.Point(36, 12);
-            this.btnVolver.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(67, 32);
-            this.btnVolver.TabIndex = 29;
-            this.btnVolver.Text = "Volver";
-            this.btnVolver.UseVisualStyleBackColor = true;
-            this.btnVolver.Click += new System.EventHandler(this.BtnVolver_Click);
-            // 
-            // pnlBotones
-            // 
-            this.pnlBotones.Controls.Add(this.btnModificarUsuario);
-            this.pnlBotones.Controls.Add(this.btnNuevoUsuario);
-            this.pnlBotones.Controls.Add(this.btnEstado);
-            this.pnlBotones.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBotones.Location = new System.Drawing.Point(0, 540);
-            this.pnlBotones.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlBotones.Name = "pnlBotones";
-            this.pnlBotones.Padding = new System.Windows.Forms.Padding(40, 10, 40, 20);
-            this.pnlBotones.Size = new System.Drawing.Size(1280, 80);
-            this.pnlBotones.TabIndex = 36;
-            // 
-            // pnlGrilla
-            // 
-            this.pnlGrilla.Controls.Add(this.dgvUsuarios);
-            this.pnlGrilla.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlGrilla.Location = new System.Drawing.Point(0, 80);
-            this.pnlGrilla.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlGrilla.Name = "pnlGrilla";
-            this.pnlGrilla.Padding = new System.Windows.Forms.Padding(40, 10, 40, 20);
-            this.pnlGrilla.Size = new System.Drawing.Size(1280, 460);
-            this.pnlGrilla.TabIndex = 37;
             // 
             // colId
             // 
@@ -284,12 +190,121 @@
             this.colFecha.Name = "colFecha";
             this.colFecha.ReadOnly = true;
             // 
+            // txtBuscar
+            // 
+            this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.txtBuscar.Location = new System.Drawing.Point(89, 54);
+            this.txtBuscar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(217, 25);
+            this.txtBuscar.TabIndex = 28;
+            this.txtBuscar.TextChanged += new System.EventHandler(this.TxtBuscar_TextChanged);
+            // 
+            // lblBuscar
+            // 
+            this.lblBuscar.AutoSize = true;
+            this.lblBuscar.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.lblBuscar.ForeColor = System.Drawing.Color.Black;
+            this.lblBuscar.Location = new System.Drawing.Point(36, 56);
+            this.lblBuscar.Name = "lblBuscar";
+            this.lblBuscar.Size = new System.Drawing.Size(49, 19);
+            this.lblBuscar.TabIndex = 27;
+            this.lblBuscar.Text = "Buscar";
+            // 
+            // lblTitulo
+            // 
+            this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblTitulo.AutoSize = true;
+            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.lblTitulo.ForeColor = System.Drawing.Color.Black;
+            this.lblTitulo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblTitulo.Location = new System.Drawing.Point(463, 15);
+            this.lblTitulo.Name = "lblTitulo";
+            this.lblTitulo.Size = new System.Drawing.Size(242, 32);
+            this.lblTitulo.TabIndex = 26;
+            this.lblTitulo.Text = "Gestión de Usuarios";
+            this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // PanelBotones
+            // 
+            this.PanelBotones.BackColor = System.Drawing.Color.Transparent;
+            this.PanelBotones.ForeColor = System.Drawing.Color.Transparent;
+            this.PanelBotones.Location = new System.Drawing.Point(32, 441);
+            this.PanelBotones.Name = "PanelBotones";
+            this.PanelBotones.Size = new System.Drawing.Size(0, 0);
+            this.PanelBotones.TabIndex = 33;
+            // 
+            // pnlTitulo
+            // 
+            this.pnlTitulo.Controls.Add(this.chkPermisoBackup);
+            this.pnlTitulo.Controls.Add(this.btnVolver);
+            this.pnlTitulo.Controls.Add(this.lblBuscar);
+            this.pnlTitulo.Controls.Add(this.lblTitulo);
+            this.pnlTitulo.Controls.Add(this.txtBuscar);
+            this.pnlTitulo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlTitulo.Location = new System.Drawing.Point(0, 0);
+            this.pnlTitulo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlTitulo.Name = "pnlTitulo";
+            this.pnlTitulo.Padding = new System.Windows.Forms.Padding(36, 4, 36, 4);
+            this.pnlTitulo.Size = new System.Drawing.Size(1140, 80);
+            this.pnlTitulo.TabIndex = 35;
+            // 
+            // chkPermisoBackup
+            // 
+            this.chkPermisoBackup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkPermisoBackup.AutoSize = true;
+            this.chkPermisoBackup.Location = new System.Drawing.Point(779, 54);
+            this.chkPermisoBackup.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.chkPermisoBackup.Name = "chkPermisoBackup";
+            this.chkPermisoBackup.Size = new System.Drawing.Size(270, 20);
+            this.chkPermisoBackup.TabIndex = 30;
+            this.chkPermisoBackup.Text = "Permitir a los Gerentes generar Backups";
+            this.chkPermisoBackup.UseVisualStyleBackColor = true;
+            this.chkPermisoBackup.CheckedChanged += new System.EventHandler(this.ChkPermisoBackup_CheckedChanged);
+            // 
+            // btnVolver
+            // 
+            this.btnVolver.Cursor = System.Windows.Forms.Cursors.Default;
+            this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnVolver.Location = new System.Drawing.Point(36, 12);
+            this.btnVolver.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(67, 32);
+            this.btnVolver.TabIndex = 29;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.BtnVolver_Click);
+            // 
+            // pnlBotones
+            // 
+            this.pnlBotones.Controls.Add(this.btnModificarUsuario);
+            this.pnlBotones.Controls.Add(this.btnNuevoUsuario);
+            this.pnlBotones.Controls.Add(this.btnEstado);
+            this.pnlBotones.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlBotones.Location = new System.Drawing.Point(0, 416);
+            this.pnlBotones.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlBotones.Name = "pnlBotones";
+            this.pnlBotones.Padding = new System.Windows.Forms.Padding(40, 10, 40, 20);
+            this.pnlBotones.Size = new System.Drawing.Size(1140, 80);
+            this.pnlBotones.TabIndex = 36;
+            // 
+            // pnlGrilla
+            // 
+            this.pnlGrilla.Controls.Add(this.dgvUsuarios);
+            this.pnlGrilla.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlGrilla.Location = new System.Drawing.Point(0, 80);
+            this.pnlGrilla.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlGrilla.Name = "pnlGrilla";
+            this.pnlGrilla.Padding = new System.Windows.Forms.Padding(40, 10, 40, 20);
+            this.pnlGrilla.Size = new System.Drawing.Size(1140, 336);
+            this.pnlGrilla.TabIndex = 37;
+            // 
             // FormUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Menu;
-            this.ClientSize = new System.Drawing.Size(1280, 620);
+            this.ClientSize = new System.Drawing.Size(1140, 496);
             this.Controls.Add(this.pnlGrilla);
             this.Controls.Add(this.pnlBotones);
             this.Controls.Add(this.PanelBotones);
@@ -321,6 +336,7 @@
         private System.Windows.Forms.Panel pnlBotones;
         private System.Windows.Forms.Panel pnlGrilla;
         private System.Windows.Forms.Button btnVolver;
+        private System.Windows.Forms.CheckBox chkPermisoBackup;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNombre;
         private System.Windows.Forms.DataGridViewTextBoxColumn colApellido;

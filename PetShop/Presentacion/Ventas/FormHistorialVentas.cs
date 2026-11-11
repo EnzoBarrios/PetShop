@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
+using PetShop.Entidades;
 using PetShop.Negocio;
 
 namespace PetShop.Presentacion
@@ -16,36 +18,60 @@ namespace PetShop.Presentacion
 
         private void FormHistorialVentas_Load(object sender, EventArgs e)
         {
-            // Ajustar el rango de fechas por defecto (desde las 00:00:00 del primer día del mes hasta las 23:59:59 de hoy)
+            // Ajustar el rango de fechas por defecto (inicio de mes hasta final del día de hoy)
             dtpDesde.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
             dtpHasta.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
 
+            CargarFiltroMetodosPago();
             ConfigurarGrilla();
             CargarHistorial();
         }
 
-        private void ConfigurarGrilla()
+        private void CargarFiltroMetodosPago()
         {
-            // Evitar duplicación automática de columnas
-            dgvVentas.AutoGenerateColumns = false;
+            try
+            {
+                List<MetodoPago> listaMetodos = _cnVenta.ListarMetodosPago();
 
-            dgvVentas.Columns["colNroTicket"].DataPropertyName = "NroTicket";
-            dgvVentas.Columns["colFecha"].DataPropertyName = "Fecha";
-            dgvVentas.Columns["colHora"].DataPropertyName = "Hora";
-            dgvVentas.Columns["colMontoTotal"].DataPropertyName = "MontoTotal";
-            dgvVentas.Columns["colEfectivo"].DataPropertyName = "Efectivo";
-            dgvVentas.Columns["colTransferencia"].DataPropertyName = "Transferencia";
-            dgvVentas.Columns["colQR"].DataPropertyName = "QR";
+                // Insertar opción por defecto para consultar todas las ventas
+                listaMetodos.Insert(0, new MetodoPago
+                {
+                    IdMetodoPago = 0,
+                    NombreMetodo = "-- Todos los métodos --"
+                });
+
+                cbxMetodoPago.DataSource = listaMetodos;
+                cbxMetodoPago.DisplayMember = nameof(MetodoPago.NombreMetodo);
+                cbxMetodoPago.ValueMember = nameof(MetodoPago.IdMetodoPago);
+                cbxMetodoPago.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar el filtro de métodos de pago: {ex.Message}", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
-        private void BtnBuscar_Click(object sender, EventArgs e)
+        private void ConfigurarGrilla()
+        {
+            dgvVentas.AutoGenerateColumns = false;
+
+            if (dgvVentas.Columns.Contains("colNroTicket")) dgvVentas.Columns["colNroTicket"].DataPropertyName = "NroTicket";
+            if (dgvVentas.Columns.Contains("colFecha")) dgvVentas.Columns["colFecha"].DataPropertyName = "Fecha";
+            if (dgvVentas.Columns.Contains("colHora")) dgvVentas.Columns["colHora"].DataPropertyName = "Hora";
+            if (dgvVentas.Columns.Contains("colMontoTotal")) dgvVentas.Columns["colMontoTotal"].DataPropertyName = "MontoTotal";
+            if (dgvVentas.Columns.Contains("colEfectivo")) dgvVentas.Columns["colEfectivo"].DataPropertyName = "Efectivo";
+            if (dgvVentas.Columns.Contains("colTransferencia")) dgvVentas.Columns["colTransferencia"].DataPropertyName = "Transferencia";
+            if (dgvVentas.Columns.Contains("colQR")) dgvVentas.Columns["colQR"].DataPropertyName = "QR";
+        }
+
+        // Asignar este evento tanto a BtnBuscar como al botón Aplicar en el diseñador
+        private void BtnAplicar_Click(object sender, EventArgs e)
         {
             CargarHistorial();
         }
 
         private void CargarHistorial()
         {
-            // Validar que la fecha 'Desde' no sea mayor a la fecha 'Hasta'
             if (dtpDesde.Value > dtpHasta.Value)
             {
                 MessageBox.Show("La fecha de inicio ('Desde') no puede ser posterior a la fecha final ('Hasta').",
@@ -57,17 +83,17 @@ namespace PetShop.Presentacion
             {
                 this.Cursor = Cursors.WaitCursor;
 
-                // Ajustar 'dtpHasta' al final del día seleccionado (23:59:59)
                 DateTime fechaDesde = dtpDesde.Value.Date;
                 DateTime fechaHasta = dtpHasta.Value.Date.AddDays(1).AddSeconds(-1);
 
-                DataTable dt = _cnVenta.ObtenerHistorialVentas(fechaDesde, fechaHasta);
+                // Tomar el ID seleccionado del ComboBox cbxMetodoPago (0 = Todos)
+                int idMetodoSeleccionado = Convert.ToInt32(cbxMetodoPago.SelectedValue ?? 0);
+
+                DataTable dt = _cnVenta.ObtenerHistorialVentas(fechaDesde, fechaHasta, idMetodoSeleccionado);
                 dgvVentas.DataSource = dt;
 
-                // Mensaje informativo si no hay registros en la fecha elegida
                 if (dt == null || dt.Rows.Count == 0)
                 {
-                    // Limpia la grilla si no hay resultados
                     dgvVentas.DataSource = null;
                 }
             }

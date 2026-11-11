@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using PetShop.Entidades;
 using PetShop.Negocio;
@@ -12,11 +13,12 @@ namespace PetShop.Presentacion.Menu
     public partial class FormMenuPrincipal : Form
     {
         private Usuario _usuarioActual; // Variable para almacenar el usuario actual
-        
-        private Form _formularioActivo;// Variable para rastrear el formulario secundario actualmente visible
+
+        private Form _formularioActivo; // Variable para rastrear el formulario secundario actualmente visible
 
         private readonly CN_Usuario _cnUsuario;
-
+        private readonly CN_Backup _cnBackup = new CN_Backup();
+        private readonly CN_Configuracion _cnConfiguracion = new CN_Configuracion(); 
         public FormMenuPrincipal(Usuario usuario)
         {
             InitializeComponent();
@@ -55,8 +57,8 @@ namespace PetShop.Presentacion.Menu
                 return;
             }
 
-            try 
-            { 
+            try
+            {
                 // Recarga los datos frescos de la BD a través de la capa de negocio
                 Usuario usuarioActualizado = _cnUsuario.ObtenerPorId(_usuarioActual.IdUsuario);
 
@@ -98,12 +100,19 @@ namespace PetShop.Presentacion.Menu
             VentaToolStripMenuItem.Enabled = false;
             ReportesToolStripMenuItem.Enabled = false;
 
+            // Apagado preventivo del Backup (oculto por defecto) 
+            BackupToolStripMenuItem.Visible = false;
+            BackupToolStripMenuItem.Enabled = false;
+
             // 2. Apagado preventivo de accesos directos
             btnRealizarVenta.Enabled = false;
             btnHistorialVentas.Enabled = false;
             btnReportes.Enabled = false;
 
-            // 3. Activación según perfil
+            // 3. Consultamos el permiso guardado en la tabla Configuracion de SQL Server 
+            bool permisoGerenteBackup = _cnConfiguracion.ObtenerPermisoBackupGerente();
+
+            // 4. Activación según perfil
             switch (rol)
             {
                 case CN_Rol.ROL_ADMINISTRADOR:
@@ -116,6 +125,10 @@ namespace PetShop.Presentacion.Menu
                     btnReportes.Enabled = true;
 
                     NuevaVentaToolStripMenuItem.Enabled = false;
+
+                    // Administrador: Siempre lo ve y siempre puede ejecutarlo 
+                    BackupToolStripMenuItem.Visible = true;
+                    BackupToolStripMenuItem.Enabled = true;
                     break;
 
                 case CN_Rol.ROL_GERENTE:
@@ -128,6 +141,10 @@ namespace PetShop.Presentacion.Menu
                     btnRealizarVenta.Enabled = true;
                     btnHistorialVentas.Enabled = true;
                     btnReportes.Enabled = true;
+
+                    // Gerente: Lo ve siempre, pero solo se habilita si la BD devuelve true
+                    BackupToolStripMenuItem.Visible = true;
+                    BackupToolStripMenuItem.Enabled = permisoGerenteBackup;
                     break;
 
                 case CN_Rol.ROL_VENDEDOR:
@@ -137,10 +154,12 @@ namespace PetShop.Presentacion.Menu
 
                     btnRealizarVenta.Enabled = true;
                     btnHistorialVentas.Enabled = true;
+
+                    BackupToolStripMenuItem.Visible = false;
                     break;
 
                 default:
-                    // Por seguridad, si el rol no coincide se oculta todo lo crítico
+                    BackupToolStripMenuItem.Visible = false;
                     break;
             }
         }
@@ -227,7 +246,7 @@ namespace PetShop.Presentacion.Menu
                 contenedor.ResumeLayout(true);
             }
         }
-        
+
         private void FormularioHijo_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (sender is Form formCerrado)
@@ -354,6 +373,71 @@ namespace PetShop.Presentacion.Menu
             if (respuesta == DialogResult.Yes)
             {
                 Application.Exit();
+            }
+        }
+
+        private async void BackupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // 1. Definimos una ruta segura y universal en la raíz del disco C
+            string rutaSegura = @"C:\PetShop_Backups";
+
+            // 2. Si la carpeta no existe, la creamos automáticamente
+            if (!System.IO.Directory.Exists(rutaSegura))
+            {
+                System.IO.Directory.CreateDirectory(rutaSegura);
+            }
+
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Filter = "Backup SQL Server (*.bak)|*.bak";
+                saveFileDialog.Title = "Guardar Copia de Seguridad de PetShop";
+
+                // 3. Obligamos a la ventana a abrirse en nuestra carpeta dedicada
+                saveFileDialog.InitialDirectory = rutaSegura;
+
+                saveFileDialog.FileName = $"PetShop_Backup_{DateTime.Now:yyyyMMdd_HHmmss}.bak";
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        this.Cursor = Cursors.WaitCursor;
+                        BackupToolStripMenuItem.Enabled = false;
+
+                        string rutaSeleccionada = saveFileDialog.FileName;
+                        bool resultado = false;
+                        string mensaje = string.Empty;
+
+                        // Tarea asíncrona para no congelar la pantalla
+                        await Task.Run(() =>
+                        {
+                            resultado = _cnBackup.GenerarCopiaSeguridad(rutaSeleccionada, out mensaje);
+                        });
+
+                        this.Cursor = Cursors.Default;
+
+                        // Revalida los permisos tras terminar
+                        ConfigurarPermisosPorRol();
+
+                        if (resultado)
+                        {
+                            MessageBox.Show($"{mensaje}\n\nUbicación:\n{rutaSeleccionada}",
+                                "Backup Éxitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show(mensaje, "Error de Backup",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        this.Cursor = Cursors.Default;
+                        ConfigurarPermisosPorRol();
+                        MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}",
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
         }
     }

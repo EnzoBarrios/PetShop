@@ -133,8 +133,7 @@
             // 
             // lblFechaCreacion
             // 
-            this.lblFechaCreacion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblFechaCreacion.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblFechaCreacion.AutoSize = true;
             this.lblFechaCreacion.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFechaCreacion.ForeColor = System.Drawing.Color.Black;
@@ -494,6 +493,7 @@
             this.Font = new System.Drawing.Font("Symbol", 8.25F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(1080, 680);
             this.Name = "FormModificarUsuario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.FormModificarUsuario_Load);

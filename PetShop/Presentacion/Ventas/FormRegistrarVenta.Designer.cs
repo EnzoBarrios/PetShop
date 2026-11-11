@@ -57,6 +57,12 @@
             this.lblCodProducto = new System.Windows.Forms.Label();
             this.btnVolver = new System.Windows.Forms.Button();
             this.dgvCarrito = new System.Windows.Forms.DataGridView();
+            this.colProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCódigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSubtotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAccion = new System.Windows.Forms.DataGridViewButtonColumn();
             this.cbxMetodoPago = new System.Windows.Forms.ComboBox();
             this.lblMetodoPago = new System.Windows.Forms.Label();
             this.lblTotalFinal = new System.Windows.Forms.Label();
@@ -80,12 +86,6 @@
             this.panelInfo = new System.Windows.Forms.Panel();
             this.pnlCobro = new System.Windows.Forms.Panel();
             this.pnlGrilla = new System.Windows.Forms.Panel();
-            this.colProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCódigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSubtotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAccion = new System.Windows.Forms.DataGridViewButtonColumn();
             this.gbInformacionVenta.SuspendLayout();
             this.gbInformacionProducto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numCantidad)).BeginInit();
@@ -218,9 +218,8 @@
             // 
             // btnBuscarProducto
             // 
-            this.btnBuscarProducto.BackColor = System.Drawing.Color.LightCyan;
-            this.btnBuscarProducto.FlatAppearance.BorderColor = System.Drawing.Color.MidnightBlue;
-            this.btnBuscarProducto.FlatAppearance.BorderSize = 2;
+            this.btnBuscarProducto.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnBuscarProducto.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
             this.btnBuscarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBuscarProducto.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBuscarProducto.ForeColor = System.Drawing.SystemColors.InactiveCaption;
@@ -295,6 +294,7 @@
             // 
             this.txtNombreProducto.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNombreProducto.Location = new System.Drawing.Point(18, 45);
+            this.txtNombreProducto.MaxLength = 50;
             this.txtNombreProducto.Name = "txtNombreProducto";
             this.txtNombreProducto.Size = new System.Drawing.Size(200, 25);
             this.txtNombreProducto.TabIndex = 12;
@@ -412,6 +412,63 @@
             this.dgvCarrito.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvCarrito_CellMouseEnter);
             this.dgvCarrito.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvCarrito_CellMouseLeave);
             // 
+            // colProducto
+            // 
+            this.colProducto.DataPropertyName = "Producto";
+            this.colProducto.HeaderText = "Producto";
+            this.colProducto.MinimumWidth = 150;
+            this.colProducto.Name = "colProducto";
+            this.colProducto.ReadOnly = true;
+            this.colProducto.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // colCódigo
+            // 
+            this.colCódigo.DataPropertyName = "Codigo";
+            this.colCódigo.HeaderText = "Código";
+            this.colCódigo.MinimumWidth = 120;
+            this.colCódigo.Name = "colCódigo";
+            this.colCódigo.ReadOnly = true;
+            this.colCódigo.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // colPrecio
+            // 
+            this.colPrecio.DataPropertyName = "PrecioUnitario";
+            this.colPrecio.HeaderText = "Precio U.";
+            this.colPrecio.MinimumWidth = 120;
+            this.colPrecio.Name = "colPrecio";
+            this.colPrecio.ReadOnly = true;
+            this.colPrecio.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // colCantidad
+            // 
+            this.colCantidad.DataPropertyName = "Cantidad";
+            this.colCantidad.HeaderText = "Cantidad";
+            this.colCantidad.MinimumWidth = 100;
+            this.colCantidad.Name = "colCantidad";
+            this.colCantidad.ReadOnly = true;
+            this.colCantidad.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // colSubtotal
+            // 
+            this.colSubtotal.DataPropertyName = "Subtotal";
+            this.colSubtotal.HeaderText = "Subtotal";
+            this.colSubtotal.MinimumWidth = 100;
+            this.colSubtotal.Name = "colSubtotal";
+            this.colSubtotal.ReadOnly = true;
+            this.colSubtotal.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // colAccion
+            // 
+            this.colAccion.DataPropertyName = "Accion";
+            this.colAccion.HeaderText = "Acción";
+            this.colAccion.MinimumWidth = 120;
+            this.colAccion.Name = "colAccion";
+            this.colAccion.ReadOnly = true;
+            this.colAccion.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.colAccion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colAccion.Text = "Quitar";
+            this.colAccion.UseColumnTextForButtonValue = true;
+            // 
             // cbxMetodoPago
             // 
             this.cbxMetodoPago.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -460,6 +517,7 @@
             // 
             this.txtMontoAbonado.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMontoAbonado.Location = new System.Drawing.Point(235, 56);
+            this.txtMontoAbonado.MaxLength = 14;
             this.txtMontoAbonado.Name = "txtMontoAbonado";
             this.txtMontoAbonado.Size = new System.Drawing.Size(178, 25);
             this.txtMontoAbonado.TabIndex = 14;
@@ -538,6 +596,7 @@
             // 
             this.txtDescuento.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDescuento.Location = new System.Drawing.Point(188, 206);
+            this.txtDescuento.MaxLength = 14;
             this.txtDescuento.Name = "txtDescuento";
             this.txtDescuento.Size = new System.Drawing.Size(86, 25);
             this.txtDescuento.TabIndex = 23;
@@ -592,6 +651,7 @@
             // 
             this.txtMontoAbonado2.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMontoAbonado2.Location = new System.Drawing.Point(236, 158);
+            this.txtMontoAbonado2.MaxLength = 14;
             this.txtMontoAbonado2.Name = "txtMontoAbonado2";
             this.txtMontoAbonado2.Size = new System.Drawing.Size(178, 25);
             this.txtMontoAbonado2.TabIndex = 30;
@@ -713,63 +773,6 @@
             this.pnlGrilla.Padding = new System.Windows.Forms.Padding(40, 5, 40, 5);
             this.pnlGrilla.Size = new System.Drawing.Size(1280, 198);
             this.pnlGrilla.TabIndex = 11;
-            // 
-            // colProducto
-            // 
-            this.colProducto.DataPropertyName = "Producto";
-            this.colProducto.HeaderText = "Producto";
-            this.colProducto.MinimumWidth = 150;
-            this.colProducto.Name = "colProducto";
-            this.colProducto.ReadOnly = true;
-            this.colProducto.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // colCódigo
-            // 
-            this.colCódigo.DataPropertyName = "Codigo";
-            this.colCódigo.HeaderText = "Código";
-            this.colCódigo.MinimumWidth = 120;
-            this.colCódigo.Name = "colCódigo";
-            this.colCódigo.ReadOnly = true;
-            this.colCódigo.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // colPrecio
-            // 
-            this.colPrecio.DataPropertyName = "PrecioUnitario";
-            this.colPrecio.HeaderText = "Precio U.";
-            this.colPrecio.MinimumWidth = 120;
-            this.colPrecio.Name = "colPrecio";
-            this.colPrecio.ReadOnly = true;
-            this.colPrecio.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // colCantidad
-            // 
-            this.colCantidad.DataPropertyName = "Cantidad";
-            this.colCantidad.HeaderText = "Cantidad";
-            this.colCantidad.MinimumWidth = 100;
-            this.colCantidad.Name = "colCantidad";
-            this.colCantidad.ReadOnly = true;
-            this.colCantidad.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // colSubtotal
-            // 
-            this.colSubtotal.DataPropertyName = "Subtotal";
-            this.colSubtotal.HeaderText = "Subtotal";
-            this.colSubtotal.MinimumWidth = 100;
-            this.colSubtotal.Name = "colSubtotal";
-            this.colSubtotal.ReadOnly = true;
-            this.colSubtotal.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // colAccion
-            // 
-            this.colAccion.DataPropertyName = "Accion";
-            this.colAccion.HeaderText = "Acción";
-            this.colAccion.MinimumWidth = 120;
-            this.colAccion.Name = "colAccion";
-            this.colAccion.ReadOnly = true;
-            this.colAccion.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colAccion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colAccion.Text = "Quitar";
-            this.colAccion.UseColumnTextForButtonValue = true;
             // 
             // FormRegistrarVenta
             // 

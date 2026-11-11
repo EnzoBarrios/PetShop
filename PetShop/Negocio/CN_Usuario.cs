@@ -37,11 +37,18 @@ namespace PetShop.Negocio
 
                 List<Usuario> listaUsuarios = _cdUsuario.Listar(0, textoBusqueda);
 
+                // Si el rol es Administrador, filtrar a lo usuarios con rol Gerente y Vendedor
                 if (rol.Equals(CN_Rol.ROL_ADMINISTRADOR, StringComparison.OrdinalIgnoreCase))
                 {
-                    return listaUsuarios;
+                    return listaUsuarios
+                        .Where(u => u.Rol != null &&
+                                    u.Rol.NombreRol.Trim().Equals(CN_Rol.ROL_ADMINISTRADOR,
+                                    StringComparison.OrdinalIgnoreCase) || 
+                                    u.Rol.NombreRol.Trim().Equals(CN_Rol.ROL_GERENTE, StringComparison.OrdinalIgnoreCase))
+                        .ToList();
                 }
 
+                // Si el rol es Gerente, filtrar solo los usuarios con rol Vendedor
                 if (rol.Equals(CN_Rol.ROL_GERENTE, StringComparison.OrdinalIgnoreCase))
                 {
                     return listaUsuarios
@@ -242,8 +249,6 @@ namespace PetShop.Negocio
                 mensaje = "Error al actualizar el usuario: " + ex.Message;
                 return false;
             }
-
-
         }
 
         // Método para cambiar el estado de un usuario (activar/desactivar) con validación para evitar que un usuario se desactive a sí mismo

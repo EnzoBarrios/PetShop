@@ -181,6 +181,8 @@ namespace PetShop.Presentacion.Usuarios
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
+            Usuario usuarioActual = _cnUsuario.ObtenerPorId(_idUsuarioActual);
+
             if (!ValidarFormulario())
             {
                 MessageBox.Show("Por favor, verifique los campos marcados con error antes de continuar.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -208,6 +210,7 @@ namespace PetShop.Presentacion.Usuarios
                 Dni = string.IsNullOrWhiteSpace(txtDni.Text) ? null : txtDni.Text.Trim(),
                 Correo = string.IsNullOrWhiteSpace(txtCorreo.Text) ? null : txtCorreo.Text.Trim(),
                 Telefono = string.IsNullOrWhiteSpace(txtTelefono.Text) ? null : txtTelefono.Text.Trim(),
+                Rol = usuarioActual.Rol
             };
 
             bool exito = _cnUsuario.ModificarUsuario(usuarioActualizado, actualizarClave, claveNueva, out string mensaje);

@@ -39,8 +39,7 @@ namespace PetShop.Presentacion.Autenticacion
             this.AcceptButton = btnIngresar;
             this.CancelButton = btnCancelar;
         }
-        
-        // 
+
         private bool ValidarCamposLogin()
         {
             _ep.Clear();

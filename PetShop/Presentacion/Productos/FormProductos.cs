@@ -201,12 +201,12 @@ namespace PetShop.Presentacion
             if (_filtrarSoloStockMinimo)
             {
                 btnStock.Text = "Ver Todos";
-                btnStock.BackColor = Color.LightBlue; // Resalta el botón indicando que el filtro está activo
+                
             }
             else
             {
                 btnStock.Text = "Stock Crítico";
-                btnStock.BackColor = SystemColors.Control; // Vuelve al color original
+                
             }
 
             await CargarProductosAsync();

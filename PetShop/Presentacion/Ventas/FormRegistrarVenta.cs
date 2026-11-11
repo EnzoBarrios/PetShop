@@ -276,10 +276,17 @@ namespace PetShop.Presentacion.Ventas
 
         private void DgvCarrito_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgvCarrito.Columns[e.ColumnIndex].Name == "colAccion")
+            try
             {
-                _listaDetalle.RemoveAt(e.RowIndex);
-                RefrescarCarrito();
+                if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgvCarrito.Columns[e.ColumnIndex].Name == "colAccion")
+                {
+                    _listaDetalle.RemoveAt(e.RowIndex);
+                    RefrescarCarrito();
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show($"No hay productos en el carrito.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

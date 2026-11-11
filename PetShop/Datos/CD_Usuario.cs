@@ -257,7 +257,7 @@ namespace PetShop.Datos
             string query = $@"SELECT COUNT(1) 
                               FROM Usuario 
                               WHERE LOWER({nombreCampo}) = LOWER(@ValorCampo) 
-                              AND (id_usuario <> @IdActual OR @IdActual = 0)";
+                              AND (@IdActual = 0 OR id_usuario <> @IdActual)";
 
             using (SqlConnection conexion = ConexionBd.CrearConexion())
             
@@ -276,7 +276,7 @@ namespace PetShop.Datos
         {
             cmd.Parameters.Add("@Nombre", SqlDbType.VarChar, 50).Value = usuario.Nombre.Trim();
             cmd.Parameters.Add("@Apellido", SqlDbType.VarChar, 50).Value = usuario.Apellido.Trim();
-            cmd.Parameters.Add("@Usuario", SqlDbType.VarChar, 50).Value = usuario.NombreUsuario.Trim();
+            cmd.Parameters.Add("@NombreUsuario", SqlDbType.VarChar, 50).Value = usuario.NombreUsuario.Trim();
             
             cmd.Parameters.Add("@Dni", SqlDbType.VarChar, 20).Value =
                 string.IsNullOrWhiteSpace(usuario.Dni) ? (object)DBNull.Value : usuario.Dni.Trim();

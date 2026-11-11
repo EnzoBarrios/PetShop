@@ -266,9 +266,10 @@
             this.txtRol.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txtRol.Location = new System.Drawing.Point(685, 64);
             this.txtRol.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtRol.Multiline = true;
             this.txtRol.Name = "txtRol";
             this.txtRol.ReadOnly = true;
-            this.txtRol.Size = new System.Drawing.Size(280, 27);
+            this.txtRol.Size = new System.Drawing.Size(280, 22);
             this.txtRol.TabIndex = 105;
             this.txtRol.TabStop = false;
             // 

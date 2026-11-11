@@ -47,6 +47,7 @@ namespace PetShop.Presentacion.Menu
             this.MiPerfilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CerrarSesiónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SalirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BackupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Titulo = new System.Windows.Forms.ImageList(this.components);
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -60,7 +61,6 @@ namespace PetShop.Presentacion.Menu
             this.lblHora = new System.Windows.Forms.Label();
             this.lblFecha = new System.Windows.Forms.Label();
             this.msTitulo = new System.Windows.Forms.MenuStrip();
-            this.lblPetShop = new System.Windows.Forms.Label();
             this.listaAccesoRapido = new System.Windows.Forms.ImageList(this.components);
             this.lblUsuarioBienvenida = new System.Windows.Forms.Label();
             this.contenedor = new System.Windows.Forms.Panel();
@@ -70,6 +70,7 @@ namespace PetShop.Presentacion.Menu
             this.btnReportes = new System.Windows.Forms.Button();
             this.tlbEstructuraPrincipal = new System.Windows.Forms.TableLayoutPanel();
             this.pnlHeader = new System.Windows.Forms.Panel();
+            this.lblPetShop = new System.Windows.Forms.Label();
             this.msPrincipal.SuspendLayout();
             this.gbSesionIniciada.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -92,10 +93,10 @@ namespace PetShop.Presentacion.Menu
             this.CatalogoToolStripMenuItem,
             this.VentaToolStripMenuItem,
             this.ReportesToolStripMenuItem,
-            this.SistemaToolStripMenuItem});
+            this.SistemaToolStripMenuItem,
+            this.BackupToolStripMenuItem});
             this.msPrincipal.Location = new System.Drawing.Point(0, 60);
             this.msPrincipal.Name = "msPrincipal";
-            this.msPrincipal.Padding = new System.Windows.Forms.Padding(6, 2, 0, 2);
             this.msPrincipal.Size = new System.Drawing.Size(1710, 80);
             this.msPrincipal.TabIndex = 1;
             this.msPrincipal.Text = "PetShop";
@@ -106,7 +107,7 @@ namespace PetShop.Presentacion.Menu
             this.UsuariosToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UsuariosToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("UsuariosToolStripMenuItem.Image")));
             this.UsuariosToolStripMenuItem.Name = "UsuariosToolStripMenuItem";
-            this.UsuariosToolStripMenuItem.Size = new System.Drawing.Size(70, 70);
+            this.UsuariosToolStripMenuItem.Size = new System.Drawing.Size(80, 70);
             this.UsuariosToolStripMenuItem.Text = "Usuarios";
             this.UsuariosToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.UsuariosToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -121,7 +122,7 @@ namespace PetShop.Presentacion.Menu
             this.EspeciesToolStripMenuItem});
             this.CatalogoToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("CatalogoToolStripMenuItem.Image")));
             this.CatalogoToolStripMenuItem.Name = "CatalogoToolStripMenuItem";
-            this.CatalogoToolStripMenuItem.Size = new System.Drawing.Size(70, 70);
+            this.CatalogoToolStripMenuItem.Size = new System.Drawing.Size(80, 70);
             this.CatalogoToolStripMenuItem.Text = "Catálogo";
             this.CatalogoToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.CatalogoToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -158,7 +159,7 @@ namespace PetShop.Presentacion.Menu
             this.HistorialDeVentasToolStripMenuItem});
             this.VentaToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("VentaToolStripMenuItem.Image")));
             this.VentaToolStripMenuItem.Name = "VentaToolStripMenuItem";
-            this.VentaToolStripMenuItem.Size = new System.Drawing.Size(70, 70);
+            this.VentaToolStripMenuItem.Size = new System.Drawing.Size(80, 70);
             this.VentaToolStripMenuItem.Text = "Ventas";
             this.VentaToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.VentaToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -184,7 +185,7 @@ namespace PetShop.Presentacion.Menu
             this.ReportesToolStripMenuItem.AutoSize = false;
             this.ReportesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ReportesToolStripMenuItem.Image")));
             this.ReportesToolStripMenuItem.Name = "ReportesToolStripMenuItem";
-            this.ReportesToolStripMenuItem.Size = new System.Drawing.Size(70, 70);
+            this.ReportesToolStripMenuItem.Size = new System.Drawing.Size(80, 70);
             this.ReportesToolStripMenuItem.Text = "Reportes";
             this.ReportesToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.ReportesToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -199,7 +200,7 @@ namespace PetShop.Presentacion.Menu
             this.SalirToolStripMenuItem});
             this.SistemaToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("SistemaToolStripMenuItem.Image")));
             this.SistemaToolStripMenuItem.Name = "SistemaToolStripMenuItem";
-            this.SistemaToolStripMenuItem.Size = new System.Drawing.Size(70, 70);
+            this.SistemaToolStripMenuItem.Size = new System.Drawing.Size(80, 70);
             this.SistemaToolStripMenuItem.Text = "Sistema";
             this.SistemaToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.SistemaToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -227,6 +228,16 @@ namespace PetShop.Presentacion.Menu
             this.SalirToolStripMenuItem.Size = new System.Drawing.Size(207, 38);
             this.SalirToolStripMenuItem.Text = "Salir";
             this.SalirToolStripMenuItem.Click += new System.EventHandler(this.SalirToolStripMenuItem_Click);
+            // 
+            // BackupToolStripMenuItem
+            // 
+            this.BackupToolStripMenuItem.Image = global::PetShop.Properties.Resources.backup;
+            this.BackupToolStripMenuItem.Name = "BackupToolStripMenuItem";
+            this.BackupToolStripMenuItem.Size = new System.Drawing.Size(174, 76);
+            this.BackupToolStripMenuItem.Text = "Copia de Seguridad";
+            this.BackupToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.BackupToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.BackupToolStripMenuItem.Click += new System.EventHandler(this.BackupToolStripMenuItem_Click);
             // 
             // Titulo
             // 
@@ -355,24 +366,9 @@ namespace PetShop.Presentacion.Menu
             this.msTitulo.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.msTitulo.Location = new System.Drawing.Point(0, 0);
             this.msTitulo.Name = "msTitulo";
-            this.msTitulo.Padding = new System.Windows.Forms.Padding(6, 2, 0, 2);
             this.msTitulo.Size = new System.Drawing.Size(1710, 60);
             this.msTitulo.TabIndex = 4;
             this.msTitulo.Text = "titulo";
-            // 
-            // lblPetShop
-            // 
-            this.lblPetShop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(150)))), ((int)(((byte)(195)))));
-            this.lblPetShop.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPetShop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblPetShop.ImageIndex = 0;
-            this.lblPetShop.ImageList = this.Titulo;
-            this.lblPetShop.Location = new System.Drawing.Point(5, 10);
-            this.lblPetShop.Name = "lblPetShop";
-            this.lblPetShop.Size = new System.Drawing.Size(200, 40);
-            this.lblPetShop.TabIndex = 17;
-            this.lblPetShop.Text = "PetShop";
-            this.lblPetShop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // listaAccesoRapido
             // 
@@ -503,6 +499,20 @@ namespace PetShop.Presentacion.Menu
             this.pnlHeader.Size = new System.Drawing.Size(1710, 140);
             this.pnlHeader.TabIndex = 0;
             // 
+            // lblPetShop
+            // 
+            this.lblPetShop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(150)))), ((int)(((byte)(195)))));
+            this.lblPetShop.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPetShop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblPetShop.ImageIndex = 0;
+            this.lblPetShop.ImageList = this.Titulo;
+            this.lblPetShop.Location = new System.Drawing.Point(5, 10);
+            this.lblPetShop.Name = "lblPetShop";
+            this.lblPetShop.Size = new System.Drawing.Size(200, 40);
+            this.lblPetShop.TabIndex = 17;
+            this.lblPetShop.Text = "PetShop";
+            this.lblPetShop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // FormMenuPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -574,8 +584,6 @@ namespace PetShop.Presentacion.Menu
         private ToolStripMenuItem MiPerfilToolStripMenuItem;
         private TableLayoutPanel tlbEstructuraPrincipal;
         private Panel pnlHeader;
+        private ToolStripMenuItem BackupToolStripMenuItem;
     }
 }
-
-
-
