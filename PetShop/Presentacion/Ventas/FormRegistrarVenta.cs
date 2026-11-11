@@ -54,7 +54,6 @@ namespace PetShop.Presentacion.Ventas
             try
             {
                 this.Cursor = Cursors.WaitCursor;
-
                 txtNroFactura.Text = _cnVenta.ObtenerProximoNroFactura();
 
                 // Cargar Tipos de Venta
@@ -90,7 +89,6 @@ namespace PetShop.Presentacion.Ventas
                 this.Cursor = Cursors.Default;
             }
         }
-
         private void ConfigurarGrillaCarrito()
         {
             if (dgvCarrito.Columns.Count > 0) return;
@@ -164,7 +162,6 @@ namespace PetShop.Presentacion.Ventas
                 }
             }
         }
-
         private void CargarProductoEnInterfaz(Producto producto)
         {
             if (!producto.Estado)
@@ -236,11 +233,9 @@ namespace PetShop.Presentacion.Ventas
                     MessageBoxIcon.Warning
                 );
             }
-
             RefrescarCarrito();
             LimpiarCamposProducto();
         }
-
         private void RefrescarCarrito()
         {
             dgvCarrito.AutoGenerateColumns = false;
@@ -265,7 +260,6 @@ namespace PetShop.Presentacion.Ventas
                 dgvCarrito.Cursor = Cursors.Hand;
             }
         }
-
         private void DgvCarrito_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgvCarrito.Columns[e.ColumnIndex].Name == "colAccion")
@@ -273,7 +267,6 @@ namespace PetShop.Presentacion.Ventas
                 dgvCarrito.Cursor = Cursors.Default;
             }
         }
-
         private void DgvCarrito_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -291,7 +284,6 @@ namespace PetShop.Presentacion.Ventas
         }
 
         // --- CÁLCULOS Y EVENTOS DE DESCUENTO / ABONADO ---
-
         private void ActualizarOpcionesSegundoMetodoPago()
         {
             if (cbxMetodoPago.SelectedValue == null) return;
@@ -337,7 +329,6 @@ namespace PetShop.Presentacion.Ventas
         {
             ActualizarOpcionesSegundoMetodoPago();
         }
-
         private void CalcularTotales()
         {
             decimal subtotal = _listaDetalle.Sum(d => d.Subtotal);
@@ -391,18 +382,12 @@ namespace PetShop.Presentacion.Ventas
                 lblVuelto.BackColor = Color.LightPink;
             }
         }
-
         private void TxtDescuento_TextChanged(object sender, EventArgs e)
         {
             CalcularTotales();
         }
 
         private void TxtMontoAbonado_TextChanged(object sender, EventArgs e)
-        {
-            CalcularTotales();
-        }
-
-        private void TxtMontoAbonado2_TextChanged(object sender, EventArgs e)
         {
             CalcularTotales();
         }
@@ -439,10 +424,8 @@ namespace PetShop.Presentacion.Ventas
                     txtDescuento.Text = $"${valor:F2}";
                 }
             }
-
             CalcularTotales();
         }
-
         private void TxtMontoAbonado_Enter(object sender, EventArgs e)
         {
             string textoActual = txtMontoAbonado.Text.Trim();
@@ -451,7 +434,6 @@ namespace PetShop.Presentacion.Ventas
                 txtMontoAbonado.Text = "";
             }
         }
-
         private void TxtMontoAbonado_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtMontoAbonado.Text))
@@ -463,28 +445,7 @@ namespace PetShop.Presentacion.Ventas
                 txtMontoAbonado.Text = valor.ToString("F2");
             }
         }
-
-        private void TxtMontoAbonado2_Enter(object sender, EventArgs e)
-        {
-            string textoActual = txtMontoAbonado2.Text.Trim();
-            if (textoActual == "0,00" || textoActual == "0")
-            {
-                txtMontoAbonado2.Text = "";
-            }
-        }
-
-        private void TxtMontoAbonado2_Leave(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtMontoAbonado2.Text))
-            {
-                txtMontoAbonado2.Text = "0,00";
-            }
-            else if (decimal.TryParse(txtMontoAbonado2.Text.Trim(), out decimal valor))
-            {
-                txtMontoAbonado2.Text = valor.ToString("F2");
-            }
-        }
-
+       
         // Permitir números y el separador decimal (para Precios)
         private void SoloNumerosDecimales_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -542,7 +503,6 @@ namespace PetShop.Presentacion.Ventas
                 MessageBox.Show("Ingrese un monto abonado válido mayor a $0 para el primer método de pago.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             List<Pago> listaPagos = new List<Pago>
             {
                 new Pago
@@ -597,12 +557,10 @@ namespace PetShop.Presentacion.Ventas
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question
                 );
-
                 if (respuestaImpresion == DialogResult.Yes)
                 {
                     ImprimirComprobante();
                 }
-
                 foreach (var detalle in _listaDetalle)
                 {
                     Producto prod = _cnProducto.ObtenerPorId(detalle.IdProducto);
@@ -619,7 +577,6 @@ namespace PetShop.Presentacion.Ventas
                         );
                     }
                 }
-
                 LimpiarFormularioVenta();
             }
             else
@@ -627,23 +584,36 @@ namespace PetShop.Presentacion.Ventas
                 MessageBox.Show(mensaje, "Error al Registrar Venta", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         // --- MÉTODOS DE IMPRESIÓN ---
         public void ImprimirComprobante()
         {
             try
             {
                 PrintDocument pd = new PrintDocument();
-                pd.PrintController = new StandardPrintController();
+                pd.PrintController = new StandardPrintController(); // Evita diálogos secundarios de impresión
                 pd.PrintPage += new PrintPageEventHandler(ImprimirPage);
-                pd.Print();
+
+                // Configurar la ventana de vista previa en pantalla
+                using (PrintPreviewDialog previewDlg = new PrintPreviewDialog())
+                {
+                    previewDlg.Document = pd;
+                    previewDlg.Width = 450;
+                    previewDlg.Height = 650;
+                    previewDlg.StartPosition = FormStartPosition.CenterScreen;
+                    previewDlg.Text = "Vista Previa del Comprobante";
+
+                    // Mostrar el recibo directamente en pantalla
+                    previewDlg.ShowDialog();
+                }
+
+                // NOTA: Se elimina la línea pd.Print() para que no intente buscar impresoras 
+                // ni abra el cuadro de diálogo de guardar archivo.
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ocurrió un error al intentar imprimir: {ex.Message}", "Error de Impresión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ocurrió un error al generar la vista previa: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void ImprimirPage(object sender, PrintPageEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -669,7 +639,6 @@ namespace PetShop.Presentacion.Ventas
             {
                 g.DrawString($"Pago: {cbxMetodoPago.Text}", fontNormal, Brushes.Black, posX, y); y += 15;
             }
-
             g.DrawString("------------------------------", fontNormal, Brushes.Black, posX, y); y += 15;
             g.DrawString("Cant. Producto          Subtotal", fontBold, Brushes.Black, posX, y); y += 15;
 
@@ -685,7 +654,6 @@ namespace PetShop.Presentacion.Ventas
                 g.DrawString(linea, fontNormal, Brushes.Black, posX, y);
                 y += 15;
             }
-
             g.DrawString("------------------------------", fontNormal, Brushes.Black, posX, y); y += 15;
             g.DrawString($"{lblSubtotal.Text}", fontNormal, Brushes.Black, posX, y); y += 15;
             g.DrawString($"{lblDescuentoFinal.Text}", fontNormal, Brushes.Black, posX, y); y += 15;
@@ -704,7 +672,6 @@ namespace PetShop.Presentacion.Ventas
                 LimpiarFormularioVenta();
             }
         }
-
         private void LimpiarCamposProducto()
         {
             _productoSeleccionado = null;
@@ -715,7 +682,6 @@ namespace PetShop.Presentacion.Ventas
             numCantidad.Value = 1;
             txtNombreProducto.Focus();
         }
-
         private void LimpiarFormularioVenta()
         {
             LimpiarCamposProducto();
@@ -728,7 +694,6 @@ namespace PetShop.Presentacion.Ventas
             CargarInformacionInicial();
             txtNombreProducto.Focus();
         }
-
         private void BtnVolver_Click(object sender, EventArgs e)
         {
             this.Close();

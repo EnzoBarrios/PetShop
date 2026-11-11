@@ -164,5 +164,15 @@ namespace PetShop.Negocio
         {
             return _cdvVenta.ObtenerHistorialVentas(desde, hasta, idMetodoPago);
         }
+
+        public DataTable ObtenerDetalleVentaPorTicket(string nroTicket)
+        {
+            if (string.IsNullOrWhiteSpace(nroTicket))
+            {
+                return new DataTable();
+            }
+
+            return _cdvVenta.ObtenerDetalleVentaPorTicket(nroTicket);
+        }
     }
 }

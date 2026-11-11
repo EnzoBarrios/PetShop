@@ -204,6 +204,7 @@ namespace PetShop.Datos
                     v.nro_factura AS [NroTicket],
                     CONVERT(VARCHAR(10), v.fecha_hora, 103) AS [Fecha],
                     CONVERT(VARCHAR(8), v.fecha_hora, 108) AS [Hora],
+                    v.descuento AS [Descuento],
                     v.total AS [MontoTotal],
                     ISNULL(p.Efectivo, 0) AS [Efectivo],
                     ISNULL(p.Transferencia, 0) AS [Transferencia],
@@ -242,7 +243,40 @@ namespace PetShop.Datos
                 }
             }
             return dt;
-        
+        }
+
+        // Obtener el detalle de productos pertenecientes a una venta según su N° de ticket/factura
+        public DataTable ObtenerDetalleVentaPorTicket(string nroTicket)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection conexion = ConexionBd.CrearConexion())
+            {
+                try
+                {
+                    string query = @"
+                SELECT 
+                    p.nombre_producto AS [NombreProducto],
+                    dv.cantidad AS [Cantidad],
+                    dv.precio_unitario AS [PrecioUnitario],
+                    (dv.cantidad * dv.precio_unitario) AS [Subtotal]
+                FROM Detalle_Venta dv
+                INNER JOIN Venta v ON v.id_venta = dv.id_venta
+                INNER JOIN Producto p ON p.id_producto = dv.id_producto
+                WHERE v.nro_factura = @nroTicket";
+
+                    SqlCommand cmd = new SqlCommand(query, conexion);
+                    cmd.Parameters.AddWithValue("@nroTicket", nroTicket);
+
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    conexion.Open();
+                    da.Fill(dt);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al consultar el detalle de la venta: " + ex.Message);
+                }
+            }
+            return dt;
         }
     }
 }
