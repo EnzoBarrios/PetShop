@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormHistorialVentas));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gbInformacionVenta = new System.Windows.Forms.GroupBox();
             this.lblMetodoPago = new System.Windows.Forms.Label();
             this.cbxMetodoPago = new System.Windows.Forms.ComboBox();
@@ -42,10 +42,6 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.lblTituloHistorialVentas = new System.Windows.Forms.Label();
             this.dgvVentas = new System.Windows.Forms.DataGridView();
-            this.btnVolver = new System.Windows.Forms.Button();
-            this.pnlTitulo = new System.Windows.Forms.Panel();
-            this.pnlGrilla = new System.Windows.Forms.Panel();
-            this.pnlFiltro = new System.Windows.Forms.Panel();
             this.colIdDetalleVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNroTicket = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,6 +50,10 @@
             this.colEfectivo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTransferencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colQR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnVolver = new System.Windows.Forms.Button();
+            this.pnlTitulo = new System.Windows.Forms.Panel();
+            this.pnlGrilla = new System.Windows.Forms.Panel();
+            this.pnlFiltro = new System.Windows.Forms.Panel();
             this.gbInformacionVenta.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVentas)).BeginInit();
             this.pnlTitulo.SuspendLayout();
@@ -82,10 +82,9 @@
             // 
             // lblMetodoPago
             // 
-            this.lblMetodoPago.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblMetodoPago.AutoSize = true;
             this.lblMetodoPago.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMetodoPago.Location = new System.Drawing.Point(159, 43);
+            this.lblMetodoPago.Location = new System.Drawing.Point(150, 43);
             this.lblMetodoPago.Name = "lblMetodoPago";
             this.lblMetodoPago.Size = new System.Drawing.Size(115, 19);
             this.lblMetodoPago.TabIndex = 18;
@@ -102,7 +101,7 @@
             // 
             // dtpHasta
             // 
-            this.dtpHasta.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.dtpHasta.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.dtpHasta.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpHasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpHasta.Location = new System.Drawing.Point(748, 38);
@@ -112,7 +111,7 @@
             // 
             // dtpDesde
             // 
-            this.dtpDesde.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.dtpDesde.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.dtpDesde.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpDesde.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpDesde.Location = new System.Drawing.Point(556, 38);
@@ -122,6 +121,7 @@
             // 
             // btnBuscar
             // 
+            this.btnBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBuscar.BackColor = System.Drawing.Color.SlateGray;
             this.btnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBuscar.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -137,7 +137,7 @@
             // 
             // lblFechaHasta
             // 
-            this.lblFechaHasta.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblFechaHasta.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblFechaHasta.AutoSize = true;
             this.lblFechaHasta.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFechaHasta.Location = new System.Drawing.Point(694, 42);
@@ -148,7 +148,7 @@
             // 
             // lblFechaDesde
             // 
-            this.lblFechaDesde.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblFechaDesde.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblFechaDesde.AutoSize = true;
             this.lblFechaDesde.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFechaDesde.Location = new System.Drawing.Point(501, 42);
@@ -180,14 +180,14 @@
             // 
             this.dgvVentas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvVentas.BackgroundColor = System.Drawing.Color.LightSlateGray;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvVentas.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvVentas.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvVentas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvVentas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colIdDetalleVenta,
@@ -206,50 +206,6 @@
             this.dgvVentas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvVentas.Size = new System.Drawing.Size(1200, 415);
             this.dgvVentas.TabIndex = 6;
-            // 
-            // btnVolver
-            // 
-            this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnVolver.Location = new System.Drawing.Point(40, 10);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(75, 40);
-            this.btnVolver.TabIndex = 10;
-            this.btnVolver.Text = "Volver";
-            this.btnVolver.UseVisualStyleBackColor = true;
-            this.btnVolver.Click += new System.EventHandler(this.BtnVolver_Click);
-            // 
-            // pnlTitulo
-            // 
-            this.pnlTitulo.Controls.Add(this.lblTituloHistorialVentas);
-            this.pnlTitulo.Controls.Add(this.btnVolver);
-            this.pnlTitulo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlTitulo.Location = new System.Drawing.Point(0, 0);
-            this.pnlTitulo.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlTitulo.Name = "pnlTitulo";
-            this.pnlTitulo.Padding = new System.Windows.Forms.Padding(40, 5, 40, 5);
-            this.pnlTitulo.Size = new System.Drawing.Size(1280, 60);
-            this.pnlTitulo.TabIndex = 11;
-            // 
-            // pnlGrilla
-            // 
-            this.pnlGrilla.Controls.Add(this.dgvVentas);
-            this.pnlGrilla.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlGrilla.Location = new System.Drawing.Point(0, 160);
-            this.pnlGrilla.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlGrilla.Name = "pnlGrilla";
-            this.pnlGrilla.Padding = new System.Windows.Forms.Padding(40, 5, 40, 40);
-            this.pnlGrilla.Size = new System.Drawing.Size(1280, 460);
-            this.pnlGrilla.TabIndex = 12;
-            // 
-            // pnlFiltro
-            // 
-            this.pnlFiltro.Controls.Add(this.gbInformacionVenta);
-            this.pnlFiltro.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlFiltro.Location = new System.Drawing.Point(0, 60);
-            this.pnlFiltro.Name = "pnlFiltro";
-            this.pnlFiltro.Padding = new System.Windows.Forms.Padding(40, 5, 40, 5);
-            this.pnlFiltro.Size = new System.Drawing.Size(1280, 100);
-            this.pnlFiltro.TabIndex = 12;
             // 
             // colIdDetalleVenta
             // 
@@ -314,6 +270,50 @@
             this.colQR.MinimumWidth = 150;
             this.colQR.Name = "colQR";
             this.colQR.ReadOnly = true;
+            // 
+            // btnVolver
+            // 
+            this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnVolver.Location = new System.Drawing.Point(40, 10);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(75, 40);
+            this.btnVolver.TabIndex = 10;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.BtnVolver_Click);
+            // 
+            // pnlTitulo
+            // 
+            this.pnlTitulo.Controls.Add(this.lblTituloHistorialVentas);
+            this.pnlTitulo.Controls.Add(this.btnVolver);
+            this.pnlTitulo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlTitulo.Location = new System.Drawing.Point(0, 0);
+            this.pnlTitulo.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlTitulo.Name = "pnlTitulo";
+            this.pnlTitulo.Padding = new System.Windows.Forms.Padding(40, 5, 40, 5);
+            this.pnlTitulo.Size = new System.Drawing.Size(1280, 60);
+            this.pnlTitulo.TabIndex = 11;
+            // 
+            // pnlGrilla
+            // 
+            this.pnlGrilla.Controls.Add(this.dgvVentas);
+            this.pnlGrilla.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlGrilla.Location = new System.Drawing.Point(0, 160);
+            this.pnlGrilla.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlGrilla.Name = "pnlGrilla";
+            this.pnlGrilla.Padding = new System.Windows.Forms.Padding(40, 5, 40, 40);
+            this.pnlGrilla.Size = new System.Drawing.Size(1280, 460);
+            this.pnlGrilla.TabIndex = 12;
+            // 
+            // pnlFiltro
+            // 
+            this.pnlFiltro.Controls.Add(this.gbInformacionVenta);
+            this.pnlFiltro.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlFiltro.Location = new System.Drawing.Point(0, 60);
+            this.pnlFiltro.Name = "pnlFiltro";
+            this.pnlFiltro.Padding = new System.Windows.Forms.Padding(40, 5, 40, 5);
+            this.pnlFiltro.Size = new System.Drawing.Size(1280, 100);
+            this.pnlFiltro.TabIndex = 12;
             // 
             // FormHistorialVentas
             // 
