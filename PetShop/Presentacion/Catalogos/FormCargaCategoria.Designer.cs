@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCargaCategoria));
             this.lblAltaCategoria = new System.Windows.Forms.Label();
-            this.lblPetShop = new System.Windows.Forms.Label();
             this.imgListLogo = new System.Windows.Forms.ImageList(this.components);
             this.lblNombre = new System.Windows.Forms.Label();
             this.txtNombre = new System.Windows.Forms.TextBox();
@@ -54,19 +53,6 @@
             this.lblAltaCategoria.Size = new System.Drawing.Size(264, 41);
             this.lblAltaCategoria.TabIndex = 0;
             this.lblAltaCategoria.Text = "Alta de Categoría";
-            // 
-            // lblPetShop
-            // 
-            this.lblPetShop.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPetShop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblPetShop.ImageIndex = 0;
-            this.lblPetShop.ImageList = this.imgListLogo;
-            this.lblPetShop.Location = new System.Drawing.Point(12, 20);
-            this.lblPetShop.Name = "lblPetShop";
-            this.lblPetShop.Size = new System.Drawing.Size(180, 41);
-            this.lblPetShop.TabIndex = 1;
-            this.lblPetShop.Text = "PetShop";
-            this.lblPetShop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // imgListLogo
             // 
@@ -119,7 +105,7 @@
             // lblContador
             // 
             this.lblContador.AutoSize = true;
-            this.lblContador.BackColor = System.Drawing.SystemColors.Control;
+            this.lblContador.BackColor = System.Drawing.Color.Transparent;
             this.lblContador.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.lblContador.Location = new System.Drawing.Point(725, 154);
             this.lblContador.Name = "lblContador";
@@ -168,6 +154,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.ClientSize = new System.Drawing.Size(800, 500);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnGuardar);
@@ -176,7 +163,6 @@
             this.Controls.Add(this.lblDescripcion);
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.lblNombre);
-            this.Controls.Add(this.lblPetShop);
             this.Controls.Add(this.lblAltaCategoria);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -185,6 +171,7 @@
             this.Name = "FormCargaCategoria";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "PetShop";
             this.Load += new System.EventHandler(this.FormCargaCategoria_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -194,7 +181,6 @@
         #endregion
 
         private System.Windows.Forms.Label lblAltaCategoria;
-        private System.Windows.Forms.Label lblPetShop;
         private System.Windows.Forms.ImageList imgListLogo;
         private System.Windows.Forms.Label lblNombre;
         private System.Windows.Forms.TextBox txtNombre;

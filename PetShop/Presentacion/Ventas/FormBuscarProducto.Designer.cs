@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormBuscarProducto));
             this.dgvResultados = new System.Windows.Forms.DataGridView();
             this.cCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,7 +41,7 @@
             this.dgvResultados.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -52,11 +53,13 @@
             this.cNombre});
             this.dgvResultados.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvResultados.Location = new System.Drawing.Point(0, 0);
+            this.dgvResultados.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgvResultados.Name = "dgvResultados";
             this.dgvResultados.RowHeadersVisible = false;
             this.dgvResultados.RowHeadersWidth = 62;
             this.dgvResultados.RowTemplate.Height = 28;
-            this.dgvResultados.Size = new System.Drawing.Size(578, 244);
+            this.dgvResultados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvResultados.Size = new System.Drawing.Size(514, 195);
             this.dgvResultados.TabIndex = 0;
             // 
             // cCodigo
@@ -65,6 +68,7 @@
             this.cCodigo.HeaderText = "Código";
             this.cCodigo.MinimumWidth = 8;
             this.cCodigo.Name = "cCodigo";
+            this.cCodigo.ReadOnly = true;
             // 
             // cNombre
             // 
@@ -72,15 +76,19 @@
             this.cNombre.HeaderText = "Nombre";
             this.cNombre.MinimumWidth = 8;
             this.cNombre.Name = "cNombre";
+            this.cNombre.ReadOnly = true;
             // 
             // FormBuscarProducto
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(578, 244);
+            this.ClientSize = new System.Drawing.Size(514, 195);
             this.Controls.Add(this.dgvResultados);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FormBuscarProducto";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "PetShop";
             this.Load += new System.EventHandler(this.FormBuscarProducto_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvResultados)).EndInit();
             this.ResumeLayout(false);

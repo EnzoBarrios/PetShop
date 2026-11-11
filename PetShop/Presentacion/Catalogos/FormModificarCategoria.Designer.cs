@@ -38,7 +38,6 @@
             this.lblDescripcion = new System.Windows.Forms.Label();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.lblNombre = new System.Windows.Forms.Label();
-            this.lblPetShop = new System.Windows.Forms.Label();
             this.imgListLogo = new System.Windows.Forms.ImageList(this.components);
             this.lblModifCategoria = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -79,7 +78,7 @@
             // lblContador
             // 
             this.lblContador.AutoSize = true;
-            this.lblContador.BackColor = System.Drawing.SystemColors.Control;
+            this.lblContador.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.lblContador.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.lblContador.Location = new System.Drawing.Point(725, 164);
             this.lblContador.Name = "lblContador";
@@ -130,19 +129,6 @@
             this.lblNombre.TabIndex = 11;
             this.lblNombre.Text = "Modificar Categoria: ";
             // 
-            // lblPetShop
-            // 
-            this.lblPetShop.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPetShop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblPetShop.ImageIndex = 0;
-            this.lblPetShop.ImageList = this.imgListLogo;
-            this.lblPetShop.Location = new System.Drawing.Point(15, 30);
-            this.lblPetShop.Name = "lblPetShop";
-            this.lblPetShop.Size = new System.Drawing.Size(180, 41);
-            this.lblPetShop.TabIndex = 10;
-            this.lblPetShop.Text = "PetShop";
-            this.lblPetShop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // imgListLogo
             // 
             this.imgListLogo.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgListLogo.ImageStream")));
@@ -163,6 +149,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.ClientSize = new System.Drawing.Size(800, 500);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnGuardar);
@@ -171,12 +158,12 @@
             this.Controls.Add(this.lblDescripcion);
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.lblNombre);
-            this.Controls.Add(this.lblPetShop);
             this.Controls.Add(this.lblModifCategoria);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormModificarCategoria";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "PetShop";
             this.Load += new System.EventHandler(this.FormModificarCategoria_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -192,7 +179,6 @@
         private System.Windows.Forms.Label lblDescripcion;
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.Label lblNombre;
-        private System.Windows.Forms.Label lblPetShop;
         private System.Windows.Forms.Label lblModifCategoria;
         private System.Windows.Forms.ImageList imgListLogo;
         private System.Windows.Forms.ImageList imgListBotones;

@@ -18,7 +18,7 @@ namespace PetShop.Presentacion
     {
         private readonly CN_Reporte _cnReporte = new CN_Reporte();
         private const string REPORTE_STOCK = "Stock Crítico y Reposición";
-        private const string REPORTE_VENTAS = "Ventas y Métodos de Pago";
+        private const string REPORTE_VENTAS = "Ventas por Vendedor";
         private const string REPORTE_TOP_PRODUCTOS = "Top 10 Productos Más Vendidos";
         private string _ultimoTipoReporteGenerado = string.Empty;
         private DateTime _ultimaFechaDesde;
@@ -139,7 +139,7 @@ namespace PetShop.Presentacion
             // 1. Crear nueva serie
             Series serie = new Series("Stock Actual")
             {
-                ChartType = SeriesChartType.Column // Gráfico de barras
+                ChartType = SeriesChartType.Bar // Gráfico de barras
             };
 
             // 2. Cargar los 10 productos con menor stock
@@ -158,10 +158,7 @@ namespace PetShop.Presentacion
             }
 
             // 3. Personalización del gráfico
-            if (chartReportes.Titles.Count > 0)
-            {
-                chartReportes.Titles[0].Text = "Top 10 Productos con Menor Stock";
-            }
+            lblTituloReportesStock.Text = "Top 10 Productos con Menor Stock";
             chartReportes.Series.Add(serie);
         }
 
@@ -173,7 +170,7 @@ namespace PetShop.Presentacion
 
             Series serie = new Series("Ventas")
             {
-                ChartType = SeriesChartType.Doughnut // Gráfico de Dona / Torta
+                ChartType = SeriesChartType.Bar // Gráfico de barras
             };
 
             // Agrupar ventas por vendedor o por fecha
@@ -188,15 +185,8 @@ namespace PetShop.Presentacion
             {
                 serie.Points.AddXY(item.Vendedor, item.Total);
             }
-            
-            if (chartReportes.Titles.Count > 0)
-            {
-                chartReportes.Titles[0].Text = "Distribución de Ventas por Vendedor";
-            }
-            else
-            {
-                chartReportes.Titles.Add("Distribución de Ventas por Vendedor");
-            }
+
+            lblTituloReportesStock.Text = "Distribución de Ventas por Vendedor";
             chartReportes.Series.Add(serie);
         }
 
@@ -209,8 +199,7 @@ namespace PetShop.Presentacion
             // Gráfico de Barras Horizontales para leer cómodamente los nombres largos de productos
             Series serie = new Series("Unidades")
             {
-                ChartType = SeriesChartType.Bar,
-                IsValueShownAsLabel = true
+                ChartType = SeriesChartType.Bar
             };
 
             foreach (DataRow row in dt.Rows)
@@ -220,11 +209,7 @@ namespace PetShop.Presentacion
                 serie.Points.AddXY(producto, unidades);
             }
 
-            if (chartReportes.Titles.Count > 0)
-            {
-                chartReportes.Titles[0].Text = "Top 10 Productos Más Vendidos (Unidades)";
-            }
-
+            lblTituloReportesStock.Text = "Top 10 Productos Más Vendidos (Unidades)";
             chartReportes.Series.Add(serie);
         }
 
@@ -296,7 +281,7 @@ namespace PetShop.Presentacion
                     case REPORTE_VENTAS:
                         DateTime desdeVentas = dtpDesde.Value.Date;
                         DateTime hastaVentas = dtpHasta.Value.Date.AddDays(1).AddTicks(-1);
-                        DataTable dtVentas = await Task.Run(() => _cnReporte.ObtenerVentasYMetodosPago(desdeVentas, hastaVentas));
+                        DataTable dtVentas = await Task.Run(() => _cnReporte.ObtenerVentasPorVendedor(desdeVentas, hastaVentas));
                         CalcularVentas(dtVentas);
                         CargarGraficoVentas(dtVentas);
                         ConfigurarGrilla(dtVentas);

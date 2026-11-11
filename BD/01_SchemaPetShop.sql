@@ -76,6 +76,7 @@ GO
 CREATE TABLE Especie_Tamano (
 	id_especie INT NOT NULL,
 	id_tamano INT NOT NULL,
+	estado BIT NOT NULL DEFAULT 1,
 	CONSTRAINT PK_Especie_Tamano PRIMARY KEY (id_especie, id_tamano),
 	CONSTRAINT FK_EspecieTamano_Especie FOREIGN KEY (id_especie) REFERENCES Especie(id_especie),
 	CONSTRAINT FK_EspecieTamano_Tamano FOREIGN KEY (id_tamano) REFERENCES Tamano(id_tamano)
@@ -130,7 +131,8 @@ CREATE TABLE Venta (
 	id_venta INT IDENTITY(1,1),
 	nro_factura VARCHAR(50) NOT NULL,
 	fecha_hora DATETIME NOT NULL DEFAULT GETDATE(),
-	total DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+	total DECIMAL(12,2) NOT NULL DEFAULT 0.00,
+	descuento DECIMAL(12,2) NOT NULL DEFAULT 0.00,
 	estado BIT NOT NULL DEFAULT 1, -- 1: 'Completada', 0: 'Anulada'
 	id_tipo_venta INT NOT NULL,
 	id_usuario INT NOT NULL,
@@ -138,20 +140,16 @@ CREATE TABLE Venta (
 	CONSTRAINT FK_Venta_TipoVenta FOREIGN KEY (id_tipo_venta) REFERENCES Tipo_venta(id_tipo_venta),
 	CONSTRAINT FK_Venta_Usuario FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario),
 	CONSTRAINT UQ_Venta_NroFactura UNIQUE (nro_factura),
-	CONSTRAINT CK_Venta_Total CHECK (total >= 0),
+	CONSTRAINT CK_Venta_Total CHECK (total >= 0), 
+	CONSTRAINT CK_Venta_Descuento CHECK (descuento >= 0 AND descuento <= 100.00)
 );
 GO
-
-ALTER TABLE Venta 
-ADD descuento DECIMAL(18,2) NOT NULL DEFAULT 0;
-GO
-
 
 -- 11. Tabla Pago
 CREATE TABLE Pago (
 	id_venta INT NOT NULL,
 	id_metodo_pago INT NOT NULL,
-	monto DECIMAL(10,2) NOT NULL,
+	monto DECIMAL(12,2) NOT NULL,
 	CONSTRAINT PK_Pago PRIMARY KEY (id_venta, id_metodo_pago),
 	CONSTRAINT FK_Pago_Venta FOREIGN KEY (id_venta) REFERENCES Venta(id_venta),
 	CONSTRAINT FK_Pago_MetodoPago FOREIGN KEY (id_metodo_pago) REFERENCES Metodo_pago(id_metodo_pago),
@@ -164,13 +162,12 @@ CREATE TABLE Detalle_Venta (
 	id_venta INT NOT NULL,
 	id_producto INT NOT NULL,
 	cantidad INT NOT NULL,
-	precio_unitario DECIMAL(10,2) NOT NULL,
+	precio_unitario DECIMAL(12,2) NOT NULL,
 	subtotal AS (cantidad * precio_unitario) PERSISTED,
 	CONSTRAINT PK_DetalleVenta PRIMARY KEY (id_venta, id_producto),
 	CONSTRAINT FK_DetalleVenta_Venta FOREIGN KEY (id_venta) REFERENCES Venta(id_venta),
 	CONSTRAINT FK_DetalleVenta_Producto FOREIGN KEY (id_producto) REFERENCES Producto(id_producto),
 	CONSTRAINT CK_DetalleVenta_Cantidad CHECK (cantidad > 0),
-	CONSTRAINT CK_DetalleVenta_Precios CHECK (precio_unitario >= 0 AND subtotal >= 0),
-	CONSTRAINT CK_DetalleVenta_Subtotal CHECK (subtotal = cantidad * precio_unitario)
+	CONSTRAINT CK_DetalleVenta_Precios CHECK (precio_unitario >= 0)
 );
 GO

@@ -109,7 +109,7 @@
             this.txtStock.Name = "txtStock";
             this.txtStock.Size = new System.Drawing.Size(134, 22);
             this.txtStock.TabIndex = 53;
-            this.txtStock.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumeros_KeyPress);
+            this.txtStock.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumerosEnteros_KeyPress);
             // 
             // txtPrecioVenta
             // 
@@ -119,7 +119,7 @@
             this.txtPrecioVenta.Name = "txtPrecioVenta";
             this.txtPrecioVenta.Size = new System.Drawing.Size(150, 22);
             this.txtPrecioVenta.TabIndex = 52;
-            this.txtPrecioVenta.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtPrecio_KeyPress);
+            this.txtPrecioVenta.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumerosDecimales_KeyPress);
             // 
             // txtPrecioCompra
             // 
@@ -129,7 +129,7 @@
             this.txtPrecioCompra.Name = "txtPrecioCompra";
             this.txtPrecioCompra.Size = new System.Drawing.Size(150, 22);
             this.txtPrecioCompra.TabIndex = 51;
-            this.txtPrecioCompra.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtPrecio_KeyPress);
+            this.txtPrecioCompra.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumerosDecimales_KeyPress);
             // 
             // cbxCategoria
             // 
@@ -196,6 +196,7 @@
             this.txtCodigo.Size = new System.Drawing.Size(200, 22);
             this.txtCodigo.TabIndex = 46;
             this.txtCodigo.TabStop = false;
+            this.txtCodigo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumerosEnteros_KeyPress);
             // 
             // lblStock
             // 
@@ -283,7 +284,7 @@
             // lblContador
             // 
             this.lblContador.AutoSize = true;
-            this.lblContador.BackColor = System.Drawing.SystemColors.Control;
+            this.lblContador.BackColor = System.Drawing.Color.Transparent;
             this.lblContador.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.lblContador.Location = new System.Drawing.Point(725, 141);
             this.lblContador.Name = "lblContador";
@@ -299,7 +300,7 @@
             this.txtStockMinimo.Name = "txtStockMinimo";
             this.txtStockMinimo.Size = new System.Drawing.Size(134, 22);
             this.txtStockMinimo.TabIndex = 58;
-            this.txtStockMinimo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumeros_KeyPress);
+            this.txtStockMinimo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumerosEnteros_KeyPress);
             // 
             // lblStockMinimo
             // 
@@ -315,6 +316,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.ClientSize = new System.Drawing.Size(802, 473);
             this.Controls.Add(this.txtStockMinimo);
             this.Controls.Add(this.lblStockMinimo);
@@ -346,6 +348,7 @@
             this.Name = "FormModificarProducto";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "PetShop";
             this.Load += new System.EventHandler(this.FormModificarProducto_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

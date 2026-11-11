@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,12 +58,15 @@ namespace PetShop
         {
             try
             {
-                List<Categoria> categorias = _cnCategoria.ListarCategorias();
+                // Carga únicamente las categorías que están activas
+                List<Categoria> categoriasActivas = _cnCategoria.ListarCategorias()
+                    .Where(c => c.Estado)
+                    .ToList();
 
                 cbxCategoria.DataSource = null;
                 cbxCategoria.DisplayMember = nameof(Categoria.NombreCategoria);
                 cbxCategoria.ValueMember = nameof(Categoria.IdCategoria);
-                cbxCategoria.DataSource = categorias;
+                cbxCategoria.DataSource = categoriasActivas;
             }
             catch (Exception ex)
             {
@@ -145,7 +149,7 @@ namespace PetShop
             }
         }
 
-        private void SoloNumeros_KeyPress(object sender, KeyPressEventArgs e)
+        private void SoloNumerosEnteros_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
             {
@@ -153,24 +157,40 @@ namespace PetShop
             }
         }
 
-        private void TxtPrecio_KeyPress(object sender, KeyPressEventArgs e)
+        // Permitir números y el separador decimal (para Precios)
+        private void SoloNumerosDecimales_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == '.')
-            {
-                e.KeyChar = ',';
-            }
+            TextBox txt = sender as TextBox;
+            if (txt == null) return;
 
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && (e.KeyChar != ','))
+            // Teclas de control (Backspace) siempre se permiten
+            if (char.IsControl(e.KeyChar)) return;
+
+            char separadorDecimal = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
+
+            // Bloquear si no es dígito ni el separador decimal
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != separadorDecimal)
             {
                 e.Handled = true;
                 return;
             }
 
-            TextBox textBox;
-            textBox = sender as TextBox;
-            if ((e.KeyChar == ',') && (textBox != null) && (textBox.Text.IndexOf(',') > -1))
+            // Bloquear si intenta ingresar un segundo separador decimal
+            if (e.KeyChar == separadorDecimal && txt.Text.Contains(separadorDecimal))
             {
                 e.Handled = true;
+                return;
+            }
+
+            // Limitar a máximo 2 decimales a la derecha del separador
+            int posicionSeparador = txt.Text.IndexOf(separadorDecimal);
+            if (posicionSeparador != -1 && txt.SelectionStart > posicionSeparador && txt.SelectionLength == 0)
+            {
+                // En lugar de Substring, medimos directamente los caracteres restantes desde la coma/punto
+                if (txt.Text.Length - posicionSeparador - 1 >= 2)
+                {
+                    e.Handled = true;
+                }
             }
         }
 

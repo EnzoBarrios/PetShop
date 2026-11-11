@@ -86,11 +86,11 @@ namespace PetShop.Presentacion.Catalogos
 
         private void ActualizarBotonEstado()
         {
-            EspecieTamano sel = ObtenerEspecieTamanoSeleccionado();
+            EspecieTamano seleccionado = ObtenerEspecieTamanoSeleccionado();
 
-            if (sel != null)
+            if (seleccionado != null)
             {
-                btnCambiarEstado.Text = sel.Estado ? "Desactivar" : "Activar";
+                btnCambiarEstado.Text = seleccionado.Estado ? "Desactivar" : "Activar";
                 btnCambiarEstado.Enabled = true;
             }
             else

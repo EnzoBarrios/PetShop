@@ -98,6 +98,7 @@
             this.dgvEspecieTamano.AllowUserToAddRows = false;
             this.dgvEspecieTamano.AllowUserToDeleteRows = false;
             this.dgvEspecieTamano.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvEspecieTamano.BackgroundColor = System.Drawing.Color.LightSlateGray;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -429,7 +430,7 @@
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.Grip;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.SystemColors.Menu;
             this.ClientSize = new System.Drawing.Size(1280, 620);
             this.Controls.Add(this.pnlGrilla);
             this.Controls.Add(this.pnlAcciones);

@@ -33,13 +33,6 @@
             this.btnModificarUsuario = new System.Windows.Forms.Button();
             this.btnNuevoUsuario = new System.Windows.Forms.Button();
             this.dgvUsuarios = new System.Windows.Forms.DataGridView();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colApellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colUsuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colRol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.lblBuscar = new System.Windows.Forms.Label();
             this.lblTitulo = new System.Windows.Forms.Label();
@@ -48,6 +41,13 @@
             this.btnVolver = new System.Windows.Forms.Button();
             this.pnlBotones = new System.Windows.Forms.Panel();
             this.pnlGrilla = new System.Windows.Forms.Panel();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colApellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colUsuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.pnlTitulo.SuspendLayout();
             this.pnlBotones.SuspendLayout();
@@ -59,10 +59,10 @@
             this.btnEstado.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnEstado.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btnEstado.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnEstado.Location = new System.Drawing.Point(1120, 10);
+            this.btnEstado.Location = new System.Drawing.Point(1090, 10);
             this.btnEstado.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEstado.Name = "btnEstado";
-            this.btnEstado.Size = new System.Drawing.Size(120, 50);
+            this.btnEstado.Size = new System.Drawing.Size(150, 50);
             this.btnEstado.TabIndex = 32;
             this.btnEstado.Text = "Desactivar";
             this.btnEstado.UseVisualStyleBackColor = false;
@@ -73,10 +73,10 @@
             this.btnModificarUsuario.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnModificarUsuario.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btnModificarUsuario.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnModificarUsuario.Location = new System.Drawing.Point(580, 10);
+            this.btnModificarUsuario.Location = new System.Drawing.Point(565, 10);
             this.btnModificarUsuario.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnModificarUsuario.Name = "btnModificarUsuario";
-            this.btnModificarUsuario.Size = new System.Drawing.Size(120, 50);
+            this.btnModificarUsuario.Size = new System.Drawing.Size(150, 50);
             this.btnModificarUsuario.TabIndex = 31;
             this.btnModificarUsuario.Text = "Modificar";
             this.btnModificarUsuario.UseVisualStyleBackColor = false;
@@ -90,7 +90,7 @@
             this.btnNuevoUsuario.Location = new System.Drawing.Point(40, 10);
             this.btnNuevoUsuario.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnNuevoUsuario.Name = "btnNuevoUsuario";
-            this.btnNuevoUsuario.Size = new System.Drawing.Size(120, 50);
+            this.btnNuevoUsuario.Size = new System.Drawing.Size(150, 50);
             this.btnNuevoUsuario.TabIndex = 30;
             this.btnNuevoUsuario.Text = "Nuevo Usuario";
             this.btnNuevoUsuario.UseVisualStyleBackColor = false;
@@ -100,7 +100,7 @@
             // 
             this.dgvUsuarios.AllowUserToAddRows = false;
             this.dgvUsuarios.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvUsuarios.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.dgvUsuarios.BackgroundColor = System.Drawing.Color.LightSlateGray;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -131,63 +131,6 @@
             this.dgvUsuarios.TabIndex = 29;
             this.dgvUsuarios.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DgvUsuarios_CellFormatting);
             this.dgvUsuarios.SelectionChanged += new System.EventHandler(this.DgvUsuarios_SelectionChanged);
-            // 
-            // colId
-            // 
-            this.colId.DataPropertyName = "colId";
-            this.colId.HeaderText = "Id";
-            this.colId.MinimumWidth = 6;
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            this.colId.Visible = false;
-            // 
-            // colNombre
-            // 
-            this.colNombre.DataPropertyName = "colNombre";
-            this.colNombre.HeaderText = "Nombre";
-            this.colNombre.MinimumWidth = 6;
-            this.colNombre.Name = "colNombre";
-            this.colNombre.ReadOnly = true;
-            // 
-            // colApellido
-            // 
-            this.colApellido.DataPropertyName = "colApellido";
-            this.colApellido.HeaderText = "Apellido";
-            this.colApellido.MinimumWidth = 6;
-            this.colApellido.Name = "colApellido";
-            this.colApellido.ReadOnly = true;
-            // 
-            // colUsuario
-            // 
-            this.colUsuario.DataPropertyName = "colUsuario";
-            this.colUsuario.HeaderText = "Usuario";
-            this.colUsuario.MinimumWidth = 6;
-            this.colUsuario.Name = "colUsuario";
-            this.colUsuario.ReadOnly = true;
-            // 
-            // colRol
-            // 
-            this.colRol.DataPropertyName = "colRol";
-            this.colRol.HeaderText = "Rol";
-            this.colRol.MinimumWidth = 6;
-            this.colRol.Name = "colRol";
-            this.colRol.ReadOnly = true;
-            // 
-            // colEstado
-            // 
-            this.colEstado.DataPropertyName = "colEstado";
-            this.colEstado.HeaderText = "Estado";
-            this.colEstado.MinimumWidth = 6;
-            this.colEstado.Name = "colEstado";
-            this.colEstado.ReadOnly = true;
-            // 
-            // colFecha
-            // 
-            this.colFecha.DataPropertyName = "colFecha";
-            this.colFecha.HeaderText = "Fecha Creación";
-            this.colFecha.MinimumWidth = 6;
-            this.colFecha.Name = "colFecha";
-            this.colFecha.ReadOnly = true;
             // 
             // txtBuscar
             // 
@@ -284,11 +227,68 @@
             this.pnlGrilla.Size = new System.Drawing.Size(1280, 460);
             this.pnlGrilla.TabIndex = 37;
             // 
+            // colId
+            // 
+            this.colId.DataPropertyName = "colId";
+            this.colId.HeaderText = "Id";
+            this.colId.MinimumWidth = 6;
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            this.colId.Visible = false;
+            // 
+            // colNombre
+            // 
+            this.colNombre.DataPropertyName = "colNombre";
+            this.colNombre.HeaderText = "Nombre";
+            this.colNombre.MinimumWidth = 120;
+            this.colNombre.Name = "colNombre";
+            this.colNombre.ReadOnly = true;
+            // 
+            // colApellido
+            // 
+            this.colApellido.DataPropertyName = "colApellido";
+            this.colApellido.HeaderText = "Apellido";
+            this.colApellido.MinimumWidth = 120;
+            this.colApellido.Name = "colApellido";
+            this.colApellido.ReadOnly = true;
+            // 
+            // colUsuario
+            // 
+            this.colUsuario.DataPropertyName = "colUsuario";
+            this.colUsuario.HeaderText = "Usuario";
+            this.colUsuario.MinimumWidth = 120;
+            this.colUsuario.Name = "colUsuario";
+            this.colUsuario.ReadOnly = true;
+            // 
+            // colRol
+            // 
+            this.colRol.DataPropertyName = "colRol";
+            this.colRol.HeaderText = "Rol";
+            this.colRol.MinimumWidth = 120;
+            this.colRol.Name = "colRol";
+            this.colRol.ReadOnly = true;
+            // 
+            // colEstado
+            // 
+            this.colEstado.DataPropertyName = "colEstado";
+            this.colEstado.HeaderText = "Estado";
+            this.colEstado.MinimumWidth = 120;
+            this.colEstado.Name = "colEstado";
+            this.colEstado.ReadOnly = true;
+            // 
+            // colFecha
+            // 
+            this.colFecha.DataPropertyName = "colFecha";
+            this.colFecha.HeaderText = "Fecha Creación";
+            this.colFecha.MinimumWidth = 150;
+            this.colFecha.Name = "colFecha";
+            this.colFecha.ReadOnly = true;
+            // 
             // FormUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.BackColor = System.Drawing.SystemColors.Menu;
             this.ClientSize = new System.Drawing.Size(1280, 620);
             this.Controls.Add(this.pnlGrilla);
             this.Controls.Add(this.pnlBotones);
@@ -319,6 +319,8 @@
         private System.Windows.Forms.Panel PanelBotones;
         private System.Windows.Forms.Panel pnlTitulo;
         private System.Windows.Forms.Panel pnlBotones;
+        private System.Windows.Forms.Panel pnlGrilla;
+        private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNombre;
         private System.Windows.Forms.DataGridViewTextBoxColumn colApellido;
@@ -326,7 +328,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colRol;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEstado;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFecha;
-        private System.Windows.Forms.Panel pnlGrilla;
-        private System.Windows.Forms.Button btnVolver;
     }
 }

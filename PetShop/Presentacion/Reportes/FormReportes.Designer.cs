@@ -59,12 +59,12 @@
             this.lblTitulo1 = new System.Windows.Forms.Label();
             this.lblTitulo3 = new System.Windows.Forms.Label();
             this.chartReportes = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.pnlTotalRecaudado = new System.Windows.Forms.Panel();
+            this.pnlTarjeta1 = new System.Windows.Forms.Panel();
             this.lblValor1 = new System.Windows.Forms.Label();
-            this.pnlProductoEstrella = new System.Windows.Forms.Panel();
+            this.pnlTarjeta2 = new System.Windows.Forms.Panel();
             this.lblValor2 = new System.Windows.Forms.Label();
             this.lblTitulo2 = new System.Windows.Forms.Label();
-            this.pnlCantidadVenta = new System.Windows.Forms.Panel();
+            this.pnlTarjeta3 = new System.Windows.Forms.Panel();
             this.lblValor3 = new System.Windows.Forms.Label();
             this.pnlTitulo = new System.Windows.Forms.Panel();
             this.pnlFiltros = new System.Windows.Forms.Panel();
@@ -74,9 +74,9 @@
             this.gbFiltroFechas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReportes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartReportes)).BeginInit();
-            this.pnlTotalRecaudado.SuspendLayout();
-            this.pnlProductoEstrella.SuspendLayout();
-            this.pnlCantidadVenta.SuspendLayout();
+            this.pnlTarjeta1.SuspendLayout();
+            this.pnlTarjeta2.SuspendLayout();
+            this.pnlTarjeta3.SuspendLayout();
             this.pnlTitulo.SuspendLayout();
             this.pnlFiltros.SuspendLayout();
             this.pnlInformacion.SuspendLayout();
@@ -98,8 +98,7 @@
             // 
             // lblTituloReportesStock
             // 
-            this.lblTituloReportesStock.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblTituloReportesStock.AutoSize = true;
+            this.lblTituloReportesStock.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTituloReportesStock.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblTituloReportesStock.ForeColor = System.Drawing.Color.Black;
             this.lblTituloReportesStock.Location = new System.Drawing.Point(582, 15);
@@ -107,6 +106,7 @@
             this.lblTituloReportesStock.Size = new System.Drawing.Size(116, 32);
             this.lblTituloReportesStock.TabIndex = 5;
             this.lblTituloReportesStock.Text = "Reportes";
+            this.lblTituloReportesStock.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblTituloReportesStock.UseWaitCursor = true;
             // 
             // gbFiltroReporte
@@ -219,6 +219,7 @@
             // dgvReportes
             // 
             this.dgvReportes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvReportes.BackgroundColor = System.Drawing.Color.LightSlateGray;
             this.dgvReportes.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
@@ -241,9 +242,11 @@
             this.dgvReportes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvReportes.Location = new System.Drawing.Point(20, 5);
             this.dgvReportes.Name = "dgvReportes";
+            this.dgvReportes.ReadOnly = true;
             this.dgvReportes.RowHeadersWidth = 51;
             this.dgvReportes.RowTemplate.Height = 24;
-            this.dgvReportes.Size = new System.Drawing.Size(860, 270);
+            this.dgvReportes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvReportes.Size = new System.Drawing.Size(860, 240);
             this.dgvReportes.TabIndex = 0;
             // 
             // colId
@@ -251,6 +254,7 @@
             this.colId.HeaderText = "ColId";
             this.colId.MinimumWidth = 6;
             this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
             this.colId.Visible = false;
             // 
             // col1
@@ -353,27 +357,27 @@
             this.chartReportes.Legends.Add(legend1);
             this.chartReportes.Location = new System.Drawing.Point(20, 10);
             this.chartReportes.Name = "chartReportes";
-            this.chartReportes.Size = new System.Drawing.Size(640, 250);
+            this.chartReportes.Size = new System.Drawing.Size(640, 280);
             this.chartReportes.TabIndex = 14;
             this.chartReportes.Text = "chart1";
             title1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             title1.Name = "titulo";
             this.chartReportes.Titles.Add(title1);
             // 
-            // pnlTotalRecaudado
+            // pnlTarjeta1
             // 
-            this.pnlTotalRecaudado.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.pnlTotalRecaudado.BackColor = System.Drawing.SystemColors.Control;
-            this.pnlTotalRecaudado.Controls.Add(this.lblValor1);
-            this.pnlTotalRecaudado.Controls.Add(this.lblTitulo1);
-            this.pnlTotalRecaudado.Location = new System.Drawing.Point(680, 25);
-            this.pnlTotalRecaudado.Name = "pnlTotalRecaudado";
-            this.pnlTotalRecaudado.Size = new System.Drawing.Size(200, 60);
-            this.pnlTotalRecaudado.TabIndex = 15;
+            this.pnlTarjeta1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.pnlTarjeta1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.pnlTarjeta1.Controls.Add(this.lblValor1);
+            this.pnlTarjeta1.Controls.Add(this.lblTitulo1);
+            this.pnlTarjeta1.Location = new System.Drawing.Point(680, 40);
+            this.pnlTarjeta1.Name = "pnlTarjeta1";
+            this.pnlTarjeta1.Size = new System.Drawing.Size(200, 60);
+            this.pnlTarjeta1.TabIndex = 15;
             // 
             // lblValor1
             // 
-            this.lblValor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblValor1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblValor1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblValor1.Location = new System.Drawing.Point(0, 20);
             this.lblValor1.Name = "lblValor1";
@@ -381,16 +385,16 @@
             this.lblValor1.TabIndex = 12;
             this.lblValor1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // pnlProductoEstrella
+            // pnlTarjeta2
             // 
-            this.pnlProductoEstrella.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.pnlProductoEstrella.BackColor = System.Drawing.SystemColors.Control;
-            this.pnlProductoEstrella.Controls.Add(this.lblValor2);
-            this.pnlProductoEstrella.Controls.Add(this.lblTitulo2);
-            this.pnlProductoEstrella.Location = new System.Drawing.Point(680, 105);
-            this.pnlProductoEstrella.Name = "pnlProductoEstrella";
-            this.pnlProductoEstrella.Size = new System.Drawing.Size(200, 60);
-            this.pnlProductoEstrella.TabIndex = 18;
+            this.pnlTarjeta2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.pnlTarjeta2.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.pnlTarjeta2.Controls.Add(this.lblValor2);
+            this.pnlTarjeta2.Controls.Add(this.lblTitulo2);
+            this.pnlTarjeta2.Location = new System.Drawing.Point(680, 120);
+            this.pnlTarjeta2.Name = "pnlTarjeta2";
+            this.pnlTarjeta2.Size = new System.Drawing.Size(200, 60);
+            this.pnlTarjeta2.TabIndex = 18;
             // 
             // lblValor2
             // 
@@ -412,16 +416,16 @@
             this.lblTitulo2.TabIndex = 13;
             this.lblTitulo2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // pnlCantidadVenta
+            // pnlTarjeta3
             // 
-            this.pnlCantidadVenta.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.pnlCantidadVenta.BackColor = System.Drawing.SystemColors.Control;
-            this.pnlCantidadVenta.Controls.Add(this.lblValor3);
-            this.pnlCantidadVenta.Controls.Add(this.lblTitulo3);
-            this.pnlCantidadVenta.Location = new System.Drawing.Point(680, 185);
-            this.pnlCantidadVenta.Name = "pnlCantidadVenta";
-            this.pnlCantidadVenta.Size = new System.Drawing.Size(200, 60);
-            this.pnlCantidadVenta.TabIndex = 20;
+            this.pnlTarjeta3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.pnlTarjeta3.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.pnlTarjeta3.Controls.Add(this.lblValor3);
+            this.pnlTarjeta3.Controls.Add(this.lblTitulo3);
+            this.pnlTarjeta3.Location = new System.Drawing.Point(680, 200);
+            this.pnlTarjeta3.Name = "pnlTarjeta3";
+            this.pnlTarjeta3.Size = new System.Drawing.Size(200, 60);
+            this.pnlTarjeta3.TabIndex = 20;
             // 
             // lblValor3
             // 
@@ -447,6 +451,7 @@
             // 
             // pnlFiltros
             // 
+            this.pnlFiltros.BackColor = System.Drawing.Color.Transparent;
             this.pnlFiltros.Controls.Add(this.btnGenerarReporte);
             this.pnlFiltros.Controls.Add(this.gbFiltroReporte);
             this.pnlFiltros.Controls.Add(this.gbFiltroFechas);
@@ -460,32 +465,32 @@
             // 
             // pnlInformacion
             // 
-            this.pnlInformacion.Controls.Add(this.pnlTotalRecaudado);
-            this.pnlInformacion.Controls.Add(this.pnlProductoEstrella);
-            this.pnlInformacion.Controls.Add(this.pnlCantidadVenta);
+            this.pnlInformacion.Controls.Add(this.pnlTarjeta1);
+            this.pnlInformacion.Controls.Add(this.pnlTarjeta2);
+            this.pnlInformacion.Controls.Add(this.pnlTarjeta3);
             this.pnlInformacion.Controls.Add(this.chartReportes);
             this.pnlInformacion.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlInformacion.Location = new System.Drawing.Point(360, 60);
             this.pnlInformacion.Name = "pnlInformacion";
             this.pnlInformacion.Padding = new System.Windows.Forms.Padding(20, 5, 40, 5);
-            this.pnlInformacion.Size = new System.Drawing.Size(920, 270);
+            this.pnlInformacion.Size = new System.Drawing.Size(920, 300);
             this.pnlInformacion.TabIndex = 24;
             // 
             // pnlGrilla
             // 
             this.pnlGrilla.Controls.Add(this.dgvReportes);
             this.pnlGrilla.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlGrilla.Location = new System.Drawing.Point(360, 330);
+            this.pnlGrilla.Location = new System.Drawing.Point(360, 360);
             this.pnlGrilla.Name = "pnlGrilla";
             this.pnlGrilla.Padding = new System.Windows.Forms.Padding(20, 5, 40, 15);
-            this.pnlGrilla.Size = new System.Drawing.Size(920, 290);
+            this.pnlGrilla.Size = new System.Drawing.Size(920, 260);
             this.pnlGrilla.TabIndex = 25;
             // 
             // FormReportes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.SystemColors.Menu;
             this.ClientSize = new System.Drawing.Size(1280, 620);
             this.Controls.Add(this.pnlGrilla);
             this.Controls.Add(this.pnlInformacion);
@@ -502,11 +507,10 @@
             this.gbFiltroFechas.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReportes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartReportes)).EndInit();
-            this.pnlTotalRecaudado.ResumeLayout(false);
-            this.pnlProductoEstrella.ResumeLayout(false);
-            this.pnlCantidadVenta.ResumeLayout(false);
+            this.pnlTarjeta1.ResumeLayout(false);
+            this.pnlTarjeta2.ResumeLayout(false);
+            this.pnlTarjeta3.ResumeLayout(false);
             this.pnlTitulo.ResumeLayout(false);
-            this.pnlTitulo.PerformLayout();
             this.pnlFiltros.ResumeLayout(false);
             this.pnlInformacion.ResumeLayout(false);
             this.pnlGrilla.ResumeLayout(false);
@@ -532,9 +536,9 @@
         private System.Windows.Forms.Label lblTitulo1;
         private System.Windows.Forms.Label lblTitulo3;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartReportes;
-        private System.Windows.Forms.Panel pnlTotalRecaudado;
-        private System.Windows.Forms.Panel pnlProductoEstrella;
-        private System.Windows.Forms.Panel pnlCantidadVenta;
+        private System.Windows.Forms.Panel pnlTarjeta1;
+        private System.Windows.Forms.Panel pnlTarjeta2;
+        private System.Windows.Forms.Panel pnlTarjeta3;
         private System.Windows.Forms.Label lblValor1;
         private System.Windows.Forms.Label lblValor2;
         private System.Windows.Forms.Label lblValor3;

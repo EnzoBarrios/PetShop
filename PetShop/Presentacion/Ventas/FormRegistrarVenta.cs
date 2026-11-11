@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using PetShop.Entidades;
@@ -375,7 +376,6 @@ namespace PetShop.Presentacion.Ventas
                 else
                 {
                     lblVuelto.Text = "Vuelto/Cambio: $0,00";
-                    lblVuelto.BackColor = Color.White;
                 }
             }
             else
@@ -478,21 +478,40 @@ namespace PetShop.Presentacion.Ventas
             }
         }
 
-        private void TxtSoloNumeros_KeyPress(object sender, KeyPressEventArgs e)
+        // Permitir números y el separador decimal (para Precios)
+        private void SoloNumerosDecimales_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != '.')
+            TextBox txt = sender as TextBox;
+            if (txt == null) return;
+
+            // Teclas de control (Backspace) siempre se permiten
+            if (char.IsControl(e.KeyChar)) return;
+
+            char separadorDecimal = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
+
+            // Bloquear si no es dígito ni el separador decimal
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != separadorDecimal)
             {
                 e.Handled = true;
+                return;
             }
 
-            if (e.KeyChar == '.')
-            {
-                e.KeyChar = ',';
-            }
-
-            if (e.KeyChar == ',' && sender is TextBox txt && txt.Text.Contains(","))
+            // Bloquear si intenta ingresar un segundo separador decimal
+            if (e.KeyChar == separadorDecimal && txt.Text.Contains(separadorDecimal))
             {
                 e.Handled = true;
+                return;
+            }
+
+            // Limitar a máximo 2 decimales a la derecha del separador
+            int posicionSeparador = txt.Text.IndexOf(separadorDecimal);
+            if (posicionSeparador != -1 && txt.SelectionStart > posicionSeparador && txt.SelectionLength == 0)
+            {
+                // En lugar de Substring, medimos directamente los caracteres restantes desde la coma/punto
+                if (txt.Text.Length - posicionSeparador - 1 >= 2)
+                {
+                    e.Handled = true;
+                }
             }
         }
 

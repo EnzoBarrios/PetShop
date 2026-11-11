@@ -129,6 +129,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.ClientSize = new System.Drawing.Size(600, 300);
             this.Controls.Add(this.cbxTamano);
             this.Controls.Add(this.cbxEspecie);
@@ -144,6 +145,7 @@
             this.Name = "FormAsignarEspecieTamano";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "PetShop";
             this.Load += new System.EventHandler(this.FormAsignarEspecieTamano_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

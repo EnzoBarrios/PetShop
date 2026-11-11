@@ -14,7 +14,8 @@ namespace PetShop.Datos
 
             string query = @"
                 SELECT et.id_especie, e.nombre_especie AS nombre_especie, e.estado AS estado_especie,
-                       et.id_tamano, t.nombre_tamano AS nombre_tamano, t.estado AS estado_tamano
+                       et.id_tamano, t.nombre_tamano AS nombre_tamano, t.estado AS estado_tamano,
+                       et.estado
                 FROM Especie_Tamano et
                 INNER JOIN Especie e ON (et.id_especie = e.id_especie)
                 INNER JOIN Tamano t ON (et.id_tamano = t.id_tamano)
@@ -79,8 +80,22 @@ namespace PetShop.Datos
 
         public bool CambiarEstado(int idEspecie, int idTamano, bool nuevoEstado)
         {
-            // Al no existir una columna estado en la tabla intermedia, esta función retorna true si existe la tupla
-            return ExisteRelacion(idEspecie, idTamano, out _);
+            string query = @"
+                UPDATE Especie_Tamano
+                SET estado = @nuevoEstado
+                WHERE id_especie = @idEspecie AND id_tamano = @idTamano;";
+
+            using (SqlConnection conexion = ConexionBd.CrearConexion())
+            using (SqlCommand cmd = new SqlCommand(query, conexion))
+            {
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.Add("@idEspecie", SqlDbType.Int).Value = idEspecie;
+                cmd.Parameters.Add("@idTamano", SqlDbType.Int).Value = idTamano;
+                cmd.Parameters.Add("@nuevoEstado", SqlDbType.Bit).Value = nuevoEstado;
+
+                conexion.Open();
+                return cmd.ExecuteNonQuery() > 0;
+            }
         }
 
         private static EspecieTamano MapearEspecieTamano(SqlDataReader dr)
@@ -93,15 +108,19 @@ namespace PetShop.Datos
             int ordNomTam = dr.GetOrdinal("nombre_tamano");
             int ordEstTam = dr.GetOrdinal("estado_tamano");
 
-            bool estadoEspecie = dr.GetBoolean(ordEstEsp);
+            int ordEstRealcion = dr.GetOrdinal("estado");
+
             bool estadoTamano = dr.GetBoolean(ordEstTam);
+            bool estadoEspecie = dr.GetBoolean(ordEstEsp);
+            bool estadoRelacion = dr.GetBoolean(ordEstRealcion);
 
             return new EspecieTamano()
             {
                 IdEspecie = dr.GetInt32(ordIdEsp),
                 IdTamano = dr.GetInt32(ordIdTam),
-                // La combinación está activa solo si AMBOS componentes están activos
-                Estado = estadoEspecie && estadoTamano,
+                // La relación está activa SI su propio estado es true Y además Especie y Tamano están activos
+                Estado = estadoRelacion && estadoEspecie && estadoTamano, 
+
                 Especie = new Especie
                 {
                     IdEspecie = dr.GetInt32(ordIdEsp),

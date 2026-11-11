@@ -18,14 +18,14 @@ namespace PetShop.Negocio
             return _cdReporte.ObtenerStockCritico();
         }
 
-        public DataTable ObtenerVentasYMetodosPago(DateTime fechaInicio, DateTime fechaFin)
+        public DataTable ObtenerVentasPorVendedor(DateTime fechaInicio, DateTime fechaFin)
         {
             // Validación de regla de negocio para fechas
             if (fechaInicio.Date > fechaFin.Date)
             {
                 throw new ArgumentException("La fecha de inicio no puede ser mayor que la fecha de fin.");
             }
-            return _cdReporte.ObtenerVentasYMetodosPago(fechaInicio, fechaFin);
+            return _cdReporte.ObtenerVentasPorVendedor(fechaInicio, fechaFin);
         }
 
         public DataTable ObtenerProductosVendidos(DateTime fechaInicio, DateTime fechaFin)
@@ -35,7 +35,7 @@ namespace PetShop.Negocio
             {
                 throw new ArgumentException("La fecha de inicio no puede ser mayor que la fecha de fin.");
             }
-            return _cdReporte.ObtenerProductoVendidos(fechaInicio, fechaFin);
+            return _cdReporte.ObtenerProductosVendidos(fechaInicio, fechaFin);
         }
     }
 }

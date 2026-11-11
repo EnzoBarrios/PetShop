@@ -1,13 +1,13 @@
-﻿using PetShop.Datos;
-using PetShop.Entidades;
-using PetShop.Negocio;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using PetShop.Datos;
+using PetShop.Entidades;
+using PetShop.Negocio;
 
 namespace PetShop.Presentacion.Productos
 {
@@ -109,17 +109,37 @@ namespace PetShop.Presentacion.Productos
         // Permitir números y el separador decimal (para Precios)
         private void SoloNumerosDecimales_KeyPress(object sender, KeyPressEventArgs e)
         {
+            TextBox txt = sender as TextBox;
+            if (txt == null) return;
+
+            // Teclas de control (Backspace) siempre se permiten
+            if (char.IsControl(e.KeyChar)) return;
+
             char separadorDecimal = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
 
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != separadorDecimal)
+            // Bloquear si no es dígito ni el separador decimal
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != separadorDecimal)
             {
                 e.Handled = true;
+                return;
             }
 
-            // Evitar ingresar más de un separador decimal
-            if (e.KeyChar == separadorDecimal && (sender as TextBox).Text.Contains(separadorDecimal))
+            // Bloquear si intenta ingresar un segundo separador decimal
+            if (e.KeyChar == separadorDecimal && txt.Text.Contains(separadorDecimal))
             {
                 e.Handled = true;
+                return;
+            }
+
+            // Limitar a máximo 2 decimales a la derecha del separador
+            int posicionSeparador = txt.Text.IndexOf(separadorDecimal);
+            if (posicionSeparador != -1 && txt.SelectionStart > posicionSeparador && txt.SelectionLength == 0)
+            {
+                // En lugar de Substring, medimos directamente los caracteres restantes desde la coma/punto
+                if (txt.Text.Length - posicionSeparador - 1 >= 2)
+                {
+                    e.Handled = true;
+                }
             }
         }
 
